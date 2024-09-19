@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://careops.c1sg8g8smswp.ap-northeast-2.rds.amazonaws.com:3306/careops
+    username: root
+    password: himedia001
+
+  thymeleaf:
+    cache: false
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+  # spring data jpa 설정
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  devtools: # devtools initialization
+    livereload:
+      enabled: true
+
+  # RequestMethod Put / Delete / Update 사용시 필요
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  # log 사용시 필요
+  logging:
+    level:
+      org:
+        springframework:
+          security: DEBUG
+        hibernate:
+          SQL: DEBUG
+          type:
+            description:
+              sql:
+                BasicBinder: TRACE

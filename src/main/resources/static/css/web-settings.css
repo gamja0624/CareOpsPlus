@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'Freesentation-9Black';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* reset.css */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    font-family: 'Freesentation-9Black';
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: rgb(107, 107, 107);
+}
+
+/* 사이드바 */
+.nav-link, .nav-color { font-size: 20px; }
+
+/* 콘텐츠 영역 */
+.content {
+	width: calc(100% - 280px);
+	margin: 100px 150px 0 150px;
+	box-sizing: border-box;
+}
+
+.section { margin: 0 auto; }
+.title { width: 1340px; margin-bottom: 30px; font-size: 2.5rem; font-weight: 900; color: #13254C; }
+.title-next { width: 30px; margin: 0 5px;  }
+
+/* 페이지네이션 */
+.pagination { justify-content: center; }
+.page-link { color: #13254C; border: none; }
+
+/* 검색바 */
+.search-box { display: flex; text-align: center; margin: 0 auto; }
+.category-search-box {
+  	border: 1px solid #13254C;
+  	width: 600px;
+  	line-height: 60px;
+  	border-radius: 10px;
+  	margin: 40px auto;
+  }
+  
+  form > .input {
+  	line-height: 30px;
+  	border-radius: 5px;
+  	border: 1px solid #888;
+  }
+  
+  .input#search { width: 400px; padding-left: 10px; }
+  .input#search-submit { width: 80px; line-height: 30px; background-color: #13254C; color: white; }
