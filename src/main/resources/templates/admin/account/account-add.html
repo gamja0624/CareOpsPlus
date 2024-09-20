@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>CareOps+ | 담당자 등록 </title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			.form-whole-cover {
+				width: 600px;
+				margin: 100px  auto;
+				display: flex;
+				font-weight: 600;
+				font: 25px;
+			}
+		   	.form-group {
+		       margin-bottom: 15px;
+		   	}
+		   	.label-style {
+		       margin-bottom: 5px;
+		       margin-right: 8px;
+			   width: 80px;
+		   	}
+		   	.input-style {
+		       width: 400px;
+		       padding: 10px;
+		       border: 1px solid #ccc;
+		       border-radius: 5px;
+			   background-color: #13254C;
+			   margin-left: auto;
+			   color: #FFF;
+		   	}
+		  	 .warning {
+		       color: red;
+		       font-size: 14px;
+		   	}
+		   	.button-cover {
+				width: 600px;
+				margin-top: 50px;
+				text-align: center;
+		
+		   	}
+		   	.account-button {
+		       padding: 10px 15px;
+		       color: white;
+			   background-color: #13254C;
+		       border-radius: 10px;
+		       cursor: pointer;
+		   	}
+		  	.account-button:hover {
+		       border: 1px solid #13254C;	
+			   color: #13254C;
+		       background-color: white;
+		   	}
+			.srh-button {
+				margin-left: 15px;
+			}
+		   	.complete-button {
+				width: 120px;
+		   	}
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			
+			<!-- section -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">담당자 등록</h1>
+				<!-- layout-table -->
+				<div class="layout-table">
+					<div class="form-whole-cover">
+						<form id="registration-form">
+					        <div class="form-group">
+					            <label class="label-style" for="department">부 서 명</label>
+					            <input class="input-style" type="text" id="department" value="" >
+								<button class="account-button srh-button" >부서 검색</button>
+					        </div>
+					        <div class="form-group">
+					            <label class="label-style" for="name">이 름</label>
+					            <input class="input-style" type="text" id="name" value="" >
+					        </div>
+					        <div class="form-group">
+					            <label class="label-style" for="contact">연 락 처</label>
+					            <input class="input-style" type="text" id="contact" value="" >
+					        </div>
+					        <div class="form-group">
+					            <label class="label-style" for="userId">아 이 디</label>
+					            <input class="input-style" type="text" id="userid" required>
+					            <div class="warning" id="usernameWarning" style="display:none;">아이디는 7자 이상이어야 합니다.</div>
+								<button class="account-button srh-button" >중복 확인</button>
+					        </div>
+					        <div class="form-group">
+					            <label class="label-style" for="password">비밀번호</label>
+					            <input class="input-style" type="password" id="password" required>
+					        </div>
+					        <div class="form-group">
+					            <label class="label-style" for="confirmPassword">비밀번호 확인</label>
+					            <input class="input-style" type="password" id="confirmPassword" required>
+					            <div class="warning" id="passwordWarning" style="display:none;">비밀번호가 일치하지 않습니다.</div>
+					        </div>
+							<div class="button-cover">
+						        <button class="account-button  complete-button" type="submit">등록 완료</button>
+							</div>
+					    </form>
+					</div>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+		    document.getElementById('registration-form').addEventListener('submit', function(event) {
+		        const username = document.getElementById('userid').value;
+		        const password = document.getElementById('password').value;
+		        const confirmPassword = document.getElementById('confirmPassword').value;
+		        
+		        let valid = true;
+	
+		        // 아이디 길이 검사
+		        if (username.length < 7) {
+		            document.getElementById('usernameWarning').style.display = 'block';
+		            valid = false;
+		        } else {
+		            document.getElementById('usernameWarning').style.display = 'none';
+		        }
+	
+		        // 비밀번호 일치 검사
+		        if (password !== confirmPassword) {
+		            document.getElementById('passwordWarning').style.display = 'block';
+		            valid = false;
+		        } else {
+		            document.getElementById('passwordWarning').style.display = 'none';
+		        }
+	
+		        if (!valid) {
+		            event.preventDefault(); // 폼 제출 방지
+		        }
+		    });
+		</script>
+	
+		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+	</body>
+	
+</html>

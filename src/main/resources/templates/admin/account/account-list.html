@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>CareOps+ | 담당자 목록 </title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			.table-basic-style {
+				width: 1200px;
+				margin: 0 auto;
+				height: 400px;
+			}
+			.tr-style {
+				border-bottom: 1px solid #000;
+			}
+			.tr-style th, td {
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			
+			<!-- section -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">담당자 목록</h1>
+				<div class="layout-table">
+					<table class ="table-basic-style">
+						<thead>
+							<tr class="tr-style">
+								<th>부서 번호</th>
+								<th>부서 파트</th>
+								<th>부서 이름</th>
+								<th>아이디</th>
+								<th>이름</th>
+								<th>연락처</th>
+								<th>담당자 변경</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>ABC1234</td>
+								<td>김지혜</td>
+								<td>010-0057-8795</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>DEF5678</td>
+								<td>이민수</td>
+								<td>010-0087-9853</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>ABC1234</td>
+								<td>김지혜</td>
+								<td>010-0057-8795</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>DEF5678</td>
+								<td>이민수</td>
+								<td>010-0087-9853</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>ABC1234</td>
+								<td>김지혜</td>
+								<td>010-0057-8795</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>DEF5678</td>
+								<td>이민수</td>
+								<td>010-0087-9853</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>ABC1234</td>
+								<td>김지혜</td>
+								<td>010-0057-8795</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>DEF5678</td>
+								<td>이민수</td>
+								<td>010-0087-9853</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>ABC1234</td>
+								<td>김지혜</td>
+								<td>010-0057-8795</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>DEF5678</td>
+								<td>이민수</td>
+								<td>010-0087-9853</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>ABC1234</td>
+								<td>김지혜</td>
+								<td>010-0057-8795</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+							<tr class="tr-style">
+								<td>101</td>
+								<td>진료부서</td>
+								<td>응급의학과</td>
+								<td>DEF5678</td>
+								<td>이민수</td>
+								<td>010-0087-9853</td>
+								<td><button>담당자 변경</button></td>
+							</tr>
+						</tbody>
+					</table>
+					<button>담당자 등록</button>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+</html>
