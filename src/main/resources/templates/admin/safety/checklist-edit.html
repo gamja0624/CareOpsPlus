@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+  <head>
+  	<meta charset="UTF-8">
+  	<!-- title 지정 -->
+  	<title>CareOps+ | 안전관리</title>
+  	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+  	  
+  	<style type="text/css">
+      .secton-table { margin: 0 auto; }
+      .table { width: 650px; text-align: center; }
+      .btn-line { text-align: center; }
+      /* 뒤로가기 버튼 */
+      .page-back { margin: 0 auto; }
+      .btn-registration { 
+        background-color: #13254C; 
+        border: 1px solid #13254C;
+        color: white; width: 120px;
+        line-height: 45px; 
+        font-size: 25px; 
+        border-radius: 10px; 
+        }
+      .btn-registration:hover { border: 1px solid #13254C; background-color: white; color: #13254C; }
+  	</style>
+  </head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			<!-- 안전관리 목록 -->
+			<h1 class="title">안전관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 목록</h1>
+			<div class="section">
+				<!-- 제목 -->
+    			<div class="secton-table">
+    				<table class="table table-hover">
+    				  <thead>
+    				    <tr>
+    				      <th scope="col">No.</th>
+    				      <th scope="col">세부항목</th>
+    				      <th scope="col">점검표 수정</th>
+    				    </tr>
+    				  </thead>
+    				  <tbody>
+    				    <tr>
+    				      <th scope="row">1</th>
+    				      <td>소화기</td>
+    				      <td>수정버튼</td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">2</th>
+    				      <td>스프링쿨러</td>
+    				      <td>수정버튼</td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">3</th>
+    				      <td>소화전설비</td>
+    				      <td>수정버튼</td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">4</th>
+    				      <td>피난설비</td>
+    				      <td>수정버튼</td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">5</th>
+    				      <td>유도등</td>
+    				      <td>수정버튼</td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">6</th>
+    				      <td>대피로</td>
+    				      <td>수정버튼</td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">7</th>
+    				      <td>비상방송설비</td>
+    				      <td>수정버튼</td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">8</th>
+    				      <td>비상구</td>
+    				      <td>수정버튼</td>
+    				    </tr>
+    				  </tbody>
+    				</table>
+                    <div class="btn-line" >
+        				<div class="page-back">
+        					<button class="btn-registration" type="submit">뒤로가기</button>
+        				</div>
+                    </div>
+    			</div>
+			</div>
+		</div>
+	</body>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+</html>

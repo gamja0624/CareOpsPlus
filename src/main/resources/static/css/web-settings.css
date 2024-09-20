@@ -50,6 +50,7 @@ a {
 /* 콘텐츠 영역 */
 .content {
 	width: calc(100% - 280px);
+	width: 1340px;
 	margin: 100px 150px 0 150px;
 	box-sizing: border-box;
 }
@@ -58,7 +59,14 @@ a {
 .layout-table { width: 1340px; height: 600px; border: 3px solid #13254C; border-radius: 20px; }
 
 .section { margin: 0 auto; }
-.title { width: 1340px; margin-bottom: 50px; font-size: 2.5rem; font-weight: 900; color: #13254C; }
+.title { 
+	display: flex; 			
+	align-items: center;	
+	width: 1340px; 
+	margin-bottom: 30px; 
+	font-size: 2.5rem; 
+	font-weight: 900; 
+	color: #13254C; }
 .title-next { width: 30px; margin: 0 5px;  }
 
 /* 페이지네이션 */

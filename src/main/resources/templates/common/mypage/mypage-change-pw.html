@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<!-- /*@author 노태윤
+@editDate 2024-09-13~2024-09-19*/ -->
+<head>
+    <meta charset="UTF-8">
+    <title>CareOps + | 케어옵스</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap CSS 및 jQuery 추가 -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            width: 700px;
+            padding: 70px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            border: 2px solid #003366;
+        }
+
+        h1 {
+            text-align: left;
+            color: #13254C;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: #13254C;
+            font-size: 20px;
+        }
+
+        .info-field {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border: 2px solid #13254C;
+            background-color: #13254C;
+						color: #fff;
+            font-size: 18px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background-color: #13254C;
+            color: white;
+            font-size: 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        .btn:hover {
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>비밀번호 변경</h1>
+        <hr>
+        <form action="/update-info" method="post">
+            <label for="department">기존 비밀번호</label>
+            <input type="text" id="" name="" class="info-field" value="${admin.admin_dept_no}">
+
+            <label for="name">새 비밀번호</label>
+            <input type="text" id="" name="" class="info-field" value="${admin.admin_name}">
+
+            <label for="phone">새 비밀번호 재입력</label>
+            <input type="text" id="" name="" class="info-field" value="${admin.admin_phone_number}">
+            
+            <hr>
+            
+            <button class="btn" onclick="window.location.href='/mypage'">뒤로가기</button>
+            <button class="btn" onclick="window.location.href='/mypage-edit'">회원 정보 변경</button>
+            
+        </form>
+    </div>
+  <!-- 모달 박스 비밀번호 오류일떄 (작성필요) -->
+	<div class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="">비밀번호 오류</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        입력해 주신 비밀번호가 일치하지 않습니다.
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+</body>
+
+<script src="js/bootstrap.bundle.min.js">
+// 비밀번호 일치하지않을시 모달 표시 (작성필요)
+const errorMessage = "${error}";
+  if (errorMessage) {
+      $('#').modal('show');
+  }	
+</script>
+</html>
