@@ -18,4 +18,9 @@ public class MedicalController {
 		return "manager/medical/medical-list";
 	}
 	
+	@GetMapping("/detail")
+	public String medicalDetail() {
+		return "manager/medical/medical-detail";
+	}
+	
 }
