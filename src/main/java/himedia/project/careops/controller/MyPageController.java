@@ -37,9 +37,9 @@ public class MyPageController {
             model.addAttribute("error", "관리자를 찾을 수 없습니다.");
         }
 
-        return "common/mypage/mypage"; // my-page.html 뷰 반환
+        return "common/mypage/mypage2"; // my-page.html 뷰 반환
     }
-
+    
     // 내 정보 수정 페이지로 이동
     @GetMapping("/mypage-edit")
     public String showUpdateInfoForm(Model model, HttpSession session) {
