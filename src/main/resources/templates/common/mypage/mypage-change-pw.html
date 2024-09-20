@@ -80,10 +80,8 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1>비밀번호 변경</h1>
+    <div class="info-container">
         <hr>
-        <form action="/update-info" method="post">
             <label for="department">기존 비밀번호</label>
             <input type="text" id="" name="" class="info-field" value="${admin.admin_dept_no}">
 
@@ -98,7 +96,6 @@
             <button class="btn" onclick="window.location.href='/mypage'">뒤로가기</button>
             <button class="btn" onclick="window.location.href='/mypage-edit'">회원 정보 변경</button>
             
-        </form>
     </div>
   <!-- 모달 박스 비밀번호 오류일떄 (작성필요) -->
 	<div class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
@@ -120,13 +117,13 @@
 	  </div>
 	</div>
 
-</body>
-
+<!-- 비밀번호 일치하지않을시 모달 표시 (추가 작성필요) -->
 <script src="js/bootstrap.bundle.min.js">
-// 비밀번호 일치하지않을시 모달 표시 (작성필요)
 const errorMessage = "${error}";
   if (errorMessage) {
       $('#').modal('show');
   }	
 </script>
+</body>
+
 </html>

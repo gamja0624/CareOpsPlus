@@ -54,10 +54,10 @@ public class MyPageController {
 
         if (admin.isPresent()) {
             model.addAttribute("admin", admin.get()); // 수정할 관리자 정보를 모델에 추가
-            return "common/mypage/mypage-edit"; // 수정 페이지 (mypage-edit.html)으로 이동
+            return "common/mypage/mypage-edit2"; // 수정 페이지 (mypage-edit.html)으로 이동
         } else {
             model.addAttribute("error", "관리자를 찾을 수 없습니다.");
-            return "common/mypage/mypage-edit"; // 정보를 찾을 수 없는 경우 다시 내 정보 페이지로 리다이렉트
+            return "common/mypage/mypage-edit2"; // 정보를 찾을 수 없는 경우 다시 내 정보 페이지로 리다이렉트
         }
     }
     
@@ -83,6 +83,6 @@ public class MyPageController {
     // 비밀번호 변경 페이지 controller
     @GetMapping("/mypage-change-pw")
     public String myPageChangePw() {
-        return "common/mypage/mypage-change-pw";
+        return "common/mypage/mypage-change-pw2";
     }
 }
