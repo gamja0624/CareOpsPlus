@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+  <head>
+  	<meta charset="UTF-8">
+  	<!-- title 지정 -->
+  	<title>CareOps+ | 안전관리</title>
+  	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+  	  
+  	<style type="text/css">
+      .title { display: flex; align-items: center; }
+      /* 목록 테이블 */
+      .content { width: 1340px; }
+      .table { text-align: center; vertical-align: inherit; }
+      tr { border-bottom: 1px solid #d9d9d9; }
+      thead>tr { font-weight: bold; font-size: 20px; }
+      tbody>tr { line-height: 50px;  }
+      tr>td>a { cursor: pointer; }
+      .detail-icon { width: 30px; line-height: 30px; vertical-align: middle; }
+      /* 버튼 */
+      .btn-line { display: flex; }
+      /* 점검표 항목 수정 버튼 */
+      .btn-checklist { 
+        background-color: #13254C; 
+        border: 1px solid #13254C;
+        color: white; width: 200px;
+        line-height: 45px; 
+        font-size: 25px; 
+        border-radius: 10px;
+      }
+      .btn-checklist:hover {border: 1px solid #13254C; background-color: white; color: #13254C; }
+      /* 등록 버튼 */
+      .registration { margin-left: auto; }
+      .btn-registration { 
+        background-color: #13254C; 
+        border: 1px solid #13254C;
+        color: white; width: 120px;
+        line-height: 45px; 
+        font-size: 25px; 
+        border-radius: 10px; 
+        }
+      .btn-registration:hover { border: 1px solid #13254C; background-color: white; color: #13254C; }
+  	</style>
+  </head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			<!-- 안전관리 목록 -->
+			<h1 class="title">안전관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 목록</h1>
+			<div class="section">
+				<!-- 제목 -->
+    			<div>
+    				<table class="table table-hover">
+    				  <thead>
+    				    <tr>
+    				      <th scope="col">No.</th>
+    				      <th scope="col">작업자</th>
+    				      <th scope="col">소화기</th>
+    				      <th scope="col">스프링쿨러</th>
+    				      <th scope="col">소화전설비</th>
+    				      <th scope="col">피난설비</th>
+    				      <th scope="col">유도등</th>
+    				      <th scope="col">대피로</th>
+    				      <th scope="col">비상방송설비</th>
+    				      <th scope="col">비상구</th>
+    				      <th scope="col">확인</th>
+    				      <th scope="col">점검일자</th>
+    				      <th scope="col">상세</th>
+    				    </tr>
+    				  </thead>
+    				  <tbody>
+    				    <tr>
+    				      <th scope="row">1020</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">1019</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">1018</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">1017</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">1016</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">1015</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">1014</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">1013</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">1012</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				    <tr>
+    				      <th scope="row">1011</th>
+    				      <td>Mark</td>
+    				      <td>Otto</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td>@mdo</td>
+    				      <td><a><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+    				    </tr>
+    				  </tbody>
+    				</table>
+                    <div class="btn-line" >
+        				<div class="checklist">
+        					<button class="btn-checklist" type="submit">점검표 항목 수정</button>
+        				</div>
+        				<div class="registration">
+        					<button class="btn-registration" type="submit">등 록</button>
+        				</div>
+                    </div>
+    				<div class="search-box">
+    					<form class="category-search-box" action="/">
+    						<label class="notice-category" for="column"></label> 
+    						<select id="filter" name="filter">
+    							<option value="sm_no">점검번호</option>
+    							<option value="admin_name">작업자</option>
+    						</select> 
+    						<label for="search"></label> 
+    						<input class="input" type="search" name="search" id="search"> 
+    						<input class="input" type="submit" id="search-submit" value="검색">
+    					</form>
+    				</div>
+    			</div>
+			</div>
+		</div>
+	</body>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+</html>
