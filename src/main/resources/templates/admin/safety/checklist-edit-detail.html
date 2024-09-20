@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+  <head>
+  	<meta charset="UTF-8">
+  	<!-- title 지정 -->
+  	<title>CareOps+ | 안전관리</title>
+  	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+  	  
+  	<style type="text/css">
+      /* 테이블 */
+      .layout-table { text-align: center }
+      .table { margin: 5% auto; display: inline-table; width: 650px; text-align: center; }
+      .table-head { font-weight: bold; font-size: 20px; }
+      .table-row { line-height: 20px; border-bottom: 1px solid #d9d9d9; }
+      .table-row>th,td { padding: 4px; vertical-align: middle; }
+      .btn-line { text-align: center; }
+      /* 목록 */
+      .list-input { width: 100%; border: 1px solid #13254C; border-radius: 5px; padding-left: 5px; }
+      .list-td {  width: 400px; }
+      .table-row-last { text-align: center; }
+      /* 빼기 아이콘 */
+      .minus-icon { vertical-align: middle; width: 25px; line-height: 25px; }
+      .minus-icon-a { cursor: pointer; }
+      /* 더하기 아이콘 */
+      .plus-icon { vertical-align: middle; width: 25px; line-height: 25px; }
+      .plus-icon-a { cursor: pointer; }
+      /* 버튼 */
+      .page-back { margin: 10px auto; }
+      .btn-edit { line-height: 15px; }
+      .btn { background-color: #13254C; color: white; }
+      .btn:hover { border: 1px solid #13254C; }
+  	</style>
+  </head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			<!-- 안전관리 목록 -->
+			<div class="section">
+    			<h1 class="title">점검표 항목 수정 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 소화기</h1>
+				<!-- 제목 -->
+    			<div class="layout-table">
+    				<table class="table table-hover">
+    				  <thead>
+    				    <tr class="table-row table-head" >
+    				      <th scope="col">No.</th>
+    				      <th scope="col" class="column-checklist">점검 리스트</th>
+    				      <th scope="col">상 태</th>
+    				    </tr>
+    				  </thead>
+    				  <tbody>
+    				    <tr class="table-row" >
+    				      <th scope="row">41</th>
+    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
+    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+    				    </tr>
+    				    <tr class="table-row" >
+    				      <th scope="row">42</th>
+    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-002" ></td>
+    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+    				    </tr>
+    				    <tr class="table-row" >
+    				      <th scope="row">43</th>
+    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-003" ></td>
+    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+    				    </tr>
+    				    <tr class="table-row" >
+    				      <th scope="row">44</th>
+    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-004" ></td>
+    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+    				    </tr>
+    				    <tr class="table-row" >
+    				      <th scope="row">45</th>
+    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
+    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+    				    </tr>
+    				    <tr class="table-row" >
+    				      <th scope="row">46</th>
+    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
+    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+    				    </tr>
+    				    <tr class="table-row" >
+    				      <th scope="row">47</th>
+    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
+    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+    				    </tr>
+    				    <tr class="table-row" >
+    				      <th scope="row">48</th>
+    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
+    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+    				    </tr>
+    				    <tr class="table-row" >
+    				      <th scope="row">49</th>
+    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
+    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+    				    </tr>
+    				    <tr class="table-row" >
+                          <th scope="row"></th>
+                          <td class="table-row-last" >
+                            <a class="plus-icon-a" ><img alt="더하기 아이콘" th:src="@{/img/plus-icon.png}" class="plus-icon"></a>
+                          </td>
+                          <td></td>
+    				    </tr>
+    				  </tbody>
+    				</table>
+    			</div>
+                <div class="btn-line" >
+    				<div class="page-back">
+    					<button class="btn" type="submit">뒤로 가기</button>
+    				</div>
+                </div>
+			</div>
+		</div>
+	</body>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+</html>

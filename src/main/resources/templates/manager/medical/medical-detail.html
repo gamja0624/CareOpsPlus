@@ -9,22 +9,29 @@
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
 		<style type="text/css">
-			/* 데이터 테이블 */
-			.data-table { display: flex; width: 1000px; margin: 50px auto; }
-			
-			.data { display: flex; margin-bottom: 20px; }
-			.data-title { font-size: 25px; margin-right: 40px; }
-			.data-input { width: 300px; font-size: 20px; }
-			
 			/* 버튼 - 의료기기 상태 */
 			.btn-success { border-radius: 50px; width: 90px; height: 50px; font-size: 20px; } 
+			
+			/* 데이터 테이블 */
+			.data-table { display: flex; width: 1000px; margin: 50px auto; }
+ 			.data { display: flex; margin-bottom: 20px; }
+			.data-t-2 { margin-left: auto; }
+			.data-title { font-size: 25px; margin-right: 40px; }
+			.data-input { 
+				width: 300px; 
+				font-size: 20px; 
+				padding-left: 10px;
+				margin-left: auto; 
+				border-radius: 5px; 
+				background-color: #13254C; 
+				color: white; 
+			}
 			
 			/* 버튼 - 뒤로가기, 수정 */
 			.btn-table { width: 1340px; }
 			.btn-status { margin: 30px auto; text-align: center; }
 			.btn-group { display: inline-block; width: 80px; margin-right: 15px; background-color: #13254C; color: white; }
 			.btn-group:hover { border: 1px solid #13254C; }
-			
 		</style>
 	</head>
 
@@ -46,7 +53,7 @@
 					</div>
 					
 					<div class="data-table">
-						<div class="col">
+						<div class="data-t-1">
 							<div class="data">
 								<p class="data-title">장비대분류명</p>
 								<input type="text" name="search" value="염기서열검사기" class="data-input" disabled>
@@ -73,7 +80,7 @@
 							</div>
 						</div>
 						
-						<div class="col">
+						<div class="data-t-2">
 							<div class="data">
 								<p class="data-title">장비대분류코드</p>
 								<input type="text" name="search" value="A125" class="data-input" disabled>
@@ -103,12 +110,12 @@
 				</div>
 				
 				<div class="btn-table btn-status">
-					<button class="btn btn-group" type="submit">뒤로 가기</button>
-					<button class="btn btn-group" type="submit">수정</button>
+					<button class="btn btn-group" type="button">뒤로 가기</button>
+ 					<button class="btn btn-group" type="button">수정</button>
 				</div>
 			</div>
 		</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	</body>
-
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </html>

@@ -9,20 +9,18 @@
   	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
   	  
   	<style type="text/css">
-      .secton-table { margin: 0 auto; }
-      .table { width: 650px; text-align: center; }
+      /* 테이블 */
+      .layout-table { text-align: center }
+      .table { margin: 5% auto; display: inline-table; width: 650px; text-align: center; }
+      .table-head { font-weight: bold; font-size: 20px; }
+      .table-row { line-height: 20px; border-bottom: 1px solid #d9d9d9; }
+      .table-row>th,td { padding: 4px; vertical-align: middle; }
       .btn-line { text-align: center; }
-      /* 뒤로가기 버튼 */
-      .page-back { margin: 0 auto; }
-      .btn-registration { 
-        background-color: #13254C; 
-        border: 1px solid #13254C;
-        color: white; width: 120px;
-        line-height: 45px; 
-        font-size: 25px; 
-        border-radius: 10px; 
-        }
-      .btn-registration:hover { border: 1px solid #13254C; background-color: white; color: #13254C; }
+      /* 버튼 */
+      .page-back { margin: 10px auto; }
+      .btn-edit { line-height: 15px; }
+      .btn { background-color: #13254C; color: white; }
+      .btn:hover { border: 1px solid #13254C; }
   	</style>
   </head>
 
@@ -33,67 +31,67 @@
 		<!-- 컨텐츠 영역 -->
 		<div class="content">
 			<!-- 안전관리 목록 -->
-			<h1 class="title">안전관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 목록</h1>
 			<div class="section">
+    			<h1 class="title">점검표 항목 수정</h1>
 				<!-- 제목 -->
-    			<div class="secton-table">
+    			<div class="layout-table">
     				<table class="table table-hover">
     				  <thead>
-    				    <tr>
+    				    <tr class="table-row table-head" >
     				      <th scope="col">No.</th>
     				      <th scope="col">세부항목</th>
     				      <th scope="col">점검표 수정</th>
     				    </tr>
     				  </thead>
     				  <tbody>
-    				    <tr>
+    				    <tr class="table-row" >
     				      <th scope="row">1</th>
     				      <td>소화기</td>
-    				      <td>수정버튼</td>
+    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/detail'" >수 정</button></td>
     				    </tr>
-    				    <tr>
+    				    <tr class="table-row" >
     				      <th scope="row">2</th>
     				      <td>스프링쿨러</td>
-    				      <td>수정버튼</td>
+    				      <td><button class="btn btn-edit" >수 정</button></td>
     				    </tr>
-    				    <tr>
+    				    <tr class="table-row" >
     				      <th scope="row">3</th>
     				      <td>소화전설비</td>
-    				      <td>수정버튼</td>
+    				      <td><button class="btn btn-edit" >수 정</button></td>
     				    </tr>
-    				    <tr>
+    				    <tr class="table-row" >
     				      <th scope="row">4</th>
     				      <td>피난설비</td>
-    				      <td>수정버튼</td>
+    				      <td><button class="btn btn-edit" >수 정</button></td>
     				    </tr>
-    				    <tr>
+    				    <tr class="table-row" >
     				      <th scope="row">5</th>
     				      <td>유도등</td>
-    				      <td>수정버튼</td>
+    				      <td><button class="btn btn-edit" >수 정</button></td>
     				    </tr>
-    				    <tr>
+    				    <tr class="table-row" >
     				      <th scope="row">6</th>
     				      <td>대피로</td>
-    				      <td>수정버튼</td>
+    				      <td><button class="btn btn-edit" >수 정</button></td>
     				    </tr>
-    				    <tr>
+    				    <tr class="table-row" >
     				      <th scope="row">7</th>
     				      <td>비상방송설비</td>
-    				      <td>수정버튼</td>
+    				      <td><button class="btn btn-edit" >수 정</button></td>
     				    </tr>
-    				    <tr>
+    				    <tr class="table-row" >
     				      <th scope="row">8</th>
     				      <td>비상구</td>
-    				      <td>수정버튼</td>
+    				      <td><button class="btn btn-edit" >수 정</button></td>
     				    </tr>
     				  </tbody>
     				</table>
-                    <div class="btn-line" >
-        				<div class="page-back">
-        					<button class="btn-registration" type="submit">뒤로가기</button>
-        				</div>
-                    </div>
     			</div>
+                <div class="btn-line" >
+    				<div class="page-back">
+    					<button class="btn" type="submit">뒤로 가기</button>
+    				</div>
+                </div>
 			</div>
 		</div>
 	</body>
