@@ -23,4 +23,14 @@ public class MedicalController {
 		return "manager/medical/medical-detail";
 	}
 	
+	@GetMapping("/edit")
+	public String medicalEdit() {
+		return "manager/medical/medical-edit";
+	}
+	
+	@GetMapping("/add")
+	public String medicalAdd() {
+		return "manager/medical/medical-add";
+	}
+	
 }

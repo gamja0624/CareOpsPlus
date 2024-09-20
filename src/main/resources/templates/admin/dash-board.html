@@ -3,13 +3,9 @@
 <html xmlns:th="http://www.thymleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<!-- 관리자 -->
+		<!-- 작업자 -->
 		<title>CareOps+ | 대시보드</title>
-		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-		<link th:href="@{/css/style.css}" rel="stylesheet">
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
 		<style type="text/css">
@@ -87,15 +83,8 @@
 		 	.safety-table { padding: 20px; margin-top: 35px; width: 700px; height: 250px; border: 3px solid #13254C; border-radius: 10px; }
 		 	
 		 	/* 캘린더 */
-		 	.calendar { 
-				display: flex;
-				margin: 70px 0 30px 0; 
-				width: 500px; 
-				height: 350px; 
-				border: 3px solid #13254C; 
-				border-radius: 10px; 
-				background-color: #13254C;
-			}
+		 	.calendar { margin: 70px 0 30px 0; width: 500px; height: 350px; border: 3px solid #13254C; border-radius: 10px; }
+		 	
 		 	/* 내 민원 */
 		 	.claim-content { padding: 20px; margin-bottom: 15px; width: 500px; height: 95px; border: 3px solid #13254C; border-radius: 10px; }
 		 	.claim-add { display: flex; width: 500px; }
@@ -110,8 +99,7 @@
 		<!-- 컨텐츠 영역 -->
 		<div class="content">
 			<div class="section s-m">
-				<!-- 로그인 이후 담당 부서와 담당자 이름 제어 -->
-				<h1 class="title">간호팀 홍길동님, 반갑습니다.</h1>
+				<h1 class="title">안전 관리팀 홍길동님, 반갑습니다.</h1>
 				
 				<!-- 서비스 미리보기 -->
 				<div class="service">
@@ -190,19 +178,7 @@
 			
 			<div class="section">
 				<!-- 캘린더 -->
-				<div class="calendar">
-					<section class="ftco-section">
-						<div class="calendar-first" id="calendar_first">
-					    <div class="calendar_header">
-					        <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
-					         <h2></h2>
-					        <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
-					    </div>
-					    <div class="calendar_weekdays"></div>
-					    <div class="calendar_content"></div>
-						</div>
-					</section>
-				</div>
+				<div class="calendar"></div>
 				
 				<!-- 내가 쓴 민원 (최신순 3가지 ) -->
 				<div class="claim">
@@ -216,8 +192,6 @@
 			</div>
 		</div>
 		
-		<script th:src="@{/js/jquery.min.js}" ></script>
-	  <script th:src="@{/js/main.js}" ></script>
-	  <script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 	</body>
 </html>

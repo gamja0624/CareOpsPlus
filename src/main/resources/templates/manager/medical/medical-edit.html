@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 의료기기 수정</title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			/* 의료기기 상태 토글 */
+			.form-select { width: 130px; margin: 50px auto; text-align: center; font-size: 20px; }
+			.btn-success { border-radius: 50px; width: 90px; height: 50px; font-size: 20px; } 
+			
+			/* 데이터 테이블 */
+			.data-table { display: flex; width: 1000px; margin: 50px auto; }
+			.data { display: flex; margin-bottom: 20px; }
+			.data-t-2 { margin-left: auto; }
+			.data-title { font-size: 25px; margin-right: 40px; }
+			.data-input { 
+				width: 300px; 
+				font-size: 20px; 
+				padding-left: 10px;
+				margin-left: auto; 
+				border-radius: 5px; 
+				background-color: #13254C; 
+				color: white; 
+			}
+			.data-disabled { background-color: #d9d9d9; color: #717171;   }
+			
+			/* 버튼 - 뒤로가기, 수정 */
+			.btn-table { width: 1340px; }
+			.btn-status { margin: 30px auto; text-align: center; }
+			.btn-group { display: inline-block; width: 80px; margin-right: 15px; background-color: #13254C; color: white; }
+			.btn-group:hover { border: 1px solid #13254C; }
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			<!-- section -->
+			<div class="section">
+			
+				<!-- 제목 -->
+				<h1 class="title">의료관리 관리<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">수정</h1>
+				
+				<form action="" method="post">
+					<div class="layout-table">
+						<div class="btn-status">
+							<select class="form-select" aria-label="Default select">
+							  <option selected>정상</option>
+							  <option value="1">점검</option>
+							  <option value="2">수리</option>
+							  <option value="3">노후</option>
+							  <option value="4">만료</option>
+							</select>
+						</div>
+						
+						
+						<div class="data-table">
+							<div class="data-t-1">
+								<div class="data">
+									<p class="data-title">장비대분류명</p>
+									<input type="text" name="search" value="염기서열검사기" class="data-input data-disabled" disabled>
+								</div>
+								<div class="data">
+									<p class="data-title">장비세분류명</p>
+									<input type="text" name="search" value="차세대 염기서열 분석법 검사기(NGS)" class="data-input data-disabled" disabled>
+								</div>
+								<div class="data">
+								 	<p class="data-title">모델명</p>
+									<input type="text" name="search" value="ION S5 XL Sequencer" class="data-input data-disabled" disabled>
+								</div>
+								<div class="data">
+								 	<p class="data-title">담당 부서</p>
+									<input type="text" name="search" value="응급의학과" class="data-input">
+								</div>
+								<div class="data">
+									<p class="data-title">장비수</p>
+									<input type="text" name="search" value="1" class="data-input">
+								</div>
+								<div class="data">
+								 	<p class="data-title">점검자</p>
+									<input type="text" name="search" value="홍길동" class="data-input data-disabled" disabled>
+								</div>
+							</div>
+							
+							<div class="data-t-2">
+								<div class="data">
+									<p class="data-title">장비대분류코드</p>
+									<input type="text" name="search" value="A125" class="data-input data-disabled" disabled>
+								</div>
+								<div class="data">
+									<p class="data-title">장비세분류코드</p>
+									<input type="text" name="search" value="A12502" class="data-input data-disabled" disabled>
+								</div>
+								<div class="data">
+									<p class="data-title">장비허가번호</p>
+									<input type="text" name="search" value="수인15-4212호" class="data-input data-disabled" disabled>
+								</div>
+								<div class="data">
+									<p class="data-title">담당자</p>
+									<input type="text" name="search" value="박보검" class="data-input" >
+								</div>
+								<div class="data">
+								 	<p class="data-title">등록일</p>
+									<input type="text" name="search" value="2024-01-26" class="data-input data-disabled" disabled>
+								</div>
+								<div class="data">
+								 	<p class="data-title">점검일</p>
+									<input type="text" name="search" value="2024-08-20" class="data-input data-disabled" disabled>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="btn-table btn-status">
+						<button class="btn btn-group" type="button">뒤로 가기</button>
+						<button class="btn btn-group" type="submit">수정</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	</body>
+</html>

@@ -10,13 +10,19 @@
 		
 		<style type="text/css">
 			/* 테이블 */
-			th { font-size: 20px; font-weight: 600; }
-			tr { border-bottom: 1px solid #d9d9d9; }
+			.table { text-align: center; vertical-align: inherit; }
+			.table-row { line-height: 40px; }
+			.table-head { font-size: 20px; font-weight: 600; }
+			tr { height: 50px;  border-bottom: 1px solid #d9d9d9; }
+			
+			/* 상세보기 */
+			.data-add { line-height: 40px; vertical-align: middle; }
 			
 			/* 버튼 */
 			.btn-status { display: flex; }
-			.btn { margin-left: auto; background-color: #13254C; color: white; }
-			.btn:hover { border: 1px solid #13254C; }
+			.btn-css { width: 80px; border-radius: 50px; }
+			.btn-add { margin-left: auto; background-color: #13254C; color: white; }
+			.btn-add:hover { border: 1px solid #13254C; }
 			
 		</style>
 	</head>
@@ -34,7 +40,7 @@
 				
 				<table class="table table-hover">
 				  <thead class="table-group">
-				    <tr>
+				    <tr class="table-row table-head">
 				      <th scope="col">장비대분류명</th>
 				      <th scope="col">장비세분류명</th>
 				      <th scope="col">모델명</th>
@@ -44,124 +50,52 @@
 				      <th scope="col">점검일</th>
 				      <th scope="col">등록일</th>
 				      <th scope="col">상태</th>
+				      <th scope="col">상세보기</th>
 				    </tr>
 				  </thead>
 				  <tbody class="table-group">
-				    <tr>
-				      <td>Mark</td>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <td>Mark</td>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
-				      <td>@mdo</td>
+				    <tr class="table-row ">
+				    	<!-- 장비대분류명 -->
+				      <td>요화학검사기</td>
+				      
+				      <!-- 장비세분류명 -->
+				      <td>요화학검사기</td>
+				      
+				      <!-- 모델명 -->
+				      <td>디유리더 300</td>
+				      
+				      <!-- 장비수 -->
+				      <td>1</td>
+				      
+				      <!-- 담당부서 -->
+				      <td>응급의학과</td>
+				      
+				      <!-- 점검자 -->
+				      <td>박보검</td>
+				      
+				      <!-- 점검일 -->
+				      <td>2024-09-20</td>
+				      
+				      <!-- 등록일 -->
+				      <td>2024-08-01</td>
+				      
+				      <!-- 버튼 -->
+				      <td>
+				      	<button type="button" class="btn btn-css btn-outline-success" disabled>정상</button>
+				      	<!-- <button type="button" class="btn btn-css btn-outline-primary" disabled>수리 필요</button>
+				      	<button type="button" class="btn btn-css btn-outline-secondary" disabled>점검 요망</button>
+				      	<button type="button" class="btn btn-css btn-outline-warning" disabled>노후</button>
+				      	<button type="button" class="btn btn-css btn-outline-danger" disabled>만료</button> -->
+				      </td>
+				      
+				      <!-- 상세 보기 -->
+				      <td><a href=""><img alt="이동" th:src="@{/img/icon-next-b.png}" class="data-add"></a></td>
 				    </tr>
 				  </tbody>
 				</table>
 				
 				<div class="btn-status">
-					<button class="btn" type="submit">신규 등록</button>
+					<button class="btn btn-add" type="submit">신규 등록</button>
 				</div>
 				
 				<div>
@@ -202,7 +136,7 @@
 				</div>
 			</div>
 		</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	</body>
-
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </html>
