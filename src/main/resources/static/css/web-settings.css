@@ -67,7 +67,7 @@ a {
 	font-size: 2.5rem; 
 	font-weight: 900; 
 	color: #13254C; }
-.title-next { width: 30px; margin: 0 5px;  }
+.title-next { width: 30px; margin: 0 10px;  }
 
 /* 페이지네이션 */
 .pagination { justify-content: center; }
