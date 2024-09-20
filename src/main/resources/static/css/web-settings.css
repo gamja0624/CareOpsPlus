@@ -21,18 +21,18 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    font-family: 'Freesentation-9Black';
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	font-family: 'Freesentation-9Black';
 }
 
 body {
-  display: flex;
-  min-height: 100vh;
+	display: flex;
+	min-height: 100vh;
 }
 
 li {
@@ -54,8 +54,11 @@ a {
 	box-sizing: border-box;
 }
 
+/* 레이아웃 테이블 */
+.layout-table { width: 1340px; height: 600px; border: 3px solid #13254C; border-radius: 20px; }
+
 .section { margin: 0 auto; }
-.title { width: 1340px; margin-bottom: 30px; font-size: 2.5rem; font-weight: 900; color: #13254C; }
+.title { width: 1340px; margin-bottom: 50px; font-size: 2.5rem; font-weight: 900; color: #13254C; }
 .title-next { width: 30px; margin: 0 5px;  }
 
 /* 페이지네이션 */
@@ -65,18 +68,17 @@ a {
 /* 검색바 */
 .search-box { display: flex; text-align: center; margin: 0 auto; }
 .category-search-box {
-  	border: 1px solid #13254C;
-  	width: 600px;
-  	line-height: 60px;
-  	border-radius: 10px;
-  	margin: 40px auto;
-  }
-  
-  form > .input {
-  	line-height: 30px;
-  	border-radius: 5px;
-  	border: 1px solid #888;
-  }
-  
-  .input#search { width: 400px; padding-left: 10px; }
-  .input#search-submit { width: 80px; line-height: 30px; background-color: #13254C; color: white; }
+ 	border: 1px solid #13254C;
+ 	width: 600px;
+ 	line-height: 60px;
+ 	border-radius: 10px;
+ 	margin: 40px auto;
+ }
+form > .input {
+	line-height: 30px;
+	border-radius: 5px;
+	border: 1px solid #888;
+}
+.input#search { width: 400px; padding-left: 10px; }
+.input#search-submit { width: 80px; line-height: 30px; background-color: #13254C; color: white; }
+ 

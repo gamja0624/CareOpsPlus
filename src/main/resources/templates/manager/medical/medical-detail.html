@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 의료기기 상세</title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			/* 레이아웃 테이블 */
+			.btn-table { width: 1340px; }
+			.data-table { display: flex; }
+			
+			/* 버튼 - 의료기기 상태 */
+			.btn-success { border-radius: 50px; width: 90px; height: 50px; font-size: 20px; } 
+			
+			/* 버튼 - 뒤로가기, 수정 */
+			.btn-status { margin: 30px auto; text-align: center; }
+			.btn-group { display: inline-block; width: 80px; margin-right: 15px; background-color: #13254C; color: white; }
+			.btn-group:hover { border: 1px solid #13254C; }
+			
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			<!-- 서비스 미리보기 -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">의료관리 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 상세</h1>
+				
+				<div class="layout-table">
+					<div class="btn-status">
+						<button type="button" class="btn btn-success">정상</button>
+					</div>
+					
+					<div class="data-table">
+						<div class="col">
+							<div>
+								<p>장비대분류명</p>
+								<input type="text" name="search" value="염기서열검사기" disabled>
+							</div>
+							<div>
+								<p>장비세분류명</p>
+								<input type="text" name="search" value="차세대 염기서열 분석법 검사기(NGS)" disabled>
+							</div>
+							<div>
+							 	<p>모델명</p>
+								<input type="text" name="search" value="ION S5 XL Sequencer" disabled>
+							</div>
+							<div>
+							 	<p>담당 부서</p>
+								<input type="text" name="search" value="응급의학과" disabled>
+							</div>
+							<div>
+							 	<p>점검자</p>
+								<input type="text" name="search" value="홍길동" disabled>
+							</div>
+							<div>
+							 	<p>점검일</p>
+								<input type="text" name="search" value="2024-08-20" disabled>
+							</div>
+							<div>
+							 	<p>등록일</p>
+								<input type="text" name="search" value="2024-01-26" disabled>
+							</div>
+						</div>
+						
+						<div class="col">
+							<div>
+								<p>장비대분류코드</p>
+								<input type="text" name="search" value="A125" disabled>
+							</div>
+							<div>
+								<p>장비세분류코드</p>
+								<input type="text" name="search" value="A12502" disabled>
+							</div>
+							<div>
+								<p>장비허가번호</p>
+								<input type="text" name="search" value="수인15-4212호" disabled>
+							</div>
+							<div>
+								<p>장비허가번호</p>
+								<input type="text" name="search" value="수인15-4212호" disabled>
+							</div>
+							<div>
+								<p>장비수</p>
+								<input type="text" name="search" value="1" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="btn-table btn-status">
+					<button class="btn btn-group" type="submit">뒤로 가기</button>
+					<button class="btn btn-group" type="submit">수정</button>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>
