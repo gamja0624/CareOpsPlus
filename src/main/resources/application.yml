@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://careops.c1sg8g8smswp.ap-northeast-2.rds.amazonaws.com:3306/careops
+    url: jdbc:mysql://careops.c1sg8g8smswp.ap-northeast-2.rds.amazonaws.com:3306/CareOps_DataBase
     username: root
     password: himedia001
 

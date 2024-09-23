@@ -22,16 +22,15 @@
         }
 
         .site_logo {
-            display: block; /* 블록 요소로 변경 */
-            margin: 50px auto 100px auto; /* 상단 간격 10px, 하단 간격 0px */
-            max-width: 500px; /* 최대 너비 설정 */
-            width: 100%; /* 너비를 100%로 설정하여 비율 유지 */
+            margin: -200px auto 150px auto;
+            max-width: 500px;
+            width: 100%; 
         }
 
         /* 배경과 별 설정 */
         #background {
             position: fixed;
-            top: 0; /* 전체 화면을 덮도록 수정 */
+            top: 0;
             left: 0;
             width: 100vw; /* 화면 전체 너비 */
             height: 100vh; /* 화면 전체 높이 */
@@ -58,28 +57,61 @@
         }
 
         .login-box {
-            width: 90%; /* 화면 크기에 맞게 조정 */
+            width: 30%; /* 화면 크기에 맞게 조정 */
             max-width: 800px; /* 로고 너비와 일치하도록 설정 */
-            margin: 20px auto; /* 상단 간격 20px, 하단 간격 0px */
-            padding: 20px; /* 패딩 추가 */
+            margin-top: -50px;
+            padding: 60px; /* 패딩 추가 */
             background-color: #13254D; /* 로그인 박스 색상 */
-            border-radius: 8px; /* 모서리 둥글게 */
+            border-radius: 5px; /* 모서리 둥글게 */
             color: white; /* 텍스트 색상 흰색으로 변경 */
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* 그림자 추가 */
         }
 
         .col-form-label {
-            color: rgb(255, 255, 255); /* 레이블 텍스트 색상 흰색으로 변경 */
-            text-align: left; /* 왼쪽 정렬 */
+        		color: white;
+        		text-align: left;
+        		font-size: 1.1rem;
         }
 
+				/* 입력 필드 스타일 */
         .form-control {
             width: 100%; /* 입력 필드 너비 100% */
+            font-size: 1.1rem;
         }
-
+        
+				/* 로그인 버튼 스타일 */
         .btn-login {
-            width: 100%; /* 로그인 버튼 너비 100% */
-            padding: 15px; /* 버튼 높이 늘리기 */
+            width: 100%; 
+            padding: 15px;
+            background-color: rgb(0, 0, 0); /* 버튼 색상 변경 */
+            border:none;
+            font-size: 1.2rem;
+            transition:background-color 0.3s ease;  
+        }
+        
+        /* 로그인 버튼 hover 스타일 */
+        .btn-login:hover {
+        	background-color:#0d1d40;
+        }
+        
+        /* 페이지 이동 애니메이션  */
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+        
+        /* 로그인 박스 클릭 시 애니메이션 */
+        .fade-out {
+        	animation:fadeOut 0.5s forwards;
+        }
+        
+        .form-label {
+        	font-size: 20px;
         }
     </style>
 </head>
@@ -97,7 +129,7 @@
     <form action="/" method="post"> 
         <div class="mb-3">
             <label for="inputDepartments" class="form-label">부서 번호</label>
-            <input type="text" class="form-control" id="inputDepartments" name="department_id">
+            <input type="text" class="form-control" id="inputDepartments" name="department_dept_no">
         </div>
         <div class="mb-3">
             <label for="inputEmail" class="form-label">아이디</label>
