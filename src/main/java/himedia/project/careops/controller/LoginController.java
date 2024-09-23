@@ -42,7 +42,7 @@ public class LoginController {
             session.setAttribute("admin_id", admin_id);
 
             if (admin_id.equals(ADMIN_ID)) {
-                return "redirect:/admin/admindashboard";  // 관리자 대시보드로 리다이렉트
+                return "redirect:/admin/dash-board";  // 관리자 대시보드로 리다이렉트
             } else if (admin_id.equals(MANAGER_ID)) {
                 return "redirect:/manager/managerdashboard";  // 매니저 대시보드로 리다이렉트
             } else {
