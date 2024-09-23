@@ -1,5 +1,10 @@
 package himedia.project.careops.common;
 
+/**
+ * @author 진혜정 
+ * @editDate 2024-09-23
+ */
+
 public class PagingButtonInfo {
 	
 	private int currentPage;

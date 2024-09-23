@@ -1,5 +1,10 @@
 package himedia.project.careops.common;
 
+/**
+ * @author 진혜정 
+ * @editDate 2024-09-23
+ */
+
 import org.springframework.data.domain.Page;
 
 public class Pagenation {
