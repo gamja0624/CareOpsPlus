@@ -1,5 +1,10 @@
 package himedia.project.careops.entity;
 
+/**
+ * @author 진혜정 
+ * @editDate 2024-09-23
+ */
+
 import java.sql.Date;
 
 import jakarta.persistence.Column;
@@ -9,77 +14,72 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/**
- * @author 진혜정 
- * @editDate 2024-09-23
- */
-
 @Entity
 @Table(name = "list_medical_devices")
 public class ListMedicalDevices {
 	
 	@Id
-	@Column(name="lmd_minor_cate_code")
+	@Column(name="lmd_minor_cate_code", nullable = false) // 장비세분류코드
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String lmdMinorCateCode;
 	
-	@Column(name="lmd_minor_cate_name")
+	@Column(name="lmd_minor_cate_name", nullable = false) // 장비세분류명
 	private String lmdMinorCateName;
 	
-	@Column(name="lmd_major_cate_code")
+	@Column(name="lmd_major_cate_code", nullable = false) // 장비대문류코드
 	private String lmdMajorCateCode;
 	
-	@Column(name="lmd_major_cate_name")
+	@Column(name="lmd_major_cate_name", nullable = false) // 장비대분류명
 	private String lmdMajorCateName;
 	
-	@Column(name="lmd_devices_name")
-	private String lmdDevicesName;
+	@Column(name="lmd_devices_name", nullable = false) // 모델명
+	private String lmdDevicesName; 
 	
-	@Column(name="lmd_license_number")
+	@Column(name="lmd_license_number", nullable = false) // 장비허가번호
 	private String lmdLicenseNumber;
 	
-	@Column(name="lmd_device_cnt")
+	@Column(name="lmd_device_cnt", nullable = false) // 장비수
 	private int lmdDeviceCnt;
 	
-	@Column(name="lmd_status")
+	@Column(name="lmd_status", nullable = false) // 상태
 	private String lmdStatus;
 	
-	@Column(name="lmd_manager_dept_no")
+	@Column(name="lmd_manager_dept_no", nullable = false) // 담당자 부서 번호
 	private int lmdManagerDeptNo;
 	
-	@Column(name="lmd_manager_dept_part")
+	@Column(name="lmd_manager_dept_part", nullable = false) // 담당 부서 이름
 	private String lmdManagerDeptPart;
 	
-	@Column(name="lmd_manager_id")
+	@Column(name="lmd_manager_id", nullable = false) // 담당자 아이디
 	private String lmdManagerId;
 	
-	@Column(name="lmd_manager_name")
+	@Column(name="lmd_manager_name", nullable = false) // 담당자 이름
 	private String lmdManagerName;
 	
-	@Column(name="lmd_date")
+	@Column(name="lmd_date", nullable = false) // 등록일
 	private Date lmdDate;
 	
-	@Column(name="lmd_admin_dept_no")
+	@Column(name="lmd_admin_dept_no") // 관리자 부서 번호
 	private String lmdAdminDeptNo;
 	
-	@Column(name="lmd_admin_id")
+	@Column(name="lmd_admin_id") // 관리자 아이디
 	private String lmdAdminId;
 	
-	@Column(name="lmd_amdin_name")
+	@Column(name="lmd_amdin_name") // 관리자 이름
 	private String lmdAdminName;
 	
-	@Column(name="lmd_last_check_date")
+	@Column(name="lmd_last_check_date") // 마지막점검일
 	private Date lmdLastCheckDate;
 	
-	@Column(name="lmd_claim_no")
-	private int lmdDlaimNo;
+	@Column(name="lmd_claim_no") // 민원 번호
+	private Integer lmdClaimNo;
 	
 	public ListMedicalDevices() {}
 	
 	public ListMedicalDevices(
 			String lmdMinorCateCode, String lmdMinorCateName, String lmdMajorCateCode, String lmdMajorCateName,
 			String lmdDevicesName, String lmdLicenseNumber, int lmdDeviceCnt, String lmdStatus,
-			int lmdManagerDeptNo, String lmdManagerDeptPart, String lmdManagerId, String lmdManagerName, Date lmdDate) {
+			int lmdManagerDeptNo, String lmdManagerDeptPart, String lmdManagerId, String lmdManagerName) {
 		super();
 		this.lmdMinorCateCode = lmdMinorCateCode;
 		this.lmdMinorCateName = lmdMinorCateName;
@@ -95,7 +95,6 @@ public class ListMedicalDevices {
 		this.lmdManagerDeptPart = lmdManagerDeptPart;
 		this.lmdManagerId = lmdManagerId;
 		this.lmdManagerName = lmdManagerName;
-		this.lmdDate = lmdDate;
 	}
 	
 	public String getLmdMinorCateCode() {
@@ -234,12 +233,12 @@ public class ListMedicalDevices {
 		this.lmdLastCheckDate = lmdLastCheckDate;
 	}
 
-	public int getLmdDlaimNo() {
-		return lmdDlaimNo;
+	public Integer getLmdClaimNo() {
+		return lmdClaimNo;
 	}
 
-	public void setLmdDlaimNo(int lmdDlaimNo) {
-		this.lmdDlaimNo = lmdDlaimNo;
+	public void setLmdClaimNo(Integer lmdClaimNo) {
+		this.lmdClaimNo = lmdClaimNo;
 	}
 	
 }
