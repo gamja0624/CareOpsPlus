@@ -30,9 +30,9 @@ public class SafetyManagement {
 	
 	@ManyToOne
 	@JoinColumn(referencedColumnName="admin_id", nullable = false)
-	private String adminId;			// 관리자 아이디
+	private Admin adminId;			// 관리자 아이디
 	
-	@Column(name="amdin_name", nullable = false)
+	@Column(name="admin_name", nullable = false)
 	private String adminName;		// 관리자 이름
 	
 	@Column(name="sm_check", nullable = false)
@@ -44,7 +44,7 @@ public class SafetyManagement {
 	
 	public SafetyManagement() {}
 	
-	public SafetyManagement(int smNo, String adminId, String adminName, Boolean smCheck, Date smDate) {
+	public SafetyManagement(int smNo, Admin adminId, String adminName, Boolean smCheck, Date smDate) {
 		this.smNo = smNo;
 		this.adminId = adminId;
 		this.adminName = adminName;
@@ -57,10 +57,10 @@ public class SafetyManagement {
 	public void setSmNo(int smNo) {
 		this.smNo = smNo;
 	}
-	public String getAdminId() {
+	public Admin getAdminId() {
 		return adminId;
 	}
-	public void setAdminId(String adminId) {
+	public void setAdminId(Admin adminId) {
 		this.adminId = adminId;
 	}
 	public String getAdminName() {
