@@ -1,6 +1,5 @@
 package himedia.project.careops;
-/*@author 노태윤
-@editDate 2024-09-24*/
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

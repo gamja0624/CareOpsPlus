@@ -32,64 +32,65 @@
 		<div class="content">
 			<!-- 안전관리 목록 -->
 			<div class="section">
-    			<h1 class="title">점검표 항목 수정</h1>
+    			<h1 class="title">안전관리 점검표<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">등록</h1>
 				<!-- 제목 -->
     			<div class="layout-table">
     				<table class="table table-hover">
+                      <!-- safety_management_list 사용(sml_no, sml_list) -->
     				  <thead>
     				    <tr class="table-row table-head" >
     				      <th scope="col">No.</th>
     				      <th scope="col">세부항목</th>
-    				      <th scope="col">점검표 수정</th>
+    				      <th scope="col">점검표 등록</th>
     				    </tr>
     				  </thead>
     				  <tbody>
     				    <tr class="table-row" >
     				      <th scope="row">1</th>
     				      <td>소화기</td>
-    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/detail'" >수 정</button></td>
+    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/1'" >등 록</button></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">2</th>
     				      <td>스프링쿨러</td>
-    				      <td><button class="btn btn-edit" >수 정</button></td>
+    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/2'" >등 록</button></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">3</th>
     				      <td>소화전설비</td>
-    				      <td><button class="btn btn-edit" >수 정</button></td>
+    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/3'">등 록</button></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">4</th>
     				      <td>피난설비</td>
-    				      <td><button class="btn btn-edit" >수 정</button></td>
+    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/4'" >등 록</button></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">5</th>
     				      <td>유도등</td>
-    				      <td><button class="btn btn-edit" >수 정</button></td>
+    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/5'" >등 록</button></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">6</th>
     				      <td>대피로</td>
-    				      <td><button class="btn btn-edit" >수 정</button></td>
+    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/6'" >등 록</button></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">7</th>
     				      <td>비상방송설비</td>
-    				      <td><button class="btn btn-edit" >수 정</button></td>
+    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/7'" >등 록</button></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">8</th>
     				      <td>비상구</td>
-    				      <td><button class="btn btn-edit" >수 정</button></td>
+    				      <td><button class="btn btn-edit" onclick="location.href='/admin/checklist-edit/8'" >등 록</button></td>
     				    </tr>
     				  </tbody>
     				</table>
     			</div>
                 <div class="btn-line" >
     				<div class="page-back">
-    					<button class="btn" type="submit">뒤로 가기</button>
+    					<button  class="btn" type="submit">뒤로 가기</button>
     				</div>
                 </div>
 			</div>
