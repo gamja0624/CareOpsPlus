@@ -26,22 +26,22 @@
 		    <div class="hr"></div>
 		    <ul class="nav nav-pills flex-column mb-auto">
 		      <li class="nav-item">
-		        <a href="#" class="nav-link active" aria-current="page">담당자 관리</a>
+		        <a th:href="@{/#}" class="nav-link active" aria-current="page">담당자 관리</a>
 		      </li>
 		      <li class="nav-item">
-		        <a href="/manager/medical-list" class="nav-link nav-color">의료기기 관리</a>
+		        <a th:href="@{/manager/medical-list}" class="nav-link nav-color">의료기기 관리</a>
 		      </li>
 		      <li class="nav-item">
-		        <a href="../admin/safety-list" class="nav-link nav-color">안전 관리</a>
+		        <a th:href="@{/admin/safety/safety-list}" class="nav-link nav-color">안전 관리</a>
 		      </li>
 		      <li class="nav-item">
-		        <a href="#" class="nav-link nav-color">시설 예약 시스템</a>
+		        <a th:href="@{/#}" class="nav-link nav-color">시설 예약 시스템</a>
 		      </li>
 		      <li class="nav-item">
-		        <a href="#" class="nav-link nav-color">일일 관리 보고서</a>
+		        <a th:href="@{/#}" class="nav-link nav-color">일일 관리 보고서</a>
 		      </li>
 		      <li class="nav-item">
-		        <a href="#" class="nav-link nav-color">민원 관리</a>
+		        <a th:href="@{/#}" class="nav-link nav-color">민원 관리</a>
 		      </li>
 		    </ul>
 		    <div class="hr"></div>
@@ -51,10 +51,10 @@
 		        <span class="nav-color">홍길동님</span>
 		      </a>
 		      <ul class="dropdown-menu text-small shadow">
-		        <li><a class="dropdown-item" href="mypage">내 정보</a></li>
-		        <li><a class="dropdown-item" href="#">비밀번호 변경</a></li>
+		        <li><a class="dropdown-item" th:href="@{/mypage2}">내 정보</a></li>
+		        <li><a class="dropdown-item" th:href="@{/mypage-change-pw2}">비밀번호 변경</a></li>
 		        <li><hr class="dropdown-divider"></li>
-		        <li><a class="dropdown-item" href="#">로그아웃</a></li>
+		        <li><a class="dropdown-item" th:href="@{/}">로그아웃</a></li>
 		      </ul>
 		    </div>
 		  </div>

@@ -46,38 +46,38 @@
 				      <th scope="col">모델명</th>
 				      <th scope="col">장비수</th>
 				      <th scope="col">부서</th>
+				      <th scope="col">등록일</th>
 				      <th scope="col">점검자</th>
 				      <th scope="col">점검일</th>
-				      <th scope="col">등록일</th>
 				      <th scope="col">상태</th>
 				      <th scope="col">상세보기</th>
 				    </tr>
 				  </thead>
 				  <tbody class="table-group">
-				    <tr class="table-row ">
+				  	<tr th:each="medical : ${ medicalDevicesList }" class="table-row">
 				    	<!-- 장비대분류명 -->
-				      <td>요화학검사기</td>
+				    	<td th:text="${ medical.lmdMinorCateCode }"></td>
 				      
 				      <!-- 장비세분류명 -->
-				      <td>요화학검사기</td>
+				    	<td th:text="${ medical.lmdMinorCateName }"></td>
 				      
 				      <!-- 모델명 -->
-				      <td>디유리더 300</td>
+				      <td th:text="${ medical.lmdDevicesName }"></td>
 				      
 				      <!-- 장비수 -->
-				      <td>1</td>
+				      <td th:text="${ medical.lmdDeviceCnt }"></td>
 				      
 				      <!-- 담당부서 -->
-				      <td>응급의학과</td>
-				      
-				      <!-- 점검자 -->
-				      <td>박보검</td>
-				      
-				      <!-- 점검일 -->
-				      <td>2024-09-20</td>
+				      <td th:text="${ medical.lmdManagerDeptPart }"></td>
 				      
 				      <!-- 등록일 -->
-				      <td>2024-08-01</td>
+				      <td th:text="${ medical.lmdDate }"></td>
+				      
+				      <!-- 점검자 -->
+				      <td th:if="${ #strings.isEmpty(medical.lmdAdminName) }" th:text="${ medical.lmdAdminName }"></td>
+				      
+				      <!-- 점검일 -->
+				      <td th:text="${ medical.lmdLastCheckDate }"></td>
 				      
 				      <!-- 버튼 -->
 				      <td>
@@ -98,7 +98,7 @@
 					<button class="btn btn-add" type="submit">신규 등록</button>
 				</div>
 				
-				<div>
+				<!-- <div>
 					<nav aria-label="Page navigation">
 					  <ul class="pagination">
 					    <li class="page-item">
@@ -118,7 +118,44 @@
 					    </li>
 					  </ul>
 					</nav>
-				</div>
+				</div> -->
+				
+					<div id="paging" >
+		
+		<!-- 맨 앞으로 이동 -->
+		<button 
+			th:onclick="'location.href=\'/menu/list?page=' + @{${paging.startPage}} + '\''">
+			<<
+		</button>
+		
+		<!-- 이전 페이지로 이동 -->
+		<button 
+			th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage - 1}} + '\''"
+			th:disabled="${ medicalDevicesList.first }">
+			<
+		</button>
+		
+		<!-- 숫자 버튼 -->
+		<th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+			<button th:onclick="'location.href=\'/menu/list?page=' + @{${page}} + '\''"
+					th:text="${ page }"
+					th:disabled="${ paging.currentPage eq page }">
+			</button>
+		</th:block>
+		
+		<!-- 다음 페이지로 이동 -->
+		<button 
+			th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage + 1}} + '\''"
+			th:disabled="${ medicalDevicesList.last }">
+			>
+		</button>
+		
+		<!-- 맨 끝으로 이동 -->
+		<button 
+			th:onclick="'location.href=\'/menu/list?page=' + @{${paging.endPage}} + '\''">
+			>>
+		</button>
+	</div>
 				
 				<div class="search-box">
 					<form class="category-search-box" action="/">

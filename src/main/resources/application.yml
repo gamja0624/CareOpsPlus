@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://careops.c1sg8g8smswp.ap-northeast-2.rds.amazonaws.com:3306/careops
+    url: jdbc:mysql://careops.c1sg8g8smswp.ap-northeast-2.rds.amazonaws.com:3306/CareOps_DataBase
     username: root
     password: himedia001
 
@@ -15,10 +15,13 @@ spring:
   # spring data jpa 설정
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: false
+    database: mysql
     open-in-view: false
     show-sql: true
-    hibernate:
-      ddl-auto: update
+    properties:
+      hibernate: 
+        '[format_sql]': true
 
   devtools: # devtools initialization
     livereload:

@@ -26,12 +26,14 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	// implementation 'org.springframework.boot:spring-boot-starter-security' // 보안 프레임워크, login 페이지 제공, SecurityConfig 클래스를 생성해서 필요한 보안 설정 추가할 것
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// implementation 'org.springframework.boot:spring-boot-starter-security' // 보안 프레임워크, login 페이지 제공, SecurityConfig 클래스를 생성해서 필요한 보안 설정 추가할 것
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.modelmapper:modelmapper:3.1.1'
 	
 	// MySQL JDBC 드라이버 의존성
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
 
 	compileOnly 'org.projectlombok:lombok'
