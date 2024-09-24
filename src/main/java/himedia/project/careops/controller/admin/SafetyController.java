@@ -18,6 +18,8 @@ public class SafetyController{
 	
 	@GetMapping("/safety-list")
 	public String smList() {
+		
+	
 		return "admin/safety/safety-list";
 	}
 	
