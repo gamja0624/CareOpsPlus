@@ -15,10 +15,13 @@ spring:
   # spring data jpa 설정
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: false
+    database: mysql
     open-in-view: false
     show-sql: true
-    hibernate:
-      ddl-auto: update
+    properties:
+      hibernate: 
+        '[format_sql]': true
 
   devtools: # devtools initialization
     livereload:

@@ -1,4 +1,9 @@
 <html xmlns:th="http://www.thymleaf.org">
+
+<!-- /*@author 노태윤
+@editDate 2024-09-23~2024-09-24*/
+내 정보, 비밀번호 변경, 로그아웃hyper link 설정 완료 -->
+
 	<head>
 		<style type="text/css">
 			/* 로고 */
@@ -51,10 +56,10 @@
 		        <span class="nav-color">홍길동님</span>
 		      </a>
 		      <ul class="dropdown-menu text-small shadow">
-		        <li><a class="dropdown-item" href="mypage">내 정보</a></li>
-		        <li><a class="dropdown-item" href="#">비밀번호 변경</a></li>
+		        <li><a class="dropdown-item" th:href="@{/mypage2}">내 정보</a></li>
+		        <li><a class="dropdown-item" th:href="@{/mypage-change-pw2}">비밀번호 변경</a></li>
 		        <li><hr class="dropdown-divider"></li>
-		        <li><a class="dropdown-item" href="#">로그아웃</a></li>
+		        <li><a class="dropdown-item" th:href="@{/}">로그아웃</a></li>
 		      </ul>
 		    </div>
 		  </div>

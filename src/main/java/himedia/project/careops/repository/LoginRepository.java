@@ -1,22 +1,30 @@
 package himedia.project.careops.repository;
+
 /*@author 노태윤
-@editDate 2024-09-13~2024-09-19*/
-import himedia.project.careops.dto.Admin;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+@editDate 2024-09-23~2024-09-24*/
 
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import himedia.project.careops.dto.AdminDTO;
+import himedia.project.careops.entity.Admin;
+import himedia.project.careops.entity.Manager;
+
 @Repository
-// Spring Data JPA는 인터페이스에 추상 메서드(findByIdAndPassword)만 정의하면 메서드의 이름을 분석하여 자동으로 쿼리를 만들어 사용할 수 있게 해준다.
-//public interface LoginRepository extends JpaRepository<Admin, String> {
-//    Optional<Admin> findByIdAndPassword(String admin_id, String admin_password); // admin의 admin_id, admin_password 필드로 조회
-//}
+public interface LoginRepository extends JpaRepository<Admin, String> {
 
-public interface LoginRepository extends CrudRepository<Admin, String> {
+    @Query(value = "SELECT * FROM admin WHERE admin_dept_no = ?1 AND admin_id = ?2 AND admin_password = ?3", nativeQuery = true)
+    Optional<Admin> findByAdminDeptNoAndAdminIdAndAdminPassword(String adminDeptNo, String adminId, String adminPassword);
 
-	 @Query("SELECT a FROM Admin a WHERE a.admin_dept_no = ?1 AND a.admin_id = ?2 AND a.admin_password = ?3")
-	 Optional<Admin> findByAdminDeptNoAndAdminIdAndAdminPassword(String adminDeptNo, String adminId, String adminPassword);
-	}
+    @Query(value = "SELECT m FROM manager m WHERE m.manager_dept_no = ?1 AND m.manager_id = ?2 AND m.manager_password = ?3", nativeQuery = true)
+    Optional<Manager> findByManagerDeptNoAndManagerIdAndManagerPassword(int managerDeptNo, String managerId, String managerPassword);
+
+    
+}
+
+// 이것만 써도 오류는안남
+//Optional<Admin> findByAdminDeptNoAndAdminIdAndAdminPassword(String adminDeptNo, String adminId, String adminPassword);
+//Optional<Manager> findByManagerDeptNoAndManagerIdAndManagerPassword(int managerDeptNo, String managerId, String managerPassword);
