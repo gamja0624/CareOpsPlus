@@ -10,12 +10,12 @@
   	  
   	<style type="text/css">
       /* 테이블 */
-      .layout-table { text-align: center }
+      .layout-table { text-align: center; }
       .table { margin: 5% auto; display: inline-table; width: 650px; text-align: center; }
       .table-head { font-weight: bold; font-size: 20px; }
       .table-row { line-height: 20px; border-bottom: 1px solid #d9d9d9; }
       .table-row>th,td { padding: 4px; vertical-align: middle; }
-      .btn-line { text-align: center; }
+      
       /* 목록 */
       .list-input { width: 100%; border: 1px solid #13254C; border-radius: 5px; padding-left: 5px; }
       .list-td {  width: 400px; }
@@ -26,9 +26,13 @@
       /* 더하기 아이콘 */
       .plus-icon { vertical-align: middle; width: 25px; line-height: 25px; }
       .plus-icon-a { cursor: pointer; }
+      /* 페이지네이션 */
+      .pagenation { margin-bottom: 20px; line-height: 30px; }
       /* 버튼 */
-      .page-back { margin: 10px auto; }
-      .btn-edit { line-height: 15px; }
+      .btn-line { display: flex; justify-content: center; margin-top: 20px;}
+      .page-back { margin-right: 10px; }
+      .btn-edit { margin-left: 10px; }
+      .btn-edit-comple { margin-left: auto; }
       .btn { background-color: #13254C; color: white; }
       .btn:hover { border: 1px solid #13254C; }
   	</style>
@@ -45,7 +49,8 @@
     			<h1 class="title">점검표 항목 수정 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 소화기</h1>
 				<!-- 제목 -->
     			<div class="layout-table">
-    				<table class="table table-hover">
+                    <!-- safety_management_checklist 사용 (sml_list(소화기 등), smc_no, smc_list, smc_check) -->
+    				<table class="table table-hover"> 
     				  <thead>
     				    <tr class="table-row table-head" >
     				      <th scope="col">No.</th>
@@ -63,7 +68,7 @@
     				      <th scope="row">42</th>
     				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-002" ></td>
     				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr>
+    				    </tr> 
     				    <tr class="table-row" >
     				      <th scope="row">43</th>
     				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-003" ></td>
@@ -108,15 +113,21 @@
     				    </tr>
     				  </tbody>
     				</table>
+                  <div class="pagenation" >
+                    <  1 2 3 4 5 >
+                  </div>
     			</div>
                 <div class="btn-line" >
     				<div class="page-back">
-    					<button class="btn" type="submit">뒤로 가기</button>
+    					<button onclick="history.back()" class="btn" type="submit">뒤로 가기</button>
     				</div>
+      				<div class="btn-edit">
+      					<button class="btn btn-edit-comple" type="button">수정 완료</button>
+      				</div>
                 </div>
 			</div>
 		</div>
+    	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 	</body>
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 </html>

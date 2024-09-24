@@ -1,5 +1,9 @@
 package himedia.project.careops.controller.admin;
 
+/**
+ 	@author 최은지
+    2024-09-19-~ 2024-09-20
+ */
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
