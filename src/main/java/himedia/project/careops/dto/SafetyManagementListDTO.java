@@ -1,13 +1,6 @@
 package himedia.project.careops.dto;
 
-/**
- * @author 이홍준 
- * @editDate 2024-09-24
- */
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 

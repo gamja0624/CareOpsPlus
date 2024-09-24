@@ -21,7 +21,6 @@ public interface LoginRepository extends JpaRepository<Admin, String> {
 
     @Query(value = "SELECT m FROM manager m WHERE m.manager_dept_no = ?1 AND m.manager_id = ?2 AND m.manager_password = ?3", nativeQuery = true)
     Optional<Manager> findByManagerDeptNoAndManagerIdAndManagerPassword(int managerDeptNo, String managerId, String managerPassword);
-
     
 }
 
