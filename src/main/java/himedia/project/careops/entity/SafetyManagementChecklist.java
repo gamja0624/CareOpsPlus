@@ -25,7 +25,7 @@ public class SafetyManagementChecklist {
 	
 	@ManyToOne
 	@JoinColumn(name="sml_no", nullable = false)
-	private int smlNo;
+	private SafetyManagementList smlNo;
 	
 	@Column(name="sml_list", nullable = false)
 	private String smlList;

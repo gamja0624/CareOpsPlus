@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import himedia.project.careops.dto.ListMedicalDevicesDTO;
 import himedia.project.careops.entity.ListMedicalDevices;
 import himedia.project.careops.repository.MedicalRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class MedicalService {
@@ -29,17 +30,30 @@ public class MedicalService {
 		this.medicalRepository = medicalRepository;
 		this.modelMapper = modelMapper;
 	}
-
+	
+	// 의료기기 장비세분류코드 찾기
+	public ListMedicalDevicesDTO findByMedicalLmdMinorCateCode(String lmdMinorCateCode) {
+		
+		ListMedicalDevices medicalDevice = medicalRepository.findById(lmdMinorCateCode).orElseThrow(IllegalArgumentException::new);
+		
+		return modelMapper.map(medicalDevice, ListMedicalDevicesDTO.class);
+	}
+	
+	// 의료기기 목록 + 페이지네이션
 	public Page<ListMedicalDevicesDTO> findByMedicalDevices(Pageable pageable) {
 		
 		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
-                Sort.by("lmdMinorCateCode").descending());
+                Sort.by("lmdMinorCateCode").ascending());
 		
 		Page<ListMedicalDevices> medicalDevicesList = medicalRepository.findAll(pageable);
 		
-		log.info("이거 뭐임 medicalRepository.findAll(pageable) : {}", medicalRepository.findAll(pageable));
-		
 		return medicalDevicesList.map(medical -> modelMapper.map(medical, ListMedicalDevicesDTO.class));
+	}
+
+	// 의료기기 등록
+	@Transactional
+	public void addMedicalDevice(ListMedicalDevicesDTO newMedicalDevice) {
+		medicalRepository.save(modelMapper.map(newMedicalDevice, ListMedicalDevices.class));
 	}
 }

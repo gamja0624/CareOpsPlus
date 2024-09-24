@@ -25,7 +25,7 @@ public class SafetyManagementList {
 	
 	@ManyToOne
 	@JoinColumn(name="sm_no", nullable = false)
-	private int smNo;				// 점검 번호
+	private SafetyManagement smNo;	// 점검 번호
 	
 	@Column(name="sm_list", nullable = false)
 	private String smlList;			// 세부항목
@@ -36,7 +36,7 @@ public class SafetyManagementList {
 	
 	public SafetyManagementList() {}
 
-	public SafetyManagementList(int smlNo, int smNo, String smlList, Boolean smlCheck) {
+	public SafetyManagementList(int smlNo, SafetyManagement smNo, String smlList, Boolean smlCheck) {
 		this.smlNo = smlNo;
 		this.smNo = smNo;
 		this.smlList = smlList;
@@ -51,11 +51,11 @@ public class SafetyManagementList {
 		this.smlNo = smlNo;
 	}
 
-	public int getSmNo() {
+	public SafetyManagement getSmNo() {
 		return smNo;
 	}
 
-	public void setSmNo(int smNo) {
+	public void setSmNo(SafetyManagement smNo) {
 		this.smNo = smNo;
 	}
 

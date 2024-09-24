@@ -9,13 +9,9 @@ import java.sql.Date;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-// @AllArgsConstructor
-// @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class ListMedicalDevicesDTO {
 	
 	private String lmdMinorCateCode;   // 장비세분류코드
