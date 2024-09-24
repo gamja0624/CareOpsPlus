@@ -14,7 +14,7 @@
       /* 목록 테이블 */
       .table { text-align: center; vertical-align: inherit; }
       .table-head { font-weight: 600; font-size: 20px; }
-      .table-row { line-height: 40px; border-bottom: 1px solid #d9d9d9;  }
+      .table-row { line-height: 40px; border-b양호m: 1px solid #d9d9d9;  }
       .detail-a { cursor: pointer; }
       .detail-icon { width: 30px; line-height: 30px; vertical-align: middle; }
       /* 버튼라인 */
@@ -25,6 +25,10 @@
       .btn-checklist { width: 130px; }
       .btn {  background-color: #13254C; color: white; }
       .btn:hover { border: 1px solid #13254C; }
+      .pagination { text-align: center; margin: 20px 0; }
+      .pagination a { color: black; float: left; padding: 8px 16px; text-decoration: none; }
+      .pagination a.active { background-color: #4CAF50; color: white; }
+      .pagination a:hover:not(.active) { background-color: #ddd; }
   	</style>
   </head>
 
@@ -60,164 +64,170 @@
     				  <tbody>
     				    <tr class="table-row" >
     				      <th scope="row">1020</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">1019</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">1018</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">1017</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">1016</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">1015</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">1014</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">1013</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				    <tr class="table-row" >
     				      <th scope="row">1012</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				    <tr>
     				      <th scope="row">1011</th>
-    				      <td>Mark</td>
-    				      <td>Otto</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
-    				      <td>@mdo</td>
+    				      <td>홍길동</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
+    				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
     				  </tbody>
     				</table>
+    				 <!-- 페이지네이션 --> 
+     				<div class="pagination">
+                      페이지네이션
+    				</div> 
+                    <!-- 버튼 라인 -->
                     <div class="btn-line" >
         				<div class="checklist">
-        					<button onclick="location.href='/admin/checklist-edit'" class="btn btn-checklist" type="button">점검표 항목 수정</button>
+        					<button onclick="location.href='/admin/safety-checklist-edit'" class="btn btn-checklist" type="button">점검표 항목 수정</button>
         				</div>
         				<div class="registration">
-        					<button class="btn btn-registration" type="button">등 록</button>
+        					<button onclick="location.href='/admin/safety-daily-registration'" class="btn btn-registration" type="button">등 록</button>
         				</div>
                     </div>
+                    <!-- 검색바 -->
     				<div class="search-box">
     					<form class="category-search-box" action="/">
     						<label class="search-column" for="column"></label> 
@@ -233,7 +243,7 @@
     			</div>
 			</div>
 		</div>
+  	 <script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 	</body>
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 </html>
