@@ -18,7 +18,9 @@ import himedia.project.careops.dto.ListMedicalDevicesDTO;
 import himedia.project.careops.entity.ListMedicalDevices;
 import himedia.project.careops.repository.MedicalRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MedicalService {
 

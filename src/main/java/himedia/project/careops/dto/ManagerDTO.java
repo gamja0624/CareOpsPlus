@@ -1,5 +1,6 @@
 package himedia.project.careops.dto;
 
+import himedia.project.careops.entity.ManagerDepartment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,17 +8,17 @@ import lombok.Setter;
 @Setter
 public class ManagerDTO {
 	
-    private String managerId;
-    private Integer managerDeptNo;
-    private String managerDeptPart;
-    private String managerDeptName;
-    private String managerPassword;
-    private String managerName;
-    private String managerPhoneNumber;
+    private String managerId;					// 담당자 아이디
+    private ManagerDepartment managerDeptNo; 	// 담당자 부서 번호 
+    private String managerDeptPart;				// 담당자 부서 파트
+    private String managerDeptName;				// 담당자 부서 이름
+    private String managerPassword;				// 담당자 비밀번호
+    private String managerName;					// 담당자 이름
+    private String managerPhoneNumber;			// 담당자 연락처
     
     public ManagerDTO() {} 
     
-	public ManagerDTO(String managerId, Integer managerDeptNo, String managerDeptPart, String managerDeptName, 
+	public ManagerDTO(String managerId, ManagerDepartment managerDeptNo, String managerDeptPart, String managerDeptName, 
 			String managerPassword, String managerName, String managerPhoneNumber) {
 			super();
 			this.managerId = managerId;
@@ -37,11 +38,11 @@ public class ManagerDTO {
 		this.managerId = managerId;
 	}
 
-	public Integer getManagerDeptNo() {
+	public ManagerDepartment getManagerDeptNo() {
 		return managerDeptNo;
 	}
 
-	public void setManagerDeptNo(Integer managerDeptNo) {
+	public void setManagerDeptNo(ManagerDepartment managerDeptNo) {
 		this.managerDeptNo = managerDeptNo;
 	}
 

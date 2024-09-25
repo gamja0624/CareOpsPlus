@@ -17,19 +17,23 @@ import himedia.project.careops.dto.AdminDTO;
 import himedia.project.careops.dto.ManagerDTO; // ManagerDTO import
 import himedia.project.careops.repository.MyPageRepository;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class MyPageController {
 
     @Autowired
     private MyPageRepository myPageRepository;
 
-    @GetMapping("/mypage")
+    @GetMapping("/mypage2")
     public String getMyInfo(Model model, HttpSession session) {
         // 로그인 상태 확인
         String userType = (String) session.getAttribute("user_type"); // "admin" 또는 "manager"
         String userId = (String) session.getAttribute("user_id");
 
+        log.info("userId {}", userId);
+        log.info("userType {}", userType);
         /*
         if (userId == null) {
             return "redirect:/login"; // 로그인 페이지로 리다이렉트
@@ -40,6 +44,11 @@ public class MyPageController {
             Optional<AdminDTO> admin = myPageRepository.getMyInfoByAdminId(userId);
             if (admin.isPresent()) {
                 model.addAttribute("admin", admin.get());
+				/*
+				 * model.addAttribute("admin_dept_name", admin.get());
+				 * model.addAttribute("admin_id", admin.get()); model.addAttribute("admin_name",
+				 * admin.get()); model.addAttribute("admin_phone_number", admin.get());
+				 */
             } else {
                 model.addAttribute("error", "관리자를 찾을 수 없습니다.");
             }
@@ -47,6 +56,12 @@ public class MyPageController {
             Optional<ManagerDTO> manager = myPageRepository.getMyInfoByManagerId(userId);
             if (manager.isPresent()) {
                 model.addAttribute("manager", manager.get());
+				/*
+				 * model.addAttribute("manager_dept_name", manager.get());
+				 * model.addAttribute("manager_id", manager.get());
+				 * model.addAttribute("manager_name", manager.get());
+				 * model.addAttribute("manager_phone_number", manager.get());
+				 */
             } else {
                 model.addAttribute("error", "매니저를 찾을 수 없습니다.");
             }
@@ -71,12 +86,24 @@ public class MyPageController {
             Optional<AdminDTO> admin = myPageRepository.getMyInfoByAdminId(userId);
             if (admin.isPresent()) {
                 model.addAttribute("admin", admin.get());
+				/*
+				 * model.addAttribute("admin_dept_name", admin.get());
+				 * model.addAttribute("admin_id", admin.get()); model.addAttribute("admin_name",
+				 * admin.get()); model.addAttribute("admin_phone_number", admin.get());
+				 */
                 return "common/mypage/mypage-edit2"; // 수정 페이지로 이동
             }
         } else if ("manager".equals(userType)) {
             Optional<ManagerDTO> manager = myPageRepository.getMyInfoByManagerId(userId);
             if (manager.isPresent()) {
                 model.addAttribute("manager", manager.get());
+				/*
+				 * model.addAttribute("manager", manager.get());
+				 * model.addAttribute("manager_dept_name", manager.get());
+				 * model.addAttribute("manager_id", manager.get());
+				 * model.addAttribute("manager_name", manager.get());
+				 * model.addAttribute("manager_phone_number", manager.get());
+				 */
                 return "common/mypage/mypage-edit2"; // 수정 페이지로 이동
             }
         }

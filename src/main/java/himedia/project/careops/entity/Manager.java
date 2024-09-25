@@ -1,23 +1,33 @@
 package himedia.project.careops.entity;
 
-/*@author 노태윤
-@editDate 2024-09-23~2024-09-24*/
+/**
+ * @author 노태윤 -> 진혜정
+ * @editDate 2024-09-25
+ */
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name = "manager")
+@ToString
 public class Manager {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "manager_id")
     private String managerId;
 
-    @Column(name = "manager_dept_no")
-    private int managerDeptNo;
+    @ManyToOne
+    @JoinColumn(name="manager_dept_no", nullable = false)
+    private ManagerDepartment managerDeptNo;
 
     @Column(name = "manager_dept_part")
     private String managerDeptPart;
@@ -36,7 +46,7 @@ public class Manager {
 
     public Manager() {}
 
-    public Manager(String managerId, int managerDeptNo, String managerDeptPart,
+    public Manager(String managerId, ManagerDepartment managerDeptNo, String managerDeptPart,
                          String managerDeptName, String managerPassword, String managerName,
                          String managerPhoneNumber) {
         this.managerId = managerId;
@@ -48,7 +58,6 @@ public class Manager {
         this.managerPhoneNumber = managerPhoneNumber;
     }
 
-    // Getters and Setters
 	public String getManagerId() {
 		return managerId;
 	}
@@ -57,11 +66,11 @@ public class Manager {
 		this.managerId = managerId;
 	}
 
-	public int getManagerDeptNo() {
+	public ManagerDepartment getManagerDeptNo() {
 		return managerDeptNo;
 	}
 
-	public void setManagerDeptNo(int managerDeptNo) {
+	public void setManagerDeptNo(ManagerDepartment managerDeptNo) {
 		this.managerDeptNo = managerDeptNo;
 	}
 
@@ -104,4 +113,18 @@ public class Manager {
 	public void setManagerPhoneNumber(String managerPhoneNumber) {
 		this.managerPhoneNumber = managerPhoneNumber;
 	}
+	
+	@Override
+	public String toString() {
+	    return "Manager{" +
+	            "managerId='" + managerId + '\'' +
+	            ", managerDeptNo=" + managerDeptNo +
+	            ", managerDeptPart='" + managerDeptPart + '\'' +
+	            ", managerDeptName='" + managerDeptName + '\'' +
+	            ", managerPassword='" + managerPassword + '\'' +
+	            ", managerName='" + managerName + '\'' +
+	            ", managerPhoneNumber='" + managerPhoneNumber + '\'' +
+	            '}';
+	}
+
 }

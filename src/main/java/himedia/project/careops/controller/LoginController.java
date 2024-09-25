@@ -1,36 +1,32 @@
 package himedia.project.careops.controller;
 
-
-/*@author 노태윤
-@editDate 2024-09-23~2024-09-24*/
-
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import jakarta.servlet.http.HttpSession;
-import himedia.project.careops.repository.LoginRepository;
-import himedia.project.careops.dto.AdminDTO;
 import himedia.project.careops.entity.Admin;
 import himedia.project.careops.entity.Manager;
-import java.util.Optional;
+import himedia.project.careops.repository.AdminLoginRepository;
+import himedia.project.careops.repository.ManagerLoginRepository;
+import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/")
 public class LoginController {
 
-    private final LoginRepository loginRepository;
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    public LoginController(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
-    }
+    private final AdminLoginRepository adminLoginRepository;
+    private final ManagerLoginRepository managerLoginRepository;
 
-    @GetMapping("/")
-    public String showLoginPage(Model model) {
-        model.addAttribute("error", "");
-        return "common/login"; // login.html 페이지로 이동
+    public LoginController(AdminLoginRepository adminLoginRepository, ManagerLoginRepository managerLoginRepository) {
+        this.adminLoginRepository = adminLoginRepository;
+        this.managerLoginRepository = managerLoginRepository;
     }
 
     @PostMapping("/")
@@ -39,28 +35,32 @@ public class LoginController {
                         @RequestParam("user_password") String userPassword,
                         Model model, HttpSession session) {
 
+        logger.info("로그인 시도: deptNo={}, userId={}", deptNo, userId);
+
         // Admin 테이블에서 조회
-        Optional<Admin> admin = loginRepository.findByAdminDeptNoAndAdminIdAndAdminPassword(deptNo, userId, userPassword);
+        Optional<Admin> admin = adminLoginRepository.findByAdminDeptNoAndAdminIdAndAdminPassword(deptNo, userId, userPassword);
         if (admin.isPresent()) {
+            logger.info("관리자 로그인 성공: {}", userId);
             session.setAttribute("admin_id", admin.get().getAdminId());
+            session.setAttribute("admin_name", admin.get().getAdminName());
             return "redirect:/admin/dash-board";
         }
 
         // Manager 테이블에서 조회
-        int managerDeptNo;
         try {
-            managerDeptNo = Integer.parseInt(deptNo); // 문자열을 정수로 변환
+            int managerDeptNo = Integer.parseInt(deptNo);
+            Optional<Manager> manager = managerLoginRepository.findByManagerDeptNoAndManagerIdAndManagerPassword(managerDeptNo, userId, userPassword);
+            if (manager.isPresent()) {
+                logger.info("매니저 로그인 성공: {}", userId);
+                session.setAttribute("manager_id", manager.get().getManagerId());
+                session.setAttribute("manager_name", manager.get().getManagerName());
+                return "redirect:/manager/dash-board";
+            }
         } catch (NumberFormatException e) {
-            model.addAttribute("error", "부서 번호는 숫자여야 합니다.");
-            return "common/login";
+            logger.warn("부서 번호 변환 실패: {}", deptNo);
         }
 
-        Optional<Manager> manager = loginRepository.findByManagerDeptNoAndManagerIdAndManagerPassword(managerDeptNo, userId, userPassword);
-        if (manager.isPresent()) {
-            session.setAttribute("manager_id", manager.get().getManagerId());
-            return "redirect:/manager/dash-board";
-        }
-
+        logger.warn("로그인 실패: deptNo={}, userId={}", deptNo, userId);
         model.addAttribute("error", "로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다.");
         return "common/login";
     }

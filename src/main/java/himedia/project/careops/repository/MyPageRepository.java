@@ -1,6 +1,9 @@
 package himedia.project.careops.repository;
-/*@author 노태윤
-@editDate 2024-09-23~2024-09-24*/
+/*
+ * @author 노태윤
+ * @editDate 2024-09-23~2024-09-24
+ * 
+ * */
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -21,7 +24,7 @@ public class MyPageRepository {
 
     public Optional<AdminDTO> getMyInfoByAdminId(String admin_id) {
         try {
-            Admin admin = entityManager.createQuery("SELECT a FROM AdminEntity a WHERE a.admin_id = :adminId", Admin.class)
+            Admin admin = entityManager.createQuery("SELECT a FROM Admin a WHERE a.admin_id = :adminId", Admin.class)
                                              .setParameter("adminId", admin_id)
                                              .getSingleResult();
             return Optional.of(convertToDTO(admin));
@@ -32,7 +35,7 @@ public class MyPageRepository {
 
     public Optional<ManagerDTO> getMyInfoByManagerId(String manager_id) {
         try {
-            Manager manager = entityManager.createQuery("SELECT m FROM ManagerEntity m WHERE m.manager_id = :managerId", Manager.class)
+            Manager manager = entityManager.createQuery("SELECT m FROM Manager m WHERE m.manager_id = :managerId", Manager.class)
                                                  .setParameter("managerId", manager_id)
                                                  .getSingleResult();
             return Optional.of(convertToDTO(manager));
@@ -44,7 +47,7 @@ public class MyPageRepository {
     private AdminDTO convertToDTO(Admin admin) {
         AdminDTO dto = new AdminDTO();
         dto.setAdminId(admin.getAdminId());
-        dto.setAdminDeptNo(admin.getAdminDeptNo());
+        //dto.setAdminDeptNo(admin.getAdminDeptNo());
         dto.setAdminName(admin.getAdminName());
         dto.setAdminPhoneNumber(admin.getAdminPhoneNumber());
         return dto;
