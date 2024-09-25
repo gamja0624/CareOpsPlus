@@ -30,7 +30,7 @@ public class Manager {
     private ManagerDepartment managerDeptNo;
 
     @Column(name = "manager_dept_part")
-    private String managerDeptPart;
+    private String managerDeptPart; 
 
     @Column(name = "manager_dept_name")
     private String managerDeptName;

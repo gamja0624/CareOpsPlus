@@ -45,7 +45,4 @@ public class AdminDepartmentService {
 		return modelMapper.map(adminDept, AdminDepartmentDTO.class);
 	}
 	
-	
-	
-	
 }

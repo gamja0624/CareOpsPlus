@@ -14,25 +14,19 @@ import lombok.ToString;
 @ToString
 public class ManagerDepartmentDTO {
 	
-	private Integer managerDeptNo;            // 담당자 부서 번호
-	private String managerDeptPart;           // 담당자 부서 파트
-	private String managerDeptName;           // 담당자 부서 이름 
-	
+	private int managerDeptNo;        // 담당자 부서 번호
+	private String managerDeptPart;   // 담당자 부서 파트
+	private String managerDeptName;   // 담당자 부서 이름 
+
 	public ManagerDepartmentDTO() {}
 	
-	public ManagerDepartmentDTO(Integer managerDeptNo, String managerDeptPart, String managerDeptName) {
+	public ManagerDepartmentDTO(int managerDeptNo, String managerDeptPart, String managerDeptName) {
 		this.managerDeptNo = managerDeptNo;
 		this.managerDeptPart = managerDeptPart;
 		this.managerDeptName = managerDeptName;
 	}
-	
-
-	public Integer getManagerDeptNo() {
+	public int getManagerDeptNo() {
 		return managerDeptNo;
-	}
-
-	public void setManagerDeptNo(Integer managerDeptNo) {
-		this.managerDeptNo = managerDeptNo;
 	}
 
 	public void setManagerDeptNo(int managerDeptNo) {

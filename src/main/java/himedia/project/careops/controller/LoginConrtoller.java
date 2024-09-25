@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import himedia.project.careops.dto.AdminDepartmentDTO;
-import himedia.project.careops.dto.ListMedicalDevicesDTO;
 import himedia.project.careops.service.AdminDepartmentService;
 import himedia.project.careops.service.AdminService;
 import himedia.project.careops.service.ManagerDepartmentService;
@@ -35,14 +34,24 @@ public class LoginConrtoller {
 		this.mangerService = mangerService;
 	}
 	
-	@GetMapping("/login/{deptNo}/")
+	@GetMapping("")
+	public String login() {
+		return "common/login";
+	}
+	
+	@GetMapping("/{deptNo}")
 	public String loginPage(@PathVariable String deptNo) {
 		
-		// AdminDepartmentDTO adminDept = adminDepartmentService.findByAdminDeptNo(deptNo);
-		log.info("deptNo : {}" + deptNo);
-		AdminDepartmentDTO adminDept = adminDepartmentService.findByAdminDeptName(deptNo);
+		log.info("deptNo : {}", deptNo);
+		AdminDepartmentDTO adminDept = adminDepartmentService.findByAdminDeptNo(deptNo);
 		
-		log.info("deptNo : {}" + adminDept);
+		log.info("실행 중");
+		
+		if (adminDept != null) {
+			log.info("adminDept : {}", adminDept);
+		} else {
+			log.info("없다 !");
+		}
 		
 		return "common/login";
 	}
