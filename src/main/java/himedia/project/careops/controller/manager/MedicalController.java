@@ -38,6 +38,8 @@ public class MedicalController {
 	@GetMapping("")
 	public String medicalList(@PageableDefault Pageable pageable, Model model) {
 		
+		log.info("시작");
+		
 		Page<ListMedicalDevicesDTO> medicalDevicesList = medicalService.findByMedicalDevices(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(medicalDevicesList);
 		

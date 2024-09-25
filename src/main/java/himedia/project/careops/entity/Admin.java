@@ -1,39 +1,46 @@
 package himedia.project.careops.entity;
 
-/*@author 노태윤
-@editDate 2024-09-23~2024-09-24*/
+/**
+ * @author 노태윤 -> 진혜정
+ * @editDate 2024-09-25
+ */
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name = "admin")
+@ToString
 public class Admin {
 
     @Id
-    @Column(name="admin_id")
+    @Column(name="admin_id", nullable = false)
     private String adminId;
     
-    @Column(name="admin_dept_no")
-    private String adminDeptNo;
-    
-    @Column(name="admin_dept_name")
+    @ManyToOne
+    @JoinColumn(name = "admin_dept_no", nullable = false)
+    private AdminDepartment adminDeptNo;
+
+    @Column(name="admin_dept_name", nullable = false)
     private String adminDeptName;
     
-    @Column(name="admin_password")
+    @Column(name="admin_password", nullable = false)
     private String adminPassword;
     
-    @Column(name="admin_name")
+    @Column(name="admin_name", nullable = false)
     private String adminName;
     
-    @Column(name="admin_phone_number")
+    @Column(name="admin_phone_number", nullable = false)
     private String adminPhoneNumber;
     
     public Admin() {}
     
-    public Admin(String adminId, String adminDeptNo, String adminDeptName, String adminPassword, 
+    public Admin(String adminId, AdminDepartment adminDeptNo, String adminDeptName, String adminPassword, 
             String adminName, String adminPhoneNumber) {
     	this.adminId = adminId;
     	this.adminDeptNo = adminDeptNo;
@@ -42,8 +49,7 @@ public class Admin {
     	this.adminName = adminName;
     	this.adminPhoneNumber = adminPhoneNumber;
     }
-
-    // Getters and Setters
+    
 	public String getAdminId() {
 		return adminId;
 	}
@@ -52,11 +58,11 @@ public class Admin {
 		this.adminId = adminId;
 	}
 
-	public String getAdminDeptNo() {
+	public AdminDepartment getAdminDeptNo() {
 		return adminDeptNo;
 	}
 
-	public void setAdminDeptNo(String adminDeptNo) {
+	public void setAdminDeptNo(AdminDepartment adminDeptNo) {
 		this.adminDeptNo = adminDeptNo;
 	}
 
@@ -91,4 +97,10 @@ public class Admin {
 	public void setAdminPhoneNumber(String adminPhoneNumber) {
 		this.adminPhoneNumber = adminPhoneNumber;
 	}
+
+	@Override
+    public String toString() {
+    	return "AdminDTO [adminId=" + adminId + ", adminDeptNo=" + adminDeptNo + ", adminDeptName=" + adminDeptName + ", adminPassword=" + adminPassword 
+    			+ ", adminName=" + adminName + ", adminPhoneNumber=" + adminPhoneNumber + "]";
+    }
 }
