@@ -1,5 +1,10 @@
 package himedia.project.careops.entity;
 
+/**
+ * @author 이홍준 
+ * @editDate 2024-09-24
+ */
+
 import java.sql.Date;
 
 import org.hibernate.annotations.ColumnDefault;

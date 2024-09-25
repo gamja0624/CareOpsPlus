@@ -78,5 +78,4 @@ public class SafetyManagementDTO {
 		return "SafetyManagementDTO [ smNo=" + smNo + ", adminId=" + adminId 
 				+ ", adminName=" + adminName + ", smCheck=" + smCheck + ", smDate=" + smDate + "]";
 	}
-	
 }

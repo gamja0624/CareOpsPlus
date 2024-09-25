@@ -1,14 +1,13 @@
 package himedia.project.careops.entity;
 
-import org.hibernate.annotations.ColumnDefault;
-
-import jakarta.persistence.Column;
-
 /**
  * @author 이홍준 
  * @editDate 2024-09-24
  */
 
+import org.hibernate.annotations.ColumnDefault;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +29,7 @@ public class SafetyManagementList {
 	@JoinColumn(name="sm_no", nullable = false)
 	private SafetyManagement smNo;	// 점검 번호
 	
-	@Column(name="sm_list", nullable = false)
+	@Column(name="sml_list", nullable = false)
 	private String smlList;			// 세부항목
 	
 	@Column(name="sml_check", nullable = false)

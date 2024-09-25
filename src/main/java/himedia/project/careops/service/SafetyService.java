@@ -44,6 +44,7 @@ public class SafetyService {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	public List<SafetyManagementDTO> safetyResultList() {
+		log.info("safetyResultList 실행");
 		List<SafetyManagement> safetyResultList = safetyManagementRepository.findAll();
 		return safetyResultList.stream().map(safetyManagement -> modelMapper.map(safetyManagement, SafetyManagementDTO.class)).collect(Collectors.toList());
 	}
