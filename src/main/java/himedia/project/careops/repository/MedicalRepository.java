@@ -12,4 +12,5 @@ import himedia.project.careops.entity.ListMedicalDevices;
 
 @Repository
 public interface MedicalRepository extends JpaRepository<ListMedicalDevices, String> {
+	
 }
