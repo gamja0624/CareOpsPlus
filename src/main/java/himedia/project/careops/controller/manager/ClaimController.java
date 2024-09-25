@@ -10,7 +10,7 @@ public class ClaimController {
 	
 	@GetMapping("claim-list")
 	public String departmentsClaimList() {
-		return "/manager/claim-list";
+		return "/manager/claim/claim-list";
 	}
 	
 }

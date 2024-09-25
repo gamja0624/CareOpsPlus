@@ -24,12 +24,12 @@ import jakarta.persistence.Table;
 public class SafetyManagement {
 
 	@Id
-	@Column(name="sm_no", nullable =  false)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="sm_no", nullable =  false)
 	private int smNo;				// 점검 번호
 	
 	@ManyToOne
-	@JoinColumn(referencedColumnName="admin_id", nullable = false)
+	@JoinColumn(name="admin_id", nullable = false)
 	private Admin adminId;			// 관리자 아이디
 	
 	@Column(name="admin_name", nullable = false)

@@ -74,7 +74,8 @@
 				      <td th:text="${ medical.lmdDate }"></td>
 				      
 				      <!-- 점검자 -->
-				      <td th:if="${ #strings.isEmpty(medical.lmdAdminName) }" th:text="${ medical.lmdAdminName }"></td>
+				      <!-- <td th:if="${ #strings.isEmpty(medical.lmdAdminName) }" th:text="${ medical.lmdAdminName }"></td> -->
+				      <td th:if="${ !#strings.isEmpty(medical.lmdAdminName) }" th:text="${ medical.lmdAdminName }"></td>
 				      
 				      <!-- 점검일 -->
 				      <td th:text="${ medical.lmdLastCheckDate }"></td>
@@ -123,9 +124,9 @@
 					    </th:block>
 					    
 					    <!-- 다음 페이지 이동 -->
-					    <li class="page-item">
-					    	<a class="page-link" th:href="@{./medical-list?page=} + @{${paging.currentPage + 1}}">&#62;</a>
-				    	</li>
+							<li class="page-item">
+							    <a class="page-link" th:href="@{./medical-list?page=${paging.currentPage + 1}}">&#62;</a>
+							</li>
 					    
 					    <!-- 맨 끝으로 이동 -->
 					    <li class="page-item">
@@ -138,7 +139,7 @@
 				</div>
 				
 				<div class="search-box">
-					<form class="category-search-box" action="/">
+					<form class="category-search-box" action="@{/medical-list/search}">
 						<label class="notice-category" for="column"></label> 
 						<select id="filter" name="filter">
 							<option value="lmd_major_category_name">장비대분류명</option>
