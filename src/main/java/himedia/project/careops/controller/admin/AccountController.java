@@ -1,20 +1,26 @@
 package himedia.project.careops.controller.admin;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 /**
  * @author 최은지 
  * @editDate 2024-09-20 ~ 2024-09-25
  */
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import himedia.project.careops.common.Pagenation;
+import himedia.project.careops.common.PagingButtonInfo;
+import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.dto.ManagerDepartmentDTO;
 import himedia.project.careops.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,26 +31,41 @@ import lombok.extern.slf4j.Slf4j;
 public class AccountController {
 	
 	@Autowired
-	private ManagerService managerService;
+	private  ManagerService managerService;
+
 	
+	// 전체 부서 조회
 	@GetMapping("/account-department")
 	public String accountDepartment(Model model) {
-	    // 전체 부서 조회
-	    List<ManagerDepartmentDTO> managerDepartment= managerService.findAllDepartments();
+	    
+		List<ManagerDepartmentDTO> managerDepartment= managerService.findAllDepartments();
 	    log.info("Manager Departments: {}", managerDepartment);
+	   
 	    model.addAttribute("managerDepartment", managerDepartment);
 	    return "admin/account/account-department";
 	}
+	
+	// 전체 담당자 목록 조회 페이지
 	@GetMapping("/account-list")
-	public String accountList() {
+	public String accountList(@PageableDefault Pageable page, Model model) {
+		
+		Page<ManagerDTO> managerList = managerService.allManager(page);
+		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(managerList);
+		
+		log.info("Manager: {}", managerList);
+		model.addAttribute("manager", managerList);
+		model.addAttribute("paging", paging);
+		
 		return "admin/account/account-list";
 	}
 	
+	// 담당자 등록 페이지
 	@GetMapping("/account-add")
 	public String accountAdd() {
 		return "admin/account/account-add";
 	}
 	
+	// 담당자 수정 페이지
 	@GetMapping("/account-edit")
 	public String accountEdit() {
 		return "admin/account/account-edit";
