@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 민원 상세 페이지 </title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			.layout-table {
+				width: 1340px; 
+				min-height: 680px; 
+				border: 3px solid #13254C; 
+				border-radius: 20px; 
+			}
+			.container {
+		        padding: 10px;
+		        margin: 0 auto;
+				width: 1280px;
+			 }
+		    .claim-detail-table {
+				width: 100%;
+		        border-collapse: separate;
+				border-spacing: 0 5px;
+		    }
+		    .claim-detail-table th, .claim-detail-table td {
+		        border-top:  1px solid #13254C;
+		        border-bottom:  1px solid #13254C;
+		        text-align: center;
+				height: 25px;
+				line-height: 25px;
+		    }
+		    .claim-detail-table th {
+		        background-color: #13254C;
+				color: #FFF;
+		    }
+			.claim-th-small th {
+				width: 200px;
+			}
+			.claim-content {
+				display: flex;
+				margin-top: 10px;
+			}
+		    .claim-image {
+		        text-align: center;
+				border: 1px solid #13254C;
+				border-radius: 5px;
+				width: 400px;
+				min-height: 400px;
+				margin-right: 20px;
+		    }
+		    .claim-image img {
+		        max-width: 100%;
+		    }
+		    .message {
+		        padding: 10px;
+				width: 860px;
+				border: 1px solid #13254C;
+				border-radius: 5px;
+				min-height: 400px;
+		    }
+			.button-cover {
+				display: flex;
+				width: 100%;
+				margin-top: 10px;
+			}
+		    .submit-button {
+		        width:150px;
+		        padding: 10px;
+				margin-left: auto;
+		        background-color: #13254C;
+		        color: white;
+		        border-radius: 5px;
+		        cursor: pointer;
+		        text-align: center;
+		        font-size: 16px;
+		    }
+		    .submit-button:hover {
+		        background-color: white;
+				border:1px solid #13254C ;
+				color: #13254C;
+		    }
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			
+			<!-- section -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">민원 상세</h1>
+				<div class="layout-table">
+					<div class="container">
+					<table class="claim-detail-table">
+			        	<tr>
+			            	<th>민원 번호</th>
+			            	<td>100321</td>
+			             	<th>민원 일자</th>
+			             	<td>2024.09.09</td>
+			       		</tr>
+				        <tr>
+							<th>접수 승인</th>
+							<td>미승인</td>
+							<th>처리 상태</th>
+							<td>미처리</td>
+				         </tr>
+				     </table>
+					 <table class="claim-detail-table">
+						<tr class="claim-th-small">
+							<th>부서 파트</th>
+							<td>진료부서</td>
+							<th>부서명</th>
+							<td>응급의학과</td>
+							<th>담당자</th>
+							<td>홍길동</td>
+						</tr>
+						<tr class="claim-th-small">
+							<th>대분류</th>
+							<td>의료기기</td>
+							<th>소분류</th>
+							<td>요화학검사기</td>
+							<th>요청구분</th>
+							<td>수리필요</td>
+						</tr>
+					</table>
+					<table class="claim-detail-table">
+						<th>민원 제목</th>
+						<td>1층 진료부서 응급의학과 기기 수리 요청드립니다.</td>
+					</table>
+					<div class="claim-content">
+						<div class="claim-image">
+							<img src="" alt="의료기기 이미지">
+						</div>
+						<div class="message">
+							안녕하세요.<br>
+							저는 응급의학과 홍길동입니다.<br>
+							1층 진료부서에 위치한 응급의학과의 기기가 고장이 나서 정상적으로 작동하지 않는 상황입니다.<br>
+						    기기 정보는 다음과 같습니다:<br>
+						    기기명: [ 요화학검사기 ]<br>
+						    고장 증상: 기기에서 비정상적인 소음이 발생.
+						</div>
+					</div>
+					<div class="button-cover">
+						<button class="submit-button">민원 수정</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+	</body>
+</html>

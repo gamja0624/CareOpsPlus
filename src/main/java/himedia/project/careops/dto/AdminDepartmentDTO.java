@@ -21,7 +21,6 @@ public class AdminDepartmentDTO {
 	public AdminDepartmentDTO() {}
 
 	public AdminDepartmentDTO(String adminDeptNo, String adminDeptName) {
-		super();
 		this.adminDeptNo = adminDeptNo;
 		this.adminDeptName = adminDeptName;
 	}

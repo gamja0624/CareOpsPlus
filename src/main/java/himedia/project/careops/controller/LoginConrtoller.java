@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import himedia.project.careops.dto.AdminDepartmentDTO;
-import himedia.project.careops.dto.ListMedicalDevicesDTO;
 import himedia.project.careops.service.AdminDepartmentService;
 import himedia.project.careops.service.AdminService;
 import himedia.project.careops.service.ManagerDepartmentService;

@@ -59,5 +59,13 @@ public class ManagerDepartment {
 	public void setManagerDeptName(String managerDeptName) {
 		this.managerDeptName = managerDeptName;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "ManagerDepartment [managerDeptNo=" + managerDeptNo + ", managerDeptPart=" + managerDeptPart
+				+ ", managerDeptName=" + managerDeptName + ", getManagerDeptNo()=" + getManagerDeptNo()
+				+ ", getManagerDeptPart()=" + getManagerDeptPart() + ", getManagerDeptName()=" + getManagerDeptName()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
+	}
 }
