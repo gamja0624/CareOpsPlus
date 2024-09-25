@@ -5,6 +5,8 @@ package himedia.project.careops.controller;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +26,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MyPageController {
 
     @Autowired
-    private MyPageRepository myPageRepository;
+    //private Logger log = LoggerFactory.getLogger(this.getClass());
+    private final MyPageRepository myPageRepository;
+    
+    public MyPageController(MyPageRepository myPageRepository) {
+    	this.myPageRepository = myPageRepository;
+    }
 
     @GetMapping("/mypage2")
     public String getMyInfo(Model model, HttpSession session) {
@@ -32,8 +39,8 @@ public class MyPageController {
         String userType = (String) session.getAttribute("user_type"); // "admin" 또는 "manager"
         String userId = (String) session.getAttribute("user_id");
 
-        log.info("userId {}", userId);
-        log.info("userType {}", userType);
+//        log.info("userId {}", userId);
+//        log.info("userType {}", userType);
         /*
         if (userId == null) {
             return "redirect:/login"; // 로그인 페이지로 리다이렉트

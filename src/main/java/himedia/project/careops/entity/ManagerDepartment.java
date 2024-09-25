@@ -35,7 +35,6 @@ public class ManagerDepartment {
 		this.managerDeptPart = managerDeptPart;
 		this.managerDeptName = managerDeptName;
 	}
-
 	public int getManagerDeptNo() {
 		return managerDeptNo;
 	}
@@ -56,7 +55,6 @@ public class ManagerDepartment {
 		return managerDeptName;
 	}
 
-
 	public void setManagerDeptName(String managerDeptName) {
 		this.managerDeptName = managerDeptName;
 	}
@@ -69,5 +67,4 @@ public class ManagerDepartment {
 				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
 				+ "]";
 	}
-	
 }

@@ -25,14 +25,17 @@ import himedia.project.careops.dto.ManagerDepartmentDTO;
 import himedia.project.careops.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
 @Slf4j
+@Controller
 @RequestMapping("/admin/account")
 public class AccountController {
 	
-	@Autowired
-	private  ManagerService managerService;
-
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private final ManagerService managerService;
+	
+	public AccountController(ManagerService managerService) {
+		this.managerService = managerService;
+	}
 	
 	// 전체 부서 조회
 	@GetMapping("/account-department")
@@ -45,7 +48,6 @@ public class AccountController {
 	    return "admin/account/account-department";
 	}
 	
-	// 전체 담당자 목록 조회 페이지
 	@GetMapping("/account-list")
 	public String accountList(@PageableDefault Pageable page, Model model) {
 		

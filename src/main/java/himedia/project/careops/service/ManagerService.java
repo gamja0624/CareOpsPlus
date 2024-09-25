@@ -1,5 +1,10 @@
 package himedia.project.careops.service;
 
+/**
+ * @author 진혜정, 최은지 
+ * @editDate 2024-09-25
+ */
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,9 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ManagerDTO;
@@ -18,17 +21,6 @@ import himedia.project.careops.entity.Manager;
 import himedia.project.careops.entity.ManagerDepartment;
 import himedia.project.careops.repository.ManagerDepartmentRepository;
 import himedia.project.careops.repository.ManagerRepository;
-
-/**
- * @author 최은지 
- * @editDate 2024-09-25
- */
-
-/**
- *
- * @author 진혜정 
- * @editDate 2024-09-25
- */
 
 @Service
 public class ManagerService {

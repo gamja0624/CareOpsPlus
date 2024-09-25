@@ -49,5 +49,4 @@ public class PagingButtonInfo {
 		return "PagingButtonInfo [currentPage=" + currentPage + ", startPage=" + startPage 
 				+ ", endPage=" + endPage + "]";
 	}
-	
 }
