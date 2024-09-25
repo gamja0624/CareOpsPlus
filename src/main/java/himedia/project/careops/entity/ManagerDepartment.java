@@ -20,7 +20,7 @@ public class ManagerDepartment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "manager_dept_no", nullable = false)
-	private Integer managerDeptNo;
+	private int managerDeptNo;
 	
 	@Column(name = "manager_dept_part",  nullable = false)
 	private String managerDeptPart;
@@ -30,11 +30,17 @@ public class ManagerDepartment {
 
 	public ManagerDepartment() {}
 	
-	public Integer getManagerDeptNo() {
+	public ManagerDepartment(int managerDeptNo, String managerDeptPart, String managerDeptName) {
+		this.managerDeptNo = managerDeptNo;
+		this.managerDeptPart = managerDeptPart;
+		this.managerDeptName = managerDeptName;
+	}
+	
+	public int getManagerDeptNo() {
 		return managerDeptNo;
 	}
 
-	public void setManagerDeptNo(Integer managerDeptNo) {
+	public void setManagerDeptNo(int managerDeptNo) {
 		this.managerDeptNo = managerDeptNo;
 	}
 
@@ -54,9 +60,4 @@ public class ManagerDepartment {
 		this.managerDeptName = managerDeptName;
 	}
 
-	public ManagerDepartment(int managerDeptNo, String managerDeptPart, String managerDeptName) {
-		this.managerDeptNo = managerDeptNo;
-		this.managerDeptPart = managerDeptPart;
-		this.managerDeptName = managerDeptName;
-	}
 }

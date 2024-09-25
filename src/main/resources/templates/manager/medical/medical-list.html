@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
@@ -74,7 +73,6 @@
 				      <td th:text="${ medical.lmdDate }"></td>
 				      
 				      <!-- 점검자 -->
-				      <!-- <td th:if="${ #strings.isEmpty(medical.lmdAdminName) }" th:text="${ medical.lmdAdminName }"></td> -->
 				      <td th:if="${ !#strings.isEmpty(medical.lmdAdminName) }" th:text="${ medical.lmdAdminName }"></td>
 				      
 				      <!-- 점검일 -->
@@ -90,7 +88,11 @@
 			      	</td>
 				      
 				      <!-- 상세 보기 -->
-				      <td><a th:href="@{'./medical-list/' + ${ medical.lmdMinorCateCode } + '/detail' }"><img alt="이동" th:src="@{/img/icon-next-b.png}" class="data-add"></a></td>
+				      <td>
+				      	<a th:href="@{'./medical-list/' + ${ medical.lmdMinorCateCode } + '/detail' }">
+				      		<img alt="이동" th:src="@{/img/icon-next-b.png}" class="data-add">
+			      		</a>
+		      		</td>
 				    </tr>
 				  </tbody>
 				</table>
@@ -124,9 +126,9 @@
 					    </th:block>
 					    
 					    <!-- 다음 페이지 이동 -->
-							<li class="page-item">
-							    <a class="page-link" th:href="@{./medical-list?page=${paging.currentPage + 1}}">&#62;</a>
-							</li>
+					    <li class="page-item">
+					    	<a class="page-link" th:href="@{./medical-list?page=} + @{${paging.currentPage + 1}}">&#62;</a>
+				    	</li>
 					    
 					    <!-- 맨 끝으로 이동 -->
 					    <li class="page-item">

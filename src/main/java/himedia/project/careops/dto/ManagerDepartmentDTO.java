@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class ManagerDepartmentDTO {
 	
-	private int managerDeptNo;            // 담당자 부서 번호
+	private int managerDeptNo;        // 담당자 부서 번호
 	private String managerDeptPart;       // 담당자 부서 파트
 	private String managerDeptname;       // 담당자 부서 이름 
 	
@@ -25,7 +25,7 @@ public class ManagerDepartmentDTO {
 		this.managerDeptPart = managerDeptPart;
 		this.managerDeptname = managerDeptname;
 	}
-	
+
 	public int getManagerDeptNo() {
 		return managerDeptNo;
 	}

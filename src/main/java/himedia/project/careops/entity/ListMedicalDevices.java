@@ -45,14 +45,14 @@ public class ListMedicalDevices {
 	private String lmdStatus;
 	
 	@ManyToOne
-	@JoinColumn(name="lmd_manager_dept_no", nullable = false) // 담당자 부서 번호 - 3
+	@JoinColumn(name="lmd_manager_dept_no", referencedColumnName = "manager_dept_no", nullable = false) // 담당자 부서 번호 - 3
 	private Manager lmdManagerDeptNo;
 	
 	@Column(name="lmd_manager_dept_part", nullable = false) // 담당 부서 이름
 	private String lmdManagerDeptPart;
 	
 	@ManyToOne
-	@JoinColumn(name="lmd_manager_id", nullable = false) // 담당자 아이디
+	@JoinColumn(name="lmd_manager_id", referencedColumnName = "manager_id", nullable = false) // 담당자 아이디
 	private Manager lmdManagerId;
 	
 	@Column(name="lmd_manager_name", nullable = false) // 담당자 이름
@@ -101,4 +101,149 @@ public class ListMedicalDevices {
 	    this.lmdManagerId = lmdManagerId; 
 	    this.lmdManagerName = lmdManagerName;
 	}
+
+	public String getLmdMinorCateCode() {
+		return lmdMinorCateCode;
+	}
+
+	public void setLmdMinorCateCode(String lmdMinorCateCode) {
+		this.lmdMinorCateCode = lmdMinorCateCode;
+	}
+
+	public String getLmdMinorCateName() {
+		return lmdMinorCateName;
+	}
+
+	public void setLmdMinorCateName(String lmdMinorCateName) {
+		this.lmdMinorCateName = lmdMinorCateName;
+	}
+
+	public String getLmdMajorCateCode() {
+		return lmdMajorCateCode;
+	}
+
+	public void setLmdMajorCateCode(String lmdMajorCateCode) {
+		this.lmdMajorCateCode = lmdMajorCateCode;
+	}
+
+	public String getLmdMajorCateName() {
+		return lmdMajorCateName;
+	}
+
+	public void setLmdMajorCateName(String lmdMajorCateName) {
+		this.lmdMajorCateName = lmdMajorCateName;
+	}
+
+	public String getLmdDevicesName() {
+		return lmdDevicesName;
+	}
+
+	public void setLmdDevicesName(String lmdDevicesName) {
+		this.lmdDevicesName = lmdDevicesName;
+	}
+
+	public String getLmdLicenseNumber() {
+		return lmdLicenseNumber;
+	}
+
+	public void setLmdLicenseNumber(String lmdLicenseNumber) {
+		this.lmdLicenseNumber = lmdLicenseNumber;
+	}
+
+	public int getLmdDeviceCnt() {
+		return lmdDeviceCnt;
+	}
+
+	public void setLmdDeviceCnt(int lmdDeviceCnt) {
+		this.lmdDeviceCnt = lmdDeviceCnt;
+	}
+
+	public String getLmdStatus() {
+		return lmdStatus;
+	}
+
+	public void setLmdStatus(String lmdStatus) {
+		this.lmdStatus = lmdStatus;
+	}
+
+	public Manager getLmdManagerDeptNo() {
+		return lmdManagerDeptNo;
+	}
+
+	public void setLmdManagerDeptNo(Manager lmdManagerDeptNo) {
+		this.lmdManagerDeptNo = lmdManagerDeptNo;
+	}
+
+	public String getLmdManagerDeptPart() {
+		return lmdManagerDeptPart;
+	}
+
+	public void setLmdManagerDeptPart(String lmdManagerDeptPart) {
+		this.lmdManagerDeptPart = lmdManagerDeptPart;
+	}
+
+	public Manager getLmdManagerId() {
+		return lmdManagerId;
+	}
+
+	public void setLmdManagerId(Manager lmdManagerId) {
+		this.lmdManagerId = lmdManagerId;
+	}
+
+	public String getLmdManagerName() {
+		return lmdManagerName;
+	}
+
+	public void setLmdManagerName(String lmdManagerName) {
+		this.lmdManagerName = lmdManagerName;
+	}
+
+	public Date getLmdDate() {
+		return lmdDate;
+	}
+
+	public void setLmdDate(Date lmdDate) {
+		this.lmdDate = lmdDate;
+	}
+
+	public Admin getLmdAdminDeptNo() {
+		return lmdAdminDeptNo;
+	}
+
+	public void setLmdAdminDeptNo(Admin lmdAdminDeptNo) {
+		this.lmdAdminDeptNo = lmdAdminDeptNo;
+	}
+
+	public Admin getLmdAdminId() {
+		return lmdAdminId;
+	}
+
+	public void setLmdAdminId(Admin lmdAdminId) {
+		this.lmdAdminId = lmdAdminId;
+	}
+
+	public String getLmdAdminName() {
+		return lmdAdminName;
+	}
+
+	public void setLmdAdminName(String lmdAdminName) {
+		this.lmdAdminName = lmdAdminName;
+	}
+
+	public Date getLmdLastCheckDate() {
+		return lmdLastCheckDate;
+	}
+
+	public void setLmdLastCheckDate(Date lmdLastCheckDate) {
+		this.lmdLastCheckDate = lmdLastCheckDate;
+	}
+
+	public Integer getLmdClaimNo() {
+		return lmdClaimNo;
+	}
+
+	public void setLmdClaimNo(Integer lmdClaimNo) {
+		this.lmdClaimNo = lmdClaimNo;
+	}
+	
 }
