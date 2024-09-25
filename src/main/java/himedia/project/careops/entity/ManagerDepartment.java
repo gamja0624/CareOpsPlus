@@ -7,6 +7,8 @@ package himedia.project.careops.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -16,6 +18,7 @@ import jakarta.persistence.Table;
 public class ManagerDepartment {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "manager_dept_no", nullable = false)
 	private Integer managerDeptNo;
 	

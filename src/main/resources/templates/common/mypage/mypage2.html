@@ -79,20 +79,23 @@
                 	<div>
    						 <label for="department">부서명</label> 
     					 <input type="text" id="department" class="info-field" 
-          						th:value="${admin != null ? admin.admin_dept_name : (manager != null ? manager.manager_dept_name : '')}" readonly>
-					</div>
+          					readonly>
+									</div>
                     <div>
                         <label for="username">아이디</label> 
                         <input type="text" id="username" class="info-field" 
-           					   th:value="${admin != null ? admin.admin_id : (manager != null ? manager.manager_id : '')}" readonly>
+           					    >
                     </div>
                     <div>
                         <label for="name">이름</label> 
-                        <input type="text" id="name" class="info-field" th:value="${admin != null ? admin.admin_name : manager.manager_name}" readonly>
+                        <input type="text" id="name" class="info-field" readonly >
+                        	<!-- th:value="${admin != null ? admin.admin_name : manager.manager_name}"  -->
+
                     </div>
                     <div>
                         <label for="phone">연락처</label> 
-                        <input type="text" id="phone" class="info-field" th:value="${admin != null ? admin.admin_phoneNumber : manager.manager_phone_number}" readonly>
+                        <input type="text" id="phone" class="info-field" readonly>
+                        <!-- th:value="${admin != null ? admin.admin_phoneNumber : manager.manager_phone_number}"  -->
                     </div>
                 </div>
                 <hr>

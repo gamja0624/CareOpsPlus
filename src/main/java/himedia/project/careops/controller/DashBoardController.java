@@ -1,8 +1,8 @@
-package himedia.project.careops.controller.manager;
+package himedia.project.careops.controller;
 
 /**
  * @author 진혜정
- * @editDate 2024-09-13 ~ 
+ * @editDate 2024-09-24 ~ 
  */
 
 import org.springframework.stereotype.Controller;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class DashBoardCotroller {
-	
+public class DashBoardController {
+
 	@GetMapping("/manager/dash-board")
 	public String mdashBoard() {
 		return "manager/dash-board";
@@ -22,8 +22,4 @@ public class DashBoardCotroller {
 		return "admin/dash-board";
 	}
 	
-	@GetMapping("/test")
-	public String test() {
-		return "common/index";
-	}
 }

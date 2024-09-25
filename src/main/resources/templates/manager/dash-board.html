@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:th="http://www.thymleaf.org" lang="ko">
 	<head>
 		<meta charset="UTF-8">
 		<!-- 관리자 -->
@@ -100,6 +100,16 @@
 		 	.claim-content { padding: 20px; margin-bottom: 15px; width: 500px; height: 95px; border: 3px solid #13254C; border-radius: 10px; }
 		 	.claim-add { display: flex; width: 500px; }
 		 	.claim-add-next { margin-left: auto; margin-bottom: 5px; }
+		 	
+		 				/* 환영 인사 */		 	
+		 	.welcome-message {
+            font-size: 24px; /* 글씨 크기를 24픽셀로 설정 */
+            font-weight: bold; /* 글씨를 굵게 설정 */
+            color: #333; /* 글씨 색상 설정 */
+      }
+     	.admin-name {
+            color: #007bff; /* 매니저 이름 색상을 파란색으로 설정 */
+      }
 		</style>
 	</head>
 
@@ -111,7 +121,9 @@
 		<div class="content">
 			<div class="section s-m">
 				<!-- 로그인 이후 담당 부서와 담당자 이름 제어 -->
-				<h1 class="title">간호팀 홍길동님, 반갑습니다.</h1>
+					<h1 class="welcome-message">
+        		반갑습니다, <span th:text="${managerName}" class="manager-name">관리자</span>님!
+    			</h1>
 				
 				<!-- 서비스 미리보기 -->
 				<div class="service">

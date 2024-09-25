@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.stereotype.Repository;
 
-import himedia.project.careops.entity.ManagerDepartment;
+import himedia.project.careops.entity.AdminDepartment;
 
 @Repository
-public interface ManagerDepartmentRepository extends JpaRepository<ManagerDepartment, Integer> {
+public interface AdminDepartmentRepository extends JpaRepository<AdminDepartment, String> {
 
 }

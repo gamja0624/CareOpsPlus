@@ -21,6 +21,12 @@ import himedia.project.careops.repository.ManagerDepartmentRepository;
  * @editDate 2024-09-25
  */
 
+/**
+ *
+ * @author 진혜정 
+ * @editDate 2024-09-25
+ */
+
 @Service
 public class ManagerService {
 	
@@ -41,3 +47,4 @@ public class ManagerService {
                          .collect(Collectors.toList());
     }
 }
+

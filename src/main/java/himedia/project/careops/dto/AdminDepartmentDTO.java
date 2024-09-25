@@ -25,7 +25,6 @@ public class AdminDepartmentDTO {
 		this.adminDeptName = adminDeptName;
 	}
 
-	
 	public String getAdminDeptNo() {
 		return adminDeptNo;
 	}

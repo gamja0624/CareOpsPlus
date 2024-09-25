@@ -35,6 +35,10 @@ public class ManagerDepartmentDTO {
 		this.managerDeptNo = managerDeptNo;
 	}
 
+	public void setManagerDeptNo(int managerDeptNo) {
+		this.managerDeptNo = managerDeptNo;
+	}
+
 	public String getManagerDeptPart() {
 		return managerDeptPart;
 	}
@@ -56,5 +60,4 @@ public class ManagerDepartmentDTO {
 		return "ManagerDepartmentDTO [managerDeptNo=" + managerDeptNo + ", managerDeptPart=" + managerDeptPart
 				+ ", managerDeptName=" + managerDeptName + "]";
 	}
-
 }

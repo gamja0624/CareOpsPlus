@@ -19,7 +19,6 @@ public class SafetyController{
 	@GetMapping("/safety-list")
 	public String smList() {
 		
-	
 		return "admin/safety/safety-list";
 	}
 	
@@ -51,6 +50,4 @@ public class SafetyController{
 	public String dailyResistraionDetail() {
 		return "admin/safety/daily-registration-detail";
 	}
-	
-	
 }

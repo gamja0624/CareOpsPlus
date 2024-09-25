@@ -13,6 +13,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import himedia.project.careops.common.Pagenation;
@@ -36,8 +38,9 @@ public class MedicalController {
 	@GetMapping("")
 	public String medicalList(@PageableDefault Pageable pageable, Model model) {
 		
+		log.info("시작");
+		
 		Page<ListMedicalDevicesDTO> medicalDevicesList = medicalService.findByMedicalDevices(pageable);
-		log.info("medicalDevicesList : {}", medicalDevicesList);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(medicalDevicesList);
 		
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
@@ -46,19 +49,35 @@ public class MedicalController {
 		return "manager/medical/medical-list";
 	}
 	
-	@GetMapping("/detail")
-	public String medicalDetail() {
+	@GetMapping("/{lmdMinorCateCode}/detail")
+	public String medicalDetail(@PathVariable String lmdMinorCateCode, Model model) {
+		
+		ListMedicalDevicesDTO medicalDevice = medicalService.findByMedicalLmdMinorCateCode(lmdMinorCateCode);
+		model.addAttribute("medicalDevice", medicalDevice);
+		
 		return "manager/medical/medical-detail";
 	}
 	
-	@GetMapping("/edit")
-	public String medicalEdit() {
+	@GetMapping("/{lmdMinorCateCode}/edit")
+	public String medicalEdit(@PathVariable String lmdMinorCateCode, Model model) {
+		
+		ListMedicalDevicesDTO medicalDevice = medicalService.findByMedicalLmdMinorCateCode(lmdMinorCateCode);
+		model.addAttribute("medicalDevice", medicalDevice);
+		
 		return "manager/medical/medical-edit";
 	}
 	
 	@GetMapping("/add")
-	public String medicalAdd() {
+	public String medicalAddPage() {
 		return "manager/medical/medical-add";
+	}
+	
+	@PostMapping("/add")
+	public String medicalAdd(ListMedicalDevicesDTO newMedicalDevice) {
+		
+		medicalService.addMedicalDevice(newMedicalDevice);
+		
+		return "redirect:/manager/medical-list";
 	}
 	
 }
