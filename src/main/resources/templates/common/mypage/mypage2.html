@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<!-- /*@author 노태윤
-@editDate 2024-09-23~2024-09-24*/ -->
-=======
->>>>>>> 6df152e4b9e0b8569de60290fae5dfbc706f2119
 <html xmlns:th="http://www.thymleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -84,37 +79,23 @@
                 	<div>
    						 <label for="department">부서명</label> 
     					 <input type="text" id="department" class="info-field" 
-<<<<<<< HEAD
-          						th:value="${admin != null ? admin.adminDeptName : (manager != null ? manager.managerDeptName : '')}" readonly>
+          					readonly>
 									</div>
                     <div>
                         <label for="username">아이디</label> 
                         <input type="text" id="username" class="info-field" 
-           					   th:value="${admin != null ? admin.adminId : (manager != null ? manager.managerId : '')}" readonly>
+           					    >
                     </div>
                     <div>
                         <label for="name">이름</label> 
-                        <input type="text" id="name" class="info-field" th:value="${admin != null ? admin.adminName : manager.managerName}" readonly>
+                        <input type="text" id="name" class="info-field" readonly >
+                        	<!-- th:value="${admin != null ? admin.admin_name : manager.manager_name}"  -->
+
                     </div>
                     <div>
                         <label for="phone">연락처</label> 
-                        <input type="text" id="phone" class="info-field" th:value="${admin != null ? admin.adminPhoneNumber : manager.managerPhoneNumber}" readonly>
-=======
-          						th:value="${admin != null ? admin.admin_dept_name : (manager != null ? manager.manager_dept_name : '')}" readonly>
-					</div>
-                    <div>
-                        <label for="username">아이디</label> 
-                        <input type="text" id="username" class="info-field" 
-           					   th:value="${admin != null ? admin.admin_id : (manager != null ? manager.manager_id : '')}" readonly>
-                    </div>
-                    <div>
-                        <label for="name">이름</label> 
-                        <input type="text" id="name" class="info-field" th:value="${admin != null ? admin.admin_name : manager.manager_name}" readonly>
-                    </div>
-                    <div>
-                        <label for="phone">연락처</label> 
-                        <input type="text" id="phone" class="info-field" th:value="${admin != null ? admin.admin_phoneNumber : manager.manager_phone_number}" readonly>
->>>>>>> 6df152e4b9e0b8569de60290fae5dfbc706f2119
+                        <input type="text" id="phone" class="info-field" readonly>
+                        <!-- th:value="${admin != null ? admin.admin_phoneNumber : manager.manager_phone_number}"  -->
                     </div>
                 </div>
                 <hr>
