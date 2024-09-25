@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-
 <html xmlns:th="http://www.thymleaf.org">
-<head>
+	<head>
     <meta charset="UTF-8">
     <title>CareOps+ | 케어옵스</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,210 +10,107 @@
     <link th:href="@{/css/web-settings.css}" rel="stylesheet">
 
     <style>
-        body {
-            margin: 0;
-            background-color: #13254D;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column; /* 수직 정렬 */
-        }
+     body {
+         margin: 0;
+         background-color: #13254D;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         flex-direction: column; /* 수직 정렬 */
+     }
 
-        .site_logo {
-            margin: -200px auto 150px auto;
-            max-width: 500px;
-            width: 100%; 
-        }
+     .site_logo {
+         margin: -200px auto 150px auto;
+         max-width: 500px;
+         width: 100%; 
+     }
 
-        #background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            z-index: -1;
-        }
+     #background {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100vw;
+         height: 100vh;
+         overflow: hidden;
+         z-index: -1;
+     }
 
-        .star {
-            fill: white;
-            animation: moveStar 30s linear infinite;
-            opacity: 0.8;
-            filter: drop-shadow(0 0 6px white);
-        }
+     .star {
+         fill: white;
+         animation: moveStar 30s linear infinite;
+         opacity: 0.8;
+         filter: drop-shadow(0 0 6px white);
+     }
 
-        @keyframes moveStar {
-            0% { transform: translateY(-100px); }
-            100% { transform: translateY(100vh); }
-        }
+     @keyframes moveStar {
+         0% { transform: translateY(-100px); }
+         100% { transform: translateY(100vh); }
+     }
 
-        .login-box {
-            width: 30%;
-            max-width: 800px;
-            margin-top: -50px;
-            padding: 60px;
-            background-color: #13254D;
-            border-radius: 5px;
-            color: white;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
+     .login-box {
+         width: 30%;
+         max-width: 800px;
+         margin-top: -50px;
+         padding: 60px;
+         background-color: #13254D;
+         border-radius: 5px;
+         color: white;
+         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+     }
 
-        .col-form-label {
-            color: white;
-            text-align: left;
-            font-size: 1.1rem;
-        }
+     .col-form-label {
+         color: white;
+         text-align: left;
+         font-size: 1.1rem;
+     }
 
-        .form-control {
-            width: 100%;
-            font-size: 1.1rem;
-        }
-        
-        .btn-login {
-            width: 100%; 
-            padding: 15px;
-            background-color: rgb(0, 0, 0);
-            border: none;
-            font-size: 1.2rem;
-            transition: background-color 0.3s ease;  
-        }
-        
-        .btn-login:hover {
-            background-color: #0d1d40;
-        }
+     .form-control {
+         width: 100%;
+         font-size: 1.1rem;
+     }
+     
+     .btn-login {
+         width: 100%; 
+         padding: 15px;
+         background-color: rgb(0, 0, 0);
+         border: none;
+         font-size: 1.2rem;
+         transition: background-color 0.3s ease;  
+     }
+     
+     .btn-login:hover {
+         background-color: #0d1d40;
+     }
 
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; transform: translateY(-20px); }
-        }
-        
-        .fade-out {
-            animation: fadeOut 0.5s forwards;
-        }
+     @keyframes fadeOut {
+         from { opacity: 1; }
+         to { opacity: 0; transform: translateY(-20px); }
+     }
+     
+     .fade-out {
+         animation: fadeOut 0.5s forwards;
+     }
 
-        .form-label {
-            font-size: 20px;
-        }
-        @media (max-width: 768px) {
- 	   		.login-box {
-       		 width: 90%;
-       		 margin-top: 0;
-    }
-}
+     .form-label {
+         font-size: 20px;
+     }
+     @media (max-width: 768px) {
+  		.login-box {
+    		 width: 90%;
+    		 margin-top: 0;
+   }
+		}
     </style>
-</head>
-=======
-<html xmlns:th="http://www.thymleaf.org">
-	<head>
-	<meta charset="UTF-8">
-	<title>CareOps+ | 케어옵스</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	<!-- Bootstrap CSS 및 jQuery 추가 -->
-	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
-	
-	<style>
-		body {
-			margin: 0;
-			background-color: #13254D;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column; /* 수직 정렬 */
-		}
-		
-		.site_logo {
-			margin: -200px auto 150px auto;
-			max-width: 500px;
-			width: 100%;
-		}
-		
-		#background {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100vw;
-			height: 100vh;
-			overflow: hidden;
-			z-index: -1;
-		}
-		
-		.star {
-			fill: white;
-			animation: moveStar 30s linear infinite;
-			opacity: 0.8;
-			filter: drop-shadow(0 0 6px white);
-		}
-		
-		@keyframes moveStar {
-	    0% { transform: translateY(-100px); }
-	    100% { transform: translateY(100vh); }
-    }
-		
-		.login-box {
-			width: 30%;
-			max-width: 800px;
-			margin-top: -50px;
-			padding: 60px;
-			background-color: #13254D;
-			border-radius: 5px;
-			color: white;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-		}
-		
-		.col-form-label {
-			color: white;
-			text-align: left;
-			font-size: 1.1rem;
-		}
-		
-		.form-control {
-			width: 100%;
-			font-size: 1.1rem;
-		}
-		
-		.btn-login {
-			width: 100%;
-			padding: 15px;
-			background-color: rgb(0, 0, 0);
-			border: none;
-			font-size: 1.2rem;
-			transition: background-color 0.3s ease;
-		}
-		
-		.btn-login:hover { background-color: #0d1d40; }
-		
-    @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; transform: translateY(-20px); }
-    }
-    
-		.fade-out {
-			animation: fadeOut 0.5s forwards;
-		}
-		
-		.form-label { font-size: 20px; }
-		
-		@media ( max-width : 768px) {
-			.login-box {
-				width: 90%;
-				margin-top: 0;
-			}
-		}
-	</style>
 	</head>
->>>>>>> 6df152e4b9e0b8569de60290fae5dfbc706f2119
-<body>
+	<body>
 
 	<div id="background">
-		<svg id="sky"></svg>
+	    <svg id="sky"></svg>
 	</div>
 
-<<<<<<< HEAD
-<img src="img/logo-ver2.png" class="site_logo" alt="사이트 로고">
+	<img src="img/logo-ver2.png" class="site_logo" alt="사이트 로고">
 
-<div class="login-box">
+	<div class="login-box">
     <form action="/" method="post"> 
        <div class="mb-3">
     		<label for="inputDepartments" class="form-label">부서 번호</label>
@@ -251,96 +146,50 @@
         </div>
     </div>
 
-<script th:src="@{/js/bootstrap.bundle.min.js}">
-=======
-	<img src="img/logo-ver2.png" class="site_logo" alt="사이트 로고">
-
-	<div class="login-box">
-		<form action="/" method="post">
-			<div class="mb-3">
-				<label for="inputDepartments" class="form-label">부서 번호</label> <input
-					type="text" class="form-control" id="inputDepartments"
-					name="department_dept_no" required>
-			</div>
-			<div class="mb-3">
-				<label for="inputUserId" class="form-label">아이디</label> <input
-					type="text" class="form-control" id="inputUserId" name="user_id"
-					required>
-			</div>
-			<div class="mb-3">
-				<label for="inputPassword" class="form-label">비밀번호</label> <input
-					type="password" class="form-control" id="inputPassword"
-					name="user_password" required>
-			</div>
-			<button type="submit" class="btn btn-dark btn-login" aria-label="로그인">로그인</button>
-		</form>
-
-		<div class="modal fade" id="loginErrorModal" tabindex="-1"
-			role="dialog" aria-labelledby="loginErrorModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="loginErrorModalLabel">로그인 오류</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">부서 번호, 아이디 또는 비밀번호를 다시 입력해주세요.</div>
-					<div class="modal-body" th:if="${error}">[[${error}]]</div>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<script>
->>>>>>> 6df152e4b9e0b8569de60290fae5dfbc706f2119
-// 배경 설정 및 별 생성
-const backgroundSetting = () => {
-    const $background = document.querySelector("#background");
-    const $sky = document.querySelector("#sky");
-    if (!($background instanceof HTMLElement)) return;
-    if (!($sky instanceof SVGElement)) return;
-
-    const maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5;
-    const getRandomX = () => Math.random() * maxSize + "";
-    const getRandomY = () => Math.random() * maxSize + "";
-    const randomRadius = () => Math.random() * 1.5 + 1 + "";
-
-    const starCount = Math.floor(maxSize / 10);
-    $background.style.width = `${maxSize}px`;
-    $background.style.height = `${maxSize}px`;
-    $sky.style.width = `${maxSize}px`;
-    $sky.style.height = `${maxSize}px`;
-
-    const svgCircleList = new Array(starCount).fill(null).map(() => {
-        const $$circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        $$circle.classList.add("star");
-        $$circle.setAttributeNS(null, "cx", getRandomX());
-        $$circle.setAttributeNS(null, "cy", getRandomY());
-        $$circle.setAttributeNS(null, "r", randomRadius());
-        return $$circle;
-    });
-
-    $sky.innerHTML = "";
-    $sky.append(...svgCircleList);
-};
-
-(() => {
-    window.addEventListener("DOMContentLoaded", () => {
-        backgroundSetting();
-        setInterval(() => {
-            backgroundSetting();
-        }, 30000);
-    });
-
-    window.addEventListener("resize", () => {
-        backgroundSetting();
-    });
-})();
-</script>
-</body>
+		<script th:src="@{/js/bootstrap.bundle.min.js}" >
+		// 배경 설정 및 별 생성
+		const backgroundSetting = () => {
+		    const $background = document.querySelector("#background");
+		    const $sky = document.querySelector("#sky");
+		    if (!($background instanceof HTMLElement)) return;
+		    if (!($sky instanceof SVGElement)) return;
+		
+		    const maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5;
+		    const getRandomX = () => Math.random() * maxSize + "";
+		    const getRandomY = () => Math.random() * maxSize + "";
+		    const randomRadius = () => Math.random() * 1.5 + 1 + "";
+		
+		    const starCount = Math.floor(maxSize / 10);
+		    $background.style.width = `${maxSize}px`;
+		    $background.style.height = `${maxSize}px`;
+		    $sky.style.width = `${maxSize}px`;
+		    $sky.style.height = `${maxSize}px`;
+		
+		    const svgCircleList = new Array(starCount).fill(null).map(() => {
+		        const $$circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		        $$circle.classList.add("star");
+		        $$circle.setAttributeNS(null, "cx", getRandomX());
+		        $$circle.setAttributeNS(null, "cy", getRandomY());
+		        $$circle.setAttributeNS(null, "r", randomRadius());
+		        return $$circle;
+		    });
+		
+		    $sky.innerHTML = "";
+		    $sky.append(...svgCircleList);
+		};
+		
+		(() => {
+		    window.addEventListener("DOMContentLoaded", () => {
+		        backgroundSetting();
+		        setInterval(() => {
+		            backgroundSetting();
+		        }, 30000);
+		    });
+		
+		    window.addEventListener("resize", () => {
+		        backgroundSetting();
+		    });
+		})();
+		</script>
+	</body>
 </html>

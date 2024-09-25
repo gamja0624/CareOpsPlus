@@ -11,11 +11,9 @@ import himedia.project.careops.entity.Admin;
 import himedia.project.careops.entity.Manager;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class ListMedicalDevicesDTO {
 	
 	private String lmdMinorCateCode;    // 장비세분류코드
