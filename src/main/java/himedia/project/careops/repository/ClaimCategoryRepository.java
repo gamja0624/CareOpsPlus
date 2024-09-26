@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import himedia.project.careops.entity.ClaimCategory;
 
-
 @Repository
 public interface ClaimCategoryRepository extends JpaRepository<ClaimCategory, String> {
 

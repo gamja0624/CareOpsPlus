@@ -8,9 +8,6 @@ package himedia.project.careops.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.ToString;
 
@@ -23,9 +20,8 @@ public class Manager {
     @Column(name = "manager_id")
     private String managerId;
 
-    @OneToMany(mappedBy = "manager_dept_no")
-    // @JoinColumn(name="manager_dept_no", nullable = false)
-    private ManagerDepartment managerDeptNo;
+    @Column(name = "manager_dept_no")
+    private int managerDeptNo;
 
     @Column(name = "manager_dept_part")
     private String managerDeptPart; 
@@ -44,7 +40,7 @@ public class Manager {
 
     public Manager() {}
 
-    public Manager(String managerId, ManagerDepartment managerDeptNo, String managerDeptPart,
+    public Manager(String managerId, int managerDeptNo, String managerDeptPart,
                          String managerDeptName, String managerPassword, String managerName,
                          String managerPhoneNumber) {
         this.managerId = managerId;
@@ -64,11 +60,11 @@ public class Manager {
 		this.managerId = managerId;
 	}
 
-	public ManagerDepartment getManagerDeptNo() {
+	public int getManagerDeptNo() {
 		return managerDeptNo;
 	}
 
-	public void setManagerDeptNo(ManagerDepartment managerDeptNo) {
+	public void setManagerDeptNo(int managerDeptNo) {
 		this.managerDeptNo = managerDeptNo;
 	}
 

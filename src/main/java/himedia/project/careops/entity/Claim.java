@@ -12,12 +12,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name = "claim")
+@ToString
 public class Claim {
 	
 	@Id
@@ -25,21 +25,17 @@ public class Claim {
 	@Column(name="claim_no", nullable = false)
 	private Integer claimNo;					// 민원 번호 ( 고유키 )
 	
-	@ManyToOne
-	@JoinColumn(name="manager_id", nullable = false)
-	private Manager managerId;					// 담당자 아이디 ( 외래키 )         				
+	@Column(name="manager_id", nullable = false)
+	private String managerId;					// 담당자 아이디 ( 외래키 )         				
 	
-	@ManyToOne
-	@JoinColumn(name="manager_dept_no", nullable = false)
-	private Manager managerDeptNo;				// 담당자 부서번호 ( 외래키 ) 
+	@Column(name="manager_dept_no", nullable = false)
+	private int managerDeptNo;				    // 담당자 부서번호 ( 외래키 ) 
 	
-	@ManyToOne
-	@JoinColumn(name="claim_category_no", nullable = false)
-	private ClaimCategory claimCategoryNo;		// 민원 대분류 번호 ( 외래키 )
+	@Column(name="claim_category_no", nullable = false)
+	private String claimCategoryNo;		// 민원 대분류 번호 ( 외래키 )
 	
-	@ManyToOne
-	@JoinColumn(name="claim_sub_category_no", nullable = false)
-	private ClaimSubCategory claimSubCategoryNO;// 민원 소뷴류 번호 ( 외래키 )	
+	@Column(name="claim_sub_category_no", nullable = false)
+	private int claimSubCategoryNO;// 민원 소뷴류 번호 ( 외래키 )	
 	
 	@Column(name="claim_category_name", nullable = false)
 	private String claimCategoryName;			// 민원 대분류 이름 
@@ -73,8 +69,8 @@ public class Claim {
 
 	public Claim() {}
 
-	public Claim(Integer claimNo, Manager managerId, Manager managerDeptNo, ClaimCategory claimCategoryNo,
-			ClaimSubCategory claimSubCategoryNO, String claimCategoryName, String claimSubCategoryName,
+	public Claim(Integer claimNo, String managerId, int managerDeptNo, String claimCategoryNo,
+			int claimSubCategoryNO, String claimCategoryName, String claimSubCategoryName,
 			String claimCategoryStatus, String claimManagerName, Date claimDate, String claimTitle, String claimContent,
 			Boolean claimApprove, Boolean claimComplete, String claimAttachment) {
 		super();
@@ -103,35 +99,35 @@ public class Claim {
 		this.claimNo = claimNo;
 	}
 
-	public Manager getManagerId() {
+	public String getManagerId() {
 		return managerId;
 	}
 
-	public void setManagerId(Manager managerId) {
+	public void setManagerId(String managerId) {
 		this.managerId = managerId;
 	}
 
-	public Manager getManagerDeptNo() {
+	public int getManagerDeptNo() {
 		return managerDeptNo;
 	}
 
-	public void setManagerDeptNo(Manager managerDeptNo) {
+	public void setManagerDeptNo(int managerDeptNo) {
 		this.managerDeptNo = managerDeptNo;
 	}
 
-	public ClaimCategory getClaimCategoryNo() {
+	public String getClaimCategoryNo() {
 		return claimCategoryNo;
 	}
 
-	public void setClaimCategoryNo(ClaimCategory claimCategoryNo) {
+	public void setClaimCategoryNo(String claimCategoryNo) {
 		this.claimCategoryNo = claimCategoryNo;
 	}
 
-	public ClaimSubCategory getClaimSubCategoryNO() {
+	public int getClaimSubCategoryNO() {
 		return claimSubCategoryNO;
 	}
 
-	public void setClaimSubCategoryNO(ClaimSubCategory claimSubCategoryNO) {
+	public void setClaimSubCategoryNO(int claimSubCategoryNO) {
 		this.claimSubCategoryNO = claimSubCategoryNO;
 	}
 

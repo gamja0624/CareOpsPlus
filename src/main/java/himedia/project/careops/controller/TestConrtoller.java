@@ -35,16 +35,6 @@ public class TestConrtoller {
 		this.mangerService = mangerService;
 	}
 	
-	@GetMapping("favicon.ico")
-    @ResponseBody
-    public void returnNoFavicon() {
-    }
-	
-	@GetMapping("")
-	public String login() {
-		return "common/login";
-	}
-	
 	@GetMapping("/{admin}")
 	public String loginPage(@PathVariable String admin) {
 		

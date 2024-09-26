@@ -7,8 +7,10 @@ package himedia.project.careops.entity;
 
 import java.io.Serializable;
 import jakarta.persistence.Embeddable;
+import lombok.ToString;
 
 @Embeddable
+@ToString
 public class ClaimReplyId implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -76,6 +78,4 @@ public class ClaimReplyId implements Serializable {
 		return "ClaimReplyId [claimNo=" + claimNo + ", claimCategoryNo=" + claimCategoryNo + ", claimSubCategoryNo="
 				+ claimSubCategoryNo + ", managerId=" + managerId + ", managerDeptNo=" + managerDeptNo + "]";
 	}
-
-    
 }

@@ -10,12 +10,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name="claim_sub_category")
+@ToString
 public class ClaimSubCategory {
 	
 	@Id
@@ -23,24 +23,22 @@ public class ClaimSubCategory {
 	@Column(name="claim_sub_category_no", nullable = false)
 	private int claimSubCategoryNo;                 // 민원 소분류 번호 ( 기본키 auto_increment)
 	
-	@ManyToOne
-	@JoinColumn(name="lmd_minor_cate_code")
-	private ListMedicalDevices lmdMinorCateCode;    // 장비 세분류 코드 ( 의료기기 관리 )
+	@Column(name="lmd_minor_cate_code")
+	private String lmdMinorCateCode;    // 장비 세분류 코드 ( 의료기기 관리 )
 	
 	@Column(name="lmd_minor_cate_name")
 	private String lmdMinorCateName;                // 장비 세분류명 ( 의료기기 관리 )
 	
-	@ManyToOne
-	@JoinColumn(name = "sml_no")
-	private SafetyManagementList smlNo;             // 세부항목 번호 ( 안전관리 )
+	@Column(name="sml_no")
+	private int smlNo;             // 세부항목 번호 ( 안전관리 )
 	
 	@Column(name="sml_list")
 	private String smlList;                         // 세부항목 ( 안전관리 )
 
 	public ClaimSubCategory() {}
 
-	public ClaimSubCategory(int claimSubCategoryNo, ListMedicalDevices lmdMinorCateCode, String lmdMinorCateName,
-			SafetyManagementList smlNo, String smlList) {
+	public ClaimSubCategory(int claimSubCategoryNo, String lmdMinorCateCode, String lmdMinorCateName,
+			int smlNo, String smlList) {
 		super();
 		this.claimSubCategoryNo = claimSubCategoryNo;
 		this.lmdMinorCateCode = lmdMinorCateCode;
@@ -57,12 +55,11 @@ public class ClaimSubCategory {
 		this.claimSubCategoryNo = claimSubCategoryNo;
 	}
 
-
-	public ListMedicalDevices getLmdMinorCateCode() {
+	public String getLmdMinorCateCode() {
 		return lmdMinorCateCode;
 	}
 
-	public void setLmdMinorCateCode(ListMedicalDevices lmdMinorCateCode) {
+	public void setLmdMinorCateCode(String lmdMinorCateCode) {
 		this.lmdMinorCateCode = lmdMinorCateCode;
 	}
 
@@ -74,11 +71,11 @@ public class ClaimSubCategory {
 		this.lmdMinorCateName = lmdMinorCateName;
 	}
 
-	public SafetyManagementList getSmlNo() {
+	public int getSmlNo() {
 		return smlNo;
 	}
 
-	public void setSmlNo(SafetyManagementList smlNo) {
+	public void setSmlNo(int smlNo) {
 		this.smlNo = smlNo;
 	}
 

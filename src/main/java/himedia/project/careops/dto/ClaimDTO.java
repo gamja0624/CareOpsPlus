@@ -7,9 +7,6 @@ package himedia.project.careops.dto;
 
 import java.sql.Date;
 
-import himedia.project.careops.entity.ClaimCategory;
-import himedia.project.careops.entity.ClaimSubCategory;
-import himedia.project.careops.entity.Manager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,10 +17,10 @@ import lombok.ToString;
 public class ClaimDTO {
 
 	private int claimNo;						// 민원 번호 ( 고유키 )
-	private Manager managerId;					// 담당자 아이디 ( 외래키 )         				
-	private Manager managerDeptNo;				// 담당자 부서번호 ( 외래키 ) 
-	private ClaimCategory claimCategoryNo;		// 민원 대분류 번호 ( 외래키 )
-	private ClaimSubCategory claimSubCategoryNO;// 민원 소뷴류 번호 ( 외래키 )	
+	private String managerId;					// 담당자 아이디 ( 외래키 )         				
+	private int managerDeptNo;					// 담당자 부서번호 ( 외래키 ) 
+	private String claimCategoryNo;				// 민원 대분류 번호 ( 외래키 )
+	private int claimSubCategoryNO;				// 민원 소뷴류 번호 ( 외래키 )	
 	private String claimCategoryName;			// 민원 대분류 이름 
 	private String claimSubCategoryName;		// 민원 소분류 이름
 	private String claimCategoryStatus;			// 민원 요청 구분 ( * 의료 기기 관리 ) 
@@ -37,8 +34,8 @@ public class ClaimDTO {
 	
 	public ClaimDTO() {}
 
-	public ClaimDTO(int claimNo, Manager managerId, Manager managerDeptNo, ClaimCategory claimCategoryNo,
-			ClaimSubCategory claimSubCategoryNO, String claimCategoryName, String claimSubCategoryName,
+	public ClaimDTO(int claimNo, String managerId, int managerDeptNo, String claimCategoryNo,
+			int claimSubCategoryNO, String claimCategoryName, String claimSubCategoryName,
 			String claimCategoryStatus, String claimManagerName, Date claimDate, String claimTitle, String claimContent,
 			Boolean claimApprove, Boolean claimComplete, String claimAttachment) {
 		super();
@@ -58,7 +55,7 @@ public class ClaimDTO {
 		this.claimComplete = claimComplete;
 		this.claimAttachment = claimAttachment;
 	}
-
+	
 	public int getClaimNo() {
 		return claimNo;
 	}
@@ -67,35 +64,35 @@ public class ClaimDTO {
 		this.claimNo = claimNo;
 	}
 
-	public Manager getManagerId() {
+	public String getManagerId() {
 		return managerId;
 	}
 
-	public void setManagerId(Manager managerId) {
+	public void setManagerId(String managerId) {
 		this.managerId = managerId;
 	}
 
-	public Manager getManagerDeptNo() {
+	public int getManagerDeptNo() {
 		return managerDeptNo;
 	}
 
-	public void setManagerDeptNo(Manager managerDeptNo) {
+	public void setManagerDeptNo(int managerDeptNo) {
 		this.managerDeptNo = managerDeptNo;
 	}
 
-	public ClaimCategory getClaimCategoryNo() {
+	public String getClaimCategoryNo() {
 		return claimCategoryNo;
 	}
 
-	public void setClaimCategoryNo(ClaimCategory claimCategoryNo) {
+	public void setClaimCategoryNo(String claimCategoryNo) {
 		this.claimCategoryNo = claimCategoryNo;
 	}
 
-	public ClaimSubCategory getClaimSubCategoryNO() {
+	public int getClaimSubCategoryNO() {
 		return claimSubCategoryNO;
 	}
 
-	public void setClaimSubCategoryNO(ClaimSubCategory claimSubCategoryNO) {
+	public void setClaimSubCategoryNO(int claimSubCategoryNO) {
 		this.claimSubCategoryNO = claimSubCategoryNO;
 	}
 

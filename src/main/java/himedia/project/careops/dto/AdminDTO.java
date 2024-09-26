@@ -10,7 +10,7 @@ import lombok.ToString;
 public class AdminDTO {
 
     private String adminId;					// 관리자 아이디
-    private AdminDepartmentDTO adminDeptNo;	// 관리자 부서 번호
+    private String adminDeptNo;	            // 관리자 부서 번호
     private String adminDeptName;			// 관리자 부서 이름
     private String adminPassword; 			// 관리자 비밀번
     private String adminName;				// 관리자 이름
@@ -18,7 +18,7 @@ public class AdminDTO {
 
     public AdminDTO() {}
     
-	public AdminDTO(String adminId, AdminDepartmentDTO adminDeptNo, String adminDeptName, String adminPassword, 
+	public AdminDTO(String adminId, String adminDeptNo, String adminDeptName, String adminPassword, 
 			String adminName, String adminPhoneNumber) {
 			super();
 		this.adminId = adminId;
@@ -37,11 +37,11 @@ public class AdminDTO {
 		this.adminId = adminId;
 	}
 
-	public AdminDepartmentDTO getAdminDeptNo() {
+	public String getAdminDeptNo() {
 		return adminDeptNo;
 	}
 
-	public void setAdminDeptNo(AdminDepartmentDTO adminDeptNo) {
+	public void setAdminDeptNo(String adminDeptNo) {
 		this.adminDeptNo = adminDeptNo;
 	}
 
@@ -79,7 +79,7 @@ public class AdminDTO {
 
 	@Override
     public String toString() {
-    	return "AdminDTO [adminId=" + adminId + ", adminDeptNo=" + adminDeptNo.getAdminDeptNo() + ", adminDeptName=" + adminDeptName + ", adminPassword=" + adminPassword 
+    	return "AdminDTO [adminId=" + adminId + ", adminDeptNo=" + adminDeptNo + ", adminDeptName=" + adminDeptName + ", adminPassword=" + adminPassword 
     			+ ", adminName=" + adminName + ", adminPhoneNumber=" + adminPhoneNumber + "]";
     }
 }

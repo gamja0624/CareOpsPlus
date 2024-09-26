@@ -7,7 +7,6 @@ package himedia.project.careops.dto;
 
 import java.sql.Date;
 
-import himedia.project.careops.entity.Admin;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,14 +17,14 @@ import lombok.ToString;
 public class SafetyManagementDTO {
 	
 	private int smNo;
-	private Admin adminId;
+	private String adminId;
 	private String adminName;
 	private Boolean smCheck;
 	private Date smDate;
 	
 	public SafetyManagementDTO() {}
 	
-	public SafetyManagementDTO(int smNo, Admin adminId, String adminName, Boolean smCheck, Date smDate) {
+	public SafetyManagementDTO(int smNo, String adminId, String adminName, Boolean smCheck, Date smDate) {
 		this.smNo = smNo;
 		this.adminId = adminId;
 		this.adminName = adminName;
@@ -41,11 +40,11 @@ public class SafetyManagementDTO {
 		this.smNo = smNo;
 	}
 
-	public Admin getAdminId() {
+	public String getAdminId() {
 		return adminId;
 	}
 
-	public void setAdminId(Admin adminId) {
+	public void setAdminId(String adminId) {
 		this.adminId = adminId;
 	}
 

@@ -12,12 +12,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name = "safety_management_list")
+@ToString
 public class SafetyManagementList {
 
 	@Id
@@ -25,9 +25,8 @@ public class SafetyManagementList {
 	@Column(name="sml_no", nullable = false)
 	private int smlNo;				// 세부항목 번호
 	
-	@ManyToOne
-	@JoinColumn(name="sm_no", nullable = false)
-	private SafetyManagement smNo;	// 점검 번호
+	@Column(name="sm_no", nullable = false)
+	private int smNo;	// 점검 번호
 	
 	@Column(name="sml_list", nullable = false)
 	private String smlList;			// 세부항목
@@ -38,7 +37,7 @@ public class SafetyManagementList {
 	
 	public SafetyManagementList() {}
 
-	public SafetyManagementList(int smlNo, SafetyManagement smNo, String smlList, Boolean smlCheck) {
+	public SafetyManagementList(int smlNo, int smNo, String smlList, Boolean smlCheck) {
 		this.smlNo = smlNo;
 		this.smNo = smNo;
 		this.smlList = smlList;
@@ -53,11 +52,11 @@ public class SafetyManagementList {
 		this.smlNo = smlNo;
 	}
 
-	public SafetyManagement getSmNo() {
+	public int getSmNo() {
 		return smNo;
 	}
 
-	public void setSmNo(SafetyManagement smNo) {
+	public void setSmNo(int smNo) {
 		this.smNo = smNo;
 	}
 

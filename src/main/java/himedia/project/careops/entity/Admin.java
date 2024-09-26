@@ -1,15 +1,13 @@
 package himedia.project.careops.entity;
 
 /**
- * @author 노태윤 -> 진혜정
+ * @author 진혜정
  * @editDate 2024-09-25
  */
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.ToString;
 
@@ -99,7 +97,7 @@ public class Admin {
 
 	@Override
     public String toString() {
-    	return "AdminDTO [adminId=" + adminId + ", adminDeptNo=" + adminDeptNo + ", adminDeptName=" + adminDeptName 
+    	return "Admin [adminId=" + adminId + ", adminDeptNo=" + adminDeptNo + ", adminDeptName=" + adminDeptName 
     			+ ", adminPassword=" + adminPassword + ", adminName=" + adminName + ", adminPhoneNumber=" + adminPhoneNumber + "]";
     }
 }

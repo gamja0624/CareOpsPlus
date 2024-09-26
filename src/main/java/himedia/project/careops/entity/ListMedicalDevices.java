@@ -8,14 +8,9 @@ package himedia.project.careops.entity;
 
 import java.sql.Date;
 
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -48,13 +43,13 @@ public class ListMedicalDevices {
 	private String lmdStatus;
 	
 	@Column(name="lmd_manager_dept_no", nullable = false) // 담당자 부서 번호 - 3
-	private Manager lmdManagerDeptNo;
+	private int lmdManagerDeptNo;
 	
 	@Column(name="lmd_manager_dept_part", nullable = false) // 담당 부서 이름
 	private String lmdManagerDeptPart;
 	
 	@Column(name="lmd_manager_id", nullable = false) // 담당자 아이디
-	private Manager lmdManagerId;
+	private String lmdManagerId;
 	
 	@Column(name="lmd_manager_name", nullable = false) // 담당자 이름
 	private String lmdManagerName;
@@ -63,10 +58,10 @@ public class ListMedicalDevices {
 	private Date lmdDate;
 	
 	@Column(name="lmd_admin_dept_no") // 관리자 부서 번호 - 4
-	private Admin lmdAdminDeptNo;
+	private String lmdAdminDeptNo;
 	
 	@Column(name="lmd_admin_id") // 관리자 아이디
-	private Admin lmdAdminId;
+	private String lmdAdminId;
 	
 	@Column(name="lmd_admin_name") // 관리자 이름
 	private String lmdAdminName;
@@ -82,7 +77,7 @@ public class ListMedicalDevices {
 	public ListMedicalDevices(
 	        String lmdMinorCateCode, String lmdMinorCateName, String lmdMajorCateCode, String lmdMajorCateName,
 	        String lmdDevicesName, String lmdLicenseNumber, int lmdDeviceCnt, String lmdStatus,
-	        Manager lmdManagerDeptNo, String lmdManagerDeptPart, Manager lmdManagerId, String lmdManagerName ) {
+	        int lmdManagerDeptNo, String lmdManagerDeptPart, String lmdManagerId, String lmdManagerName ) {
 	        //Date lmdDate, Admin lmdAdminDeptNo, Admin lmdAdminId, String lmdAdminName, Date lmdLastCheckDate, Integer lmdClaimNo
 	    super();
 	    this.lmdMinorCateCode = lmdMinorCateCode;
@@ -165,11 +160,11 @@ public class ListMedicalDevices {
 		this.lmdStatus = lmdStatus;
 	}
 
-	public Manager getLmdManagerDeptNo() {
+	public int getLmdManagerDeptNo() {
 		return lmdManagerDeptNo;
 	}
 
-	public void setLmdManagerDeptNo(Manager lmdManagerDeptNo) {
+	public void setLmdManagerDeptNo(int lmdManagerDeptNo) {
 		this.lmdManagerDeptNo = lmdManagerDeptNo;
 	}
 
@@ -181,11 +176,11 @@ public class ListMedicalDevices {
 		this.lmdManagerDeptPart = lmdManagerDeptPart;
 	}
 
-	public Manager getLmdManagerId() {
+	public String getLmdManagerId() {
 		return lmdManagerId;
 	}
 
-	public void setLmdManagerId(Manager lmdManagerId) {
+	public void setLmdManagerId(String lmdManagerId) {
 		this.lmdManagerId = lmdManagerId;
 	}
 
@@ -205,19 +200,19 @@ public class ListMedicalDevices {
 		this.lmdDate = lmdDate;
 	}
 
-	public Admin getLmdAdminDeptNo() {
+	public String getLmdAdminDeptNo() {
 		return lmdAdminDeptNo;
 	}
 
-	public void setLmdAdminDeptNo(Admin lmdAdminDeptNo) {
+	public void setLmdAdminDeptNo(String lmdAdminDeptNo) {
 		this.lmdAdminDeptNo = lmdAdminDeptNo;
 	}
 
-	public Admin getLmdAdminId() {
+	public String getLmdAdminId() {
 		return lmdAdminId;
 	}
 
-	public void setLmdAdminId(Admin lmdAdminId) {
+	public void setLmdAdminId(String lmdAdminId) {
 		this.lmdAdminId = lmdAdminId;
 	}
 
@@ -243,6 +238,16 @@ public class ListMedicalDevices {
 
 	public void setLmdClaimNo(Integer lmdClaimNo) {
 		this.lmdClaimNo = lmdClaimNo;
+	}
+
+	@Override
+	public String toString() {
+		return "ListMedicalDevices : [" +
+				"lmdMinorCateCode=" + lmdMinorCateCode + "," +
+				"lmdMinorCateName=" + lmdMinorCateName + "," + 
+				"lmdMajorCateCode=" + lmdMajorCateCode + "," + 
+				"lmdMajorCateName=" + lmdMajorCateName + "," + 
+				"lmdLicenseNumber=" + lmdLicenseNumber + "]";
 	}
 	
 }
