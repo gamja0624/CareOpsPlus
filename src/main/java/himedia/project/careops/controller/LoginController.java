@@ -31,7 +31,17 @@ public class LoginController {
     public String showLoginPage() {
         return "common/login"; // 로그인 페이지 반환
     }
-
+    
+    @GetMapping("admin/dash-board")
+    public String showDashBoard() {
+    	return "admin/dash-board";
+    }
+    
+    @GetMapping("manager/dash-board") 
+    public String showManagerDashBoard() {
+    	return "manager/dash-board";
+    }
+    
     @PostMapping("")
     public String login(@RequestParam("department_dept_no") String deptNo,
                        @RequestParam("user_id") String userId,
