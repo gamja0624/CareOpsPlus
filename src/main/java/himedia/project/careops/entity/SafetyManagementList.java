@@ -79,7 +79,7 @@ public class SafetyManagementList {
 	
 	@Override
 	public String toString() {
-		return "SafetyManagementListDTO [ smlNo=" + smlNo + "smNo=" + smNo 
+		return "SafetyManagementList [ smlNo=" + smlNo + "smNo=" + smNo 
 				+ "smList=" + smlList + "smlCheck=" + smlCheck + "]";
 	}
 }
