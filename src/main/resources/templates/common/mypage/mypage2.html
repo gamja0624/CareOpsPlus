@@ -1,108 +1,118 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>CareOps+ | 내 정보</title>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/web-settings.css}" rel="stylesheet">
+<meta charset="UTF-8">
+<title>CareOps+ | 내 정보</title>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 
-    <style type="text/css">
-        .layout-table {
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 10px;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .info-container {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            width: 65%;
-        }
-        label {
-            font-weight: bold;
-            color: #666;
-            font-size: 23px;
-            width: 100px;
-            text-align: left;
-            white-space: nowrap;
-        }
-        .info-field {
-            flex: 1;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            border: 1px solid #13254C;
-            background-color: #13254C;
-            color: #fff;
-            font-size: 20px;
-            box-sizing: border-box;
-            width: calc(100% - 160px);
-        }
-        .btn {
-            width: 60%;
-            padding: 12px;
-            background-color: #13254C;
-            color: white;
-            font-size: 18px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        hr {
-            width: 60%;
-            margin: 2rem 0;
-            background-color: #000;
-            height: 1px;
-            border: 0;
-        }
-        .btn:hover {
-            background-color: #1a3366;
-        }
-    </style>
+	<style type="text/css">
+	.layout-table {
+		padding: 40px;
+		background-color: #fff;
+		border-radius: 10px;
+		overflow: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.info-container {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+		width: 65%;
+	}
+	
+	label {
+		font-weight: 500;
+		color: #666;
+		font-size: 23px;
+		width: 100px;
+		text-align: left;
+		white-space: nowrap;
+	}
+	
+	.info-field {
+		flex: 1;
+		padding: 10px;
+		margin-bottom: 15px;
+		border-radius: 4px;
+		border: 1px solid #13254C;
+		background-color: #13254C;
+		color: #fff;
+		font-size: 20px;
+		box-sizing: border-box;
+		width: calc(100% - 160px);
+	}
+	
+	.btn {
+		width: 60%;
+		padding: 12px;
+		background-color: #13254C;
+		color: white;
+		font-size: 18px;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background-color 0.3s;
+	}
+	
+	hr {
+		width: 60%;
+		margin: 2rem 0;
+		background-color: #000;
+		height: 1px;
+		border: 0;
+	}
+	
+	.btn:hover {
+		background-color: #1a3366;
+	}
+</style>
 </head>
 
 <body>
-    <th:block th:replace="~{/common/side-bar}"></th:block>
+	<th:block th:replace="~{/common/side-bar}"></th:block>
 
-    <div class="content">
-        <div class="section">
-            <h1 class="title">내 정보</h1>
-            <div class="layout-table">
-                <hr>
-                <div class="info-container">
-                	<div>
-   						 <label for="department">부서명</label> 
-    					 <input type="text" id="department" class="info-field" 
-          					readonly>
-									</div>
-                    <div>
-                        <label for="username">아이디</label> 
-                        <input type="text" id="username" class="info-field" 
-           					    >
-                    </div>
-                    <div>
-                        <label for="name">이름</label> 
-                        <input type="text" id="name" class="info-field" readonly >
-                        	<!-- th:value="${admin != null ? admin.admin_name : manager.manager_name}"  -->
-
-                    </div>
-                    <div>
-                        <label for="phone">연락처</label> 
-                        <input type="text" id="phone" class="info-field" readonly>
-                        <!-- th:value="${admin != null ? admin.admin_phoneNumber : manager.manager_phone_number}"  -->
-                    </div>
-                </div>
-                <hr>
-                <button class="btn" onclick="window.location.href='/mypage-edit'">회원 정보 수정</button>
-            </div>
-        </div>
-    </div>
-    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<div class="content">
+		<div class="section">
+			<h1 class="title">내 정보</h1>
+			<div class="layout-table">
+				<hr>
+				<div class="info-container">
+					<div>
+						<label for="department">부서명</label> <input type="text"
+							id="department" class="info-field"
+							th:value="${user != null ? (userType == 'admin' ? user.adminDeptName : user.managerDeptName) : ''}"
+							readonly>
+					</div>
+					<div>
+						<label for="username">아이디</label> <input type="text" id="username"
+							class="info-field"
+							th:value="${user != null ? (userType == 'admin' ? user.adminId : user.managerId) : ''}"
+							readonly>
+					</div>
+					<div>
+						<label for="name">이름</label> <input type="text" id="name"
+							class="info-field"
+							th:value="${user != null ? (userType == 'admin' ? user.adminName : user.managerName) : ''}"
+							readonly>
+					</div>
+					<div>
+						<label for="phone">연락처</label> <input type="text" id="phone"
+							class="info-field"
+							th:value="${user != null ? (userType == 'admin' ? user.adminPhoneNumber : user.managerPhoneNumber) : ''}"
+							readonly>
+					</div>
+				</div>
+				<hr>
+				<button class="btn" onclick="window.location.href='/mypage-edit2'">회원
+					정보 수정</button>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

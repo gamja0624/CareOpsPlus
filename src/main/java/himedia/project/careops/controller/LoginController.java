@@ -1,17 +1,18 @@
 package himedia.project.careops.controller;
 
-import java.util.Optional;
+/**
+ * @author 노태윤 
+ * @editDate 2024-09-26
+ */
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import himedia.project.careops.entity.Admin;
-import himedia.project.careops.entity.Manager;
-import himedia.project.careops.repository.AdminLoginRepository;
-import himedia.project.careops.repository.ManagerLoginRepository;
 import jakarta.servlet.http.HttpSession;
+import himedia.project.careops.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,48 +21,42 @@ import org.slf4j.LoggerFactory;
 public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private final LoginService loginService;
 
-    private final AdminLoginRepository adminLoginRepository;
-    private final ManagerLoginRepository managerLoginRepository;
-
-    public LoginController(AdminLoginRepository adminLoginRepository, ManagerLoginRepository managerLoginRepository) {
-        this.adminLoginRepository = adminLoginRepository;
-        this.managerLoginRepository = managerLoginRepository;
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
     }
 
-    @PostMapping("/")
+    @GetMapping("")
+    public String showLoginPage() {
+        return "common/login"; // 로그인 페이지 반환
+    }
+
+    @PostMapping("")
     public String login(@RequestParam("department_dept_no") String deptNo,
-                        @RequestParam("user_id") String userId,
-                        @RequestParam("user_password") String userPassword,
-                        Model model, HttpSession session) {
+                       @RequestParam("user_id") String userId,
+                       @RequestParam("user_password") String userPassword,
+                       Model model, HttpSession session) {
 
         logger.info("로그인 시도: deptNo={}, userId={}", deptNo, userId);
 
-        // Admin 테이블에서 조회
-        Optional<Admin> admin = adminLoginRepository.findByAdminDeptNoAndAdminIdAndAdminPassword(deptNo, userId, userPassword);
-        if (admin.isPresent()) {
+        // 로그인 처리 메서드 호출
+        String loginResult = loginService.login(deptNo, userId, userPassword);
+
+        if (loginResult.equals("admin")) {
             logger.info("관리자 로그인 성공: {}", userId);
-            session.setAttribute("admin_id", admin.get().getAdminId());
-            session.setAttribute("admin_name", admin.get().getAdminName());
-            return "redirect:/admin/dash-board";
+            session.setAttribute("user_type", "admin"); // 사용자 타입 설정
+            session.setAttribute("user_id", userId); // 사용자 ID 설정
+            return "redirect:/admin/dash-board"; // 관리자 대시보드로 리다이렉트
+        } else if (loginResult.equals("manager")) {
+            logger.info("매니저 로그인 성공: {}", userId);
+            session.setAttribute("user_type", "manager"); // 사용자 타입 설정
+            session.setAttribute("user_id", userId); // 사용자 ID 설정
+            return "redirect:/manager/dash-board"; // 매니저 대시보드로 리다이렉트
+        } else {
+            logger.warn("로그인 실패: deptNo={}, userId={}", deptNo, userId);
+            model.addAttribute("error", loginResult); // 에러 메시지 추가
+            return "common/login"; // 로그인 페이지로 돌아감
         }
-
-        // Manager 테이블에서 조회
-        try {
-            int managerDeptNo = Integer.parseInt(deptNo);
-            Optional<Manager> manager = managerLoginRepository.findByManagerDeptNoAndManagerIdAndManagerPassword(managerDeptNo, userId, userPassword);
-            if (manager.isPresent()) {
-                logger.info("매니저 로그인 성공: {}", userId);
-                session.setAttribute("manager_id", manager.get().getManagerId());
-                session.setAttribute("manager_name", manager.get().getManagerName());
-                return "redirect:/manager/dash-board";
-            }
-        } catch (NumberFormatException e) {
-            logger.warn("부서 번호 변환 실패: {}", deptNo);
-        }
-
-        logger.warn("로그인 실패: deptNo={}, userId={}", deptNo, userId);
-        model.addAttribute("error", "로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다.");
-        return "common/login";
     }
 }

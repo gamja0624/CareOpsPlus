@@ -1,5 +1,12 @@
 package himedia.project.careops.repository;
 
+/**
+ * @author 노태윤 
+ * @editDate 2024-09-26
+ */
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +20,5 @@ import himedia.project.careops.entity.ManagerDepartment;
 
 @Repository
 public interface ManagerDepartmentRepository extends JpaRepository<ManagerDepartment, Integer> {
-
+    Optional<ManagerDepartment> findByManagerDeptNo(int managerDeptNo);
 }
