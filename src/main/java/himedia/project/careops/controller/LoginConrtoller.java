@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("")
+@RequestMapping("/")
 public class LoginConrtoller {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());

@@ -29,10 +29,6 @@ public class LoginController {
         this.managerLoginRepository = managerLoginRepository;
     }
 
-    @GetMapping("")
-    public String test() {
-    	return "common/login";
-    }
     @PostMapping("")
     public String login(@RequestParam("department_dept_no") String deptNo,
                         @RequestParam("user_id") String userId,
