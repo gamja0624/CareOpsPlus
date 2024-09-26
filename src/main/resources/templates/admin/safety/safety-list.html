@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<!-- 
-@author 이홍준
-@editDate 2024-09-19~ -->
 <html xmlns:th="http://www.thymleaf.org">
   <head>
   	<meta charset="UTF-8">
@@ -14,7 +11,7 @@
       /* 목록 테이블 */
       .table { text-align: center; vertical-align: inherit; }
       .table-head { font-weight: 600; font-size: 20px; }
-      .table-row { line-height: 40px; border-b양호m: 1px solid #d9d9d9;  }
+      .table-row { line-height: 40px; border-bottom: 1px solid #d9d9d9;  }
       .detail-a { cursor: pointer; }
       .detail-icon { width: 30px; line-height: 30px; vertical-align: middle; }
       /* 버튼라인 */
@@ -62,7 +59,24 @@
     				    </tr>
     				  </thead>
     				  <tbody>
-    				    <tr class="table-row" >
+                        <tr th:each="safetyResultList : ${safetyResultList}" >
+                          <th:block th:each="safetyListAll : ${safetyListAll}" >
+                          <td th:text="${safetyResultList.smNo}" > 
+                          <td th:text="${safetyResultList.adminName}" > 
+                          <td th:text="${#lists.contains(safetyListAll.smlList, '소화기') ? safetyListAll.smlCheck : '-'}"></td> 
+                          <td th:text="${#lists.contains(safetyListAll.smlList, '스프링쿨러') ? safetyListAll.smlCheck : '-'}"></td> 
+                          <td th:text="${#lists.contains(safetyListAll.smlList, '소화전설비') ? safetyListAll.smlCheck : '-'}"></td> 
+                          <td th:text="${#lists.contains(safetyListAll.smlList, '피난설비') ? safetyListAll.smlCheck : '-'}"></td> 
+                          <td th:text="${#lists.contains(safetyListAll.smlList, '유도등') ? safetyListAll.smlCheck : '-'}"></td> 
+                          <td th:text="${#lists.contains(safetyListAll.smlList, '대피로') ? safetyListAll.smlCheck : '-'}"></td> 
+                          <td th:text="${#lists.contains(safetyListAll.smlList, '비상방송설비') ? safetyListAll.smlCheck : '-'}"></td> 
+                          <td th:text="${#lists.contains(safetyListAll.smlList, '비상구') ? safetyListAll.smlCheck : '-'}"></td> 
+                          <td th:text="${safetyResultList.smCheck}" > 
+                          <td th:text="${safetyResultList.smDate}" > 
+                          <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+                          </th:block>
+                        </tr>
+    				    <!-- <tr class="table-row" >
     				      <th scope="row">1020</th>
     				      <td>홍길동</td>
     				      <td>양호</td>
@@ -212,7 +226,7 @@
     				      <td>양호</td>
     				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
     				    </tr>
-    				  </tbody>
+    				  </tbody> -->
     				</table>
     				 <!-- 페이지네이션 --> 
      				<div class="pagination">
