@@ -79,7 +79,7 @@ public class AdminDTO {
 
 	@Override
     public String toString() {
-    	return "AdminDTO [adminId=" + adminId + ", adminDeptNo=" + adminDeptNo + ", adminDeptName=" + adminDeptName + ", adminPassword=" + adminPassword 
+    	return "AdminDTO [adminId=" + adminId + ", adminDeptNo=" + adminDeptNo.getAdminDeptNo() + ", adminDeptName=" + adminDeptName + ", adminPassword=" + adminPassword 
     			+ ", adminName=" + adminName + ", adminPhoneNumber=" + adminPhoneNumber + "]";
     }
 }

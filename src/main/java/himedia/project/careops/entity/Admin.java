@@ -9,7 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.ToString;
 
@@ -22,9 +22,8 @@ public class Admin {
     @Column(name="admin_id", nullable = false)
     private String adminId;
     
-    @ManyToOne
-    @JoinColumn(name = "admin_dept_no", nullable = false)
-    private AdminDepartment adminDeptNo;
+    @Column(name="admin_dept_no", nullable = false)
+    private String adminDeptNo;
 
     @Column(name="admin_dept_name", nullable = false)
     private String adminDeptName;
@@ -40,7 +39,7 @@ public class Admin {
     
     public Admin() {}
     
-    public Admin(String adminId, AdminDepartment adminDeptNo, String adminDeptName, String adminPassword, 
+    public Admin(String adminId, String adminDeptNo, String adminDeptName, String adminPassword, 
             String adminName, String adminPhoneNumber) {
     	this.adminId = adminId;
     	this.adminDeptNo = adminDeptNo;
@@ -58,11 +57,11 @@ public class Admin {
 		this.adminId = adminId;
 	}
 
-	public AdminDepartment getAdminDeptNo() {
+	public String getAdminDeptNo() {
 		return adminDeptNo;
 	}
 
-	public void setAdminDeptNo(AdminDepartment adminDeptNo) {
+	public void setAdminDeptNo(String adminDeptNo) {
 		this.adminDeptNo = adminDeptNo;
 	}
 
@@ -100,7 +99,7 @@ public class Admin {
 
 	@Override
     public String toString() {
-    	return "AdminDTO [adminId=" + adminId + ", adminDeptNo=" + adminDeptNo + ", adminDeptName=" + adminDeptName + ", adminPassword=" + adminPassword 
-    			+ ", adminName=" + adminName + ", adminPhoneNumber=" + adminPhoneNumber + "]";
+    	return "AdminDTO [adminId=" + adminId + ", adminDeptNo=" + adminDeptNo + ", adminDeptName=" + adminDeptName 
+    			+ ", adminPassword=" + adminPassword + ", adminName=" + adminName + ", adminPhoneNumber=" + adminPhoneNumber + "]";
     }
 }

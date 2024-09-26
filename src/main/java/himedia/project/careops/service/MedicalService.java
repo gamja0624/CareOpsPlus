@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ListMedicalDevicesDTO;
@@ -37,7 +38,7 @@ public class MedicalService {
 	public ListMedicalDevicesDTO findByMedicalLmdMinorCateCode(String lmdMinorCateCode) {
 		
 		ListMedicalDevices medicalDevice = medicalRepository.findById(lmdMinorCateCode).orElseThrow(IllegalArgumentException::new);
-		log.info("medicalDevice : {}", medicalDevice);
+		// log.info("medicalDevice : {}", medicalDevice);
 		
 		return modelMapper.map(medicalDevice, ListMedicalDevicesDTO.class);
 	}
@@ -58,6 +59,25 @@ public class MedicalService {
 	// 의료기기 등록
 	@Transactional
 	public void addMedicalDevice(ListMedicalDevicesDTO newMedicalDevice) {
+		
 		medicalRepository.save(modelMapper.map(newMedicalDevice, ListMedicalDevices.class));
+		
 	}
+	
+	// 의료기기 수정
+	@Transactional
+	public void editMedicalDevice(
+			ListMedicalDevicesDTO editMedical,
+			@Param("lmdStatus") String lmdStatus, @Param("lmdDeviceCnt") String lmdDeviceCnt, @Param("lmdManagerName") String lmdManagerName) {
+		
+		ListMedicalDevices findMedical = medicalRepository.findById(editMedical.getLmdMinorCateCode())
+				.orElseThrow(IllegalArgumentException::new);
+		
+		findMedical.setLmdStatus(lmdStatus);
+		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));
+		findMedical.setLmdManagerName(lmdManagerName);
+		
+		log.info("서비스 종료 : editMedicalDevice !!!!!!!!!!!!");
+	}
+	
 }

@@ -17,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,7 +29,7 @@ public class SafetyManagement {
 	@Column(name="sm_no", nullable =  false)
 	private int smNo;				// 점검 번호
 	
-	@ManyToOne
+	@OneToMany
 	@JoinColumn(name="admin_id", nullable = false)
 	private Admin adminId;			// 관리자 아이디
 	

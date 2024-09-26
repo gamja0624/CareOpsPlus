@@ -1,17 +1,16 @@
 package himedia.project.careops.entity;
 
 /**
- * @author 노태윤 -> 진혜정
+ * @author 진혜정
  * @editDate 2024-09-25
  */
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.ToString;
 
@@ -21,12 +20,11 @@ import lombok.ToString;
 public class Manager {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "manager_id")
     private String managerId;
 
-    @ManyToOne
-    @JoinColumn(name="manager_dept_no", nullable = false)
+    @OneToMany(mappedBy = "manager_dept_no")
+    // @JoinColumn(name="manager_dept_no", nullable = false)
     private ManagerDepartment managerDeptNo;
 
     @Column(name = "manager_dept_part")

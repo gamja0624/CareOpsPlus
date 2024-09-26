@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import himedia.project.careops.dto.ManagerDepartmentDTO;
+import himedia.project.careops.service.ManagerDepartmentService;
 import himedia.project.careops.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,15 +26,17 @@ public class AccountController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final ManagerService managerService;
+	private final ManagerDepartmentService managerDepartmentService;
 	
-	public AccountController(ManagerService managerService) {
+	public AccountController(ManagerService managerService, ManagerDepartmentService managerDepartmentService) {
 		this.managerService = managerService;
+		this.managerDepartmentService = managerDepartmentService;
 	}
 	
 	@GetMapping("/account-department")
     public String accountDepartment(Model model) {
         // 전체 부서 조회
-        List<ManagerDepartmentDTO> managerDepartment= managerService.findAllDepartments();
+        List<ManagerDepartmentDTO> managerDepartment= managerDepartmentService.findAllDepartments();
         log.info("Manager Departments: {}", managerDepartment);
         model.addAttribute("managerDepartment", managerDepartment);
         return "admin/account/account-department";

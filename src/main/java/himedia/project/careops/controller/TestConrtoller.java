@@ -6,8 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import himedia.project.careops.dto.AdminDepartmentDTO;
+import himedia.project.careops.dto.AdminDTO;
 import himedia.project.careops.service.AdminDepartmentService;
 import himedia.project.careops.service.AdminService;
 import himedia.project.careops.service.ManagerDepartmentService;
@@ -16,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("")
-public class LoginConrtoller {
+@RequestMapping("/")
+public class TestConrtoller {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final AdminDepartmentService adminDepartmentService;
@@ -25,7 +26,7 @@ public class LoginConrtoller {
 	private final ManagerDepartmentService managerDepartmentService;
 	private final ManagerService mangerService;
 	
-	public LoginConrtoller(
+	public TestConrtoller(
 			AdminDepartmentService adminDepartmentService, AdminService adminService,
 			ManagerDepartmentService managerDepartmentService, ManagerService mangerService) {
 		this.adminDepartmentService = adminDepartmentService;
@@ -34,24 +35,24 @@ public class LoginConrtoller {
 		this.mangerService = mangerService;
 	}
 	
+	@GetMapping("favicon.ico")
+    @ResponseBody
+    public void returnNoFavicon() {
+    }
+	
 	@GetMapping("")
 	public String login() {
 		return "common/login";
 	}
 	
-	@GetMapping("/{deptNo}")
-	public String loginPage(@PathVariable String deptNo) {
+	@GetMapping("/{admin}")
+	public String loginPage(@PathVariable String admin) {
 		
-		log.info("deptNo : {}", deptNo);
-		AdminDepartmentDTO adminDept = adminDepartmentService.findByAdminDeptNo(deptNo);
+		log.info("받아온 파리미터 : {}", admin);
+		AdminDTO findAdmin = adminService.findByAdminId(admin);
 		
-		log.info("실행 중");
-		
-		if (adminDept != null) {
-			log.info("adminDept : {}", adminDept);
-		} else {
-			log.info("없다 !");
-		}
+		log.info("끝났어여");
+		log.info("findAdmin : {}", findAdmin);
 		
 		return "common/login";
 	}

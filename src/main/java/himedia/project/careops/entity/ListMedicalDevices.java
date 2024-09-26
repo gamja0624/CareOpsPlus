@@ -8,11 +8,14 @@ package himedia.project.careops.entity;
 
 import java.sql.Date;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -44,15 +47,13 @@ public class ListMedicalDevices {
 	@Column(name="lmd_status", nullable = false) // 상태
 	private String lmdStatus;
 	
-	@ManyToOne
-	@JoinColumn(name="lmd_manager_dept_no", referencedColumnName = "manager_dept_no", nullable = false) // 담당자 부서 번호 - 3
+	@Column(name="lmd_manager_dept_no", nullable = false) // 담당자 부서 번호 - 3
 	private Manager lmdManagerDeptNo;
 	
 	@Column(name="lmd_manager_dept_part", nullable = false) // 담당 부서 이름
 	private String lmdManagerDeptPart;
 	
-	@ManyToOne
-	@JoinColumn(name="lmd_manager_id", referencedColumnName = "manager_id", nullable = false) // 담당자 아이디
+	@Column(name="lmd_manager_id", nullable = false) // 담당자 아이디
 	private Manager lmdManagerId;
 	
 	@Column(name="lmd_manager_name", nullable = false) // 담당자 이름
@@ -61,12 +62,10 @@ public class ListMedicalDevices {
 	@Column(name="lmd_date", nullable = false) // 등록일 
 	private Date lmdDate;
 	
-	@ManyToOne
-	@JoinColumn(name="lmd_admin_dept_no", referencedColumnName = "admin_dept_no") // 관리자 부서 번호 - 4
+	@Column(name="lmd_admin_dept_no") // 관리자 부서 번호 - 4
 	private Admin lmdAdminDeptNo;
 	
-	@ManyToOne
-	@JoinColumn(name="lmd_admin_id", referencedColumnName = "admin_id") // 관리자 아이디
+	@Column(name="lmd_admin_id") // 관리자 아이디
 	private Admin lmdAdminId;
 	
 	@Column(name="lmd_admin_name") // 관리자 이름
