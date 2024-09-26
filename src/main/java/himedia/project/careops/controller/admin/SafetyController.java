@@ -1,5 +1,10 @@
 package himedia.project.careops.controller.admin;
 
+/**
+ * @author 이홍준
+ * @editDate 2024-09-20 ~ 
+ */
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,17 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import himedia.project.careops.dto.SafetyManagementDTO;
 import himedia.project.careops.dto.SafetyManagementListDTO;
 import himedia.project.careops.service.SafetyService;
 
-/**
- * @author 이홍준
- * @editDate 2024-09-20 ~ 
- */
 
 @Controller
 @RequestMapping("/admin")
@@ -40,18 +40,26 @@ public class SafetyController{
 		
 		  log.info("목록 페이지 실행");
 		  
-		  List<SafetyManagementDTO> safetyResultList =
-		  safetyService.safetyResultList(); 
-		  log.info("목록 페이지 safetyResultList 실행");
-		  List<SafetyManagementListDTO> safetyListAll = safetyService.safetyListAll();
+			/*
+			 * List<SafetyManagementListDTO> safetyAllList = safetyService.findList();
+			 * model.addAttribute("safetyAllList", safetyAllList);
+			 * 
+			 * log.info("네이티브쿼리 >>>> {}", safetyAllList);
+			 */
+			
+			  List<SafetyManagementDTO> safetyResultList =
+			  safetyService.safetyResultList(); log.info("목록 페이지 safetyResultList 실행");
+			  List<SafetyManagementListDTO> safetyListAll = safetyService.safetyListAll();
+			  
+			  model.addAttribute("safetyResultList", safetyResultList);
+			  model.addAttribute("safetyListAll", safetyListAll);
+			 
 		  
-		  model.addAttribute("safetyResultList", safetyResultList);
-		  model.addAttribute("safetyListAll", safetyListAll);
+			
+			  log.info("safetyResultList >>>{}", safetyResultList);
+			  log.info("safetyListAll>>>{}", safetyListAll);
+			 
 		  
-		  log.info("safetyResultList >>>{}", safetyResultList);
-		  log.info("safetyListAll>>>{}", safetyListAll);
-		 
-		
 		return "admin/safety/safety-list";
 	}
 	
