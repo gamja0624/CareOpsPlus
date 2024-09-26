@@ -1,5 +1,10 @@
 package himedia.project.careops.dto;
 
+/**
+ * @author 이홍준 
+ * @editDate 2024-09-24
+ */
+
 import himedia.project.careops.entity.SafetyManagementList;
 import lombok.Getter;
 import lombok.Setter;

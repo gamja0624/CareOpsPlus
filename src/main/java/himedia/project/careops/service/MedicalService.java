@@ -37,6 +37,7 @@ public class MedicalService {
 	public ListMedicalDevicesDTO findByMedicalLmdMinorCateCode(String lmdMinorCateCode) {
 		
 		ListMedicalDevices medicalDevice = medicalRepository.findById(lmdMinorCateCode).orElseThrow(IllegalArgumentException::new);
+		log.info("medicalDevice : {}", medicalDevice);
 		
 		return modelMapper.map(medicalDevice, ListMedicalDevicesDTO.class);
 	}
@@ -49,6 +50,7 @@ public class MedicalService {
                 Sort.by("lmdMinorCateCode").ascending());
 		
 		Page<ListMedicalDevices> medicalDevicesList = medicalRepository.findAll(pageable);
+		// log.info("조회된 엔티티 데이터: {}", medicalDevicesList.getContent());
 		
 		return medicalDevicesList.map(medical -> modelMapper.map(medical, ListMedicalDevicesDTO.class));
 	}

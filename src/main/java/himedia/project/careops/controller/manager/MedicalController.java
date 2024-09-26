@@ -46,6 +46,9 @@ public class MedicalController {
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
 		model.addAttribute("paging", paging);
 		
+		log.info("컨트롤러 : 1번째 : {}", medicalDevicesList.get().toList().toString());
+		log.info("컨트롤러 : 2번째 : {}", paging);
+		
 		return "manager/medical/medical-list";
 	}
 	
