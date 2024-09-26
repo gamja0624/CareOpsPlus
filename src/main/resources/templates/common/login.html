@@ -35,17 +35,22 @@
          z-index: -1;
      }
 
-     .star {
-         fill: white;
-         animation: moveStar 30s linear infinite;
-         opacity: 0.8;
-         filter: drop-shadow(0 0 6px white);
-     }
+	.star {
+	    fill: white; /* 별 색상 */
+	    animation: twinkle 3s infinite alternate;
+	    opacity: 0.8; /* 기본 불투명도 */
+	    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8)); /* 그림자 효과 */
+	}
 
-     @keyframes moveStar {
-         0% { transform: translateY(-100px); }
-         100% { transform: translateY(100vh); }
-     }
+    @keyframes twinkle {
+        0% { opacity: 0.3; }
+        100% { opacity: 1; }
+    }
+
+    @keyframes moveStar {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(100vh); }
+    }
 
      .login-box {
          width: 30%;
@@ -105,13 +110,13 @@
 	<body>
 
 	<div id="background">
-	    <svg id="sky"></svg>
+    	<svg id="sky" style="position: absolute; top: 0; left: 0;"></svg> <!-- 위치 설정 -->
 	</div>
 
 	<img src="img/logo-ver2.png" class="site_logo" alt="사이트 로고">
 
 	<div class="login-box">
-    <form action="/" method="post"> 
+    <form id="loginForm" action="/" method="post"> 
        <div class="mb-3">
     		<label for="inputDepartments" class="form-label">부서 번호</label>
     		<input type="text" class="form-control" id="inputDepartments" name="department_dept_no" required>
@@ -146,50 +151,76 @@
         </div>
     </div>
 
-		<script th:src="@{/js/bootstrap.bundle.min.js}" >
-		// 배경 설정 및 별 생성
-		const backgroundSetting = () => {
-		    const $background = document.querySelector("#background");
-		    const $sky = document.querySelector("#sky");
-		    if (!($background instanceof HTMLElement)) return;
-		    if (!($sky instanceof SVGElement)) return;
+		<script>
 		
-		    const maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5;
-		    const getRandomX = () => Math.random() * maxSize + "";
-		    const getRandomY = () => Math.random() * maxSize + "";
-		    const randomRadius = () => Math.random() * 1.5 + 1 + "";
-		
-		    const starCount = Math.floor(maxSize / 10);
-		    $background.style.width = `${maxSize}px`;
-		    $background.style.height = `${maxSize}px`;
-		    $sky.style.width = `${maxSize}px`;
-		    $sky.style.height = `${maxSize}px`;
-		
-		    const svgCircleList = new Array(starCount).fill(null).map(() => {
-		        const $$circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		        $$circle.classList.add("star");
-		        $$circle.setAttributeNS(null, "cx", getRandomX());
-		        $$circle.setAttributeNS(null, "cy", getRandomY());
-		        $$circle.setAttributeNS(null, "r", randomRadius());
-		        return $$circle;
-		    });
-		
-		    $sky.innerHTML = "";
-		    $sky.append(...svgCircleList);
-		};
-		
-		(() => {
-		    window.addEventListener("DOMContentLoaded", () => {
-		        backgroundSetting();
-		        setInterval(() => {
-		            backgroundSetting();
-		        }, 30000);
-		    });
-		
-		    window.addEventListener("resize", () => {
-		        backgroundSetting();
-		    });
-		})();
+/* 	    $(document).ready(function() {
+	        $('#loginForm').submit(function(e) {
+	            e.preventDefault();
+	            $.ajax({
+	                url: '/',
+	                type: 'POST',
+	                data: $(this).serialize(),
+	                success: function(response) {
+	                    if (response.success) {
+	                        // 성공 시 리다이렉트
+	                        window.location.href = response.redirectUrl;
+	                    } else {
+	                        // 실패 시 에러 메시지 표시
+	                        $('#loginErrorModal .modal-body').text(response.error);
+	                        $('#loginErrorModal').modal('show');
+	                    }
+	                },
+	                error: function(xhr, status, error) {
+	                    // AJAX 요청 실패 시 에러 처리
+	                    $('#loginErrorModal .modal-body').text('서버와의 통신 중 오류가 발생했습니다.');
+	                    $('#loginErrorModal').modal('show');
+	                }
+	            });
+	        });
+	    }); */
+        
+	// 배경 설정 및 별 생성
+	const backgroundSetting = () => {
+	    const $background = document.querySelector("#background");
+	    const $sky = document.querySelector("#sky");
+	    if (!($background instanceof HTMLElement) || !($sky instanceof SVGElement)) return;
+	
+	    const maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5; // 배경 크기 조정
+	    const getRandomX = () => Math.random() * maxSize;
+	    const getRandomY = () => Math.random() * maxSize;
+	    const randomRadius = () => Math.random() * 1.5 + 1; // 랜덤 반지름 생성
+	    const randomDuration = () => Math.random() * 20 + 10; // 랜덤 지속 시간
+	
+	    const starCount = Math.floor(maxSize / 10);
+	    $background.style.width = `${maxSize}px`;
+	    $background.style.height = `${maxSize}px`;
+	    $sky.style.width = `${maxSize}px`;
+	    $sky.style.height = `${maxSize}px`;
+	
+	    $sky.innerHTML = ''; // 기존 별들 제거
+	
+	    for (let i = 0; i < starCount; i++) {
+	        const $$circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+	        $$circle.classList.add("star");
+	        $$circle.setAttributeNS(null, "cx", getRandomX());
+	        $$circle.setAttributeNS(null, "cy", getRandomY());
+	        $$circle.setAttributeNS(null, "r", randomRadius());
+	        
+	        const duration = randomDuration();
+	        $$circle.style.animation = `twinkle 3s infinite alternate, moveStar ${duration}s linear infinite`;
+	        
+	        $sky.appendChild($$circle);
+	    }
+	};
+
+	
+	window.addEventListener("DOMContentLoaded", () => {
+	    backgroundSetting();
+	});
+
+	window.addEventListener("resize", () => {
+	    backgroundSetting();
+	});
 		</script>
 	</body>
 </html>

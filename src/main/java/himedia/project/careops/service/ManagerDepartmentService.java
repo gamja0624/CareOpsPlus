@@ -16,4 +16,5 @@ import lombok.extern.slf4j.Slf4j;
 public class ManagerDepartmentService {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
 }

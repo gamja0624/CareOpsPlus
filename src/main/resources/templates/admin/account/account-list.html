@@ -53,8 +53,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="manager : ${managerList}"  class="tr-style">
-					            <td th:text="${manager.managerDeptNo}"></td> 
+							<tr th:each="manager : ${manager}"  class="tr-style">
+					            <td th:text="${manager.managerDeptNo.managerDeptNo}"></td> 
 								<td th:text="${manager.managerDeptPart}"></td>
 								<td th:text="${manager.managerDeptName}"></td>
 								<td th:text="${manager.managerId}"></td>
@@ -64,7 +64,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<button>담당자 등록</button>
+					<button >담당자 등록</button>
 				</div>
 			</div>
 		</div>

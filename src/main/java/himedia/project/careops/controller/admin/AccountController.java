@@ -51,11 +51,11 @@ public class AccountController {
 	@GetMapping("/account-list")
 	public String accountList(@PageableDefault Pageable page, Model model) {
 		
-		Page<ManagerDTO> managerList = managerService.allManager(page);
-		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(managerList);
+		Page<ManagerDTO> manager = managerService.allManager(page);
+		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(manager);
 		
-		log.info("Manager: {}", managerList);
-		model.addAttribute("manager", managerList);
+		log.info("Manager: {}", manager);
+		model.addAttribute("manager", manager);
 		model.addAttribute("paging", paging);
 		
 		return "admin/account/account-list";
