@@ -8,10 +8,9 @@ package himedia.project.careops.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import himedia.project.careops.entity.ClaimCategory;
-
+import himedia.project.careops.entity.ClaimSubCategory;
 
 @Repository
-public interface ClaimCategoryRepository extends JpaRepository<ClaimCategory, String> {
+public interface ClaimSubCategoryRepository extends JpaRepository<ClaimSubCategory, Integer > {
 
 }
