@@ -28,6 +28,12 @@ public class LoginController {
         this.adminLoginRepository = adminLoginRepository;
         this.managerLoginRepository = managerLoginRepository;
     }
+    
+    // 임시용 
+    @GetMapping("")
+    public String loginTest() {
+    	return "common/login";
+    }
 
     @PostMapping("")
     public String login(@RequestParam("department_dept_no") String deptNo,
