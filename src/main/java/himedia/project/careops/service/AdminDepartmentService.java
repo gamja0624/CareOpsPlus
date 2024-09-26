@@ -1,11 +1,11 @@
 package himedia.project.careops.service;
 
-import org.modelmapper.ModelMapper;
-
 /**
  * @author 진혜정 
  * @editDate 2024-09-25
  */
+
+import org.modelmapper.ModelMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,18 +29,11 @@ public class AdminDepartmentService {
 		this.modelMapper = modelMapper;
 	}
 	
-	// 관리자 부서 번호 찾기
+	// 관리자 부서 번호로 찾기
 	public AdminDepartmentDTO findByAdminDeptNo(String adminDeptNo) {
 		
+		// log.info("[AdminDepartmentService] 시작 !!!! - findByAdminDeptNo");
 		AdminDepartment adminDept = adminDepartmentRepository.findById(adminDeptNo).orElseThrow(IllegalArgumentException::new);
-		
-		return modelMapper.map(adminDept, AdminDepartmentDTO.class);
-	}
-
-	// 관리자 부서 이름으로 찾기
-	public AdminDepartmentDTO findByAdminDeptName(String adminDeptName) {
-		
-		AdminDepartment adminDept = adminDepartmentRepository.findById(adminDeptName).orElseThrow(IllegalArgumentException::new);
 		
 		return modelMapper.map(adminDept, AdminDepartmentDTO.class);
 	}

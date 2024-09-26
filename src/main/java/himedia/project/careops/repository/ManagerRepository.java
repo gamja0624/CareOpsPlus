@@ -1,16 +1,11 @@
 package himedia.project.careops.repository;
 
 /**
- * @author 노태윤 
- * @editDate 2024-09-26
+ * @author 진혜정, 노태윤
+ * @editDate 2024-09-25
  */
 
 import java.util.Optional;
-
-/**
- * @author 진혜정
- * @editDate 2024-09-25
- */
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -21,7 +16,7 @@ import himedia.project.careops.entity.ManagerDepartment;
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, String> {
 	
-	 // 부서 번호, 매니저 아이디, 비밀번호로 매니저를 찾는 메서드
+	// 부서 번호, 매니저 아이디, 비밀번호로 매니저를 찾는 메서드
     Optional<Manager> findByManagerDeptNoAndManagerIdAndManagerPassword(ManagerDepartment managerDeptNo, String managerId, String managerPassword);
 
     // Mypage에서 쓰는 매니저 id 찾는 메서드

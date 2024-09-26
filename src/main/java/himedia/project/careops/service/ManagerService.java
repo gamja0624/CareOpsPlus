@@ -1,10 +1,5 @@
 package himedia.project.careops.service;
 
-/**
- * @author 진혜정, 최은지 
- * @editDate 2024-09-25
- */
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,14 +21,43 @@ import himedia.project.careops.repository.ManagerRepository;
 public class ManagerService {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
-	private final ManagerRepository managerRepository;
+	
 	private final ManagerDepartmentRepository managerDepartmentRepository;
+	private final ManagerRepository managerRepository;
 	private final ModelMapper modelMapper;
 	
-	public ManagerService(ManagerDepartmentRepository managerDepartmentRepository, ManagerRepository managerRepository, ModelMapper modelMapper) {
+	public ManagerService(
+			ManagerDepartmentRepository managerDepartmentRepository, ManagerRepository managerRepository, 
+			ModelMapper modelMapper) {
 		this.managerRepository = managerRepository; 
 		this.managerDepartmentRepository = managerDepartmentRepository;
 		this.modelMapper = modelMapper;
+	}
+	
+	// 작성자 : 진혜정
+	// 매니저 아이디로 매니저 정보 반환
+	public ManagerDTO findByManagerId(String managerId) {
+		
+		// log.info("[MangerService] 시작 !!!! - findByAdminNo 메서드 실행");
+		Manager findManager = managerRepository.findById(managerId).orElseThrow(IllegalArgumentException::new);
+		
+		return modelMapper.map(findManager, ManagerDTO.class);
+	}
+
+	// 작성자 : 진혜정
+	// 부서 이름으로 매니저 리스트 찾기
+	public void findByManagerName(String lmdManagerDeptPart) {
+		
+		log.info("[MangerService] 시작 !!!! - findByManagerName 메서드 실행");
+		List<Manager> findDeptMangerList = managerRepository.findAll();
+	
+		System.out.println("ㅋㅋ" + lmdManagerDeptPart);
+		for(Manager m : findDeptMangerList) {
+			
+			if (m.getManagerDeptName().equals(lmdManagerDeptPart)) {
+				System.out.println("찾았땅" + m.getManagerName());
+			}
+		}
 	}
 	
 	// 작성자 : 최은지
@@ -57,6 +81,5 @@ public class ManagerService {
     	
     	return managerList.map(manager -> modelMapper.map(manager, ManagerDTO.class));
     }
-    
 }
 

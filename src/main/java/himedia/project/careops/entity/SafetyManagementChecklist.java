@@ -18,12 +18,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name = "safety_management_checklist")
+@ToString
 public class SafetyManagementChecklist {
 
 	@Id
@@ -31,9 +31,8 @@ public class SafetyManagementChecklist {
 	@Column(name="smc_no", nullable = false)
 	private int smcNo;
 	
-	@ManyToOne
-	@JoinColumn(name="sml_no", nullable = false)
-	private SafetyManagementList smlNo;
+	@Column(name="sml_no", nullable = false)
+	private int smlNo;
 	
 	@Column(name="sml_list", nullable = false)
 	private String smlList;
@@ -50,7 +49,7 @@ public class SafetyManagementChecklist {
 
 	public SafetyManagementChecklist() {}
 	
-	public SafetyManagementChecklist(int smcNo, SafetyManagementList smlNo, String smlList, String smcList,
+	public SafetyManagementChecklist(int smcNo, int smlNo, String smlList, String smcList,
 			Boolean smcCheck, String smcIssue) {
 		super();
 		this.smcNo = smcNo;
@@ -69,11 +68,11 @@ public class SafetyManagementChecklist {
 		this.smcNo = smcNo;
 	}
 
-	public SafetyManagementList getSmlNo() {
+	public int getSmlNo() {
 		return smlNo;
 	}
 
-	public void setSmlNo(SafetyManagementList smlNo) {
+	public void setSmlNo(int smlNo) {
 		this.smlNo = smlNo;
 	}
 
@@ -111,7 +110,7 @@ public class SafetyManagementChecklist {
 	
 	@Override
 	public String toString() {
-		return "SafetyManagementChecklistDTO [ smcNo=" + smcNo + "smlNo=" + smlNo + "smlList=" + smlList 
+		return "SafetyManagementChecklist [ smcNo=" + smcNo + "smlNo=" + smlNo + "smlList=" + smlList 
 				+ "smcList=" + smcList + "smcCheck=" + smcCheck + "smcIssue=" + smcIssue + "]";
 	}
 }

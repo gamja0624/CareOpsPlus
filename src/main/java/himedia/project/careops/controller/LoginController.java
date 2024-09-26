@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import jakarta.servlet.http.HttpSession;
 import himedia.project.careops.service.LoginService;
 import org.slf4j.Logger;
@@ -25,6 +27,13 @@ public class LoginController {
 
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
+    }
+    
+    // 작성자 : 진혜정
+    // 파라미터 값으로 favicon.ico 들어오는 거 방지
+    @GetMapping("favicon.ico")
+    @ResponseBody
+    public void returnNoFavicon() {
     }
 
     @GetMapping("")

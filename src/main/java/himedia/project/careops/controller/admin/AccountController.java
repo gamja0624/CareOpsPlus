@@ -22,19 +22,22 @@ import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.dto.ManagerDepartmentDTO;
+import himedia.project.careops.service.ManagerDepartmentService;
 import himedia.project.careops.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/admin/account")
+@RequestMapping("/admin")
 public class AccountController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final ManagerService managerService;
+	private final ManagerDepartmentService managerDepartmentService;
 	
-	public AccountController(ManagerService managerService) {
+	public AccountController(ManagerService managerService, ManagerDepartmentService managerDepartmentService) {
 		this.managerService = managerService;
+		this.managerDepartmentService = managerDepartmentService;
 	}
 	
 	// 전체 부서 조회

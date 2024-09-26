@@ -1,8 +1,10 @@
 package himedia.project.careops.dto;
+
 /**
  * @author 최은지 
  * @editDate 2024-09-25
  */
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

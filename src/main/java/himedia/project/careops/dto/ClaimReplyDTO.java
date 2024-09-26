@@ -7,7 +7,6 @@ package himedia.project.careops.dto;
 
 import java.sql.Date;
 
-import himedia.project.careops.entity.Admin;
 import himedia.project.careops.entity.Claim;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +22,8 @@ public class ClaimReplyDTO {
 	private Claim claimSubCategoryNo;	// 민원 소분류 번호 ( 외래키 )
 	private Claim managerId;			// 민원 담당자 아이디 ( 외래키 ) 
 	private Claim managerDeptNo;		// 민원 담당자 부서번호 ( 외래키 )
-	private Admin adminId;				// 관리자 아이디 ( 외래키 )
-	private Admin adminDeptNo;			// 관리자 부서번호 ( 외래키 )
+	private String adminId;				// 관리자 아이디 ( 외래키 )
+	private String adminDeptNo;			// 관리자 부서번호 ( 외래키 )
 	private String admin_name;			// 관리자 이름
 	private String claimReTitle;		// 민원 답변 제목
 	private String claimReContent;		// 민원 답변 내용
@@ -33,7 +32,7 @@ public class ClaimReplyDTO {
 	public ClaimReplyDTO() {}
 
 	public ClaimReplyDTO(Claim claimNo, Claim claimCategoryNo, Claim claimSubCategoryNo, Claim managerId,
-			Claim managerDeptNo, Admin adminId, Admin adminDeptNo, String admin_name, String claimReTitle,
+			Claim managerDeptNo, String adminId, String adminDeptNo, String admin_name, String claimReTitle,
 			String claimReContent, Date claimReDate) {
 		super();
 		this.claimNo = claimNo;
@@ -89,19 +88,19 @@ public class ClaimReplyDTO {
 		this.managerDeptNo = managerDeptNo;
 	}
 
-	public Admin getAdminId() {
+	public String getAdminId() {
 		return adminId;
 	}
 
-	public void setAdminId(Admin adminId) {
+	public void setAdminId(String adminId) {
 		this.adminId = adminId;
 	}
 
-	public Admin getAdminDeptNo() {
+	public String getAdminDeptNo() {
 		return adminDeptNo;
 	}
 
-	public void setAdminDeptNo(Admin adminDeptNo) {
+	public void setAdminDeptNo(String adminDeptNo) {
 		this.adminDeptNo = adminDeptNo;
 	}
 

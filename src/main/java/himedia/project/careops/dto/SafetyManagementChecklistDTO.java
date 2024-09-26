@@ -5,7 +5,6 @@ package himedia.project.careops.dto;
  * @editDate 2024-09-24
  */
 
-import himedia.project.careops.entity.SafetyManagementList;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,7 +15,7 @@ import lombok.ToString;
 public class SafetyManagementChecklistDTO {
 	
 	private int smcNo;
-	private SafetyManagementList smlNo;
+	private int smlNo;
 	private String smlList;
 	private String smcList;
 	private Boolean smcCheck;
@@ -24,7 +23,7 @@ public class SafetyManagementChecklistDTO {
 	
 	public SafetyManagementChecklistDTO() {}
 
-	public SafetyManagementChecklistDTO(int smcNo, SafetyManagementList smlNo, String smlList, String smcList, Boolean smcCheck,
+	public SafetyManagementChecklistDTO(int smcNo, int smlNo, String smlList, String smcList, Boolean smcCheck,
 			String smcIssue) {
 		this.smcNo = smcNo;
 		this.smlNo = smlNo;
@@ -42,11 +41,11 @@ public class SafetyManagementChecklistDTO {
 		this.smcNo = smcNo;
 	}
 
-	public SafetyManagementList getSmlNo() {
+	public int getSmlNo() {
 		return smlNo;
 	}
 
-	public void setSmlNo(SafetyManagementList smlNo) {
+	public void setSmlNo(int smlNo) {
 		this.smlNo = smlNo;
 	}
 

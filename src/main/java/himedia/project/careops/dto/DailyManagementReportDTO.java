@@ -1,17 +1,15 @@
 package himedia.project.careops.dto;
 
-import java.sql.Date;
-
-import himedia.project.careops.entity.Admin;
-import himedia.project.careops.entity.AdminDepartment;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * @author 이홍준 
  * @editDate 2024-09-25
  */
+
+import java.sql.Date;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -19,8 +17,8 @@ import lombok.ToString;
 public class DailyManagementReportDTO {
 
 	private int dmrNo;
-	private Admin adminId;
-	private AdminDepartment adminDeptNo;
+	private String adminId;
+	private String adminDeptNo;
 	private String adminName;
 	private String adminDeptName;
 	private String dmrReportDetail;
@@ -29,7 +27,7 @@ public class DailyManagementReportDTO {
 	
 	public DailyManagementReportDTO() {}
 	
-	public DailyManagementReportDTO(int dmrNo, Admin adminId, AdminDepartment adminDeptNo, String adminName,
+	public DailyManagementReportDTO(int dmrNo, String adminId, String adminDeptNo, String adminName,
 			String adminDeptName, String dmrReportDetail, String dmrIssue, Date dmrDate) {
 		this.dmrNo = dmrNo;
 		this.adminId = adminId;
@@ -49,19 +47,19 @@ public class DailyManagementReportDTO {
 		this.dmrNo = dmrNo;
 	}
 
-	public Admin getAdminId() {
+	public String getAdminId() {
 		return adminId;
 	}
 
-	public void setAdminId(Admin adminId) {
+	public void setAdminId(String adminId) {
 		this.adminId = adminId;
 	}
 
-	public AdminDepartment getAdminDeptNo() {
+	public String getAdminDeptNo() {
 		return adminDeptNo;
 	}
 
-	public void setAdminDeptNo(AdminDepartment adminDeptNo) {
+	public void setAdminDeptNo(String adminDeptNo) {
 		this.adminDeptNo = adminDeptNo;
 	}
 

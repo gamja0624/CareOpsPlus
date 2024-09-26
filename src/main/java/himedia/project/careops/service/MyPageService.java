@@ -6,9 +6,11 @@ package himedia.project.careops.service;
  */
 
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import himedia.project.careops.dto.AdminDTO;
 import himedia.project.careops.dto.AdminDepartmentDTO;
 import himedia.project.careops.dto.ManagerDTO;
@@ -57,9 +59,11 @@ public class MyPageService {
 		Admin admin = new Admin();
 		admin.setAdminId(adminDTO.getAdminId());
 
+		// [확인]
 		// AdminDepartmentDTO를 AdminDepartment로 변환한 후 설정
-		AdminDepartment adminDepartment = convertToEntity(adminDTO.getAdminDeptNo());
-		admin.setAdminDeptNo(adminDepartment);
+		// AdminDepartment adminDepartment = convertToEntity(adminDTO.getAdminDeptNo());
+		// AdminDepartment adminDepartment = convertToEntity(adminDTO.getAdminDeptNo());
+		// admin.setAdminDeptNo(adminDepartment);
 
 		admin.setAdminPassword(adminDTO.getAdminPassword());
 		admin.setAdminName(adminDTO.getAdminName());
@@ -97,11 +101,20 @@ public class MyPageService {
 
 		// AdminDepartmentDTO로 변환하여 설정
 		AdminDepartmentDTO deptDTO = new AdminDepartmentDTO();
-		deptDTO.setAdminDeptNo(admin.getAdminDeptNo().getAdminDeptNo());
-		deptDTO.setAdminDeptName(admin.getAdminDeptNo().getAdminDeptName());
-		dto.setAdminDeptNo(deptDTO); // AdminDepartmentDTO 설정
+		
+		// [확인]
+		// deptDTO.setAdminDeptNo(admin.getAdminDeptNo().getAdminDeptNo());
+		// deptDTO.setAdminDeptName(admin.getAdminDeptNo().getAdminDeptName());
+		deptDTO.setAdminDeptNo(admin.getAdminDeptNo());
+		deptDTO.setAdminDeptName(admin.getAdminDeptNo());
+		
+		// [확인]
+		//dto.setAdminDeptNo(deptDTO); // AdminDepartmentDTO 설정
 
-		dto.setAdminDeptName(admin.getAdminDeptNo().getAdminDeptName());
+		// [확인]
+		// dto.setAdminDeptName(admin.getAdminDeptNo().getAdminDeptName());
+		dto.setAdminDeptName(admin.getAdminDeptNo());
+		
 		dto.setAdminName(admin.getAdminName());
 		dto.setAdminPhoneNumber(admin.getAdminPhoneNumber());
 		return dto;

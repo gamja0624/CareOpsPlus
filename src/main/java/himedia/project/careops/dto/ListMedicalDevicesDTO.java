@@ -7,8 +7,6 @@ package himedia.project.careops.dto;
 
 import java.sql.Date;
 
-import himedia.project.careops.entity.Admin;
-import himedia.project.careops.entity.Manager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,14 +26,14 @@ public class ListMedicalDevicesDTO {
 	private int lmdDeviceCnt;           // 장비수
 	private String lmdStatus;           // 상태
 	
-	private Manager lmdManagerDeptNo;   // 담당자 부서 번호
+	private int lmdManagerDeptNo;   	// 담당자 부서 번호
 	private String lmdManagerDeptPart;  // 담당 부서 이름
-	private Manager lmdManagerId;       // 담당자 아이디
+	private String lmdManagerId;        // 담당자 아이디
 	private String lmdManagerName;      // 담당자 이름
 	private Date lmdDate;               // 등록일
 	
-	private Admin lmdAdminDeptNo;       // 관리자 부서 번호
-	private Admin lmdAdminId;           // 관리자 아이디
+	private String lmdAdminDeptNo;      // 관리자 부서 번호
+	private String lmdAdminId;          // 관리자 아이디
 	private String lmdAdminName;        // 관리자 이름
 	private Date lmdLastCheckDate;      // 마지막점검일
 	private Integer lmdClaimNo;         // 민원 번호
@@ -45,7 +43,7 @@ public class ListMedicalDevicesDTO {
 	public ListMedicalDevicesDTO(
 			String lmdMinorCateCode, String lmdMinorCateName, String lmdMajorCateCode, String lmdMajorCateName,
 			String lmdDevicesName, String lmdLicenseNumber, int lmdDeviceCnt, String lmdStatus,
-			Manager lmdManagerDeptNo, String lmdManagerDeptPart, Manager lmdManagerId, String lmdManagerName, Date lmdDate) {
+			int lmdManagerDeptNo, String lmdManagerDeptPart, String lmdManagerId, String lmdManagerName, Date lmdDate) {
 		super();
 		this.lmdMinorCateCode = lmdMinorCateCode;
 		this.lmdMinorCateName = lmdMinorCateName;
@@ -133,11 +131,11 @@ public class ListMedicalDevicesDTO {
 		this.lmdStatus = lmdStatus;
 	}
 
-	public Manager getLmdManagerDeptNo() {
+	public int getLmdManagerDeptNo() {
 		return lmdManagerDeptNo;
 	}
 
-	public void setLmdManagerDeptNo(Manager lmdManagerDeptNo) {
+	public void setLmdManagerDeptNo(int lmdManagerDeptNo) {
 		this.lmdManagerDeptNo = lmdManagerDeptNo;
 	}
 
@@ -149,11 +147,11 @@ public class ListMedicalDevicesDTO {
 		this.lmdManagerDeptPart = lmdManagerDeptPart;
 	}
 
-	public Manager getLmdManagerId() {
+	public String getLmdManagerId() {
 		return lmdManagerId;
 	}
 
-	public void setLmdManagerId(Manager lmdManagerId) {
+	public void setLmdManagerId(String lmdManagerId) {
 		this.lmdManagerId = lmdManagerId;
 	}
 
@@ -173,19 +171,19 @@ public class ListMedicalDevicesDTO {
 		this.lmdDate = lmdDate;
 	}
 
-	public Admin getLmdAdminDeptNo() {
+	public String getLmdAdminDeptNo() {
 		return lmdAdminDeptNo;
 	}
 
-	public void setLmdAdminDeptNo(Admin lmdAdminDeptNo) {
+	public void setLmdAdminDeptNo(String lmdAdminDeptNo) {
 		this.lmdAdminDeptNo = lmdAdminDeptNo;
 	}
 
-	public Admin getLmdAdminId() {
+	public String getLmdAdminId() {
 		return lmdAdminId;
 	}
 
-	public void setLmdAdminId(Admin lmdAdminId) {
+	public void setLmdAdminId(String lmdAdminId) {
 		this.lmdAdminId = lmdAdminId;
 	}
 

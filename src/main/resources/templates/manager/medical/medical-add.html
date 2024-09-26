@@ -9,12 +9,26 @@
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
 		<style type="text/css">
+			/* layout-table */
+			.layout-table { height: 630px; }
+		
 			/* 의료기기 상태 토글 */
 			.form-select { width: 130px; margin: 50px auto; text-align: center; font-size: 20px; }
 			.btn-success { border-radius: 50px; width: 90px; height: 50px; font-size: 20px; } 
 			
 			/* 데이터 테이블 */
-			.data-table { display: flex; width: 1000px; margin: 50px auto; }
+			.data-table-a { width: 1000px; margin: 50px auto; }
+			.data-input-a { 
+				width: 830px; 
+				height: 35px;
+				font-size: 20px; 
+				padding-left: 10px;
+				margin-left: auto; 
+				border-radius: 5px; 
+				background-color: #13254C; 
+				color: white; 
+			}
+			.data-table-b { display: flex; width: 1000px; margin: 50px auto; }
 			.data { display: flex; margin-bottom: 20px; }
 			.data-t-2 { margin-left: auto; }
 			.data-title { font-size: 25px; margin-right: 40px; }
@@ -27,7 +41,6 @@
 				background-color: #13254C; 
 				color: white; 
 			}
-			.data-disabled { background-color: #d9d9d9; color: #717171;   }
 			
 			/* 버튼 - 뒤로가기, 수정 */
 			.btn-table { width: 1340px; }
@@ -61,37 +74,29 @@
 							</select>
 						</div>
 						
-						<div class="data-table">
+						<div class="data-table-a">
+							<div class="data">
+								<p class="data-title">장비대분류명</p>
+								<input type="text" name="search" class="data-input-a">
+							</div>
+							<div class="data">
+								<p class="data-title">장비세분류명</p>
+								<input type="text" name="search" class="data-input-a">
+							</div>
+							<div class="data">
+							 	<p class="data-title">모델명</p>
+								<input type="text" name="search" class="data-input-a">
+							</div>
+							<div class="data">
+							 	<p class="data-title">등록일</p>
+								<input type="text" name="search" class="data-input-a">
+							</div>
+						</div>
+						
+						<div class="data-table-b">
 							<div class="data-t-1">
 								<div class="data">
-									<p class="data-title">장비대분류명</p>
-									<input type="text" name="search" class="data-input ">
-								</div>
-								<div class="data">
-									<p class="data-title">장비세분류명</p>
-									<input type="text" name="search" class="data-input">
-								</div>
-								<div class="data">
-								 	<p class="data-title">모델명</p>
-									<input type="text" name="search" class="data-input">
-								</div>
-								<div class="data">
-								 	<p class="data-title">담당 부서</p>
-									<input type="text" name="search" class="data-input">
-								</div>
-								<div class="data">
-									<p class="data-title">장비수</p>
-									<input type="text" name="search" class="data-input">
-								</div>
-							</div>
-							
-							<div class="data-t-2">
-								<div class="data">
 									<p class="data-title">장비대분류코드</p>
-									<input type="text" name="search" class="data-input">
-								</div>
-								<div class="data">
-									<p class="data-title">장비세분류코드</p>
 									<input type="text" name="search" class="data-input">
 								</div>
 								<div class="data">
@@ -99,11 +104,30 @@
 									<input type="text" name="search" class="data-input">
 								</div>
 								<div class="data">
-									<p class="data-title">담당자</p>
-									<input type="text" name="search" class="data-input" >
+								 	<p class="data-title">담당 부서</p>
+									<input type="text" name="search" class="data-input">
 								</div>
 								<div class="data">
-								 	<p class="data-title">등록일</p>
+								 	<p class="data-title">점검자</p>
+									<input type="text" name="search" class="data-input">
+								</div>
+							</div>
+							
+							<div class="data-t-2">
+								<div class="data">
+									<p class="data-title">장비세분류코드</p>
+									<input type="text" name="search" class="data-input">
+								</div>
+								<div class="data">
+									<p class="data-title">장비수</p>
+									<input type="text" name="search" class="data-input">
+								</div>
+								<div class="data">
+									<p class="data-title">담당자</p>
+									<input type="text" name="search" class="data-input">
+								</div>
+								<div class="data">
+								 	<p class="data-title">점검일</p>
 									<input type="text" name="search" class="data-input">
 								</div>
 							</div>
@@ -111,7 +135,7 @@
 					</div>
 					
 					<div class="btn-table btn-status">
-						<button onclick="history.back()" class="btn btn-group" type="button">뒤로 가기</button>
+						<button th:onclick="|location.href='@{../medical-list}'|" class="btn btn-group" type="button">뒤로 가기</button>
 						<button class="btn btn-group" type="submit">등록 완료</button>
 					</div>
 				</form>

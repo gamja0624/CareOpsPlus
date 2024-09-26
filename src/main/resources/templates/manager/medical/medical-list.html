@@ -73,7 +73,9 @@
 				      <td th:text="${ medical.lmdDate }"></td>
 				      
 				      <!-- 점검자 -->
-				      <td th:if="${ !#strings.isEmpty(medical.lmdAdminName) }" th:text="${ medical.lmdAdminName }"></td>
+				      <!-- <td th:if="${ #strings.isEmpty(medical.lmdAdminName) }" th:text="${ medical.lmdAdminName }"></td> -->
+				      <td th:text="${ medical.lmdAdminName != null && !#strings.isEmpty(medical.lmdAdminName) ? medical.lmdAdminName : ' ' }"></td>
+				      
 				      
 				      <!-- 점검일 -->
 				      <td th:text="${ medical.lmdLastCheckDate }"></td>
