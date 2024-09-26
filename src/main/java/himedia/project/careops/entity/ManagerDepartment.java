@@ -35,7 +35,6 @@ public class ManagerDepartment {
 		this.managerDeptPart = managerDeptPart;
 		this.managerDeptName = managerDeptName;
 	}
-	
 	public int getManagerDeptNo() {
 		return managerDeptNo;
 	}
