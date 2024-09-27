@@ -49,7 +49,7 @@ public class SafetyManagementListDTO {
 	}
 
 	public void setSmlList(String smlList) {
-		this.smlList = smlList;
+		this.smlList = smlList;		
 	}
 
 	public Boolean getSmlCheck() {
