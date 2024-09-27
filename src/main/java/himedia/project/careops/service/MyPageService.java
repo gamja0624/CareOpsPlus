@@ -1,5 +1,8 @@
 package himedia.project.careops.service;
 
+/*@author 노태윤
+@editDate 2024-09-26*/
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +24,6 @@ public class MyPageService {
     @Autowired
     private ManagerRepository managerRepository;
 
-    // 작성자 : 노태윤
     // Admin 정보를 ID로 조회하는 메서드
     // 주어진 adminId에 해당하는 Admin을 찾아 DTO로 변환하여 반환
     // 만약 해당 ID의 Admin이 없다면 EntityNotFoundException 발생
@@ -31,7 +33,6 @@ public class MyPageService {
             .orElseThrow(() -> new EntityNotFoundException("관리자를 찾을 수 없습니다: " + adminId));
     }
 
-    // 작성자 : 노태윤
     // Manager 정보를 ID로 조회하는 메서드
     // 주어진 managerId에 해당하는 Manager를 찾아 DTO로 변환하여 반환
     // 만약 해당 ID의 Manager가 없다면 EntityNotFoundException 발생
@@ -40,7 +41,7 @@ public class MyPageService {
             .map(this::convertToDTO)
             .orElseThrow(() -> new EntityNotFoundException("매니저를 찾을 수 없습니다: " + managerId));
     }
-    // 작성자 : 노태윤
+    
     // Admin 정보를 ID로 조회하고 Optional로 감싸서 반환하는 메서드
     // EntityNotFoundException이 발생하면 빈 Optional 반환
     public Optional<AdminDTO> getMyInfoByAdminId(String adminId) {
@@ -50,7 +51,7 @@ public class MyPageService {
             return Optional.empty();
         }
     }
-    // 작성자 : 노태윤
+    
     // Manager 정보를 ID로 조회하고 Optional로 감싸서 반환하는 메서드
     // EntityNotFoundException이 발생하면 빈 Optional 반환
     public Optional<ManagerDTO> getMyInfoByManagerId(String managerId) {
@@ -61,7 +62,6 @@ public class MyPageService {
         }
     }
 
-    // 작성자 : 노태윤
     // AdminDTO 객체를 Admin 엔티티로 변환하는 private 메서드
     // DTO의 정보를 새로운 Admin 엔티티에 복사
     private Admin convertToEntity(AdminDTO adminDTO) {
@@ -72,7 +72,7 @@ public class MyPageService {
         admin.setAdminPhoneNumber(adminDTO.getAdminPhoneNumber());
         return admin;
     }
-    // 작성자 : 노태윤
+    
     // ManagerDTO 객체를 Manager 엔티티로 변환하는 private 메서드
     // DTO의 정보를 새로운 Manager 엔티티에 복사
     private Manager convertToEntity(ManagerDTO managerDTO) {
@@ -85,7 +85,7 @@ public class MyPageService {
         manager.setManagerPhoneNumber(managerDTO.getManagerPhoneNumber());
         return manager;
     }
-    // 작성자 : 노태윤
+    
     // Admin 엔티티를 AdminDTO로 변환하는 private 메서드
     // 엔티티의 정보를 새로운 AdminDTO에 복사
     private AdminDTO convertToDTO(Admin admin) {
@@ -97,7 +97,7 @@ public class MyPageService {
         dto.setAdminPhoneNumber(admin.getAdminPhoneNumber());
         return dto;
     }
-    // 작성자 : 노태윤
+    
     // Manager 엔티티를 ManagerDTO로 변환하는 private 메서드
     // 엔티티의 정보를 새로운 ManagerDTO에 복사
     private ManagerDTO convertToDTO(Manager manager) {
@@ -110,7 +110,6 @@ public class MyPageService {
         return dto;
     }
 
-    // 작성자 : 노태윤
     // Admin 정보를 업데이트하는 메서드
     // 주어진 AdminDTO의 정보로 기존 Admin 엔티티를 업데이트
     // 업데이트 성공 시 true 반환, 실패 시 EntityNotFoundException 발생
@@ -126,7 +125,6 @@ public class MyPageService {
         return true;
     }
 
-    // 작성자 : 노태윤
     // Manager 정보를 업데이트하는 메서드
     // 주어진 ManagerDTO의 정보로 기존 Manager 엔티티를 업데이트
     // 업데이트 성공 시 true 반환, 실패 시 EntityNotFoundException 발생
@@ -142,7 +140,6 @@ public class MyPageService {
         return true;
     }
     
-    // 작성자 : 노태윤	
     // Admin의 비밀번호를 조회하는 메서드
     // 주어진 adminId에 해당하는 Admin의 비밀번호를 반환
     // 해당 ID의 Admin이 없으면 EntityNotFoundException 발생
@@ -152,7 +149,6 @@ public class MyPageService {
             .orElseThrow(() -> new EntityNotFoundException("관리자를 찾을 수 없습니다: " + adminId));
     }
     
-    // 작성자 : 노태윤
     // Manager의 비밀번호를 조회하는 메서드
     // 주어진 managerId에 해당하는 Manager의 비밀번호를 반환
     // 해당 ID의 Manager가 없으면 EntityNotFoundException 발생
@@ -162,12 +158,11 @@ public class MyPageService {
             .orElseThrow(() -> new EntityNotFoundException("매니저를 찾을 수 없습니다: " + managerId));
     }
     
-    // 작성자 : 노태윤
     // 사용자의 비밀번호를 변경하는 메서드
     // userType에 따라 Admin 또는 Manager의 비밀번호를 변경
     // 변경 성공 시 true, 실패 시 false 반환
     @Transactional
-    public boolean changePassword2(String userId, String newPassword, String userType) {
+    public boolean changePassword(String userId, String newPassword, String userType) {
         if ("admin".equals(userType)) {
             return adminRepository.findByAdminId(userId).map(admin -> {
                 admin.setAdminPassword(newPassword);

@@ -46,7 +46,7 @@
 			flex: 1;
 			padding: 10px;
 			margin-bottom: 15px;
-			border-radius: 4px;
+			border-radius: 5px;
 			border: 1px solid #13254C;
 			background-color: #13254C;
 			color: #fff;
@@ -60,7 +60,7 @@
 			color: white;
 			font-size: 18px;
 			border: none;
-			border-radius: 4px;
+			border-radius: 10px;
 			cursor: pointer;
 			transition: background-color 0.3s;
 			width: 48%;
@@ -74,9 +74,7 @@
 			border: 0;
 		}
 		
-		.btn:hover {
-			background-color: #1a3366;
-		}
+		.btn:hover { background-color: #1a3366; }
 		
 		.btn-container {
 			width: 60%;
@@ -84,6 +82,9 @@
 			justify-content: space-between;
 			margin-top: 30px;
 		}
+		
+	  .dropdown-divider { width: auto; }
+	  
 		</style>
 	</head>
 
@@ -96,8 +97,9 @@
         <div class="section">
             <h1 class="title">내 정보 수정</h1>
             <form th:action="@{/update-info}" method="post" th:object="${user}">
-    <input type="hidden" name="id" th:value="${user != null ? (userType == 'admin' ? user.adminId : user.managerId) : ''}"/>
-    <input type="hidden" name="userType" th:value="${userType}"/>
+    					<input type="hidden" name="id" th:value="${user != null ? (userType == 'admin' ? user.adminId : user.managerId) : ''}"/>
+    						<input type="hidden" name="userType" th:value="${userType}"/>
+    						
     <div class="layout-table">
         <hr>
         <div class="info-container">
@@ -120,7 +122,7 @@
         </div>
         <hr>
         <div class="btn-container">
-            <button type="button" class="btn" onclick="window.location.href='/mypage2'">뒤로가기</button>
+            <button type="button" class="btn" onclick="window.location.href='/mypage'">뒤로가기</button>
             <button type="submit" class="btn">회원 정보 수정</button>
         </div>
     </div>

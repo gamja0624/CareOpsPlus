@@ -17,6 +17,8 @@
 		align-items: center;
 	}
 	
+	.dropdown-divider { width: auto; }
+	
 	.info-container {
 		text-align: center;
 		display: flex;
@@ -161,7 +163,7 @@
 	<div class="content">
 		<div class="section">
 			<h1 class="title">비밀번호 변경</h1>
-			<form id="passwordChangeForm" th:action="@{/mypage-change-pw2}"
+			<form id="passwordChangeForm" th:action="@{/mypage-change-pw}"
 				method="post">
 				<div class="layout-table">
 					<hr>
@@ -198,7 +200,7 @@
 					<hr>
 					<div class="btn-container">
 						<button type="button" class="btn"
-							onclick="window.location.href='/mypage-edit2'">뒤로가기</button>
+							onclick="window.location.href='/mypage-edit'">뒤로가기</button>
 						<button type="button" class="btn" onclick="changePassword()">비밀번호
 							변경</button>
 					</div>
@@ -281,7 +283,7 @@
 
 			// AJAX를 사용하여 서버에 비밀번호 변경 요청
 			$.ajax({
-				url : '/mypage-change-pw2',
+				url : '/mypage-change-pw',
 				type : 'POST',
 				data : JSON.stringify({
 					newPassword : newPassword,
@@ -295,7 +297,7 @@
 					isSubmitting = false;
 					if (response.success) {
 						alert('비밀번호가 성공적으로 변경되었습니다.');
-						window.location.href = '/mypage2';
+						window.location.href = '/mypage';
 					} else {
 						// 실패 시 에러 메시지 표시
 						showPasswordChangeError(response.message);

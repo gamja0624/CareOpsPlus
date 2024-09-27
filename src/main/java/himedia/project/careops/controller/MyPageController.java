@@ -32,10 +32,9 @@ public class MyPageController {
         this.myPageService = myPageService;
     }
     
-    // 작성자 : 노태윤
     // 마이페이지 정보를 조회하는 메서드 
     // 사용자 타입에 따라 관리자 또는 매니저 정보를 가져와 MODEL에 추가
-    @GetMapping("/mypage2")
+    @GetMapping("/mypage")
     public String getMyInfo(Model model, HttpSession session) {
         String userType = (String) session.getAttribute("user_type");
         String userId = (String) session.getAttribute("user_id");
@@ -68,13 +67,12 @@ public class MyPageController {
             session.removeAttribute("passwordChangeError");
         }
 
-        return "common/mypage/mypage2";
+        return "common/mypage/mypage";
     }
 
-    // 작성자 : 노태윤
     // 마이페이지 수정 폼을 보여주는 메서드
     // 사용자 타입에 따라 관리자 또는 매니저 정보를 가져와 모델에 추가
-    @GetMapping("/mypage-edit2")
+    @GetMapping("/mypage-edit")
     public String showEditForm(Model model, HttpSession session) {
         String userType = (String) session.getAttribute("user_type");
         String userId = (String) session.getAttribute("user_id");
@@ -97,10 +95,9 @@ public class MyPageController {
             }
         }
 
-        return "common/mypage/mypage-edit2";
+        return "common/mypage/mypage-edit";
     }
 
-    // 작성자 : 노태윤
     // 사용자 정보를 업데이트하는 메서드
     // 관리자 또는 매니저 정보를 업데이트하고 결과에 따라 메시지를 설정
     @PostMapping("/update-info")
@@ -127,25 +124,25 @@ public class MyPageController {
                 updated = myPageService.updateManagerInfo(managerDTO);
                 System.out.println("Manager update result: " + updated + ", ID: " + id + ", Name: " + name + ", Phone: " + phoneNumber);
             }
-
+            // addAttribute는 값을 지속적으로 사용해야할때 addFlashAttribute는 일회성으로 사용해야할때 사용.
             if (updated) {
                 redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 수정되었습니다.");
             } else {
                 redirectAttributes.addFlashAttribute("error", "회원 정보 수정에 실패했습니다.");
             }
         } catch (Exception e) {
+        	// err는 대부분 에러 메시지를 출력하기 위해 사용한다.
             System.err.println("Error updating user info: " + e.getMessage());
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "회원 정보 수정 중 오류가 발생했습니다.");
         }
 
-        return "redirect:/mypage2";
+        return "redirect:/mypage";
     }
     
-    // 작성자 : 노태윤
     // 비밀번호를 업데이트하는 메서드
     // 새 비밀번호 확인, 비밀번호 검증하고 UPDATE 수행
-    @PostMapping("/mypage-change-pw2")
+    @PostMapping("/mypage-change-pw")
     @ResponseBody
     public ResponseEntity<?> updatePassword(@RequestBody Map<String, String> passwordData, HttpSession session) {
         System.out.println("updatePassword 메서드 호출됨");
@@ -166,7 +163,7 @@ public class MyPageController {
         }
 
         try {
-            boolean success = myPageService.changePassword2(userId, newPassword, userType);
+            boolean success = myPageService.changePassword(userId, newPassword, userType);
             if (success) {
                 return ResponseEntity.ok(Map.of("success", true, "message", "비밀번호가 성공적으로 변경되었습니다."));
             } else {
@@ -178,10 +175,9 @@ public class MyPageController {
         }
     }
     
-    // 작성자 : 노태윤
     // 비밀번호 변경폼을 보여주는 메서드 (비밀번호 조회)
     // 사용자 타입에 따라 현재 비밀번호를 가져와 모델에 추가
-    @GetMapping("/mypage-change-pw2")
+    @GetMapping("/mypage-change-pw")
     public String showChangePasswordForm(Model model, HttpSession session) {
         String userId = (String) session.getAttribute("user_id");
         String userType = (String) session.getAttribute("user_type");
@@ -199,6 +195,6 @@ public class MyPageController {
         // userType을 모델에 추가
         model.addAttribute("userType", userType);
 
-        return "common/mypage/mypage-change-pw2"; // 비밀번호 변경 페이지로 이동
+        return "common/mypage/mypage-change-pw"; // 비밀번호 변경 페이지로 이동
     }
 }

@@ -41,7 +41,6 @@ public class LoginService {
         this.modelMapper = modelMapper;
     }
     
-    // 작성자: 노태윤
     // 사용자 로그인 처리 메서드.
     // 사용자가 입력한 부서 번호, 아이디, 비밀번호를 받아서 관리자 또는 매니저로 로그인 시도
     // 각 역할에 맞는 로그인 처리를 시도하며 성공하면 사용자 정보를 반환, 실패하면 실패 메시지를 반환
@@ -68,7 +67,6 @@ public class LoginService {
         return result;
     }
 
-    // 작성자: 노태윤
     // 관리자 로그인 시도 메서드.
     // 부서 번호를 기반으로 AdminDepartment 엔티티를 찾고, 해당 부서의 관리자가 존재하는지 확인
     // 관리자가 존재하고 비밀번호가 일치하면 성공 처리를 하고, 그렇지 않으면 false를 반환
@@ -94,7 +92,6 @@ public class LoginService {
         return false; // 로그인 실패 시 false 반환
     }
 
-    // 작성자: 노태윤
     // 매니저 로그인 시도 메서드.
     // 부서 번호가 유효한지 확인하고, 해당 부서의 매니저가 존재하는지 확인
     // 매니저가 존재하고 비밀번호가 일치하면 성공 처리를 하고, 그렇지 않으면 false를 반환
@@ -133,7 +130,6 @@ public class LoginService {
         return false; // 로그인 실패 시 false 반환
     }
 
-    // 작성자: 노태윤
     // 로그인 결과 설정 메서드
     // 로그인 성공 시 사용자 유형(관리자 또는 매니저), 사용자 이름, 부서 이름을 결과에 저장
     // @param result 로그인 결과를 저장할 Map 객체
