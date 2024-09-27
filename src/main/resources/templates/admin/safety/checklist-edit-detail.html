@@ -11,7 +11,8 @@
   	<style type="text/css">
       /* 테이블 */
       .layout-table { text-align: center; }
-      .table { margin: 5% auto; display: inline-table; width: 650px; text-align: center; }
+      .table-size {line-height: 490px;}
+      .table { margin: 2% auto; display: inline-table; width: 650px; text-align: center; }
       .table-head { font-weight: bold; font-size: 20px; }
       .table-row { line-height: 20px; border-bottom: 1px solid #d9d9d9; }
       .table-row>th,td { padding: 4px; vertical-align: middle; }
@@ -50,71 +51,71 @@
 				<!-- 제목 -->
     			<div class="layout-table">
                     <!-- safety_management_checklist 사용 (sml_list(소화기 등), smc_no, smc_list, smc_check) -->
-    				<table class="table table-hover"> 
-    				  <thead>
-    				    <tr class="table-row table-head" >
-    				      <th scope="col">No.</th>
-    				      <th scope="col" class="column-checklist">점검 리스트</th>
-    				      <th scope="col">상 태</th>
-    				    </tr>
-    				  </thead>
-    				  <tbody>
-    				    <tr class="table-row" >
-    				      <th scope="row">41</th>
-    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
-    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">42</th>
-    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-002" ></td>
-    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr> 
-    				    <tr class="table-row" >
-    				      <th scope="row">43</th>
-    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-003" ></td>
-    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">44</th>
-    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-004" ></td>
-    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">45</th>
-    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
-    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">46</th>
-    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
-    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">47</th>
-    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
-    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">48</th>
-    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
-    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">49</th>
-    				      <td class="list-td" ><input class="list-input" type="text" value="진료부서-응급의학과-001" ></td>
-    				      <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-                          <th scope="row"></th>
-                          <td class="table-row-last" >
-                            <a class="plus-icon-a" ><img alt="더하기 아이콘" th:src="@{/img/plus-icon.png}" class="plus-icon"></a>
-                          </td>
-                          <td></td>
-    				    </tr>
-    				  </tbody>
-    				</table>
-                  <div class="pagenation" >
-                    <  1 2 3 4 5 >
+                    <div class="table-size" >
+                      <form action="" method="get">
+      				    <table class="table table-hover" id="checklist"> 
+                          <thead>
+                            <tr class="table-row table-head" >
+                              <th scope="col">No.</th>
+                              <th scope="col" class="column-checklist">점검 리스트</th>
+                              <th scope="col">상 태</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <th:block>
+                            <tr class="table-row" th:each="allChecklist : ${allChecklist}" >
+                              <td scope="row" th:text="${allChecklist.smcNo}" ></td>
+                              <td class="List-td" ><input class="list-input" type="text" th:value="${allChecklist.smcList}" >
+                              <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
+                            </tr>
+                            </th:block>
+                              <tr class="table-row" >
+                              <td class="table-row-last" >
+                                <a class="plus-icon-a" ><img alt="더하기 아이콘" th:src="@{/img/plus-icon.png}" class="plus-icon"></a>
+                              </td>
+                            </tr> 
+                          </tbody>
+      				    </table>
+                      </form>
+                    </div>
+                    
+                  <!-- 페이지 네이션 -->
+                  <div class="page" >
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                        <!-- 맨 앞으로 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./detail?page=1}" aria-label="Previous">
+                            <span aria-hidden="true">&#171;</span>
+                          </a>
+                        </li>
+                        
+                        <!-- 다음 페이지 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./detail?page=} + @{${paging.currentPage + 1}}">&#60;</a>
+                        </li>
+                        
+                        <!-- 숫자 -->
+                        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+                          <li class="page-item">
+                            <a class="page-link" th:href="@{./detail?page=} + @{${page}}"
+                                th:text="${ page }" th:disabled="${ paging.currentPage eq page }"></a>
+                          </li>
+                        </th:block>
+                        
+                        <!-- 다음 페이지 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./detail?page=} + @{${paging.currentPage + 1}}">&#62;</a>
+                        </li>
+                        
+                        <!-- 맨 끝으로 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./detail?page=} + @{${paging.endPage}}" aria-label="Next">
+                            <span aria-hidden="true">&#187;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
                   </div>
     			</div>
                 <div class="btn-line" >

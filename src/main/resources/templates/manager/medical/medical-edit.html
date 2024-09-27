@@ -13,7 +13,7 @@
 			.layout-table { height: 630px; }
 		
 			/* 의료기기 상태 토글 */
-			.form-select { width: 130px; margin: 50px auto; text-align: center; font-size: 20px; }
+			.form-select { width: 130px; margin: 30px auto; text-align: center; font-size: 20px; }
 			.btn-success { border-radius: 50px; width: 90px; height: 50px; font-size: 20px; } 
 			
 			/* 데이터 테이블 */
@@ -30,10 +30,7 @@
 			}
 			
 			.data-table-b { display: flex; width: 1000px; margin: 50px auto; }
-			.data { display: flex; margin-bottom: 20px; }
-			.data-t-2 { margin-left: auto; }
-			.data-title { font-size: 25px; margin-right: 40px; }
-			.data-input { 
+			.data-input-b { 
 				width: 300px; 
 				font-size: 20px; 
 				padding-left: 10px;
@@ -42,6 +39,9 @@
 				background-color: #13254C; 
 				color: white; 
 			}
+			.data-title { font-size: 25px; margin-right: 40px; }
+			.data { display: flex; margin-bottom: 20px; }
+			.data-t-2 { margin-left: auto; }
 			.data-disabled { background-color: #d9d9d9; color: #717171; }
 			
 			/* 버튼 - 뒤로가기, 수정 */
@@ -67,11 +67,12 @@
 					<div class="layout-table">
 						<div class="btn-status">
 							<select name="lmdStatus" class="form-select" aria-label="Default select">
-							  <option value="정상" selected>정상</option>
-							  <option value="점검요망">점검요망</option>
-							  <option value="수리필요">수리필요</option>
-							  <option value="노후">노후</option>
-							  <option value="만료">만료</option>
+						    <option value="" th:text="${medicalDevice.lmdStatus}" th:if="${medicalDevice.lmdStatus == null}" selected></option>
+						    <option value="정상" th:selected="${medicalDevice.lmdStatus == '정상'}">정상</option>
+						    <option value="점검요망" th:selected="${medicalDevice.lmdStatus == '점검요망'}">점검요망</option>
+						    <option value="수리필요" th:selected="${medicalDevice.lmdStatus == '수리필요'}">수리필요</option>
+						    <option value="노후" th:selected="${medicalDevice.lmdStatus == '노후'}">노후</option>
+						    <option value="만료" th:selected="${medicalDevice.lmdStatus == '만료'}">만료</option>
 							</select>
 						</div>
 						
@@ -98,41 +99,41 @@
 							<div class="data-t-1">
 								<div class="data">
 									<p class="data-title">장비대분류코드</p>
-									<input type="text" name="lmdMajorCateCode" th:value="${ medicalDevice.lmdMajorCateCode }" class="data-input data-disabled" disabled>
+									<input type="text" name="lmdMajorCateCode" th:value="${ medicalDevice.lmdMajorCateCode }" class="data-input-b data-disabled" disabled>
 								</div>
 								<div class="data">
 									<p class="data-title">장비허가번호</p>
-									<input type="text" name="lmdLicenseNumber" th:value="${ medicalDevice.lmdLicenseNumber }" class="data-input data-disabled" disabled>
+									<input type="text" name="lmdLicenseNumber" th:value="${ medicalDevice.lmdLicenseNumber }" class="data-input-b data-disabled" disabled>
 								</div>
 								<div class="data">
 								 	<p class="data-title">담당 부서</p>
-									<input type="text" name="lmdManagerDeptPart" th:value="${ medicalDevice.lmdManagerDeptPart }" class="data-input data-disabled" disabled>
+									<input type="text" name="lmdManagerDeptPart" th:value="${ medicalDevice.lmdManagerDeptPart }" class="data-input-b data-disabled" disabled>
 								</div>
 								<div class="data">
 								 	<p class="data-title">점검자</p>
-									<input type="text" name="lmdAdminName" th:value="${ medicalDevice.lmdAdminName }" class="data-input data-disabled" disabled>
+									<input type="text" name="lmdAdminName" th:value="${ medicalDevice.lmdAdminName }" class="data-input-b data-disabled" disabled>
 								</div>
 							</div>
 							
 							<div class="data-t-2">
 								<div class="data">
 									<p class="data-title">장비세분류코드</p>
-									<input type="text" name="lmdMinorCateCode" th:value="${ medicalDevice.lmdMinorCateCode }" class="data-input data-disabled" disabled>
+									<input type="text" name="lmdMinorCateCode" th:value="${ medicalDevice.lmdMinorCateCode }" class="data-input-b data-disabled" disabled>
 								</div>
 								<div class="data">
 									<p class="data-title">장비수</p>
-									<input type="text" name="lmdDeviceCnt" th:value="${ medicalDevice.lmdDeviceCnt }" class="data-input">
+									<input type="text" name="lmdDeviceCnt" th:value="${ medicalDevice.lmdDeviceCnt }" class="data-input-b">
 								</div>
 								<div class="data">
 									<p class="data-title">담당자</p>
-									<input type="text" name="lmdManagerName" th:value="${ medicalDevice.lmdManagerName }" class="data-input">
-									<!-- <select name="lmdManagerName" class="data-input" aria-label="Default select">
-									  <option th:text="${ medicalDevice.lmdManagerName }" selected></option>
-									</select> -->
+									<select name="lmdManagerName" class="data-input-b" aria-label="Default select">
+									  <option th:each="manager : ${ managerinfo }" th:if="${ medicalDevice.lmdManagerName } == ${ manager.managerName }" th:text="${ manager .managerName}" selected></option> 
+									  <option th:each="manager : ${ managerinfo }" th:unless="${ medicalDevice.lmdManagerName } == ${ manager.managerName }" th:text="${ manager.managerName }"></option> 
+									</select>
 								</div>
 								<div class="data">
 								 	<p class="data-title">점검일</p>
-									<input type="text" name="lmdLastCheckDate" th:value="${ medicalDevice.lmdLastCheckDate }" class="data-input data-disabled">
+									<input type="text" name="lmdLastCheckDate" th:value="${ medicalDevice.lmdLastCheckDate }" class="data-input-b data-disabled" disabled>
 								</div>
 							</div>
 						</div>

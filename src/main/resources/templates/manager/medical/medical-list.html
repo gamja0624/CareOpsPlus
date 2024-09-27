@@ -73,20 +73,18 @@
 				      <td th:text="${ medical.lmdDate }"></td>
 				      
 				      <!-- 점검자 -->
-				      <!-- <td th:if="${ #strings.isEmpty(medical.lmdAdminName) }" th:text="${ medical.lmdAdminName }"></td> -->
 				      <td th:text="${ medical.lmdAdminName != null && !#strings.isEmpty(medical.lmdAdminName) ? medical.lmdAdminName : ' ' }"></td>
-				      
 				      
 				      <!-- 점검일 -->
 				      <td th:text="${ medical.lmdLastCheckDate }"></td>
 				      
 				      <!-- 버튼 -->
 			      	<td th:switch="${ medical.lmdStatus }">
-			      		<button th:case="정상" type="button" class="btn btn-css btn-outline-success" disabled>정상</button>
-			      		<button th:case="수리필요" type="button" class="btn btn-css btn-outline-primary" disabled>수리필요</button>
-			      		<button th:case="점검요망" type="button" class="btn btn-css btn-outline-secondary" disabled>점검요망</button>
-			      		<button th:case="노후" type="button" class="btn btn-css btn-outline-warning" disabled>노후</button>
-			      		<button th:case="만료" type="button" class="btn btn-css btn-outline-danger" disabled>만료</button>
+			      		<button th:case="정상" type="button" class="btn btn-css btn-success" disabled>정상</button>
+			      		<button th:case="수리필요" type="button" class="btn btn-css btn-primary" disabled>수리필요</button>
+			      		<button th:case="점검요망" type="button" class="btn btn-css btn-secondary" disabled>점검요망</button>
+			      		<button th:case="노후" type="button" class="btn btn-css btn-warning" disabled>노후</button>
+			      		<button th:case="만료" type="button" class="btn btn-css btn-danger" disabled>만료</button>
 			      	</td>
 				      
 				      <!-- 상세 보기 -->

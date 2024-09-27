@@ -59,38 +59,44 @@
     				    </tr>
     				  </thead>
     				  <tbody>
-                        <tr th:each="safetyResultList : ${safetyResultList}" >
-                          <th:block th:each="safetyListAll : ${safetyListAll}" >
-                          <td th:text="${safetyResultList.smNo}" > 
-                          <td th:text="${safetyResultList.adminName}" > 
-<!--                           <td th:if="${safetyListAll.smlList == '소화기'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '스프링쿨러'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '소화전설비'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '피난설비'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '유도등'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '대피로'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '비상방송설비'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '비상구'}" th:text="${safetyListAll.smlCheck}"
-                          ></td>  -->
-                          <td th:if="${safetyListAll.smlList == '소화기'}" th:text="${safetyListAll.smlCheck}"></td>
-                           <td th:unless="${safetyListAll.smlList == '스프링쿨러'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '소화전설비'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '피난설비'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '유도등'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '대피로'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '비상방송설비'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '비상구'}" th:text="${safetyListAll.smlCheck}"></td>   
-                          <!-- <td th:text="${#lists.contains(safetyListAll.smlList, '스프링쿨러') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '소화전설비') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '피난설비') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '유도등') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '대피로') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '비상방송설비') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '비상구') ? safetyListAll.smlCheck : '-'}"></td>   -->
-                          <td th:text="${safetyResultList.smCheck}" > 
-                          <td th:text="${safetyResultList.smDate}" > 
-                          <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-                          </th:block>
+                         <tr th:each="safetyAllList : ${safetyAllList}" >
+                         
+                         <!--  <td th:text="" > -->
+<!--                           <td th:text="${safetyAllList.smNo}" ></td>
+                          <td th:text="${safetyAllList.adminName}" ></td>
+                          <td th:if="safetyAllList.smllist=='소화기'" th:text="${safetyAllList.smlcheck}" >
+                          <td th:if="safetyAllList.smllist=='스프링쿨러'" th:text="${safetyAllList.smlcheck}" >
+                          <td th:if="safetyAllList.smllist=='소화전설비'" th:text="${safetyAllList.smlcheck}" >
+                          <td th:if="safetyAllList.smllist=='피난설비'" th:text="${safetyAllList.smlcheck}" >
+                          <td th:if="safetyAllList.smllist=='유도등'" th:text="${safetyAllList.smlcheck}" >
+                          <td th:if="safetyAllList.smllist=='대피로'" th:text="${safetyAllList.smlcheck}" >
+                          <td th:if="safetyAllList.smllist=='비상방송설비'" th:text="${safetyAllList.smlcheck}" >
+                          <td th:if="safetyAllList.smllist=='비상구'" th:text="${safetyAllList.smlcheck}" > -->
+                         <!-- <tr th:each="safetyResultList : ${safetyResultList}" > 
+                           <th:block th:each="safetyListAll : ${safetyListAll}" > 
+                             <td th:text="${safetyResultList.smNo}" > 
+                            <td th:text="${safetyResultList.adminName}" >  
+                            <td th:if="${safetyListAll.smlList == '소화기'}" th:text="${safetyListAll.smlCheck}"></td> 
+                            <td th:if="${safetyListAll.smlList == '스프링쿨러'}" th:text="${safetyListAll.smlCheck}"></td> 
+                            <td th:if="${safetyListAll.smlList == '소화전설비'}" th:text="${safetyListAll.smlCheck}"></td> 
+                            <td th:if="${safetyListAll.smlList == '피난설비'}" th:text="${safetyListAll.smlCheck}"></td> 
+                            <td th:if="${safetyListAll.smlList == '유도등'}" th:text="${safetyListAll.smlCheck}"></td> 
+                            <td th:if="${safetyListAll.smlList == '대피로'}" th:text="${safetyListAll.smlCheck}"></td> 
+                            <td th:if="${safetyListAll.smlList == '비상방송설비'}" th:text="${safetyListAll.smlCheck}"></td> 
+                            <td th:if="${safetyListAll.smlList == '비상구'}" th:text="${safetyListAll.smlCheck}"></td>   
+                            <td th:text="${#lists.contains(safetyListAll.smlList, '스프링쿨러') ? safetyListAll.smlCheck : '-'}"></td> 
+                            <td th:text="${#lists.contains(safetyListAll.smlList, '소화전설비') ? safetyListAll.smlCheck : '-'}"></td> 
+                            <td th:text="${#lists.contains(safetyListAll.smlList, '피난설비') ? safetyListAll.smlCheck : '-'}"></td> 
+                            <td th:text="${#lists.contains(safetyListAll.smlList, '유도등') ? safetyListAll.smlCheck : '-'}"></td> 
+                            <td th:text="${#lists.contains(safetyListAll.smlList, '대피로') ? safetyListAll.smlCheck : '-'}"></td> 
+                            <td th:text="${#lists.contains(safetyListAll.smlList, '비상방송설비') ? safetyListAll.smlCheck : '-'}"></td> 
+                            <td th:text="${#lists.contains(safetyListAll.smlList, '비상구') ? safetyListAll.smlCheck : '-'}"></td>   -->
+                             <!-- <td th:text="${safetyResultList.smCheck}" > 
+                            <td th:text="${safetyResultList.smDate}" >  --> 
+                            <!--  <td th:text="${safetyAllList.smCheck}" > 
+                            <td th:text="${safetyAllList.smDate}" >   -->
+                            <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+                             <!-- </th:block>  -->
                         </tr>
     				    <!-- <tr class="table-row" >
     				      <th scope="row">1020</th>

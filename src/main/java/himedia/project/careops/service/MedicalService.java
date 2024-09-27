@@ -34,7 +34,7 @@ public class MedicalService {
 		this.modelMapper = modelMapper;
 	}
 	
-	// 의료기기 장비세분류코드 찾기
+	// [의료기기 장비세분류코드 찾기]
 	public ListMedicalDevicesDTO findByMedicalLmdMinorCateCode(String lmdMinorCateCode) {
 		
 		ListMedicalDevices medicalDevice = medicalRepository.findById(lmdMinorCateCode).orElseThrow(IllegalArgumentException::new);
@@ -43,7 +43,7 @@ public class MedicalService {
 		return modelMapper.map(medicalDevice, ListMedicalDevicesDTO.class);
 	}
 	
-	// 의료기기 목록 + 페이지네이션
+	// [목록 + 페이지네이션]
 	public Page<ListMedicalDevicesDTO> findByMedicalDevices(Pageable pageable) {
 		
 		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
@@ -56,7 +56,7 @@ public class MedicalService {
 		return medicalDevicesList.map(medical -> modelMapper.map(medical, ListMedicalDevicesDTO.class));
 	}
 
-	// 의료기기 등록
+	// [등록]
 	@Transactional
 	public void addMedicalDevice(ListMedicalDevicesDTO newMedicalDevice) {
 		
@@ -64,20 +64,22 @@ public class MedicalService {
 		
 	}
 	
-	// 의료기기 수정
+	// [수정]
 	@Transactional
 	public void editMedicalDevice(
 			ListMedicalDevicesDTO editMedical,
-			@Param("lmdStatus") String lmdStatus, @Param("lmdDeviceCnt") String lmdDeviceCnt, @Param("lmdManagerName") String lmdManagerName) {
+			@Param("lmdStatus") String lmdStatus, @Param("lmdDeviceCnt") String lmdDeviceCnt, 
+			@Param("lmdManagerName") String lmdManagerName, @Param("lmdManagerId") String lmdManagerId) {
 		
 		ListMedicalDevices findMedical = medicalRepository.findById(editMedical.getLmdMinorCateCode())
 				.orElseThrow(IllegalArgumentException::new);
 		
-		findMedical.setLmdStatus(lmdStatus);
-		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));
-		findMedical.setLmdManagerName(lmdManagerName);
+		findMedical.setLmdStatus(lmdStatus);							// 상태
+		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));	// 장비수
+		findMedical.setLmdManagerId(lmdManagerName);					// 아이디
+		findMedical.setLmdManagerId(lmdManagerId);						// 아이디
+		findMedical.setLmdManagerName(lmdManagerName);					// 이름
 		
-		log.info("서비스 종료 : editMedicalDevice !!!!!!!!!!!!");
 	}
 	
 }

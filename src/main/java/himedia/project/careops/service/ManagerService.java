@@ -1,5 +1,10 @@
 package himedia.project.careops.service;
 
+/**
+ * @author 진혜정, 최은지
+ * @editDate 2024-09-25 ~ 
+*/
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +40,17 @@ public class ManagerService {
 	}
 	
 	// 작성자 : 진혜정
-	// 매니저 아이디로 매니저 정보 반환
+	// 전체 매니저 정보 리스트로 반환
+	public List<ManagerDTO> findallManagerList() {
+		
+		List<Manager> managerInfo = managerRepository.findAll();
+		return managerInfo.stream()
+				.map(manager -> modelMapper.map(manager, ManagerDTO.class))
+                .collect(Collectors.toList());
+	}
+	
+	// 작성자 : 진혜정
+	// 매니저 아이디로 매니저 정보 객체로 반환
 	public ManagerDTO findByManagerId(String managerId) {
 		
 		// log.info("[MangerService] 시작 !!!! - findByAdminNo 메서드 실행");
@@ -43,21 +58,16 @@ public class ManagerService {
 		
 		return modelMapper.map(findManager, ManagerDTO.class);
 	}
-
-	// 작성자 : 진혜정
-	// 부서 이름으로 매니저 리스트 찾기
-	public void findByManagerName(String lmdManagerDeptPart) {
-		
-		log.info("[MangerService] 시작 !!!! - findByManagerName 메서드 실행");
-		List<Manager> findDeptMangerList = managerRepository.findAll();
 	
-		System.out.println("ㅋㅋ" + lmdManagerDeptPart);
-		for(Manager m : findDeptMangerList) {
-			
-			if (m.getManagerDeptName().equals(lmdManagerDeptPart)) {
-				System.out.println("찾았땅" + m.getManagerName());
-			}
-		}
+	// 작성자 : 진혜정
+	// 부서 이름으로 해당 매니저 리스트로 반환
+	public List<Manager> findByManagerList(String lmdManagerDeptPart) {
+		
+		// log.info("[MangerService] 시작 !!!! - findByManagerList 메서드 실행");
+		return managerRepository.findAll() 										// Manager 에 저장된 모든 객체 가져오기
+				.stream() 
+				.filter(m -> m.getManagerDeptName().equals(lmdManagerDeptPart))	// 부서명이 같은 manager 객체 가져오기
+				.collect(Collectors.toList());                                  // list 형태로 반환
 	}
 	
 	// 작성자 : 최은지

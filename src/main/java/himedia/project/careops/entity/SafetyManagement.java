@@ -6,15 +6,14 @@ package himedia.project.careops.entity;
  */
 
 import java.sql.Date;
-
-import org.hibernate.annotations.ColumnDefault;
-
-import jakarta.persistence.Column;
-
 /**
  * @author 이홍준 
  * @editDate 2024-09-24
  */
+
+import org.hibernate.annotations.ColumnDefault;
+
+import jakarta.persistence.Column;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

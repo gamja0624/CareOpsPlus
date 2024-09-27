@@ -5,6 +5,8 @@ package himedia.project.careops.controller.manager;
  * @editDate 2024-09-19 ~ 
  */
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,9 @@ import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.ListMedicalDevicesDTO;
 import himedia.project.careops.dto.ManagerDTO;
+import himedia.project.careops.dto.ManagerDepartmentDTO;
+import himedia.project.careops.entity.Manager;
+import himedia.project.careops.service.ManagerDepartmentService;
 import himedia.project.careops.service.ManagerService;
 import himedia.project.careops.service.MedicalService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +39,12 @@ public class MedicalController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final MedicalService medicalService;
 	private final ManagerService managerService;
+	private final ManagerDepartmentService managerDepartmentService;
 	
-	public MedicalController(MedicalService medicalService, ManagerService managerService) {
+	public MedicalController(MedicalService medicalService, ManagerService managerService, ManagerDepartmentService managerDepartmentService) {
 		this.medicalService = medicalService;
 		this.managerService = managerService;
+		this.managerDepartmentService = managerDepartmentService;
 	}
 
 	// [목록 조회] ======================================================================================
@@ -49,11 +56,6 @@ public class MedicalController {
 		
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
 		model.addAttribute("paging", paging);
-		
-//		log.info("목록 의료기기 상태 : {}", medicalDevicesList.toList().get(0).getLmdStatus());
-		
-//		log.info("컨트롤러 : 1번째 : {}", medicalDevicesList.get().toList().toString());
-//		log.info("컨트롤러 : 2번째 : {}", paging);
 		
 		return "manager/medical/medical-list";
 	}
@@ -72,38 +74,56 @@ public class MedicalController {
 	@GetMapping("/{lmdMinorCateCode}/edit")
 	public String medicalEditPage(@PathVariable String lmdMinorCateCode, Model model) {
 		
+		// 해당 의료기기 정보 반환
 		ListMedicalDevicesDTO medicalDevice = medicalService.findByMedicalLmdMinorCateCode(lmdMinorCateCode);
 		model.addAttribute("medicalDevice", medicalDevice);
 		
-		log.info("1번) 매니저 부서 번호 받기");
-		log.info("1번) medicalDevice : {}", medicalDevice.getLmdManagerDeptPart());
+		// 담당 부서의 매니저 정보 반환
+		String managerDeptPart = medicalDevice.getLmdManagerDeptPart();
+		List<Manager> managerinfo = managerService.findByManagerList(managerDeptPart);
 		
-		log.info("2번) 매니저 부서 번호로 해당하는 담당자 리스트 가져오기");
-		managerService.findByManagerName(medicalDevice.getLmdManagerDeptPart());
-		
+		model.addAttribute("managerinfo", managerinfo);
 		
 		return "manager/medical/medical-edit";
 	}
-	
+
 	@PostMapping("/{lmdMinorCateCode}/edit")
 	public String medicalEdit(
 			@PathVariable String lmdMinorCateCode, ListMedicalDevicesDTO editMedical,
 			@RequestParam String lmdStatus, @RequestParam String lmdDeviceCnt, @RequestParam String lmdManagerName) {
 		
-		log.info("수정 컨트롤러 실행");
+		// 해당 의료기기 정보 반환
+		ListMedicalDevicesDTO medicalDevice = medicalService.findByMedicalLmdMinorCateCode(lmdMinorCateCode);
 		
-		log.info("받아온 lmdStatus          : {}", lmdStatus);
-		log.info("받아온 lmdDeviceCnt       : {}", lmdDeviceCnt);
-		log.info("받아온 lmdManagerName     : {}", lmdManagerName);
+		// 담당 부서의 매니저 정보 반환
+		String managerDeptPart = medicalDevice.getLmdManagerDeptPart();
+		List<Manager> managerList = managerService.findByManagerList(managerDeptPart);
 		
-		medicalService.editMedicalDevice(editMedical, lmdStatus, lmdDeviceCnt, lmdManagerName);
+		// lmdManagerId 변수에 저장
+		Manager managerinfo = managerList.stream()
+				.filter(m -> m.getManagerName().equals(lmdManagerName))
+				.findFirst()
+				.get();
+		
+		String lmdManagerId = managerinfo.getManagerId();
+		
+		// 해당 의료기기 정보 수정
+		medicalService.editMedicalDevice(editMedical, lmdStatus, lmdDeviceCnt, lmdManagerName, lmdManagerId);
 		
 		return "redirect:/manager/medical-list";
 	}
 	
 	// [등록] ==========================================================================================
 	@GetMapping("/add")
-	public String medicalAddPage() {
+	public String medicalAddPage(Model model) {
+		
+		log.info("[GET] 등록 페이지");
+		
+		// 담당 부서/ 담당자 반환
+		List<ManagerDepartmentDTO> departments = managerDepartmentService.findAllDepartmentsList();
+		List<ManagerDTO> managerList = managerService.findallManagerList();
+		model.addAttribute("departments", departments);
+		model.addAttribute("managerList", managerList);
 		
 		return "manager/medical/medical-add";
 	}
@@ -111,7 +131,6 @@ public class MedicalController {
 	@PostMapping("/add")
 	public String medicalAdd(ListMedicalDevicesDTO newMedicalDevice) {
 		
-		//medicalService.addMedicalDevice(newMedicalDevice);
 		
 		return "redirect:/manager/medical-list";
 	}
