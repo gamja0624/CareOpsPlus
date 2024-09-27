@@ -15,6 +15,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class RoleBasedAccessInterceptor implements HandlerInterceptor {
 
+	
+	// 작성자: 노태윤
+	// 세션의 사용자 타입에 따라 접근을 제한하는 인터셉터 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
