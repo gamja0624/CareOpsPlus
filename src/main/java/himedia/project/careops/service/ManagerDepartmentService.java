@@ -33,8 +33,10 @@ public class ManagerDepartmentService {
 		this.modelMapper = modelMapper;
 	}
 	
-    // 전체 부서 조회
-    public List<ManagerDepartmentDTO> findAllDepartments() {
+	// 작성자 : 진혜정
+    // 전체 부서 객체로 반환
+    public List<ManagerDepartmentDTO> findAllDepartmentsList() {
+    	
         List<ManagerDepartment> departments = managerDepartmentRepository.findAll();
         return departments.stream()
                          .map(department -> modelMapper.map(department, ManagerDepartmentDTO.class))
