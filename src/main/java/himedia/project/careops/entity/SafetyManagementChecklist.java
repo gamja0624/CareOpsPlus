@@ -29,7 +29,7 @@ public class SafetyManagementChecklist {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="smc_no", nullable = false)
-	private int smcNo;
+	private Integer smcNo;
 	
 	@Column(name="sml_no", nullable = false)
 	private int smlNo;
@@ -49,7 +49,7 @@ public class SafetyManagementChecklist {
 
 	public SafetyManagementChecklist() {}
 	
-	public SafetyManagementChecklist(int smcNo, int smlNo, String smlList, String smcList,
+	public SafetyManagementChecklist(Integer smcNo, int smlNo, String smlList, String smcList,
 			Boolean smcCheck, String smcIssue) {
 		super();
 		this.smcNo = smcNo;
@@ -60,11 +60,11 @@ public class SafetyManagementChecklist {
 		this.smcIssue = smcIssue;
 	}
 
-	public int getSmcNo() {
+	public Integer getSmcNo() {
 		return smcNo;
 	}
 
-	public void setSmcNo(int smcNo) {
+	public void setSmcNo(Integer smcNo) {
 		this.smcNo = smcNo;
 	}
 

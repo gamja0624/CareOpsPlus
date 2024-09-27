@@ -33,7 +33,7 @@ public interface SafetyManagementListRepository extends JpaRepository<SafetyMana
 	 * , nativeQuery = true)
 	 */
 
-	@Query(value = "SELECT sm.sm_no, admin_name, sml_no, sml_list, sml_check, sm_check, sm_date FROM safety_management sm JOIN safety_management_list sml ON sm.sm_no = sml.sm_no ORDER BY sm.sm_no DESC", nativeQuery = true)
+	@Query(value = "SELECT * FROM safety_management_list", nativeQuery = true)
 	List<SafetyManagementList> findAllList();
 
 	/*

@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class SafetyManagementChecklistDTO {
 	
-	private int smcNo;
+	private Integer smcNo;
 	private int smlNo;
 	private String smlList;
 	private String smcList;
@@ -23,7 +23,7 @@ public class SafetyManagementChecklistDTO {
 	
 	public SafetyManagementChecklistDTO() {}
 
-	public SafetyManagementChecklistDTO(int smcNo, int smlNo, String smlList, String smcList, Boolean smcCheck,
+	public SafetyManagementChecklistDTO(Integer smcNo, int smlNo, String smlList, String smcList, Boolean smcCheck,
 			String smcIssue) {
 		this.smcNo = smcNo;
 		this.smlNo = smlNo;
@@ -33,11 +33,11 @@ public class SafetyManagementChecklistDTO {
 		this.smcIssue = smcIssue;
 	}
 	
-	public int getSmcNo() {
+	public Integer getSmcNo() {
 		return smcNo;
 	}
 
-	public void setSmcNo(int smcNo) {
+	public void setSmcNo(Integer smcNo) {
 		this.smcNo = smcNo;
 	}
 

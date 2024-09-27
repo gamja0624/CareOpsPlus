@@ -45,8 +45,7 @@ public class SafetyService {
 		this.modelMapper = modelMapper;
 	}
 	
-	// 작성자 : 이홍준
-	// smlRepository 사용 메소드(전체조회 네이티브쿼)
+	// smlRepository 사용 메소드(전체조회 네이티브쿼리)
 	public List<SafetyManagementListDTO> findAllList() {
 		List<SafetyManagementList> allList = safetyManagementListRepository.findAllList(); // 타입을 Object로 변경했지만 안 됨
 		return allList.stream().distinct()
@@ -54,7 +53,6 @@ public class SafetyService {
 				.collect(Collectors.toList());
 	}
 	
-	// 작성자 : 이홍준
 	// SafetyManagement 테이블 전체조회 
 	public List<SafetyManagementDTO> safetyResultList() {
 		log.info("safetyResultList 실행");
@@ -64,16 +62,21 @@ public class SafetyService {
 				.collect(Collectors.toList());
 	}
 	
-	// 작성자 : 이홍준
 	// SafetyManagementChecklist테이블 전체조회 메소드
 	public List<SafetyManagementListDTO> safetyListAll() {
-		List<SafetyManagementList> safetyListAll = safetyManagementListRepository.findAll();
+		
+		  List<SafetyManagementList> safetyListAll =
+		  safetyManagementListRepository.findAll();
+		 
+		/*
+		 * List<SafetyManagementList> safetyListAll =
+		 * safetyManagementListRepository.findAllList();
+		 */
 		return safetyListAll.stream().distinct()
 				.map(safetyManagementList -> modelMapper.map(safetyManagementList, SafetyManagementListDTO.class))
 				.collect(Collectors.toList());
 	}
 
-	// 작성자 : 이홍준
 	// SafetyManagementChecklist테이블 전체조회 메소드 + 페이지네이션
 	public Page<SafetyManagementChecklistDTO> findAllChecklist(Pageable pageable) {
 		
