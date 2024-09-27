@@ -2,7 +2,7 @@ package himedia.project.careops.controller;
 
 /**
  * @author 노태윤 
- * @editDate 2024-09-26
+ * @editDate 2024-09-27
  */
 
 import java.util.Map;
@@ -12,15 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import himedia.project.careops.dto.AdminDTO;
-import himedia.project.careops.dto.ManagerDTO; 
+import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.service.MyPageService;
 import jakarta.servlet.http.HttpSession;
 
@@ -33,7 +31,10 @@ public class MyPageController {
     public MyPageController(MyPageService myPageService) {
         this.myPageService = myPageService;
     }
-
+    
+    // 작성자 : 노태윤
+    // 마이페이지 정보를 조회하는 메서드 
+    // 사용자 타입에 따라 관리자 또는 매니저 정보를 가져와 MODEL에 추가
     @GetMapping("/mypage2")
     public String getMyInfo(Model model, HttpSession session) {
         String userType = (String) session.getAttribute("user_type");
@@ -69,7 +70,10 @@ public class MyPageController {
 
         return "common/mypage/mypage2";
     }
-    
+
+    // 작성자 : 노태윤
+    // 마이페이지 수정 폼을 보여주는 메서드
+    // 사용자 타입에 따라 관리자 또는 매니저 정보를 가져와 모델에 추가
     @GetMapping("/mypage-edit2")
     public String showEditForm(Model model, HttpSession session) {
         String userType = (String) session.getAttribute("user_type");
@@ -96,12 +100,16 @@ public class MyPageController {
         return "common/mypage/mypage-edit2";
     }
 
+    // 작성자 : 노태윤
+    // 사용자 정보를 업데이트하는 메서드
+    // 관리자 또는 매니저 정보를 업데이트하고 결과에 따라 메시지를 설정
     @PostMapping("/update-info")
     public String updateUserInfo(@RequestParam("id") String id,
                                  @RequestParam("name") String name,
                                  @RequestParam("phoneNumber") String phoneNumber,
                                  @RequestParam("userType") String userType,
                                  RedirectAttributes redirectAttributes) {
+    						     // RedirectAttributes를 통해 일회성 데이터 전달 설정
         try {
             boolean updated = false;
             if ("admin".equals(userType)) {
@@ -134,6 +142,9 @@ public class MyPageController {
         return "redirect:/mypage2";
     }
     
+    // 작성자 : 노태윤
+    // 비밀번호를 업데이트하는 메서드
+    // 새 비밀번호 확인, 비밀번호 검증하고 UPDATE 수행
     @PostMapping("/mypage-change-pw2")
     @ResponseBody
     public ResponseEntity<?> updatePassword(@RequestBody Map<String, String> passwordData, HttpSession session) {
@@ -167,6 +178,9 @@ public class MyPageController {
         }
     }
     
+    // 작성자 : 노태윤
+    // 비밀번호 변경폼을 보여주는 메서드 (비밀번호 조회)
+    // 사용자 타입에 따라 현재 비밀번호를 가져와 모델에 추가
     @GetMapping("/mypage-change-pw2")
     public String showChangePasswordForm(Model model, HttpSession session) {
         String userId = (String) session.getAttribute("user_id");

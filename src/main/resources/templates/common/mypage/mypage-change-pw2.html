@@ -1,210 +1,325 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>CareOps+ | 비밀번호 변경</title>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/web-settings.css}" rel="stylesheet">
+<meta charset="UTF-8">
+<title>CareOps+ | 비밀번호 변경</title>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 
-    <style>
-        .layout-table {
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 10px;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .info-container {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            width: 60%;
-        }
-
-        .info-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        label {
-            font-weight: 500; /* 기본 폰트 굵기 */
-            color: #666;
-            font-size: 23px;
-            width: 150px; /* 라벨 너비 증가 */
-            text-align: left; /* 왼쪽 정렬 */
-            white-space: nowrap; /* 줄바꿈 방지 */
-        }
-
-        .info-field {
-            flex: 1;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            border: 1px solid #13254C;
-            background-color: #13254C;
-            color: #fff;
-            font-size: 20px;
-            box-sizing: border-box;
-            width: calc(100% - 160px);
-            font-weight: 600; 
-        }
-
-        .btn {
-            padding: 12px;
-            background-color: #13254C;
-            color: white;
-            font-size: 18px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 48%;
-            font-weight: 700; 
-        }
-
-        hr {
-            width: 60%;
-            margin: 2rem 0;
-            background-color: #000;
-            height: 1px;
-            border: 0;
-        }
-
-        .btn:hover {
-            background-color: #1a3366;
-        }
-
-        .btn-container {
-            width: 60%;
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-
-        .password-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+	<style>
+	.layout-table {
+		padding: 40px;
+		background-color: #fff;
+		border-radius: 10px;
+		overflow: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.info-container {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+		width: 60%;
+	}
+	
+	.info-row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		width: 100%;
+	}
+	
+	label {
+		font-weight: 500; /* 기본 폰트 굵기 */
+		color: #666;
+		font-size: 23px;
+		width: 150px; /* 라벨 너비 증가 */
+		text-align: left; /* 왼쪽 정렬 */
+		white-space: nowrap; /* 줄바꿈 방지 */
+	}
+	
+	.info-field {
+		flex: 1;
+		padding: 10px;
+		margin-bottom: 15px;
+		border-radius: 4px;
+		border: 1px solid #13254C;
+		background-color: #13254C;
+		color: #fff;
+		font-size: 20px;
+		box-sizing: border-box;
+		width: calc(100% - 160px);
+		font-weight: 600;
+	}
+	
+	.btn {
+		padding: 12px;
+		background-color: #13254C;
+		color: white;
+		font-size: 18px;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background-color 0.3s;
+		width: 48%;
+		font-weight: 700;
+	}
+	
+	hr {
+		width: 60%;
+		margin: 2rem 0;
+		background-color: #000;
+		height: 1px;
+		border: 0;
+	}
+	
+	.btn:hover { background-color: #1a3366; }
+	
+	.btn-container {
+		width: 60%;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 30px;
+	}
+	
+	.password-container {
+		position: relative;
+		display: flex;
+		align-items: center;
+		width: 100%;
+	}
+	
+	.toggle-password {
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+		background: none;
+		border: none;
+		cursor: pointer;
+	}
+	
+	/* 모달 스타일 추가 */
+	.modal.fade .modal-dialog { transform: translate(-50%, -92%) !important; }
+	.modal-content {
+		background-color: white;
+		color: #333;
+		border-radius: 10px;
+		padding: 20px;
+		border: none;
+		margin: 0 auto;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	}
+	
+	.modal-dialog {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 90%;
+		max-width: 550px;
+		margin: 0;
+	}
+	
+	.modal-header { border-bottom: none; padding: 0 0 15px 0; }
+	.modal-title { font-size: 18px;}	
+	.modal-body { padding: 15px 0; font-size: 20px; text-align: center; }
+	.modal-footer { border-top: none; padding: 15px 0 0 0; justify-content: center; }
+	
+	.btn-close {
+		position: absolute;
+		right: 20px;
+		top: 20px;
+		font-size: 24px;
+		font-weight: 700;
+		opacity: 0.5;
+	}
+	
+	.btn-close:hover { opacity: 1; }
+	
+	/* 모달 배경 스타일 */
+	.modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
+	
+	/* 모달이 화면 맨 위로 오도록 z-index 조정 */
+	.modal { z-index: 1050; }
+	
+	.modal-backdrop { z-index: 1040; }
+	
+	/* 모달 내 버튼 스타일 */
+	.modal-footer .btn { font-size: 16px; }
+</style>
 </head>
 
 <body>
-    <!-- 사이드바 -->
-    <th:block th:replace="~{/common/side-bar}"></th:block>
+	<!-- 사이드바 -->
+	<th:block th:replace="~{/common/side-bar}"></th:block>
 
-    <!-- 컨텐츠 영역 -->
-    <div class="content">
-        <div class="section">
-            <h1 class="title">비밀번호 변경</h1>
-            <form id="passwordChangeForm" th:action="@{/mypage-change-pw2}" method="post">
-                <div class="layout-table">
-                    <hr>
-                    <div class="info-container">
-                        <div class="info-row">
-                            <label for="current_password">기존 비밀번호</label> 
-                            <div class="password-container">
-                                <input type="password" id="current_password" name="currentPassword" class="info-field" th:value="${currentPassword}" readonly>
-                                <button type="button" class="toggle-password" onclick="togglePassword('current_password')">🔐</button>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <label for="new_password">새로운 비밀번호</label> 
-                            <div class="password-container">
-                                <input type="password" id="new_password" name="newPassword" class="info-field" required>
-                                <button type="button" class="toggle-password" onclick="togglePassword('new_password')">🔐</button>
-                            </div>
-                        </div>
-                        <div class="info-row">
-                            <label for="confirm_password">비밀번호 재입력</label> 
-                            <div class="password-container">
-                                <input type="password" id="confirm_password" name="confirmPassword" class="info-field" required>
-                                <button type="button" class="toggle-password" onclick="togglePassword('confirm_password')">🔐</button>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="btn-container">
-                        <button type="button" class="btn" onclick="window.location.href='/mypage-edit2'">뒤로가기</button>
-                        <button type="button" class="btn" onclick="changePassword()">비밀번호 변경</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+	<!-- 컨텐츠 영역 -->
+	<div class="content">
+		<div class="section">
+			<h1 class="title">비밀번호 변경</h1>
+			<form id="passwordChangeForm" th:action="@{/mypage-change-pw2}"
+				method="post">
+				<div class="layout-table">
+					<hr>
+					<div class="info-container">
+						<div class="info-row">
+							<label for="current_password">기존 비밀번호</label>
+							<div class="password-container">
+								<input type="password" id="current_password"
+									name="currentPassword" class="info-field"
+									th:value="${currentPassword}" readonly>
+								<button type="button" class="toggle-password"
+									onclick="togglePassword('current_password')">🔐</button>
+							</div>
+						</div>
+						<div class="info-row">
+							<label for="new_password">새로운 비밀번호</label>
+							<div class="password-container">
+								<input type="password" id="new_password" name="newPassword"
+									class="info-field" required>
+								<button type="button" class="toggle-password"
+									onclick="togglePassword('new_password')">🔐</button>
+							</div>
+						</div>
+						<div class="info-row">
+							<label for="confirm_password">비밀번호 재입력</label>
+							<div class="password-container">
+								<input type="password" id="confirm_password"
+									name="confirmPassword" class="info-field" required>
+								<button type="button" class="toggle-password"
+									onclick="togglePassword('confirm_password')">🔐</button>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="btn-container">
+						<button type="button" class="btn"
+							onclick="window.location.href='/mypage-edit2'">뒤로가기</button>
+						<button type="button" class="btn" onclick="changePassword()">비밀번호
+							변경</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<!-- 비밀번호 변경 실패 모달 -->
+		<div class="modal fade" id="passwordChangeErrorModal" tabindex="-1"
+			role="dialog" aria-labelledby="passwordChangeErrorModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="passwordChangeErrorModalLabel">비밀번호
+							변경 오류</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-center">
+						<p id="passwordChangeErrorMessage"></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							data-bs-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function togglePassword(inputId) {
-        var input = document.getElementById(inputId);
-        if (input.type === "password") {
-            input.type = "text";
-        } else {
-            input.type = "password";
-        }
-    }
-    
-    let isSubmitting = false;
+	</div>
 
-    function changePassword() {
-        if (isSubmitting) {
-            console.log('이미 제출 중입니다.');
-            return;
-        }
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+	  // 비밀번호 입력 필드의 가시성을 토글하는 함수
+		function togglePassword(inputId) {
+		    var input = document.getElementById(inputId);
+		    // 현재 타입이 'password'이면 'text'로, 그렇지 않으면 'password'로 변경
+		    if (input.type === "password") {
+		        input.type = "text";
+		    } else {
+		        input.type = "password";
+		    }
+		}
+	  
+		// 중복 제출 방지를 위한 flag (flag는 boolean true,false의값을 가진 변수)
+		// 이 변수는 폼이 현재 제출 중인지 아닌지를 나타낸다.
+		// true일 경우 제출 중, false일 경우 제출 가능한 상태.
+		let isSubmitting = false;
 
-        var newPassword = document.getElementById('new_password').value;
-        var confirmPassword = document.getElementById('confirm_password').value;
+		// 비밀번호 변경 함수
+		function changePassword() {
+			// 이미 제출 중이면 함수 실행을 중단
+			// 이는 사용자가 여러번 버튼을 클릭하는 것 방지
+			if (isSubmitting) {
+				console.log('이미 제출 중입니다.');
+				return;
+			}
+			 
+			// 새 비밀번호와 확인 비밀번호 값을 가져옴
+			var newPassword = document.getElementById('new_password').value;
+			var confirmPassword = document.getElementById('confirm_password').value;
 
-        if (newPassword !== confirmPassword) {
-            alert('새 비밀번호와 확인 비밀번호가 일치하지 않습니다.');
-            return;
-        }
+			// 비밀번호 필드가 비어있는지 확인
+			if (!newPassword || !confirmPassword) {
+				showPasswordChangeError('비밀번호를 입력해 주세요.');
+				return;
+			}
 
-        isSubmitting = true;
+			// 새 비밀번호와 확인 비밀번호가 일치하는지 확인
+			if (newPassword !== confirmPassword) {
+				showPasswordChangeError('새 비밀번호와 확인 비밀번호가 일치하지 않습니다.');
+				return;
+			}
 
-        $.ajax({
-            url: '/mypage-change-pw2',
-            type: 'POST',
-            data: JSON.stringify({
-                newPassword: newPassword,
-                confirmPassword: confirmPassword
-            }),
-            contentType: 'application/json',
-            dataType: 'json',
-            success: function(response) {
-                isSubmitting = false;
-                if (response.success) {
-                    alert('비밀번호가 성공적으로 변경되었습니다.');
-                    window.location.href = '/mypage2';
-                } else {
-                    alert('비밀번호 변경에 실패했습니다: ' + response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                isSubmitting = false;
-                console.error('Error:', xhr.responseText);
-                alert('서버와의 통신 중 오류가 발생했습니다.');
-            }
-        });
-    }
-</script>
+			// 제출 중 플래그를 true로 설정
+			// 이제 폼이 제출 중임을 나타낸다.
+			isSubmitting = true;
+
+			// AJAX를 사용하여 서버에 비밀번호 변경 요청
+			$.ajax({
+				url : '/mypage-change-pw2',
+				type : 'POST',
+				data : JSON.stringify({
+					newPassword : newPassword,
+					confirmPassword : confirmPassword
+				}),
+				contentType : 'application/json',
+				dataType : 'json',
+				success : function(response) {
+					// 요청 완료 후 제출 중 플래그를 false로 설정
+					// 이제 다시 폼을 제출할수있는 상태가 된다.
+					isSubmitting = false;
+					if (response.success) {
+						alert('비밀번호가 성공적으로 변경되었습니다.');
+						window.location.href = '/mypage2';
+					} else {
+						// 실패 시 에러 메시지 표시
+						showPasswordChangeError(response.message);
+					}
+				},
+				error : function(xhr, status, error) {
+					// 요청 실패 시 제출 중 플래그를 false로 설정
+					// 에러가 다시 발생해도 다시 폼을 제출할 수 있도록 설정
+					isSubmitting = false;
+					// 에러 로그를 콘솔에 출력
+					console.error('Error:', xhr.responseText);
+					// 사용자에게 에러 메시지 표시
+					showPasswordChangeError('서버와의 통신 중 오류가 발생했습니다.');
+				}
+			});
+		}
+
+		// 비밀번호 변경 에러 메시지를 모달로 표시하는 함수
+		function showPasswordChangeError(message) {
+			// 에러 메시지 텍스트 설정
+			$('#passwordChangeErrorMessage').text(message);
+			// 에러 모달 표시
+			$('#passwordChangeErrorModal').modal('show');
+		}
+	</script>
 </body>
 </html>

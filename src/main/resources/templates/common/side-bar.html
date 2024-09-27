@@ -48,7 +48,7 @@
 		    <div class="mypage dropup">
 		      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 		        <img th:src="@{/img/hospital-icon.png}" alt="사용자 로고" width="45" height="45" class="rounded-circle me-2 mypage-icon">
-		        <span class="nav-color">홍길동님</span>
+		        <span class="nav-color" th:text="${session.name != null ? session.name + '님' : '사용자님'}">사용자님</span>
 		      </a>
 		      <ul class="dropdown-menu text-small shadow">
 		        <li><a class="dropdown-item" th:href="@{/mypage2}">내 정보</a></li>
