@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 	<head>
 		<meta charset="UTF-8">
-		<!-- 작업자 -->
+		<!-- 작업자 admin dashboard -->
 		<title>CareOps+ | 대시보드</title>
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
@@ -89,7 +89,7 @@
 		 	.claim-content { padding: 20px; margin-bottom: 15px; width: 500px; height: 95px; border: 3px solid #13254C; border-radius: 10px; }
 		 	.claim-add { display: flex; width: 500px; }
 		 	.claim-add-next { margin-left: auto; margin-bottom: 5px; }
-
+			
 		</style>
 	</head>
 
@@ -101,7 +101,7 @@
 		<div class="content">
 			<div class="section s-m">
 				<!-- 로그인 이후 담당 부서와 담당자 이름 제어 -->
-				<h1 class="title">안전 관리팀 홍길동님, 반갑습니다.</h1>
+				<h1 class="title" th:text="${department + ' ' + name + '님, 반갑습니다.'}">안전 관리팀 홍길동님, 반갑습니다.</h1>
 				
 				<!-- 서비스 미리보기 -->
 				<div class="service">

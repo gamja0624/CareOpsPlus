@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
-	<head>
+<html xmlns:th="http://www.thymeleaf.org"> <!-- thymeleaf 오타 수정 -->
+<head>
     <meta charset="UTF-8">
     <title>CareOps+ | 케어옵스</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap CSS 및 jQuery 추가 -->
+    <!-- Bootstrap CSS 및 커스텀 CSS 추가 -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/web-settings.css}" rel="stylesheet">
 
     <style>
-     body {
+    /* 전체 레이아웃 스타일  */
+      body {
          margin: 0;
          background-color: #13254D;
          display: flex;
@@ -18,13 +19,10 @@
          align-items: center;
          flex-direction: column; /* 수직 정렬 */
      }
+			/* 로고 스타일 */
+     .site_logo { margin: -200px auto 150px auto; max-width: 500px; width: 100%; }
 
-     .site_logo {
-         margin: -200px auto 150px auto;
-         max-width: 500px;
-         width: 100%; 
-     }
-
+			/* 배경 */
      #background {
          position: fixed;
          top: 0;
@@ -34,24 +32,21 @@
          overflow: hidden;
          z-index: -1;
      }
+     
+			/* 별 */
+     .star {
+         fill: white; /* 별 색상 */
+         animation: twinkle 3s infinite alternate;
+         opacity: 0.8; /* 기본 불투명도 */
+         filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8)); /* 그림자 효과 */
+     }
+		 /* 별 깜빡임 애니메이션 */
+     @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; }}
 
-	.star {
-	    fill: white; /* 별 색상 */
-	    animation: twinkle 3s infinite alternate;
-	    opacity: 0.8; /* 기본 불투명도 */
-	    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8)); /* 그림자 효과 */
-	}
+		 /* 별 이동 애니메이션 */
+     @keyframes moveStar { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); }}
 
-    @keyframes twinkle {
-        0% { opacity: 0.3; }
-        100% { opacity: 1; }
-    }
-
-    @keyframes moveStar {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(100vh); }
-    }
-
+		 /* 로그인 박스 스타일 */
      .login-box {
          width: 30%;
          max-width: 800px;
@@ -62,18 +57,13 @@
          color: white;
          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
      }
-
-     .col-form-label {
-         color: white;
-         text-align: left;
-         font-size: 1.1rem;
-     }
-
-     .form-control {
-         width: 100%;
-         font-size: 1.1rem;
-     }
+			
+			/* 폼 라벨 스타일  */
+     .col-form-label { color: white; text-align: left; font-size: 1.1rem; }
+			/* 입력 필드 스타일 */
+     .form-control { width: 100%; font-size: 1.1rem; }
      
+     /* 로그인 버튼 스타일 */
      .btn-login {
          width: 100%; 
          padding: 15px;
@@ -82,45 +72,79 @@
          font-size: 1.2rem;
          transition: background-color 0.3s ease;  
      }
-     
-     .btn-login:hover {
-         background-color: #0d1d40;
-     }
+     /* 로그인 버튼 호버 할때 색상 */
+     .btn-login:hover { background-color: #0d1d40; }
 
-     @keyframes fadeOut {
-         from { opacity: 1; }
-         to { opacity: 0; transform: translateY(-20px); }
-     }
+		 /* 페이드 아웃 애니메이션 */
+      @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px); }}
      
-     .fade-out {
-         animation: fadeOut 0.5s forwards;
-     }
+		 .fade-out { animation: fadeOut 0.5s forwards; }
 
-     .form-label {
-         font-size: 20px;
-     }
-     @media (max-width: 768px) {
-  		.login-box {
-    		 width: 90%;
-    		 margin-top: 0;
-   }
-		}
+			/* 입력 필드 폰트 사이즈 조정 */
+      .form-label { font-size: 20px; }
+     
+     /* 반응형 스타일 */
+      @media (max-width: 768px) { .login-box { width: 90%; margin-top: 0; } }
+     
+     /* 모달 스타일 */
+		 .modal.fade .modal-dialog { transform: translate(-50%, -92%) !important; }
+		 .modal-content {
+            background-color: white;
+            color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            border: none;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 550px;
+            margin: 0;
+        }
+
+        .modal-header { border-bottom: none; padding: 0 0 15px 0; }
+        .modal-title { font-size: 18px; }
+        .modal-body { padding: 15px 0; font-size: 20px; text-align: center; }
+        .modal-footer { border-top: none; padding: 15px 0 0 0; justify-content: center; }
+        .btn-close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            font-weight: 700;
+            opacity: 0.5;
+        }
+        .btn-close:hover { opacity: 1; }
+        /* 모달 배경 스타일 */
+        .modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
+        /* 모달이 화면 맨 위로 오도록 z-index 조정 */
+        .modal { z-index: 1050; }
+        .modal-backdrop { z-index: 1040; }
+        /* 모달 내 버튼 스타일 */
+        .modal-footer .btn { font-size: 16px; }
     </style>
-	</head>
-	<body>
 
-	<div id="background">
-    	<svg id="sky" style="position: absolute; top: 0; left: 0;"></svg> <!-- 위치 설정 -->
-	</div>
+  </head>
+  <body>
 
-	<img src="img/logo-ver2.png" class="site_logo" alt="사이트 로고">
+    <div id="background">
+        <svg id="sky" style="position: absolute; top: 0; left: 0;"></svg> <!-- 위치 설정 -->
+    </div>
 
-	<div class="login-box">
-    <form id="loginForm" action="/" method="post"> 
-       <div class="mb-3">
-    		<label for="inputDepartments" class="form-label">부서 번호</label>
-    		<input type="text" class="form-control" id="inputDepartments" name="department_dept_no" required>
-	   </div>	
+    <img src="img/logo-ver2.png" class="site_logo" alt="사이트 로고">
+
+    <div class="login-box">
+        <form id="loginForm" action="/" method="post"> 
+        <div class="mb-3">
+            <label for="inputDepartments" class="form-label">부서 번호</label>
+            <input type="text" class="form-control" id="inputDepartments" name="department_dept_no" required>
+        </div>  
         <div class="mb-3">
             <label for="inputUserId" class="form-label">아이디</label>
             <input type="text" class="form-control" id="inputUserId" name="user_id" required>
@@ -130,97 +154,87 @@
             <input type="password" class="form-control" id="inputPassword" name="user_password" required>
         </div>
         <button type="submit" class="btn btn-dark btn-login" aria-label="로그인">로그인</button>
-    </form>
+        </form>
+    </div>  
 
-    <div class="modal fade" id="loginErrorModal" tabindex="-1" role="dialog" aria-labelledby="loginErrorModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!-- 비밀번호 변경 실패 모달 -->
+    <div class="modal fade" id="passwordChangeErrorModal" tabindex="-1" role="dialog" aria-labelledby="passwordChangeErrorModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="loginErrorModalLabel">로그인 오류</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="passwordChangeErrorModalLabel">비밀번호 변경 오류</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    부서 번호, 아이디 또는 비밀번호를 다시 입력해주세요.
+                <div class="modal-body text-center">
+                    <p id="passwordChangeErrorMessage"></p>
                 </div>
-                <div class="modal-body" th:if="${error}">[[${error}]]</div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
     </div>
 
-		<script>
-		
-/* 	    $(document).ready(function() {
-	        $('#loginForm').submit(function(e) {
-	            e.preventDefault();
-	            $.ajax({
-	                url: '/',
-	                type: 'POST',
-	                data: $(this).serialize(),
-	                success: function(response) {
-	                    if (response.success) {
-	                        // 성공 시 리다이렉트
-	                        window.location.href = response.redirectUrl;
-	                    } else {
-	                        // 실패 시 에러 메시지 표시
-	                        $('#loginErrorModal .modal-body').text(response.error);
-	                        $('#loginErrorModal').modal('show');
-	                    }
-	                },
-	                error: function(xhr, status, error) {
-	                    // AJAX 요청 실패 시 에러 처리
-	                    $('#loginErrorModal .modal-body').text('서버와의 통신 중 오류가 발생했습니다.');
-	                    $('#loginErrorModal').modal('show');
-	                }
-	            });
-	        });
-	    }); */
-        
-	// 배경 설정 및 별 생성
-	const backgroundSetting = () => {
-	    const $background = document.querySelector("#background");
-	    const $sky = document.querySelector("#sky");
-	    if (!($background instanceof HTMLElement) || !($sky instanceof SVGElement)) return;
-	
-	    const maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5; // 배경 크기 조정
-	    const getRandomX = () => Math.random() * maxSize;
-	    const getRandomY = () => Math.random() * maxSize;
-	    const randomRadius = () => Math.random() * 1.5 + 1; // 랜덤 반지름 생성
-	    const randomDuration = () => Math.random() * 20 + 10; // 랜덤 지속 시간
-	
-	    const starCount = Math.floor(maxSize / 10);
-	    $background.style.width = `${maxSize}px`;
-	    $background.style.height = `${maxSize}px`;
-	    $sky.style.width = `${maxSize}px`;
-	    $sky.style.height = `${maxSize}px`;
-	
-	    $sky.innerHTML = ''; // 기존 별들 제거
-	
-	    for (let i = 0; i < starCount; i++) {
-	        const $$circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-	        $$circle.classList.add("star");
-	        $$circle.setAttributeNS(null, "cx", getRandomX());
-	        $$circle.setAttributeNS(null, "cy", getRandomY());
-	        $$circle.setAttributeNS(null, "r", randomRadius());
-	        
-	        const duration = randomDuration();
-	        $$circle.style.animation = `twinkle 3s infinite alternate, moveStar ${duration}s linear infinite`;
-	        
-	        $sky.appendChild($$circle);
-	    }
-	};
+<!-- Bootstrap JS 및 jQuery 추가 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-	
-	window.addEventListener("DOMContentLoaded", () => {
-	    backgroundSetting();
-	});
+<script>
+    // 배경 설정 및 별 생성
+    const backgroundSetting = () => {
+        const $sky = document.querySelector("#sky");
+        const maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5; // 배경 크기 조정
+        const getRandomX = () => Math.random() * maxSize;
+        const getRandomY = () => Math.random() * maxSize;
+        const randomRadius = () => Math.random() * 1.5 + 1; // 랜덤 반지름 생성
+        const randomDuration = () => Math.random() * 20 + 10; // 랜덤 지속 시간
 
-	window.addEventListener("resize", () => {
-	    backgroundSetting();
-	});
-		</script>
-	</body>
+        const starCount = Math.floor(maxSize / 10);
+        $sky.style.width = `${maxSize}px`;
+        $sky.style.height = `${maxSize}px`;
+
+        $sky.innerHTML = ''; // 기존 별들 제거
+
+        for (let i = 0; i < starCount; i++) {
+            const $$circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            $$circle.classList.add("star");
+            $$circle.setAttribute("cx", getRandomX());
+            $$circle.setAttribute("cy", getRandomY());
+            $$circle.setAttribute("r", randomRadius());
+
+            const duration = randomDuration();
+            $$circle.style.animation = `twinkle 3s infinite alternate, moveStar ${duration}s linear infinite`;
+
+            $sky.appendChild($$circle);
+        }
+    };
+		// 페이지 로드 및 리사이즈 시 배경 설정
+    window.addEventListener("DOMContentLoaded", backgroundSetting);
+    window.addEventListener("resize", backgroundSetting);
+
+    // 로그인 폼 제출 처리
+    $(document).ready(function() {
+        $('#loginForm').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        window.location.href = response.redirectUrl;
+                    } else {
+                    	  $('#loginErrorModal .modal-body').text(response.message); // 에러 메시지 표시
+                        $('#loginErrorModal').modal('show');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#loginErrorModal .modal-body').text('서버와의 통신 중 오류가 발생했습니다.');
+                    $('#loginErrorModal').modal('show');
+                }
+            });
+        });
+    });
+</script>
+</body>
 </html>
