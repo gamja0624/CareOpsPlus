@@ -48,7 +48,7 @@ public class AccountController {
 	@GetMapping("/account-department")
 	public String accountDepartment(Model model) {
 	    
-		List<ManagerDepartmentDTO> managerDepartment= managerDepartmentService.findAllDepartments();
+		List<ManagerDepartmentDTO> managerDepartment= managerDepartmentService.findAllDepartmentsList();
 	    log.info("Manager Departments: {}", managerDepartment);
 	   
 	    model.addAttribute("managerDepartment", managerDepartment);
