@@ -66,20 +66,36 @@ public class MedicalService {
 	
 	// [수정]
 	@Transactional
-	public void editMedicalDevice(
-			ListMedicalDevicesDTO editMedical,
+	public void editMedicalDevice(ListMedicalDevicesDTO editMedical,
+			// 상태, 장비수
 			@Param("lmdStatus") String lmdStatus, @Param("lmdDeviceCnt") String lmdDeviceCnt, 
-			@Param("lmdManagerName") String lmdManagerName, @Param("lmdManagerId") String lmdManagerId) {
+			// 매니저 부서 번호, 부서 이름
+			@Param("lmdManagerDeptNo") String lmdManagerDeptNo, @Param("lmdManagerDeptPart") String lmdManagerDeptPart, 
+			// 매니저 아이디, 이름
+			@Param("lmdManagerId") String lmdManagerId, @Param("lmdManagerName") String lmdManagerName,
+			// 작업자 부서 번호, 아이디
+			@Param("lmdAdminDeptNo") String lmdAdminDeptNo, @Param("lmdAdminId") String lmdAdminId, 
+			// 작업자 이름, 점검일
+			@Param("lmdAdminName") String lmdAdminName, java.util.Date lmdLastCheckDate) {
 		
 		ListMedicalDevices findMedical = medicalRepository.findById(editMedical.getLmdMinorCateCode())
 				.orElseThrow(IllegalArgumentException::new);
 		
-		findMedical.setLmdStatus(lmdStatus);							// 상태
-		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));	// 장비수
-		findMedical.setLmdManagerId(lmdManagerName);					// 아이디
-		findMedical.setLmdManagerId(lmdManagerId);						// 아이디
-		findMedical.setLmdManagerName(lmdManagerName);					// 이름
+		// 상태, 장비수
+		findMedical.setLmdStatus(lmdStatus);
+		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));
+		
+		// 매니저 부서 번호, 부서 이름, 아이디, 이름
+		findMedical.setLmdManagerDeptNo(Integer.parseInt(lmdManagerDeptNo));
+		findMedical.setLmdManagerDeptPart(lmdManagerDeptPart);
+		findMedical.setLmdManagerId(lmdManagerId);
+		findMedical.setLmdManagerName(lmdManagerName);
+		
+		// 작업자 부서 번호, 아이디, 작업자 이름, 점검일
+		findMedical.setLmdAdminDeptNo(lmdAdminDeptNo);
+		findMedical.setLmdAdminId(lmdAdminId);
+		findMedical.setLmdAdminName(lmdAdminName);
+		findMedical.setLmdLastCheckDate(new java.sql.Date(lmdLastCheckDate.getTime()));
 		
 	}
-	
 }

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 의료기기 수정</title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			/* layout-table */
+			.layout-table { height: 630px; }
+		
+			/* 의료기기 상태 토글 */
+			.form-select { width: 130px; margin: 30px auto; text-align: center; font-size: 20px; }
+			.btn-success { border-radius: 50px; width: 90px; height: 50px; font-size: 20px; } 
+			
+			/* 데이터 테이블 */
+			.data-table-a { width: 1000px; margin: 50px auto; }
+			.data-input-a { 
+				width: 830px; 
+				height: 35px;
+				font-size: 20px; 
+				padding-left: 10px;
+				margin-left: auto; 
+				border-radius: 5px; 
+				background-color: #13254C; 
+				color: white; 
+			}
+			
+			.data-table-b { display: flex; width: 1000px; margin: 50px auto; }
+			.data-input-b { 
+				width: 300px; 
+				font-size: 20px; 
+				padding-left: 10px;
+				margin-left: auto; 
+				border-radius: 5px; 
+				background-color: #13254C; 
+				color: white; 
+			}
+			.data-title { font-size: 25px; margin-right: 40px; }
+			.data { display: flex; margin-bottom: 20px; }
+			.data-t-2 { margin-left: auto; }
+			.data-disabled { background-color: #d9d9d9; color: #717171; }
+			
+			/* 버튼 - 뒤로가기, 수정 */
+			.btn-table { width: 1340px; }
+			.btn-status { margin: 30px auto; text-align: center; }
+			.btn-group { display: inline-block; width: 80px; margin-right: 15px; background-color: #13254C; color: white; }
+			.btn-group:hover { border: 1px solid #13254C; }
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			<!-- section -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">의료관리 관리<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">수정</h1>
+				
+				<!-- <form th:attr="action=@{ ${ session.user_type } + '/medical-list/' + ${ medicalDevice.lmdMinorCateCode } + '/'}" method="post"> -->
+				<form th:attr="action=@{'/admin/medical-list/' + ${ medicalDevice.lmdMinorCateCode } + '/edit'}" method="post">
+					<div class="layout-table">
+						<div class="btn-status">
+							<select name="lmdStatus" class="form-select" aria-label="Default select">
+						    <option value="" th:text="${medicalDevice.lmdStatus}" th:if="${medicalDevice.lmdStatus == null}" selected></option>
+						    <option value="정상" th:selected="${medicalDevice.lmdStatus == '정상'}">정상</option>
+						    <option value="점검요망" th:selected="${medicalDevice.lmdStatus == '점검요망'}">점검요망</option>
+						    <option value="수리필요" th:selected="${medicalDevice.lmdStatus == '수리필요'}">수리필요</option>
+						    <option value="노후" th:selected="${medicalDevice.lmdStatus == '노후'}">노후</option>
+						    <option value="만료" th:selected="${medicalDevice.lmdStatus == '만료'}">만료</option>
+							</select>
+						</div>
+						
+						<div class="data-table-a">
+							<div class="data">
+								<p class="data-title">장비대분류명</p>
+								<input type="text" name="lmdMajorCateName" th:value="${ medicalDevice.lmdMajorCateName }" class="data-input-a data-disabled" disabled>
+							</div>
+							<div class="data">
+								<p class="data-title">장비세분류명</p>
+								<input type="text" name="lmdMinorCateName" th:value="${ medicalDevice.lmdMinorCateName }" class="data-input-a data-disabled" disabled>
+							</div>
+							<div class="data">
+							 	<p class="data-title">모델명</p>
+								<input type="text" name="lmdDevicesName" th:value="${ medicalDevice.lmdDevicesName }" class="data-input-a data-disabled" disabled>
+							</div>
+							<div class="data">
+							 	<p class="data-title">등록일</p>
+								<input type="text" name="lmdDate" th:value="${ medicalDevice.lmdDate }" class="data-input-a data-disabled" disabled>
+							</div>
+						</div>
+						
+						<div class="data-table-b">
+							<div class="data-t-1">
+								<div class="data">
+									<p class="data-title">장비대분류코드</p>
+									<input type="text" name="lmdMajorCateCode" th:value="${ medicalDevice.lmdMajorCateCode }" class="data-input-b data-disabled" disabled>
+								</div>
+								<div class="data">
+									<p class="data-title">장비허가번호</p>
+									<input type="text" name="lmdLicenseNumber" th:value="${ medicalDevice.lmdLicenseNumber }" class="data-input-b data-disabled" disabled>
+								</div>
+								<div class="data">
+								 	<p class="data-title">담당 부서</p>
+							    <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()">
+						        <option th:each="dept : ${ departments }" th:if="${ medicalDevice.lmdManagerDeptPart == dept.managerDeptName }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }" selected></option> 
+						        <option th:each="dept : ${ departments }" th:unless="${ medicalDevice.lmdManagerDeptPart == dept.managerDeptName }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }"></option> 
+							    </select>
+								</div>
+								<div class="data">
+								 	<p class="data-title">점검자</p>
+								 	<select id="admin-select" name="lmdAdminDeptNo" class="data-input-b" aria-label="Default select" onchange="onAdminChange()">
+						       	<option th:each="admin : ${ adminList }" th:if="${ medicalDevice.lmdAdminName == admin.adminName }" 
+											      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
+											      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" selected></option>
+						       	<option th:each="admin : ${ adminList }" th:unless="${ medicalDevice.lmdAdminName == admin.adminName }" 
+											      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
+											      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" selected></option>
+							    </select>
+								</div>
+							</div>
+							
+							<div class="data-t-2">
+								<div class="data">
+									<p class="data-title">장비세분류코드</p>
+									<input type="text" name="lmdMinorCateCode" th:value="${ medicalDevice.lmdMinorCateCode }" class="data-input-b data-disabled" disabled>
+								</div>
+								<div class="data">
+									<p class="data-title">장비수</p>
+									<input type="text" name="lmdDeviceCnt" th:value="${ medicalDevice.lmdDeviceCnt }" class="data-input-b">
+								</div>
+						    <div class="data">
+							    <p class="data-title">담당자</p>
+							    <select id="manager-select" name="lmdManagerId" class="data-input-b" aria-label="Default select">
+						        <option value="" selected>==담당자 선택==</option>
+						        <option th:each="manager : ${ managers }" th:value="${ manager.managerId }" 
+						        th:text="${ manager.managerName }" th:selected="${ medicalDevice.lmdManagerId == manager.managerId }">
+						        </option>
+							    </select>
+								</div>
+
+								<div class="data">
+								 	<p class="data-title">점검일</p>
+								 	<input type="date" id="current-date" name="lmdLastCheckDate" class="data-input-b" th:value="${ medicalDevice.lmdLastCheckDate }" >
+								</div>
+							</div>
+							
+							<!-- hidden -->
+							<input type="hidden" id="lmd-dapt-part" name="lmdManagerDeptPart">
+		        	<input type="hidden" id="lmd-manager-name" name="lmdManagerName">
+		        	<input type="hidden" id="lmd-admin-name" name="lmdAdminName">
+		        	<input type="hidden" id="lmd-admin-id" name="lmdAdminId">
+						</div>
+					</div>
+					
+					<div class="btn-table btn-status">
+						<button onclick="location.href='/admin/medical-list'" class="btn btn-group" type="button">뒤로 가기</button>
+						<button class="btn btn-group" type="submit">수정 완료</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		
+		<script type="text/javascript">
+			// 오늘 날짜로 기본값 설정
+			document.getElementById('current-date').value = new Date().toISOString().substring(0, 10);
+		
+			// 담당 부서 선택 후 담당자 옵션이 동적으로 추가되는 함수
+			function onDepartmentChange() {
+				var deptSelect = document.getElementById('dept-select');
+				var managerSelect = document.getElementById('manager-select');
+				
+				var selectedDeptName = deptSelect.options[deptSelect.selectedIndex].text; 
+				
+				// 담당자 선택 초기화
+				managerSelect.innerHTML = '<option value="" selected>==담당자 선택==</option>';
+				
+				// 부서 이름이 선택되었으면 담당자 옵션을 동적으로 추가
+				if (selectedDeptName !== "==부서 선택==") { // 기본 선택이 아닌 경우
+					fetch('/manager/medical-list/getManagersByDeptName?managerDeptName=' + encodeURIComponent(selectedDeptName)) 
+						.then(response => response.json())
+						.then(managers => {
+							managers.forEach(manager => {
+							var option = document.createElement('option');
+								option.value = manager.managerId;
+								option.text = manager.managerName;
+								managerSelect.appendChild(option);
+							});
+						})
+					.catch(error => {
+						console.error('error msg :', error);
+					});
+				}
+			} 
+			
+			// 점검자 이름 추출하는 함수
+			function onAdminChange() {
+	        var adminSelect = document.getElementById('admin-select');
+	        var selectedOption = adminSelect.options[adminSelect.selectedIndex];
+	        
+	        var adminName = selectedOption.text.split('(')[1].split(')')[0];  // 괄호 안의 점검자 이름 추출
+	        var adminId = selectedOption.getAttribute('data-admin-id'); 			// adminId 추출
+
+	        document.getElementById('lmd-admin-name').value = adminName;
+	        document.getElementById('lmd-admin-id').value = adminId; 
+	    }
+			
+			// 담당 부서 선택 후 hidden 필드에 lmdManagerDeptPart 값 저장
+			document.getElementById('dept-select').addEventListener('change', function() {
+				var selectedOption = this.options[this.selectedIndex];
+				document.getElementById("lmd-dapt-part").value = selectedOption.text; 
+			});
+			
+			// 담당자 선택 후 hidden 필드에 lmdmManagerName 값 저장
+			document.getElementById('manager-select').addEventListener('change', function() {
+				var selectedOption = this.options[this.selectedIndex];
+				document.getElementById("lmd-manager-name").value = selectedOption.text; 
+			});
+		</script>
+	</body>
+</html>
