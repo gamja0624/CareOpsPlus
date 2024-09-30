@@ -5,17 +5,16 @@ package himedia.project.careops.service;
  * @editDate 2024-09-25
  */
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ManagerDepartmentDTO;
+import himedia.project.careops.entity.Manager;
 import himedia.project.careops.entity.ManagerDepartment;
 import himedia.project.careops.repository.ManagerDepartmentRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -42,5 +41,5 @@ public class ManagerDepartmentService {
                          .map(department -> modelMapper.map(department, ManagerDepartmentDTO.class))
                          .collect(Collectors.toList());
     }
-	
+    
 }

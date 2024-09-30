@@ -24,28 +24,18 @@ public class ClaimSubCategory {
 	private int claimSubCategoryNo;                 // 민원 소분류 번호 ( 기본키 auto_increment)
 	
 	@Column(name="lmd_minor_cate_code")
-	private String lmdMinorCateCode;    // 장비 세분류 코드 ( 의료기기 관리 )
+	private String lmdMinorCateCode;                // 장비 세분류 코드 ( 의료기기 관리 )
 	
 	@Column(name="lmd_minor_cate_name")
 	private String lmdMinorCateName;                // 장비 세분류명 ( 의료기기 관리 )
 	
-	@Column(name="sml_no")
-	private int smlNo;             // 세부항목 번호 ( 안전관리 )
+	@Column(name="sml_no", nullable = true)
+	private Integer smlNo;                              // 세부항목 번호 ( 안전관리 )
 	
 	@Column(name="sml_list")
 	private String smlList;                         // 세부항목 ( 안전관리 )
 
 	public ClaimSubCategory() {}
-
-	public ClaimSubCategory(int claimSubCategoryNo, String lmdMinorCateCode, String lmdMinorCateName,
-			int smlNo, String smlList) {
-		super();
-		this.claimSubCategoryNo = claimSubCategoryNo;
-		this.lmdMinorCateCode = lmdMinorCateCode;
-		this.lmdMinorCateName = lmdMinorCateName;
-		this.smlNo = smlNo;
-		this.smlList = smlList;
-	}
 
 	public int getClaimSubCategoryNo() {
 		return claimSubCategoryNo;
@@ -71,11 +61,11 @@ public class ClaimSubCategory {
 		this.lmdMinorCateName = lmdMinorCateName;
 	}
 
-	public int getSmlNo() {
+	public Integer getSmlNo() {
 		return smlNo;
 	}
 
-	public void setSmlNo(int smlNo) {
+	public void setSmlNo(Integer smlNo) {
 		this.smlNo = smlNo;
 	}
 

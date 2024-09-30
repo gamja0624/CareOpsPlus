@@ -45,22 +45,22 @@ public class SafetyController {
 
 		log.info("목록 페이지 실행");
 
-		List<SafetyManagementListDTO> safetyAllList = safetyService.findAllList();
-		model.addAttribute("safetyAllList", safetyAllList);
-
-		log.info("네이티브쿼리 >>>> {}", safetyAllList);
-
 		/*
-		 * List<SafetyManagementDTO> safetyResultList =
-		 * safetyService.safetyResultList(); log.info("목록 페이지 safetyResultList 실행");
-		 * List<SafetyManagementListDTO> safetyListAll = safetyService.safetyListAll();
+		 * List<SafetyManagementListDTO> safetyAllList = safetyService.findAllList();
+		 * model.addAttribute("safetyAllList", safetyAllList);
 		 * 
-		 * model.addAttribute("safetyResultList", safetyResultList);
-		 * model.addAttribute("safetyListAll", safetyListAll);
-		 * 
-		 * log.info("safetyResultList >>>{}", safetyResultList);
-		 * log.info("safetyListAll>>>{}", safetyListAll);
+		 * log.info("네이티브쿼리 >>>> {}", safetyAllList);
 		 */
+
+		List<SafetyManagementDTO> safetyResultList = safetyService.safetyResultList();
+		log.info("목록 페이지 safetyResultList 실행");
+		log.info("safetyResultList >>>{}", safetyResultList);
+		List<SafetyManagementListDTO> safetyListAll = safetyService.safetyListAll();
+		log.info("목록 페이지 safetyListAll 실행");
+		log.info("safetyListAll>>>{}", safetyListAll);
+
+		model.addAttribute("safetyResultList", safetyResultList);
+		model.addAttribute("safetyListAll", safetyListAll);
 
 		return "admin/safety/safety-list";
 	}
@@ -75,15 +75,15 @@ public class SafetyController {
 //	@GetMapping("/checklist-edit/{sml_no}")
 	@GetMapping("/checklist-edit/detail")
 	/* public String checklistEditDetail(@PathVariable int sml_no, Model model) { */
-		public String checklistEditDetail(@PageableDefault Pageable pageable, Model model) {
-		
+	public String checklistEditDetail(@PageableDefault Pageable pageable, Model model) {
+
 		Page<SafetyManagementChecklistDTO> allChecklist = safetyService.findAllChecklist(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(allChecklist);
-		
+
 		model.addAttribute("allChecklist", allChecklist);
 		model.addAttribute("paging", paging);
 		log.info("allChecklist >>>>>> {}", allChecklist);
-		// findBySmlNo()
+		
 		return "admin/safety/checklist-edit-detail";
 	}
 
