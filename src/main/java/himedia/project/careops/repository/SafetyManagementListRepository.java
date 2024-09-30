@@ -5,14 +5,19 @@ package himedia.project.careops.repository;
  * @editDate 2024-09-25
  */
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import himedia.project.careops.entity.SafetyManagement;
 import himedia.project.careops.entity.SafetyManagementList;
 
 @Repository
 public interface SafetyManagementListRepository extends JpaRepository<SafetyManagementList, Integer> {
 
+	
 	/*
 	 * // smNo 기준 중복제거
 	 * 
@@ -20,11 +25,17 @@ public interface SafetyManagementListRepository extends JpaRepository<SafetyMana
 	 * ) List<SafetyManagementList> findDistinctBySmNo();
 	 */
 
+	// 작성자 : 이홍준
+	// 목록페이지 조회하는 쿼리문 생성(nativeQuery)
 	/*
 	 * @Query(value =
-	 * "select sm.sm_no, admin_name, sml_no, sml_list, sml_check, sm_check, sm_date from safety_management sm left join safety_management_list sml on sm.sm_no = sml.sm_no group by sm.sm_no"
-	 * , nativeQuery = true) List<SafetyManagementList> findAllList();
+	 * "SELECT sm.smNo, adminName, smlNo, smlList, smlCheck, smCheck, smDate FROM safetyManagement JOIN safetyManagementList sml ON safetyManagement.smNo = safetyManagementList.smNo ORDER BY safetyManagement.smNo DESC"
+	 * , nativeQuery = true)
 	 */
+
+	@Query(value = "SELECT * FROM safety_management_list", nativeQuery = true)
+	List<SafetyManagementList> findAllList();
+
 	/*
 	 * @Query("SELECT DISTINCT sml FROM SafetyManagementList sml")
 	 * List<SafetyManagementList> findAllDistinct();

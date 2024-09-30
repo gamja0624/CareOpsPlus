@@ -5,6 +5,8 @@ package himedia.project.careops.controller.manager;
  * @editDate 2024-09-19 ~ 
  */
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,11 +19,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.ListMedicalDevicesDTO;
-import himedia.project.careops.dto.ManagerDTO;
+import himedia.project.careops.dto.ManagerDepartmentDTO;
+import himedia.project.careops.entity.Manager;
+import himedia.project.careops.service.ManagerDepartmentService;
 import himedia.project.careops.service.ManagerService;
 import himedia.project.careops.service.MedicalService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +34,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/manager/medical-list")
-public class MedicalController {
+public class ManagerMedicalController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final MedicalService medicalService;
 	private final ManagerService managerService;
+	private final ManagerDepartmentService managerDepartmentService;
 	
-	public MedicalController(MedicalService medicalService, ManagerService managerService) {
+	public ManagerMedicalController(MedicalService medicalService, ManagerService managerService, ManagerDepartmentService managerDepartmentService) {
 		this.medicalService = medicalService;
 		this.managerService = managerService;
+		this.managerDepartmentService = managerDepartmentService;
 	}
 
 	// [목록 조회] ======================================================================================
@@ -49,11 +56,6 @@ public class MedicalController {
 		
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
 		model.addAttribute("paging", paging);
-		
-//		log.info("목록 의료기기 상태 : {}", medicalDevicesList.toList().get(0).getLmdStatus());
-		
-//		log.info("컨트롤러 : 1번째 : {}", medicalDevicesList.get().toList().toString());
-//		log.info("컨트롤러 : 2번째 : {}", paging);
 		
 		return "manager/medical/medical-list";
 	}
@@ -68,42 +70,20 @@ public class MedicalController {
 		return "manager/medical/medical-detail";
 	}
 	
-	// [수정] ==========================================================================================
-	@GetMapping("/{lmdMinorCateCode}/edit")
-	public String medicalEditPage(@PathVariable String lmdMinorCateCode, Model model) {
-		
-		ListMedicalDevicesDTO medicalDevice = medicalService.findByMedicalLmdMinorCateCode(lmdMinorCateCode);
-		model.addAttribute("medicalDevice", medicalDevice);
-		
-		log.info("1번) 매니저 부서 번호 받기");
-		log.info("1번) medicalDevice : {}", medicalDevice.getLmdManagerDeptPart());
-		
-		log.info("2번) 매니저 부서 번호로 해당하는 담당자 리스트 가져오기");
-		managerService.findByManagerName(medicalDevice.getLmdManagerDeptPart());
-		
-		
-		return "manager/medical/medical-edit";
-	}
-	
-	@PostMapping("/{lmdMinorCateCode}/edit")
-	public String medicalEdit(
-			@PathVariable String lmdMinorCateCode, ListMedicalDevicesDTO editMedical,
-			@RequestParam String lmdStatus, @RequestParam String lmdDeviceCnt, @RequestParam String lmdManagerName) {
-		
-		log.info("수정 컨트롤러 실행");
-		
-		log.info("받아온 lmdStatus          : {}", lmdStatus);
-		log.info("받아온 lmdDeviceCnt       : {}", lmdDeviceCnt);
-		log.info("받아온 lmdManagerName     : {}", lmdManagerName);
-		
-		medicalService.editMedicalDevice(editMedical, lmdStatus, lmdDeviceCnt, lmdManagerName);
-		
-		return "redirect:/manager/medical-list";
-	}
-	
 	// [등록] ==========================================================================================
+	@GetMapping("/getManagersByDeptName")
+	@ResponseBody
+	// 담당 부서 이름에 해당하는 담당자 목록을 가져오는 메서드
+	public List<Manager> getManagersByDeptName(@RequestParam String managerDeptName) {
+	    return managerService.findByManagerList(managerDeptName);
+	}
+	
 	@GetMapping("/add")
-	public String medicalAddPage() {
+	public String medicalAddPage(Model model) {
+		
+		// 담당 부서 목록 반환
+		List<ManagerDepartmentDTO> departments = managerDepartmentService.findAllDepartmentsList();
+		model.addAttribute("departments", departments);
 		
 		return "manager/medical/medical-add";
 	}
@@ -111,7 +91,8 @@ public class MedicalController {
 	@PostMapping("/add")
 	public String medicalAdd(ListMedicalDevicesDTO newMedicalDevice) {
 		
-		//medicalService.addMedicalDevice(newMedicalDevice);
+		log.info("[1. 컨트롤러 실행]");
+		medicalService.addMedicalDevice(newMedicalDevice);
 		
 		return "redirect:/manager/medical-list";
 	}

@@ -32,10 +32,10 @@ public class Claim {
 	private int managerDeptNo;				    // 담당자 부서번호 ( 외래키 ) 
 	
 	@Column(name="claim_category_no", nullable = false)
-	private String claimCategoryNo;		// 민원 대분류 번호 ( 외래키 )
+	private String claimCategoryNo;				// 민원 대분류 번호 ( 외래키 )
 	
 	@Column(name="claim_sub_category_no", nullable = false)
-	private int claimSubCategoryNO;// 민원 소뷴류 번호 ( 외래키 )	
+	private int claimSubCategoryNO;     		// 민원 소뷴류 번호 ( 외래키 )	
 	
 	@Column(name="claim_category_name", nullable = false)
 	private String claimCategoryName;			// 민원 대분류 이름 

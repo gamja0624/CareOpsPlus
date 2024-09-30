@@ -23,7 +23,7 @@ public class SafetyManagementList {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="sml_no", nullable = false)
-	private int smlNo;				// 세부항목 번호
+	private Integer smlNo;				// 세부항목 번호
 	
 	@Column(name="sm_no", nullable = false)
 	private int smNo;	// 점검 번호
@@ -37,18 +37,18 @@ public class SafetyManagementList {
 	
 	public SafetyManagementList() {}
 
-	public SafetyManagementList(int smlNo, int smNo, String smlList, Boolean smlCheck) {
+	public SafetyManagementList(Integer smlNo, int smNo, String smlList, Boolean smlCheck) {
 		this.smlNo = smlNo;
 		this.smNo = smNo;
 		this.smlList = smlList;
 		this.smlCheck = smlCheck;
 	}
 
-	public int getSmlNo() {
+	public Integer getSmlNo() {
 		return smlNo;
 	}
 
-	public void setSmlNo(int smlNo) {
+	public void setSmlNo(Integer smlNo) {
 		this.smlNo = smlNo;
 	}
 

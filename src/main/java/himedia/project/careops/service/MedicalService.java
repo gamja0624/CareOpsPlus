@@ -34,7 +34,7 @@ public class MedicalService {
 		this.modelMapper = modelMapper;
 	}
 	
-	// 의료기기 장비세분류코드 찾기
+	// [의료기기 장비세분류코드 찾기]
 	public ListMedicalDevicesDTO findByMedicalLmdMinorCateCode(String lmdMinorCateCode) {
 		
 		ListMedicalDevices medicalDevice = medicalRepository.findById(lmdMinorCateCode).orElseThrow(IllegalArgumentException::new);
@@ -43,7 +43,7 @@ public class MedicalService {
 		return modelMapper.map(medicalDevice, ListMedicalDevicesDTO.class);
 	}
 	
-	// 의료기기 목록 + 페이지네이션
+	// [목록 + 페이지네이션]
 	public Page<ListMedicalDevicesDTO> findByMedicalDevices(Pageable pageable) {
 		
 		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
@@ -56,7 +56,7 @@ public class MedicalService {
 		return medicalDevicesList.map(medical -> modelMapper.map(medical, ListMedicalDevicesDTO.class));
 	}
 
-	// 의료기기 등록
+	// [등록]
 	@Transactional
 	public void addMedicalDevice(ListMedicalDevicesDTO newMedicalDevice) {
 		
@@ -64,20 +64,38 @@ public class MedicalService {
 		
 	}
 	
-	// 의료기기 수정
+	// [수정]
 	@Transactional
-	public void editMedicalDevice(
-			ListMedicalDevicesDTO editMedical,
-			@Param("lmdStatus") String lmdStatus, @Param("lmdDeviceCnt") String lmdDeviceCnt, @Param("lmdManagerName") String lmdManagerName) {
+	public void editMedicalDevice(ListMedicalDevicesDTO editMedical,
+			// 상태, 장비수
+			@Param("lmdStatus") String lmdStatus, @Param("lmdDeviceCnt") String lmdDeviceCnt, 
+			// 매니저 부서 번호, 부서 이름
+			@Param("lmdManagerDeptNo") String lmdManagerDeptNo, @Param("lmdManagerDeptPart") String lmdManagerDeptPart, 
+			// 매니저 아이디, 이름
+			@Param("lmdManagerId") String lmdManagerId, @Param("lmdManagerName") String lmdManagerName,
+			// 작업자 부서 번호, 아이디
+			@Param("lmdAdminDeptNo") String lmdAdminDeptNo, @Param("lmdAdminId") String lmdAdminId, 
+			// 작업자 이름, 점검일
+			@Param("lmdAdminName") String lmdAdminName, java.util.Date lmdLastCheckDate) {
 		
 		ListMedicalDevices findMedical = medicalRepository.findById(editMedical.getLmdMinorCateCode())
 				.orElseThrow(IllegalArgumentException::new);
 		
+		// 상태, 장비수
 		findMedical.setLmdStatus(lmdStatus);
 		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));
+		
+		// 매니저 부서 번호, 부서 이름, 아이디, 이름
+		findMedical.setLmdManagerDeptNo(Integer.parseInt(lmdManagerDeptNo));
+		findMedical.setLmdManagerDeptPart(lmdManagerDeptPart);
+		findMedical.setLmdManagerId(lmdManagerId);
 		findMedical.setLmdManagerName(lmdManagerName);
 		
-		log.info("서비스 종료 : editMedicalDevice !!!!!!!!!!!!");
+		// 작업자 부서 번호, 아이디, 작업자 이름, 점검일
+		findMedical.setLmdAdminDeptNo(lmdAdminDeptNo);
+		findMedical.setLmdAdminId(lmdAdminId);
+		findMedical.setLmdAdminName(lmdAdminName);
+		findMedical.setLmdLastCheckDate(new java.sql.Date(lmdLastCheckDate.getTime()));
+		
 	}
-	
 }

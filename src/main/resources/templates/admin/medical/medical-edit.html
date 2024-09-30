@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
@@ -63,7 +63,8 @@
 				<!-- 제목 -->
 				<h1 class="title">의료관리 관리<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">수정</h1>
 				
-				<form th:attr="action=@{'/manager/medical-list/' + ${ medicalDevice.lmdMinorCateCode } + '/edit'}" method="post">
+				<!-- <form th:attr="action=@{ ${ session.user_type } + '/medical-list/' + ${ medicalDevice.lmdMinorCateCode } + '/'}" method="post"> -->
+				<form th:attr="action=@{'/admin/medical-list/' + ${ medicalDevice.lmdMinorCateCode } + '/edit'}" method="post">
 					<div class="layout-table">
 						<div class="btn-status">
 							<select name="lmdStatus" class="form-select" aria-label="Default select">
@@ -107,11 +108,21 @@
 								</div>
 								<div class="data">
 								 	<p class="data-title">담당 부서</p>
-									<input type="text" name="lmdManagerDeptPart" th:value="${ medicalDevice.lmdManagerDeptPart }" class="data-input-b data-disabled" disabled>
+							    <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()">
+						        <option th:each="dept : ${ departments }" th:if="${ medicalDevice.lmdManagerDeptPart == dept.managerDeptName }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }" selected></option> 
+						        <option th:each="dept : ${ departments }" th:unless="${ medicalDevice.lmdManagerDeptPart == dept.managerDeptName }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }"></option> 
+							    </select>
 								</div>
 								<div class="data">
 								 	<p class="data-title">점검자</p>
-									<input type="text" name="lmdAdminName" th:value="${ medicalDevice.lmdAdminName }" class="data-input-b data-disabled" disabled>
+								 	<select id="admin-select" name="lmdAdminDeptNo" class="data-input-b" aria-label="Default select" onchange="onAdminChange()">
+						       	<option th:each="admin : ${ adminList }" th:if="${ medicalDevice.lmdAdminName == admin.adminName }" 
+											      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
+											      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" selected></option>
+						       	<option th:each="admin : ${ adminList }" th:unless="${ medicalDevice.lmdAdminName == admin.adminName }" 
+											      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
+											      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" selected></option>
+							    </select>
 								</div>
 							</div>
 							
@@ -124,23 +135,32 @@
 									<p class="data-title">장비수</p>
 									<input type="text" name="lmdDeviceCnt" th:value="${ medicalDevice.lmdDeviceCnt }" class="data-input-b">
 								</div>
-								<div class="data">
-									<p class="data-title">담당자</p>
-									<select name="lmdManagerName" class="data-input-b" aria-label="Default select">
-									  <option th:each="manager : ${ managerinfo }" th:if="${ medicalDevice.lmdManagerName } == ${ manager.managerName }" th:text="${ manager .managerName}" selected></option> 
-									  <option th:each="manager : ${ managerinfo }" th:unless="${ medicalDevice.lmdManagerName } == ${ manager.managerName }" th:text="${ manager.managerName }"></option> 
-									</select>
+						    <div class="data">
+							    <p class="data-title">담당자</p>
+							    <select id="manager-select" name="lmdManagerId" class="data-input-b" aria-label="Default select">
+						        <option value="" selected>==담당자 선택==</option>
+						        <option th:each="manager : ${ managers }" th:value="${ manager.managerId }" 
+						        th:text="${ manager.managerName }" th:selected="${ medicalDevice.lmdManagerId == manager.managerId }">
+						        </option>
+							    </select>
 								</div>
+
 								<div class="data">
 								 	<p class="data-title">점검일</p>
-									<input type="text" name="lmdLastCheckDate" th:value="${ medicalDevice.lmdLastCheckDate }" class="data-input-b data-disabled" disabled>
+								 	<input type="date" id="current-date" name="lmdLastCheckDate" class="data-input-b" th:value="${ medicalDevice.lmdLastCheckDate }" >
 								</div>
 							</div>
+							
+							<!-- hidden -->
+							<input type="hidden" id="lmd-dapt-part" name="lmdManagerDeptPart">
+		        	<input type="hidden" id="lmd-manager-name" name="lmdManagerName">
+		        	<input type="hidden" id="lmd-admin-name" name="lmdAdminName">
+		        	<input type="hidden" id="lmd-admin-id" name="lmdAdminId">
 						</div>
 					</div>
 					
 					<div class="btn-table btn-status">
-						<button onclick="history.back()" class="btn btn-group" type="button">뒤로 가기</button>
+						<button onclick="location.href='/admin/medical-list'" class="btn btn-group" type="button">뒤로 가기</button>
 						<button class="btn btn-group" type="submit">수정 완료</button>
 					</div>
 				</form>
@@ -148,5 +168,62 @@
 		</div>
 		
 		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		
+		<script type="text/javascript">
+			// 오늘 날짜로 기본값 설정
+			document.getElementById('current-date').value = new Date().toISOString().substring(0, 10);
+		
+			// 담당 부서 선택 후 담당자 옵션이 동적으로 추가되는 함수
+			function onDepartmentChange() {
+				var deptSelect = document.getElementById('dept-select');
+				var managerSelect = document.getElementById('manager-select');
+				
+				var selectedDeptName = deptSelect.options[deptSelect.selectedIndex].text; 
+				
+				// 담당자 선택 초기화
+				managerSelect.innerHTML = '<option value="" selected>==담당자 선택==</option>';
+				
+				// 부서 이름이 선택되었으면 담당자 옵션을 동적으로 추가
+				if (selectedDeptName !== "==부서 선택==") { // 기본 선택이 아닌 경우
+					fetch('/manager/medical-list/getManagersByDeptName?managerDeptName=' + encodeURIComponent(selectedDeptName)) 
+						.then(response => response.json())
+						.then(managers => {
+							managers.forEach(manager => {
+							var option = document.createElement('option');
+								option.value = manager.managerId;
+								option.text = manager.managerName;
+								managerSelect.appendChild(option);
+							});
+						})
+					.catch(error => {
+						console.error('error msg :', error);
+					});
+				}
+			} 
+			
+			// 점검자 이름 추출하는 함수
+			function onAdminChange() {
+	        var adminSelect = document.getElementById('admin-select');
+	        var selectedOption = adminSelect.options[adminSelect.selectedIndex];
+	        
+	        var adminName = selectedOption.text.split('(')[1].split(')')[0];  // 괄호 안의 점검자 이름 추출
+	        var adminId = selectedOption.getAttribute('data-admin-id'); 			// adminId 추출
+
+	        document.getElementById('lmd-admin-name').value = adminName;
+	        document.getElementById('lmd-admin-id').value = adminId; 
+	    }
+			
+			// 담당 부서 선택 후 hidden 필드에 lmdManagerDeptPart 값 저장
+			document.getElementById('dept-select').addEventListener('change', function() {
+				var selectedOption = this.options[this.selectedIndex];
+				document.getElementById("lmd-dapt-part").value = selectedOption.text; 
+			});
+			
+			// 담당자 선택 후 hidden 필드에 lmdmManagerName 값 저장
+			document.getElementById('manager-select').addEventListener('change', function() {
+				var selectedOption = this.options[this.selectedIndex];
+				document.getElementById("lmd-manager-name").value = selectedOption.text; 
+			});
+		</script>
 	</body>
 </html>

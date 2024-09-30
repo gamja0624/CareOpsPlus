@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 public class SafetyManagementDTO {
 	
-	private int smNo;
+	private Integer smNo;
 	private String adminId;
 	private String adminName;
 	private Boolean smCheck;
@@ -24,7 +24,7 @@ public class SafetyManagementDTO {
 	
 	public SafetyManagementDTO() {}
 	
-	public SafetyManagementDTO(int smNo, String adminId, String adminName, Boolean smCheck, Date smDate) {
+	public SafetyManagementDTO(Integer smNo, String adminId, String adminName, Boolean smCheck, Date smDate) {
 		this.smNo = smNo;
 		this.adminId = adminId;
 		this.adminName = adminName;
@@ -32,11 +32,11 @@ public class SafetyManagementDTO {
 		this.smDate = smDate;
 	}
 
-	public int getSmNo() {
+	public Integer getSmNo() {
 		return smNo;
 	}
 
-	public void setSmNo(int smNo) {
+	public void setSmNo(Integer smNo) {
 		this.smNo = smNo;
 	}
 

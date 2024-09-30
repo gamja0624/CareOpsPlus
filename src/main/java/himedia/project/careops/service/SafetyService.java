@@ -11,11 +11,17 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import himedia.project.careops.dto.SafetyManagementChecklistDTO;
 import himedia.project.careops.dto.SafetyManagementDTO;
 import himedia.project.careops.dto.SafetyManagementListDTO;
 import himedia.project.careops.entity.SafetyManagement;
+import himedia.project.careops.entity.SafetyManagementChecklist;
 import himedia.project.careops.entity.SafetyManagementList;
 import himedia.project.careops.repository.SafetyManagementChecklistRepository;
 import himedia.project.careops.repository.SafetyManagementListRepository;
@@ -38,16 +44,16 @@ public class SafetyService {
 		this.safetyManagementChecklistRepository = safetyManagementChecklistRepository;
 		this.modelMapper = modelMapper;
 	}
-
-	/*
-	 * public List<SafetyManagementListDTO> findList() { List<SafetyManagementList>
-	 * allList = safetyManagementListRepository.findAllList(); return
-	 * allList.stream() .map(SafetyManagementList ->
-	 * modelMapper.map(SafetyManagementList, SafetyManagementListDTO.class))
-	 * .collect(Collectors.toList()); }
-	 */
-
 	
+	// smlRepository 사용 메소드(전체조회 네이티브쿼리)
+	public List<SafetyManagementListDTO> findAllList() {
+		List<SafetyManagementList> allList = safetyManagementListRepository.findAllList(); // 타입을 Object로 변경했지만 안 됨
+		return allList.stream().distinct()
+				.map(SafetyManagementList -> modelMapper.map(SafetyManagementList, SafetyManagementListDTO.class))
+				.collect(Collectors.toList());
+	}
+	
+	// SafetyManagement 테이블 전체조회 
 	public List<SafetyManagementDTO> safetyResultList() {
 		log.info("safetyResultList 실행");
 		List<SafetyManagement> safetyResultList = safetyManagementRepository.findAll();
@@ -55,12 +61,31 @@ public class SafetyService {
 				.map(safetyManagement -> modelMapper.map(safetyManagement, SafetyManagementDTO.class))
 				.collect(Collectors.toList());
 	}
-
+	
+	// SafetyManagementChecklist테이블 전체조회 메소드
 	public List<SafetyManagementListDTO> safetyListAll() {
-		List<SafetyManagementList> safetyListAll = safetyManagementListRepository.findAll();
+		
+		  List<SafetyManagementList> safetyListAll =
+		  safetyManagementListRepository.findAll();
+		 
+		/*
+		 * List<SafetyManagementList> safetyListAll =
+		 * safetyManagementListRepository.findAllList();
+		 */
 		return safetyListAll.stream().distinct()
 				.map(safetyManagementList -> modelMapper.map(safetyManagementList, SafetyManagementListDTO.class))
 				.collect(Collectors.toList());
+	}
+
+	// SafetyManagementChecklist테이블 전체조회 메소드 + 페이지네이션
+	public Page<SafetyManagementChecklistDTO> findAllChecklist(Pageable pageable) {
+		
+		pageable =PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() -1,
+				pageable.getPageSize(),
+				Sort.by("smcNo").ascending());
+		
+		Page<SafetyManagementChecklist> allList = safetyManagementChecklistRepository.findAll(pageable);
+		return allList.map(checklist -> modelMapper.map(checklist, SafetyManagementChecklistDTO.class));
 	}
 
 	// 등록 수정 삭제 시 @Transactional 설정 필요

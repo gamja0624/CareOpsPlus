@@ -6,15 +6,14 @@ package himedia.project.careops.entity;
  */
 
 import java.sql.Date;
-
-import org.hibernate.annotations.ColumnDefault;
-
-import jakarta.persistence.Column;
-
 /**
  * @author 이홍준 
  * @editDate 2024-09-24
  */
+
+import org.hibernate.annotations.ColumnDefault;
+
+import jakarta.persistence.Column;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +30,7 @@ public class SafetyManagement {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="sm_no", nullable = false)
-	private int smNo;				// 점검 번호
+	private Integer smNo;				// 점검 번호
 	
 	@Column(name="admin_id", nullable = false)
 	private String adminId;			// 관리자 아이디
@@ -48,17 +47,17 @@ public class SafetyManagement {
 	
 	public SafetyManagement() {}
 	
-	public SafetyManagement(int smNo, String adminId, String adminName, Boolean smCheck, Date smDate) {
+	public SafetyManagement(Integer smNo, String adminId, String adminName, Boolean smCheck, Date smDate) {
 		this.smNo = smNo;
 		this.adminId = adminId;
 		this.adminName = adminName;
 		this.smCheck = smCheck;
 		this.smDate = smDate;
 	}
-	public int getSmNo() {
+	public Integer getSmNo() {
 		return smNo;
 	}
-	public void setSmNo(int smNo) {
+	public void setSmNo(Integer smNo) {
 		this.smNo = smNo;
 	}
 	public String getAdminId() {

@@ -5,17 +5,16 @@ package himedia.project.careops.service;
  * @editDate 2024-09-25
  */
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ManagerDepartmentDTO;
+import himedia.project.careops.entity.Manager;
 import himedia.project.careops.entity.ManagerDepartment;
 import himedia.project.careops.repository.ManagerDepartmentRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +32,14 @@ public class ManagerDepartmentService {
 		this.modelMapper = modelMapper;
 	}
 	
-    // 전체 부서 조회
-    public List<ManagerDepartmentDTO> findAllDepartments() {
+	// 작성자 : 진혜정
+    // 전체 부서 객체로 반환
+    public List<ManagerDepartmentDTO> findAllDepartmentsList() {
+    	
         List<ManagerDepartment> departments = managerDepartmentRepository.findAll();
         return departments.stream()
                          .map(department -> modelMapper.map(department, ManagerDepartmentDTO.class))
                          .collect(Collectors.toList());
     }
-	
+    
 }

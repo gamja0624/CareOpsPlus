@@ -1,5 +1,8 @@
 package himedia.project.careops.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author 진혜정 
  * @editDate 2024-09-25
@@ -29,6 +32,16 @@ public class AdminDepartmentService {
 		this.modelMapper = modelMapper;
 	}
 	
+	// 작성자 : 진혜정
+    // 전체 부서 조회
+    public List<AdminDepartmentDTO> findAllDepartments() {
+        List<AdminDepartment> departments = adminDepartmentRepository.findAll();
+        return departments.stream()
+                         .map(department -> modelMapper.map(department, AdminDepartmentDTO.class))
+                         .collect(Collectors.toList());
+    }
+	
+    // 작성자 : 진혜정
 	// 관리자 부서 번호로 찾기
 	public AdminDepartmentDTO findByAdminDeptNo(String adminDeptNo) {
 		

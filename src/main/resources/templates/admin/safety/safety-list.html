@@ -58,191 +58,24 @@
     				      <th scope="col">상세</th>
     				    </tr>
     				  </thead>
-    				  <tbody>
-                        <tr th:each="safetyResultList : ${safetyResultList}" >
-                          <th:block th:each="safetyListAll : ${safetyListAll}" >
-                          <td th:text="${safetyResultList.smNo}" > 
-                          <td th:text="${safetyResultList.adminName}" > 
-<!--                           <td th:if="${safetyListAll.smlList == '소화기'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '스프링쿨러'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '소화전설비'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '피난설비'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '유도등'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '대피로'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '비상방송설비'}" th:text="${safetyListAll.smlCheck}"
-                          th:unless="${safetyListAll.smlList == '비상구'}" th:text="${safetyListAll.smlCheck}"
-                          ></td>  -->
-                          <td th:if="${safetyListAll.smlList == '소화기'}" th:text="${safetyListAll.smlCheck}"></td>
-                           <td th:unless="${safetyListAll.smlList == '스프링쿨러'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '소화전설비'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '피난설비'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '유도등'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '대피로'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '비상방송설비'}" th:text="${safetyListAll.smlCheck}"></td> 
-                          <td th:unless="${safetyListAll.smlList == '비상구'}" th:text="${safetyListAll.smlCheck}"></td>   
-                          <!-- <td th:text="${#lists.contains(safetyListAll.smlList, '스프링쿨러') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '소화전설비') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '피난설비') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '유도등') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '대피로') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '비상방송설비') ? safetyListAll.smlCheck : '-'}"></td> 
-                          <td th:text="${#lists.contains(safetyListAll.smlList, '비상구') ? safetyListAll.smlCheck : '-'}"></td>   -->
-                          <td th:text="${safetyResultList.smCheck}" > 
-                          <td th:text="${safetyResultList.smDate}" > 
-                          <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-                          </th:block>
-                        </tr>
-    				    <!-- <tr class="table-row" >
-    				      <th scope="row">1020</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">1019</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">1018</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">1017</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">1016</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">1015</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">1014</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">1013</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				    <tr class="table-row" >
-    				      <th scope="row">1012</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				    <tr>
-    				      <th scope="row">1011</th>
-    				      <td>홍길동</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td>양호</td>
-    				      <td><a class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
-    				    </tr>
-    				  </tbody> -->
+                        <tbody>
+                          <tr th:each="safetyResultList : ${safetyResultList}" >
+                            <td th:text="${safetyResultList.smNo}" > 
+                            <td th:text="${safetyResultList.adminName}" >
+                             <th:block th:each="safetyListAll : ${safetyListAll}" th:if="${safetyResultList.smNo} == ${safetyListAll.smNo}" th:switch="${safetyListAll.smlList}" >
+                            <!-- <td th:case="소화기" th:text=${safetyListAll.smlCheck} >
+                            <td th:case="스프링쿨러" th:text=${safetyListAll.smlCheck} >
+                            <td th:case="소화전설비" th:text=${safetyListAll.smlCheck} >
+                            <td th:case="피난설비" th:text=${safetyListAll.smlCheck} >
+                            <td th:case="유도등" th:text=${safetyListAll.smlCheck} >
+                            <td th:case="대피로" th:text=${safetyListAll.smlCheck} >
+                            <td th:case="비상방송설비" th:text=${safetyListAll.smlCheck} >
+                            <td th:case="비상구" th:text=${safetyListAll.smlCheck} > -->
+                            </th:block>  
+                            <td th:text="${safetyResultList.smCheck}" >
+                            <td th:text="${safetyResultList.smDate}" >
+                          </tr>
+                        </tbody>
     				</table>
     				 <!-- 페이지네이션 --> 
      				<div class="pagination">

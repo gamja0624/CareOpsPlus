@@ -43,7 +43,7 @@ public class ListMedicalDevicesDTO {
 	public ListMedicalDevicesDTO(
 			String lmdMinorCateCode, String lmdMinorCateName, String lmdMajorCateCode, String lmdMajorCateName,
 			String lmdDevicesName, String lmdLicenseNumber, int lmdDeviceCnt, String lmdStatus,
-			int lmdManagerDeptNo, String lmdManagerDeptPart, String lmdManagerId, String lmdManagerName, Date lmdDate) {
+			int lmdManagerDeptNo, String lmdManagerDeptPart, String lmdManagerId, String lmdManagerName) {
 		super();
 		this.lmdMinorCateCode = lmdMinorCateCode;
 		this.lmdMinorCateName = lmdMinorCateName;
@@ -59,12 +59,6 @@ public class ListMedicalDevicesDTO {
 		this.lmdManagerDeptPart = lmdManagerDeptPart;
 		this.lmdManagerId = lmdManagerId;
 		this.lmdManagerName = lmdManagerName;
-		
-//		this.lmdAdminDeptNo = lmdAdminDeptNo;
-//		this.lmdAdminId = lmdAdminId;
-//		this.lmdAdminName = lmdAdminName;
-//		this.lmdLastCheckDate = lmdLastCheckDate;
-//		this.lmdClaimNo = lmdClaimNo;
 	}
 
 	public String getLmdMinorCateCode() {
@@ -212,7 +206,24 @@ public class ListMedicalDevicesDTO {
 	}
 
 	@Override
-    public String toString() {
-		return "의료기기 : " + lmdMinorCateName;
+	public String toString() {
+		return "ListMedicalDevices : [ " +
+		// 장비세분류코드, 장비세분류명, 장비대문류코드, 장비대분류명
+		"lmdMinorCateCode= " + lmdMinorCateCode + ", " + "lmdMinorCateName= " + lmdMinorCateName + ", "
+		+ "lmdMajorCateCode= " + lmdMajorCateCode + ", " + "lmdDevicesName= " + lmdDevicesName + ", \n" +
+
+		// 모델명, 장비허가번호, 장비수, 상태
+		"lmdDevicesName= " + lmdDevicesName + ", " + "lmdLicenseNumber= " + lmdLicenseNumber + ", "
+		+ "lmdDeviceCnt= " + lmdDeviceCnt + ", " + "lmdStatus= " + lmdStatus + ", \n" +
+
+		// 담당자 부서 번호, 담당 부서 이름, 담당자 아이디, 등록일
+		"lmdManagerDeptNo= " + lmdManagerDeptNo + ", " + "lmdManagerDeptPart= " + lmdManagerDeptPart + ", "
+		+ "lmdManagerId= " + lmdManagerId + ", " + "lmdManagerName= " + lmdManagerName + ", " + "lmdDate= "
+		+ lmdDate + ", \n" +
+
+		// 관리자 부서 번호, 관리자 아이디, 관리자 이름, 마지막점검일, 민원 번호
+		"lmdAdminDeptNo= " + lmdAdminDeptNo + "," + "lmdAdminId= " + lmdAdminId + "," + "lmdAdminName= "
+		+ lmdAdminName + ", " + "lmdLastCheckDate= " + lmdLastCheckDate + ", " + "lmdClaimNo= " + lmdClaimNo
+		+ " ]";
 	}
 }
