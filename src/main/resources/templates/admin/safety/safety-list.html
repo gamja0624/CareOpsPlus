@@ -60,20 +60,20 @@
     				  </thead>
                         <tbody>
                           <tr th:each="safetyResultList : ${safetyResultList}" >
-                            <td th:text="${safetyResultList.smNo}" > 
-                            <td th:text="${safetyResultList.adminName}" >
-                             <th:block th:each="safetyListAll : ${safetyListAll}" th:if="${safetyResultList.smNo} == ${safetyListAll.smNo}" th:switch="${safetyListAll.smlList}" >
-                            <!-- <td th:case="소화기" th:text=${safetyListAll.smlCheck} >
-                            <td th:case="스프링쿨러" th:text=${safetyListAll.smlCheck} >
-                            <td th:case="소화전설비" th:text=${safetyListAll.smlCheck} >
-                            <td th:case="피난설비" th:text=${safetyListAll.smlCheck} >
-                            <td th:case="유도등" th:text=${safetyListAll.smlCheck} >
-                            <td th:case="대피로" th:text=${safetyListAll.smlCheck} >
-                            <td th:case="비상방송설비" th:text=${safetyListAll.smlCheck} >
-                            <td th:case="비상구" th:text=${safetyListAll.smlCheck} > -->
+                            <td th:text="${safetyResultList.smNo}" > </td>
+                            <td th:text="${safetyResultList.adminName}" ></td>
+                            <th:block th:each="safetyListAll : ${safetyListAll}" th:if="${safetyResultList.smNo} == ${safetyListAll.smNo}" th:switch="${safetyListAll.smlList}" >
+                            <td th:case="소화기" th:text="${safetyListAll.smlCheck}" ></td>
+                            <td th:case="스프링쿨러" th:text="${safetyListAll.smlCheck}" ></td>
+                            <td th:case="소화전설비" th:text="${safetyListAll.smlCheck}" ></td>
+                            <td th:case="피난설비" th:text="${safetyListAll.smlCheck}" ></td>
+                            <td th:case="유도등" th:text="${safetyListAll.smlCheck}" ></td>
+                            <td th:case="대피로" th:text="${safetyListAll.smlCheck}" ></td>
+                            <td th:case="비상방송설비" th:text="${safetyListAll.smlCheck}" ></td>
+                            <td th:case="비상구" th:text="${safetyListAll.smlCheck}" ></td>
                             </th:block>  
-                            <td th:text="${safetyResultList.smCheck}" >
-                            <td th:text="${safetyResultList.smDate}" >
+                            <td th:text="${safetyResultList.smCheck}" ></td>
+                            <td th:text="${safetyResultList.smDate}" ></td>
                           </tr>
                         </tbody>
     				</table>
@@ -95,8 +95,8 @@
     					<form class="category-search-box" action="/">
     						<label class="search-column" for="column"></label> 
     						<select id="column" name="column">
-    							<option value="sm_no">점검번호</option>
-    							<option value="admin_name">작업자</option>
+    							<option value="smNo">점검번호</option>
+    							<option value="adminName">작업자</option>
     						</select> 
     						<label for="search"></label> 
     						<input class="input" type="search" name="search" id="search"> 

@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.ToString;
 
@@ -26,7 +27,7 @@ public class SafetyManagementList {
 	private Integer smlNo;				// 세부항목 번호
 	
 	@Column(name="sm_no", nullable = false)
-	private int smNo;	// 점검 번호
+	private Integer smNo;	// 점검 번호
 	
 	@Column(name="sml_list", nullable = false)
 	private String smlList;			// 세부항목
@@ -37,7 +38,7 @@ public class SafetyManagementList {
 	
 	public SafetyManagementList() {}
 
-	public SafetyManagementList(Integer smlNo, int smNo, String smlList, Boolean smlCheck) {
+	public SafetyManagementList(Integer smlNo, Integer smNo, String smlList, Boolean smlCheck) {
 		this.smlNo = smlNo;
 		this.smNo = smNo;
 		this.smlList = smlList;
@@ -52,11 +53,11 @@ public class SafetyManagementList {
 		this.smlNo = smlNo;
 	}
 
-	public int getSmNo() {
+	public Integer getSmNo() {
 		return smNo;
 	}
 
-	public void setSmNo(int smNo) {
+	public void setSmNo(Integer smNo) {
 		this.smNo = smNo;
 	}
 

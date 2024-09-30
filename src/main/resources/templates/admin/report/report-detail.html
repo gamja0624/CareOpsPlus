@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 일일관리보고서</title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+          
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			
+			<!-- section -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title"></h1>
+				<div class="layout-table">
+                  <div>
+                    
+                  </div>
+        
+                </div>
+			</div>
+		</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+	</body>
+</html>

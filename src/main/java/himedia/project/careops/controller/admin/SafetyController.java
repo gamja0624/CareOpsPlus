@@ -52,9 +52,11 @@ public class SafetyController {
 		 * log.info("네이티브쿼리 >>>> {}", safetyAllList);
 		 */
 
+		// sm table 호출
 		List<SafetyManagementDTO> safetyResultList = safetyService.safetyResultList();
 		log.info("목록 페이지 safetyResultList 실행");
 		log.info("safetyResultList >>>{}", safetyResultList);
+		// sml table 호출
 		List<SafetyManagementListDTO> safetyListAll = safetyService.safetyListAll();
 		log.info("목록 페이지 safetyListAll 실행");
 		log.info("safetyListAll>>>{}", safetyListAll);

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 일일관리보고서</title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+          /* 페이지 레이아웃 */
+          .layout-table { height: 700px; text-align: center; }
+          /* 목록 테이블 */
+          .table { margin: 0 auto; width: 800px; text-align: center; vertical-align: inherit; }
+          .table-head { font-weight: 600; font-size: 20px; }
+          .table-row { line-height: 40px; border-bottom: 1px solid #d9d9d9;  }
+          .detail-a { cursor: pointer; }
+          .detail-icon { width: 30px; line-height: 30px; vertical-align: middle; }
+          
+          /* 페이지네이션 */
+          .pagination { text-align: center; margin: 20px 0; }
+          .pagination a { color: black; float: left; padding: 8px 16px; text-decoration: none; }
+          .pagination a.active { background-color: #4CAF50; color: white; }
+          .pagination a:hover:not(.active) { background-color: #ddd; }
+          
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			
+			<!-- section -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title"></h1>
+				<div class="layout-table">
+                  <table class="table table-hover">
+    				  <thead>
+    				    <tr class="table-row table-head" >
+    				      <th scope="col">No.</th>  
+    				      <th scope="col">부서</th>
+    				      <th scope="col">작성자</th>
+    				      <th scope="col">작성일자</th>
+    				      <th scope="col">상태</th>
+    				      <th scope="col">상세</th>
+    				    </tr>
+    				  </thead>
+                        <tbody>
+                          <tr class="table-row" th:each="drl : ${reportAllList}" >
+                            <td th:text="${drl.dmrNo}" > </td>
+                            <td th:text="${drl.adminDeptName}" ></td>
+                            <td th:text="${drl.adminName}" ></td>
+                            <td th:text="${drl.dmrDate}" ></td>
+                            <td><button class="btn btn-edit" >수 정</button></td>
+                            <td><a th:href="@{/admin/daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
+                          </tr>
+                        </tbody>
+    				</table>
+          
+                    <!-- 페이지 네이션 -->
+                  <div class="page" > 
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                        <!-- 맨 앞으로 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./daily-report-list?page=1}" aria-label="Previous">
+                            <span aria-hidden="true">&#171;</span>
+                          </a>
+                        </li>
+                        
+                        <!-- 이전 페이지 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./daily-report-list?page=} + @{${paging.currentPage - 1}}">&#60;</a>
+                        </li>
+                        
+                        <!-- 숫자 -->
+                        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+                          <li class="page-item">
+                            <a class="page-link" th:href="@{./daily-report-list?page=} + @{${page}}"
+                                th:text="${ page }" th:disabled="${ paging.currentPage eq page }"></a>
+                          </li>
+                        </th:block>
+                        
+                        <!-- 다음 페이지 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./daily-report-list?page=} + @{${paging.currentPage + 1}}">&#62;</a>
+                        </li>
+                        
+                        <!-- 맨 끝으로 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./daily-report-list?page=} + @{${paging.endPage}}" aria-label="Next">
+                            <span aria-hidden="true">&#187;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+        
+                </div>
+			</div>
+		</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+	</body>
+</html>
