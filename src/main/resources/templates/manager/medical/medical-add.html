@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
@@ -92,8 +92,8 @@
 							</div>
 							<div class="data">
 							 	<p class="data-title">등록일</p>
-								<input type="text" name="lmdDate" class="data-input-a" >
-							</div>
+								<input type="date" id="current-date" name="lmdDate" class="data-input-a" >
+							</div> 
 						</div>
 						
 						<div class="data-table-b">
@@ -109,10 +109,10 @@
 								</div>
 								<div class="data">
 								 	<p class="data-title">담당 부서</p>
-								 	<select name="lmdManagerDeptPart" class="data-input-b" aria-label="Default select">
-								 		<option value="" selected>==부서 선택==</option>
-									  <option th:each="dept : ${ departments }" th:value="${ dept }" th:text="${ dept.managerDeptName }"></option> 
-									</select>
+							    <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()">
+							        <option value="" selected>==부서 선택==</option>
+							        <option th:each="dept : ${ departments }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }"></option> 
+							    </select>
 								</div>
 							</div>
 							
@@ -124,27 +124,75 @@
 								</div>
 								<div class="data">
 									<p class="data-title">장비수</p>
-									<input type="text" name="lmdDeviceCnt" class="data-input-b">
+									<input type="number" name="lmdDeviceCnt" class="data-input-b" min="1" step="1">
 								</div>
 								<div class="data">
 									<p class="data-title">담당자</p>
-									<select name="lmdManagerName" class="data-input-b" aria-label="Default select">
-										<option value="" selected>==담당자 선택==</option>
-									  <option th:each="manager : ${ managerList }" th:value="${ manager }" th:text="${ manager.managerName }"></option> 
-									</select>
+							    <select id="manager-select" name="lmdManagerId" class="data-input-b" aria-label="Default select">
+							        <option value="" selected>==담당자 선택==</option>
+							    </select>
 								</div>
 							</div>
 						</div>
+
+		        <input type="hidden" id="lmd-dapt-part" name="lmdManagerDeptPart">
+		        <input type="hidden" id="lmd-manager-name" name="lmdManagerName">
 					</div>
 					
 					<div class="btn-table btn-status">
 						<button onclick="history.back()" class="btn btn-group" type="button">뒤로 가기</button>
-						<button class="btn btn-group" type="submit">수정 완료</button>
+						<button class="btn btn-group" type="submit">등록 완료</button>
 					</div>
 				</form>
 			</div>
 		</div>
 		
 		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		
+		<script type="text/javascript">
+			// 오늘 날짜로 기본값 설정
+			document.getElementById('current-date').value = new Date().toISOString().substring(0, 10);
+		
+			// 담당 부서 선택 후 담당자 옵션이 동적으로 추가되는 함수
+			function onDepartmentChange() {
+				var deptSelect = document.getElementById('dept-select');
+				var managerSelect = document.getElementById('manager-select');
+				var selectedDeptName = deptSelect.options[deptSelect.selectedIndex].text; 
+				
+				// 담당자 선택 초기화
+				managerSelect.innerHTML = '<option value="" selected>==담당자 선택==</option>';
+				
+				// 부서 이름이 선택되었으면 담당자 옵션을 동적으로 추가
+				if (selectedDeptName !== "==부서 선택==") { // 기본 선택이 아닌 경우
+					fetch('/manager/medical-list/getManagersByDeptName?managerDeptName=' + encodeURIComponent(selectedDeptName)) 
+						.then(response => response.json())
+						.then(managers => {
+							managers.forEach(manager => {
+							var option = document.createElement('option');
+								option.value = manager.managerId;
+								option.text = manager.managerName;
+								managerSelect.appendChild(option);
+							});
+						})
+					.catch(error => {
+						console.error('error msg :', error);
+					});
+				}
+			}
+			
+			// 담당 부서 선택 후 hidden 필드에 
+			document.getElementById('dept-select').addEventListener('change', function() {
+				var selectedOption = this.options[this.selectedIndex];
+				document.getElementById("lmd-dapt-part").value = selectedOption.text; 
+			});
+			
+			// 담당자 선택 후 hidden 필드에 lmdmManagerName 값 지정
+			document.getElementById('manager-select').addEventListener('change', function() {
+				var selectedOption = this.options[this.selectedIndex];
+				document.getElementById("lmd-manager-name").value = selectedOption.text; 
+			});
+
+		</script>
+		
 	</body>
 </html>

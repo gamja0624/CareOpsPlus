@@ -41,7 +41,7 @@ public class ManagerService {
 	
 	// 작성자 : 진혜정
 	// 전체 매니저 정보 리스트로 반환
-	public List<ManagerDTO> findallManagerList() {
+	public List<ManagerDTO> findAllManagerList() {
 		
 		List<Manager> managerInfo = managerRepository.findAll();
 		return managerInfo.stream()
