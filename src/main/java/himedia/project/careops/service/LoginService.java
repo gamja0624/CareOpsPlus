@@ -84,8 +84,8 @@ public class LoginService {
             Optional<Admin> adminOpt = adminRepository.findByAdminDeptNoAndAdminIdAndAdminPassword(deptNo, userId, userPassword);
             if (adminOpt.isPresent()) {
                 // 관리자 정보가 존재하면 로그인 성공 처리
-                Admin admin = adminOpt.get();
-                setLoginResult(result, "admin", admin.getAdminName(), adminDeptOpt.get().getAdminDeptName());
+                Admin admin = adminOpt.get();   
+                setLoginResult(result, "admin", admin.getAdminName(), adminDeptOpt.get().getAdminDeptName(), deptNo);
                 return true;
             }
         }
@@ -114,7 +114,7 @@ public class LoginService {
                 if (managerOpt.isPresent()) {
                     // 매니저 정보가 존재하면 로그인 성공 처리
                     Manager manager = managerOpt.get();
-                    setLoginResult(result, "manager", manager.getManagerName(), departmentOpt.get().getManagerDeptName());
+                    setLoginResult(result, "manager", manager.getManagerName(), departmentOpt.get().getManagerDeptName(), deptNo);
                     return true;
                 }
             } else {
@@ -130,16 +130,18 @@ public class LoginService {
         return false; // 로그인 실패 시 false 반환
     }
 
-    // 로그인 결과 설정 메서드
+	// 로그인 결과 설정 메서드
     // 로그인 성공 시 사용자 유형(관리자 또는 매니저), 사용자 이름, 부서 이름을 결과에 저장
     // @param result 로그인 결과를 저장할 Map 객체
     // @param userType 사용자 유형 ("admin" 또는 "manager")
     // @param userName 사용자 이름
     // @param departmentName 부서 이름
-    private void setLoginResult(Map<String, Object> result, String userType, String userName, String departmentName) {
+    // @param deptNo 부서 번호
+    private void setLoginResult(Map<String, Object> result, String userType, String userName, String departmentName, String deptNo) {
         result.put("success", true); // 로그인 성공 상태
         result.put("userType", userType); // 사용자 유형
-        result.put("userName", userName); // 사용자 이름
+        result.put("deptNo", deptNo); // 부서 번호
         result.put("departmentName", departmentName); // 부서 이름
+        result.put("userName", userName); // 사용자 이름
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>CareOps+ | 케어옵스</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=5.0">
 
     <!-- Bootstrap CSS 및 커스텀 CSS 추가 -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
@@ -18,6 +18,7 @@
          justify-content: center;
          align-items: center;
          flex-direction: column; /* 수직 정렬 */
+         min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정 */
      }
      
 		/* 로고 스타일 */
@@ -25,11 +26,11 @@
 
 		/* 배경 */
     #background {
-         position: fixed;
+         position: absolute;
          top: 0;
          left: 0;
-         width: 100vw;
-         height: 100vh;
+         width: 100%;
+         height: 100%;
          overflow: hidden;
          z-index: -1;
      }
@@ -81,14 +82,14 @@
 		 /* 페이드 아웃 애니메이션 */
       @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px); }}
      
-		 .fade-out { animation: fadeOut 0.5s forwards; }
+	    .fade-out { animation: fadeOut 0.5s forwards; }
 
 			/* 입력 필드 폰트 사이즈 조정 */
       .form-label { font-size: 20px; border-radius: 5px; }
      
      /* 반응형 스타일 */
-      @media (max-width: 1920px) { .login-box { width: 100%; height:100%; margin-top: 0; } }
-     
+    /*  @media (max-width: 1920px) { .login-box { width: 100%; height:100%; margin-top: 0; } } */
+         
      /* 모달 스타일 */
 		 	.modal.fade .modal-dialog { transform: translate(-50%, -92%) !important; }
 		 	.modal-content {
@@ -142,7 +143,7 @@
   <body>
 
     <div id="background">
-        <svg id="sky" style="position: absolute; top: 0; left: 0;"></svg> <!-- 위치 설정 -->
+        <svg id="sky" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></svg> <!-- 위치 및 크기 설정 -->
     </div>
 
     <img src="img/logo.png" class="site_logo" alt="사이트 로고">
@@ -198,8 +199,7 @@
         const randomDuration = () => Math.random() * 20 + 10; // 랜덤 지속 시간
 
         const starCount = Math.floor(maxSize / 10);
-        $sky.style.width = `${maxSize}px`;
-        $sky.style.height = `${maxSize}px`;
+        $sky.setAttribute('viewBox', `0 0 ${maxSize} ${maxSize}`);
 
         $sky.innerHTML = ''; // 기존 별들 제거
 
@@ -230,6 +230,13 @@
                 data: $(this).serialize(),
                 success: function(response) {
                     if (response.success) {
+                        // 세션 스토리지에 사용자 정보 저장
+                        sessionStorage.setItem('userType', response.userType);
+                        sessionStorage.setItem('deptNo', response.deptNo);
+                        sessionStorage.setItem('userId', response.userId);
+                        sessionStorage.setItem('userName', response.userName);
+                        sessionStorage.setItem('department', response.department);
+
                         window.location.href = response.redirectUrl;
                     } else {
                         $('#loginErrorMessage').text(response.message);
