@@ -64,7 +64,7 @@
 				<h1 class="title">의료관리 관리<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">수정</h1>
 				
 				<!-- <form th:attr="action=@{ ${ session.user_type } + '/medical-list/' + ${ medicalDevice.lmdMinorCateCode } + '/'}" method="post"> -->
-				<form th:attr="action=@{'/admin/medical-list/' + ${ medicalDevice.lmdMinorCateCode } + '/edit'}" method="post">
+				<form th:attr="action=@{'/admin/medical-edit/' + ${ medicalDevice.lmdMinorCateCode }}" method="post">
 					<div class="layout-table">
 						<div class="btn-status">
 							<select name="lmdStatus" class="form-select" aria-label="Default select">
@@ -108,14 +108,14 @@
 								</div>
 								<div class="data">
 								 	<p class="data-title">담당 부서</p>
-							    <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()">
+							    <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()" oninput="checkFields()">
 						        <option th:each="dept : ${ departments }" th:if="${ medicalDevice.lmdManagerDeptPart == dept.managerDeptName }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }" selected></option> 
 						        <option th:each="dept : ${ departments }" th:unless="${ medicalDevice.lmdManagerDeptPart == dept.managerDeptName }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }"></option> 
 							    </select>
 								</div>
 								<div class="data">
 								 	<p class="data-title">점검자</p>
-								 	<select id="admin-select" name="lmdAdminDeptNo" class="data-input-b" aria-label="Default select" onchange="onAdminChange()">
+								 	<select id="admin-select" name="lmdAdminDeptNo" class="data-input-b" aria-label="Default select" onchange="onAdminChange()" oninput="checkFields()">
 						       	<option th:each="admin : ${ adminList }" th:if="${ medicalDevice.lmdAdminName == admin.adminName }" 
 											      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
 											      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" selected></option>
@@ -133,21 +133,18 @@
 								</div>
 								<div class="data">
 									<p class="data-title">장비수</p>
-									<input type="text" name="lmdDeviceCnt" th:value="${ medicalDevice.lmdDeviceCnt }" class="data-input-b">
+									<input type="text" name="lmdDeviceCnt" th:value="${ medicalDevice.lmdDeviceCnt }" class="data-input-b" oninput="checkFields()">
 								</div>
 						    <div class="data">
-							    <p class="data-title">담당자</p>
-							    <select id="manager-select" name="lmdManagerId" class="data-input-b" aria-label="Default select">
+									<p class="data-title">담당자</p>
+							    <select id="manager-select" name="lmdManagerId" class="data-input-b" aria-label="Default select" oninput="checkFields()">
 						        <option value="" selected>==담당자 선택==</option>
-						        <option th:each="manager : ${ managers }" th:value="${ manager.managerId }" 
-						        th:text="${ manager.managerName }" th:selected="${ medicalDevice.lmdManagerId == manager.managerId }">
-						        </option>
 							    </select>
 								</div>
 
 								<div class="data">
 								 	<p class="data-title">점검일</p>
-								 	<input type="date" id="current-date" name="lmdLastCheckDate" class="data-input-b" th:value="${ medicalDevice.lmdLastCheckDate }" >
+								 	<input type="date" id="lmdLastCheckDate" name="lmdLastCheckDate" class="data-input-b" th:value="${ medicalDevice.lmdLastCheckDate }" oninput="checkFields()">
 								</div>
 							</div>
 							
@@ -161,7 +158,7 @@
 					
 					<div class="btn-table btn-status">
 						<button onclick="location.href='/admin/medical-list'" class="btn btn-group" type="button">뒤로 가기</button>
-						<button class="btn btn-group" type="submit">수정 완료</button>
+						<button id="submit-button" class="btn btn-group" type="submit" disabled>수정 완료</button>
 					</div>
 				</form>
 			</div>
@@ -171,13 +168,12 @@
 		
 		<script type="text/javascript">
 			// 오늘 날짜로 기본값 설정
-			document.getElementById('current-date').value = new Date().toISOString().substring(0, 10);
+			document.getElementById('lmdLastCheckDate').value = new Date().toISOString().substring(0, 10);
 		
 			// 담당 부서 선택 후 담당자 옵션이 동적으로 추가되는 함수
 			function onDepartmentChange() {
 				var deptSelect = document.getElementById('dept-select');
 				var managerSelect = document.getElementById('manager-select');
-				
 				var selectedDeptName = deptSelect.options[deptSelect.selectedIndex].text; 
 				
 				// 담당자 선택 초기화
@@ -185,7 +181,7 @@
 				
 				// 부서 이름이 선택되었으면 담당자 옵션을 동적으로 추가
 				if (selectedDeptName !== "==부서 선택==") { // 기본 선택이 아닌 경우
-					fetch('/manager/medical-list/getManagersByDeptName?managerDeptName=' + encodeURIComponent(selectedDeptName)) 
+					fetch('getManagersByDeptName?managerDeptName=' + encodeURIComponent(selectedDeptName)) 
 						.then(response => response.json())
 						.then(managers => {
 							managers.forEach(manager => {
@@ -199,7 +195,7 @@
 						console.error('error msg :', error);
 					});
 				}
-			} 
+			}
 			
 			// 점검자 이름 추출하는 함수
 			function onAdminChange() {
@@ -209,8 +205,11 @@
 	        var adminName = selectedOption.text.split('(')[1].split(')')[0];  // 괄호 안의 점검자 이름 추출
 	        var adminId = selectedOption.getAttribute('data-admin-id'); 			// adminId 추출
 
-	        document.getElementById('lmd-admin-name').value = adminName;
 	        document.getElementById('lmd-admin-id').value = adminId; 
+	        document.getElementById('lmd-admin-name').value = adminName;
+	        
+	        console.log("adminId", adminId);
+	        console.log("adminName", adminName);
 	    }
 			
 			// 담당 부서 선택 후 hidden 필드에 lmdManagerDeptPart 값 저장
@@ -224,6 +223,24 @@
 				var selectedOption = this.options[this.selectedIndex];
 				document.getElementById("lmd-manager-name").value = selectedOption.text; 
 			});
+			
+			// 모든 필드 체크 함수
+      function checkFields() {
+	      const deptSelect = document.getElementById('dept-select').value;
+	      const deviceCount = document.querySelector('input[name="lmdDeviceCnt"]').value;
+	      const managerSelect = document.getElementById('manager-select').value;
+	      const adminSelect = document.getElementById('admin-select').value;
+	      const lmdLastCheckDate = document.querySelector('input[name="lmdLastCheckDate"]').value;
+	
+	      const submitButton = document.getElementById('submit-button');
+	
+	      // 모든 필드가 채워졌는지 확인
+	      if (deptSelect && deviceCount && managerSelect && adminSelect && lmdLastCheckDate) {
+	          submitButton.disabled = false; // 버튼 활성화
+	      } else {
+	          submitButton.disabled = true;  // 버튼 비활성화
+	      }
+      }
 		</script>
 	</body>
 </html>

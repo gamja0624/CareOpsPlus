@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
-		<title>CareOps+ | 의료기기 목록</title>
+		<title>CareOps+ | 의료기기 검샐 결과</title>
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
@@ -16,6 +16,7 @@
 			
 			/* 상세보기 */
 			.data-add { line-height: 40px; vertical-align: middle; }
+			.empty-row { font-size: 25px; font-weight: 600; }
 			
 			/* 버튼 */
 			.btn-status { display: flex; }
@@ -35,7 +36,9 @@
 			<!-- 서비스 미리보기 -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title">의료관리 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">목록</h1>
+				<h1 class="title">의료관리 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">검색 결과수 :
+					<th:block th:text="${ '총 ' + medicalDevicesList.size() } + '개'"></th:block>
+				</h1>
 				
 				<table class="table table-hover">
 				  <thead class="table-group">
@@ -52,8 +55,9 @@
 				      <th scope="col">상세보기</th>
 				    </tr>
 				  </thead>
-				  <tbody class="table-group-se">
-				  	<tr th:each="medical : ${ medicalDevicesList }" class="table-row">
+				  
+			  	<tbody class="table-group-se">
+				  	<tr th:each="medical : ${ medicalDevicesList }" th:if="${ ! medicalDevicesList.isEmpty() }" class="table-row">
 				    	<!-- 장비세분류코드 -->
 				    	<td th:text="${ medical.lmdMinorCateCode }"></td>
 				      
@@ -89,58 +93,22 @@
 				      
 				      <!-- 상세 보기 -->
 				      <td>
-				      	<a th:href="@{'./medical-detail/' + ${ medical.lmdMinorCateCode } }">
+				      	<a th:href="@{'./' + ${ medical.lmdMinorCateCode } + '/detail' }">
 				      		<img alt="이동" th:src="@{/img/icon-next-b.png}" class="data-add">
 			      		</a>
 		      		</td>
 				    </tr>
-				  </tbody>
+				    <tr th:unless="${ ! medicalDevicesList.isEmpty() }">
+				    	<td class="empty-row" colspan="10">결과 없음</td>
+				    </tr>
+			  	</tbody>
 				</table>
 				
 				<th:block th:if="${ session.user_type == 'manager' }">
 			    <div class="btn-status">
-		        <button th:onclick="'location.href=\'./medical-add\''" class="btn btn-add" type="button">신규 등록</button>
-				    </div>
+		        <button th:onclick="'location.href=\'./medical-list/add\''" class="btn btn-add" type="button">신규 등록</button>
+			    </div>
 				</th:block>
-				
-				<!-- 페이지네이션 -->
-				<div id="paging">
-					<nav aria-label="Page navigation">
-					  <ul class="pagination">
-					  	<!-- 맨 앞으로 이동 -->
-					    <li class="page-item">
-					      <a class="page-link" th:href="@{./medical-list?page=1}" aria-label="Previous">
-					        <span aria-hidden="true">&#171;</span>
-					      </a>
-					    </li>
-					    
-					    <!-- 이전 페이지 이동 -->
-					    <li class="page-item">
-					    	<a class="page-link" th:href="@{./medical-list?page=} + @{${paging.currentPage - 1}}">&#60;</a>
-				    	</li>
-					    
-					    <!-- 숫자 -->
-					    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
-						    <li class="page-item">
-						    	<a class="page-link" th:href="@{./medical-list?page=} + @{${page}}"
-						    			th:text="${ page }" th:disabled="${ paging.currentPage eq page }"></a>
-					    	</li>
-					    </th:block>
-					    
-					    <!-- 다음 페이지 이동 -->
-					    <li class="page-item">
-					    	<a class="page-link" th:href="@{./medical-list?page=} + @{${paging.currentPage + 1}}">&#62;</a>
-				    	</li>
-					    
-					    <!-- 맨 끝으로 이동 -->
-					    <li class="page-item">
-					      <a class="page-link" th:href="@{./medical-list?page=} + @{${paging.endPage}}" aria-label="Next">
-					        <span aria-hidden="true">&#187;</span>
-					      </a>
-					    </li>
-					  </ul>
-					</nav>
-				</div>
 				
 				<div class="search-box">
 					<form class="category-search-box" th:attr="action=@{ '/' + ${session.user_type} + '/medical-list/search' }" method="get">
@@ -160,5 +128,11 @@
 		</div>
 		
 		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		
+		<script type="text/javascript">
+			
+		
+		</script>
+		
 	</body>
 </html>

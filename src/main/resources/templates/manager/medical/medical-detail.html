@@ -74,19 +74,19 @@
 					<div class="data-table-a">
 						<div class="data">
 							<p class="data-title">장비대분류명</p>
-							<input type="text" name="search" th:value="${ medicalDevice.lmdMajorCateName }" class="data-input-a" disabled>
+							<input type="text" th:value="${ medicalDevice.lmdMajorCateName }" class="data-input-a" disabled>
 						</div>
 						<div class="data">
 							<p class="data-title">장비세분류명</p>
-							<input type="text" name="search" th:value="${ medicalDevice.lmdMinorCateName }" class="data-input-a" disabled>
+							<input type="text" th:value="${ medicalDevice.lmdMinorCateName }" class="data-input-a" disabled>
 						</div>
 						<div class="data">
 						 	<p class="data-title">모델명</p>
-							<input type="text" name="search" th:value="${ medicalDevice.lmdDevicesName }" class="data-input-a" disabled>
+							<input type="text" th:value="${ medicalDevice.lmdDevicesName }" class="data-input-a" disabled>
 						</div>
 						<div class="data">
 						 	<p class="data-title">등록일</p>
-							<input type="text" name="search" th:value="${ medicalDevice.lmdDate }" class="data-input-a" disabled>
+							<input type="text" th:value="${ medicalDevice.lmdDate }" class="data-input-a" disabled>
 						</div>
 					</div>
 					
@@ -94,38 +94,39 @@
 						<div class="data-t-1">
 							<div class="data">
 								<p class="data-title">장비대분류코드</p>
-								<input type="text" name="search" th:value="${ medicalDevice.lmdMajorCateCode }" class="data-input" disabled>
+								<input type="text" th:value="${ medicalDevice.lmdMajorCateCode }" class="data-input" disabled>
 							</div>
 							<div class="data">
 								<p class="data-title">장비허가번호</p>
-								<input type="text" name="search" th:value="${ medicalDevice.lmdLicenseNumber }" class="data-input" disabled>
+								<input type="text" th:value="${ medicalDevice.lmdLicenseNumber }" class="data-input" disabled>
 							</div>
 							<div class="data">
 							 	<p class="data-title">담당 부서</p>
-								<input type="text" name="search" th:value="${ medicalDevice.lmdManagerDeptPart }" class="data-input" disabled>
+								<input type="text" th:value="${ medicalDevice.lmdManagerDeptPart }" class="data-input" disabled>
 							</div>
 							<div class="data">
 							 	<p class="data-title">점검자</p>
-								<input type="text" name="search" th:value="${ medicalDevice.lmdAdminName }" class="data-input" disabled>
+								<input type="text" th:each="admin : ${ adminList }" th:if="${ medicalDevice.lmdAdminName == admin.adminName }"
+											th:value="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" class="data-input" disabled>
 							</div>
 						</div>
 						
 						<div class="data-t-2">
 							<div class="data">
 								<p class="data-title">장비세분류코드</p>
-								<input type="text" name="search" th:value="${ medicalDevice.lmdMinorCateCode }" class="data-input" disabled>
+								<input type="text" th:value="${ medicalDevice.lmdMinorCateCode }" class="data-input" disabled>
 							</div>
 							<div class="data">
 								<p class="data-title">장비수</p>
-								<input type="text" name="search" th:value="${ medicalDevice.lmdDeviceCnt }" class="data-input" disabled>
+								<input type="text" th:value="${ medicalDevice.lmdDeviceCnt }" class="data-input" disabled>
 							</div>
 							<div class="data">
 								<p class="data-title">담당자</p>
-								<input type="text" name="search" th:value="${ medicalDevice.lmdManagerName }" class="data-input" disabled>
+								<input type="text" th:value="${ medicalDevice.lmdManagerName }" class="data-input" disabled>
 							</div>
 							<div class="data">
 							 	<p class="data-title">점검일</p>
-								<input type="text" name="search" th:value="${ medicalDevice.lmdLastCheckDate }" class="data-input" disabled>
+								<input type="text" th:value="${ medicalDevice.lmdLastCheckDate }" class="data-input" disabled>
 							</div>
 						</div>
 					</div>
@@ -133,7 +134,9 @@
 				
 				<div class="btn-table btn-status">
 					<button onclick="location.href='/admin/medical-list'" class="btn btn-group" type="button">뒤로 가기</button>
- 					<button th:onclick="'location.href=\'./edit' + '\''" class="btn btn-group" type="button">수정</button>
+					<th:block th:if="${ session.user_type == 'admin' }">
+ 						<button th:onclick="|location.href='@{'/admin/medical-edit/' + ${ medicalDevice.lmdMinorCateCode }}'|" class="btn btn-group" type="button">수정</button>
+					</th:block>
 				</div>
 			</div>
 		</div>
