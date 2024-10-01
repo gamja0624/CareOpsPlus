@@ -73,17 +73,28 @@ public class LoginController {
 			String userName = (String) loginResult.get("userName");
 			String departmentName = (String) loginResult.get("departmentName");
 
-			logger.info("{} 로그인 성공: {}", userType, userId);
+			logger.info("{} 로그인 성공: {}", deptNo, userType, userId);
 
 			// 세션에 사용자 정보 저장
 			session.setAttribute("user_type", userType);
+			session.setAttribute("deptNo", deptNo);
+			session.setAttribute("department", departmentName);
 			session.setAttribute("user_id", userId);
 			session.setAttribute("name", userName);
-			session.setAttribute("department", departmentName);
 
 			// 응답 데이터 설정
 			response.put("success", true);
 			response.put("redirectUrl", "/" + userType + "/dash-board");
+			
+			// 세션 스토리지에 저장할 사용자 정보 설정
+			response.put("userType", userType);
+			response.put("deptNo", deptNo);
+			response.put("userId", userId);
+			response.put("userName", userName);
+			response.put("department", departmentName);
+
+			logger.info("세션 스토리지에 저장할 사용자 정보: userType={}, deptNo={}, userId={}, userName={}, department={}", 
+				userType, deptNo, userId, userName, departmentName);
 
 		} else {
 			// 로그인 실패시 처리

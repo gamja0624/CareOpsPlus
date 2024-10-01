@@ -68,6 +68,7 @@ public class AdminClaimController {
 		
 		return "/admin/claim/claim-detail";
 	}
+	
 	// 민원 승인
 	@PostMapping("/claim-approve")
 	public String ClaimApprove(@ModelAttribute ClaimDTO claimDTO) {

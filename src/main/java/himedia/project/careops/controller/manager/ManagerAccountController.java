@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author 최은지 
- * @editDate 2024-09-30
+ * @editDate 2024-09-30 ~
  */
 
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.entity.Manager;
 import himedia.project.careops.service.ManagerService;
 import jakarta.servlet.http.HttpSession;
@@ -34,10 +33,18 @@ public class ManagerAccountController {
 	}
 	
 	// 담당자 본인이 속한 부서의 담당자 목록 조회
-	@GetMapping("/manager-list")
+	@GetMapping("/account-list")
 	public String managerList(Model model, HttpSession session) {
-		log.info("우리 부서 담당자 조회 실행");
+		
+		String managerDeptName = (String) session.getAttribute("department");
+        List<Manager> manager = managerService.findByManagerList(managerDeptName);
+        
+        log.info("우리 부서 이름 :{} ", managerDeptName);
+        log.info("반환 manager :{} ", manager);
+        
+        model.addAttribute("manager", manager);
+		
 		return "manager/account/department-account-list";
 	}
-
+	
 }

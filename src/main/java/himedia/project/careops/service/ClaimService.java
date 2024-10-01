@@ -2,6 +2,8 @@ package himedia.project.careops.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -75,14 +77,23 @@ public class ClaimService {
 	// 민원 소분류 전체 조회 
 	public Page<ClaimSubCategoryDTO> findAllSubCategory(Pageable page) {
 		log.info("findAllSubCategory 실행");
+		
 		page = PageRequest.of(page.getPageNumber() <= 0 ? 0 : page.getPageNumber() - 1,
                 page.getPageSize(),
                 Sort.by("claimSubCategoryNo").ascending());
 		
 		Page<ClaimSubCategory> claimsubCategory = calimSubCategoryRepository.findAll(page);
 		
-		log.info("findAllSubCategory 종료");
 		return claimsubCategory.map(subCategory -> modelMapper.map(subCategory, ClaimSubCategoryDTO.class));
 	}
+	
+	// 부서별 민원 찾기
+	public List<Claim> findByManagerDeptClaim(Integer managerDeptNo) {
+		return claimRepository.findAll()
+				.stream()
+				.filter(deptNo -> deptNo.getManagerDeptNo() == managerDeptNo)
+				.collect(Collectors.toList());
+	}
+	// 부서 내 민원 목록 조회 ( 페이지 반환 )
 	
 }
