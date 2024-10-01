@@ -11,12 +11,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+//@Getter
+//@Setter
+//@ToString
 public class ClaimDTO {
 
-	private int claimNo;						// 민원 번호 ( 고유키 )
+	private Integer claimNo;						// 민원 번호 ( 고유키 )
 	private String managerId;					// 담당자 아이디 ( 외래키 )         				
 	private int managerDeptNo;					// 담당자 부서번호 ( 외래키 ) 
 	private String claimCategoryNo;				// 민원 대분류 번호 ( 외래키 )
@@ -34,10 +34,10 @@ public class ClaimDTO {
 	
 	public ClaimDTO() {}
 
-	public ClaimDTO(int claimNo, String managerId, int managerDeptNo, String claimCategoryNo,
-			int claimSubCategoryNO, String claimCategoryName, String claimSubCategoryName,
-			String claimCategoryStatus, String claimManagerName, Date claimDate, String claimTitle, String claimContent,
-			Boolean claimApprove, Boolean claimComplete, String claimAttachment) {
+	public ClaimDTO(Integer claimNo, String managerId, int managerDeptNo, String claimCategoryNo,
+			int claimSubCategoryNO, String claimCategoryName, String claimSubCategoryName, String claimCategoryStatus,
+			String claimManagerName, Date claimDate, String claimTitle, String claimContent, Boolean claimApprove,
+			Boolean claimComplete, String claimAttachment) {
 		super();
 		this.claimNo = claimNo;
 		this.managerId = managerId;
@@ -56,11 +56,11 @@ public class ClaimDTO {
 		this.claimAttachment = claimAttachment;
 	}
 	
-	public int getClaimNo() {
+	public Integer getClaimNo() {
 		return claimNo;
 	}
 
-	public void setClaimNo(int claimNo) {
+	public void setClaimNo(Integer claimNo) {
 		this.claimNo = claimNo;
 	}
 
@@ -186,4 +186,5 @@ public class ClaimDTO {
 				+ ", claimApprove=" + claimApprove + ", claimComplete=" + claimComplete + ", claimAttachment="
 				+ claimAttachment + "]";
 	}
+
 }

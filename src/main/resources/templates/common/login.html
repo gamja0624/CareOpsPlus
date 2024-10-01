@@ -13,20 +13,12 @@
     /* 전체 레이아웃 스타일  */
     body {
          margin: 0;
-         background : linear-gradient(135deg, rgb(67, 56, 120), #1A3366, #224080);
-         background-size : 400%, 400%;
-         animation: gradientBG 15s ease infinite;
+         background-color: #13254D;
          display: flex;
          justify-content: center;
          align-items: center;
          flex-direction: column; /* 수직 정렬 */
      }
-     
-    @keyframes gradientBG {
-     		0% { background-position: 0%, 50%;}
-     		50% { background-position: 100%, 50%;}
-     		100% { background-position: 0%, 50%;}
-    }
      
 		/* 로고 스타일 */
     .site_logo { margin: -200px auto 150px auto; max-width: 450px; width: 100%; }
@@ -49,6 +41,7 @@
          opacity: 0.8; /* 기본 불투명도 */
          filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8)); /* 그림자 효과 */
      }
+     
 		 /* 별 깜빡임 애니메이션 */
      @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; }}
 
@@ -94,13 +87,13 @@
       .form-label { font-size: 20px; border-radius: 5px; }
      
      /* 반응형 스타일 */
-      @media (max-width: 768px) { .login-box { width: 90%; margin-top: 0; } }
+      @media (max-width: 1920px) { .login-box { width: 100%; height:100%; margin-top: 0; } }
      
      /* 모달 스타일 */
-		 .modal.fade .modal-dialog { transform: translate(-50%, -92%) !important; }
-		 .modal-content {
+		 	.modal.fade .modal-dialog { transform: translate(-50%, -92%) !important; }
+		 	.modal-content {
             background-color: white;
-            color: #333;
+            color: #ff0000;
             border-radius: 10px;
             padding: 20px;
             border: none;
@@ -132,13 +125,17 @@
             opacity: 0.5;
         }
         .btn-close:hover { opacity: 1; }
+        
         /* 모달 배경 스타일 */
         .modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
+        
         /* 모달이 화면 맨 위로 오도록 z-index 조정 */
         .modal { z-index: 1050; }
         .modal-backdrop { z-index: 1040; }
+        
         /* 모달 내 버튼 스타일 */
         .modal-footer .btn { font-size: 16px; }
+        
     </style>
 
   </head>
@@ -168,23 +165,23 @@
         </form>
     </div>  
 
-    <!-- 비밀번호 변경 실패 모달 -->
-    <div class="modal fade" id="passwordChangeErrorModal" tabindex="-1" role="dialog" aria-labelledby="passwordChangeErrorModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="passwordChangeErrorModalLabel">비밀번호 변경 오류</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <p id="passwordChangeErrorMessage"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- 로그인 실패 모달 추가 -->
+	<div class="modal fade" id="loginErrorModal" tabindex="-1" role="dialog" aria-labelledby="loginErrorModalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="loginErrorModalLabel">로그인 오류</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body text-center">
+	                <p id="loginErrorMessage">부서번호, 아이디 또는 비밀번호를 다시 입력해주세요</p>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫기</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 
 <!-- Bootstrap JS 및 jQuery 추가 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -224,7 +221,7 @@
     window.addEventListener("resize", backgroundSetting);
 
     // 로그인 폼 제출 처리
-    $(document).ready(function() {
+   $(document).ready(function() {
         $('#loginForm').submit(function(e) {
             e.preventDefault();
             $.ajax({
@@ -235,13 +232,15 @@
                     if (response.success) {
                         window.location.href = response.redirectUrl;
                     } else {
-                    	  $('#loginErrorModal .modal-body').text(response.message); // 에러 메시지 표시
-                        $('#loginErrorModal').modal('show');
+                        $('#loginErrorMessage').text(response.message);
+                        var loginErrorModal = new bootstrap.Modal(document.getElementById('loginErrorModal'));
+                        loginErrorModal.show();
                     }
                 },
                 error: function(xhr, status, error) {
-                    $('#loginErrorModal .modal-body').text('서버와의 통신 중 오류가 발생했습니다.');
-                    $('#loginErrorModal').modal('show');
+                    $('#loginErrorMessage').text('서버와의 통신 중 오류가 발생했습니다.');
+                    var loginErrorModal = new bootstrap.Modal(document.getElementById('loginErrorModal'));
+                    loginErrorModal.show();
                 }
             });
         });

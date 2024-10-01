@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- 최은지 작업 중인 파일  ( 2024-09-24 ) -->
 <html xmlns:th="http://www.thymleaf.org">
 	<head>
 		<meta charset="UTF-8">
@@ -11,10 +10,168 @@
 		<style type="text/css">		
 			.layout-table {
 				width: 1340px; 
-				min-height: 680px; 
+				min-height: 880px; 
 				border: 3px solid #13254C; 
 				border-radius: 20px; 
 			}
+			.btn-basic {
+			  border-radius: 10px;
+			  border: 1px solid #14254C;
+			  background-color: #14254C;
+			  color: #FFF;     
+			  font-weight: 600;
+			  font-size: 16px;
+			}
+			.mr-st {
+			  margin-left: 25px;
+			}
+			.claim-submit-button:hover {
+			  border: 1px solid #14254C;
+			  background-color: #FFF;
+			  color: #14254C; 
+			}
+			.claim-title, .claim-attachment {
+			  margin: 18px auto;
+			  font-weight: 600;
+			  font-size: 18px;
+			  width: 1200px;
+			}
+			.claim-input-wide {
+			  width: 1100px;
+			  height: 26px;
+			  border: 1px solid #14254C;
+			  border-radius: 5px;
+			  margin-left: 30px;
+			}
+			.claim-categories {
+			  display: flex;
+			  width: 1200px;
+			  margin: 0 auto;
+			}
+			.category-label {
+			  width: 120px;
+			  height: 30px;
+			  text-align: center;
+			  line-height: 30px;
+			}
+			.category-input {
+			  border: 1px solid #14254C;
+			  border-radius: 5px;
+			  width: 240px;
+			  margin-left: 15px;
+			}
+			.claim-content {
+			  width: 1200px;
+			  margin: 0 auto ;
+			}
+			.claim-content-box {
+			  width: 1188px;
+			  height: 600px;
+			  margin: 0 auto 5px auto;
+			  border: 1px solid #14254C;
+			  border-radius: 5px;
+			}
+			.clm-sb-btn-cover {
+			  width: 1300px;
+			  margin: 10px auto;
+			  text-align: center;
+			}
+			.claim-submit-button {
+			  width: 140px;
+			  height: 40px;
+			}
+			
+			/* 모달창 */
+			.btn-open-modal {
+				width: 120px;
+				height: 30px;
+				margin: 0 15px 0 25px;
+			}
+			.modal{
+		    position:absolute;
+		    display:none;
+		    justify-content: center;
+		    top:0;
+		    left:0;
+		    width:100%;
+		    height:100%;
+		    background-color: rgba(0,0,0,0.4);
+		  }
+		  .modal-body{
+		    position:absolute;
+		    top:50%;
+		    width:800px;  
+		    height:600px; 
+		    padding:40px;  
+		    text-align: center;
+		    border: 1px solid #14254c;
+		    background-color: rgb(255,255,255);
+		    border-radius:10px; 
+		    box-shadow:0 2px 3px 0 rgba(34,36,38,0.15); 
+		    transform:translateY(-50%); 
+		  }
+		  .h2-style {
+		    width: 600px;
+		    text-align: left;
+		    margin: 0 auto;
+		  }
+		  .search-bar {
+		    margin-bottom: 20px;
+		  }
+		  .input-stlye {
+		    border-radius: 5px;
+		    border:1px solid #999999;
+		    height: 20px;
+		    width: 500px;
+		    padding: 4px;
+		  }
+		  .search-button {
+		    border-radius: 8px;
+		    border: 1px solid #999999;
+		    height: 30px;
+		    margin-left: 5px;
+		    width: 80px;
+		  }
+		  .select-button {
+		    font-size: 16px; /* 글자 크기 */
+		    background-color: #14254c;
+		    color: #FFF;
+		    border: 1px solid #14254c;
+		    border-radius: 8px;
+		    width: 50px;
+		  }
+		  .sub-category-table {
+		    border-top: 2px solid #000;
+		    border-bottom: 2px solid #000;
+		    text-align: center;
+		    width: 600px;
+		    margin: 0 auto;
+		    border-collapse: collapse
+		  }
+		  .sub-category-table tr {
+		    border-bottom: 1px solid #000;
+		  }
+		  .sub-category-table td, th {
+		    height: 26px;
+		  }
+		  .sub-category-table th {
+		    font-weight: 600;
+		  }
+			.close-button {
+		    background-color: #14254C; /* 빨간색 배경 */
+		    color: white; 
+		    border-radius: 10px;
+		    font-size: 16px; /* 글자 크기 */
+		    margin-top: 20px; /* 위쪽 여백 추가 */
+				width: 80px;
+				height: 30;
+			}
+			.close-button:hover {
+				border: 1px solid #14254C;
+				color: #13254C;
+				background-color: #fff;
+			}
+		
 		</style>
 	</head>
 
@@ -30,39 +187,98 @@
 				<!-- 제목 -->
 				<h1 class="title">민원 신청</h1>
 				<div class="layout-table">
-					<form>
-						<div>
-							<lable>민 원 제 목</lable>
-							<input></input>							
-						</div>
-						<div>
-							<button>대분류</button>
-							<select>
-								<option>의료기기</option>
-								<option>안전</option>
-								<option>시설물</option>
-								<option>일반</option>
-							</select>						
-							<button>소분류</button>
-							<input></input>							
-							<button>요청구분</button>
-							<input></input>							
-						</div>
-						<div>
-							<lable>첨부파일</lable>
-							<input></input>						
-						</div>
-						<div>
-							<textarea></textarea>
-						</div>
+					<form action="" class="claim-form">
+					  <div class="claim-title">
+					    <label for="">민 원 제 목</label>
+					    <input type="text" class="claim-input-wide ">
+					  </div>
+					  <div class="claim-categories">
+					    <label for="claim-categories" class="btn-basic category-label ">대분류</label>
+					    <select name="" id="" class="category-input">
+					      <option value="00" disabled selected>선택하기</option>
+					      <option value="01">의료기기</option>
+					      <option value="02">안전</option>
+					      <option value="03">시설물</option>
+					      <option value="04">일반</option>
+					    </select>
+					    <button class="btn-open-modal btn-basic">소분류</button>
+					    <input class="category-input">
+					    <label class="btn-basic category-label mr-st">요청구분</label>
+					    <input class="category-input">
+					  </div>
+					  <div class="claim-attachment filebox">
+					    <label for="file">첨 부 파 일</label> 
+					    <input type="file" id="file" class="file-stlye">
+					  </div>
+					  <div class="claim-content">
+					    <textarea class="claim-content-box" name="" id=""></textarea>
+					  </div>
 					</form>
-					<div class="hidden">
-						모달창
-					</div>
 					
+					<div class="clm-sb-btn-cover">
+					  <button class="claim-submit-button btn-basic" type="submit"> 민원 신청 </button>
+					</div>
+				
+					 <div class="modal">
+					   <div class="modal-body">
+					     <div class="h2-style">
+					       <h2>민원 소분류 검색</h2>
+					     </div>
+					     <div class="search-bar">
+					       <input type="text" placeholder="" class="input-stlye">
+					       <button class="search-button"> 검 색</button>
+					     </div>
+					     
+					     <table class="sub-category-table">
+					       <thead>
+					         <tr class="tr-style">
+					           <th>소분류 번호</th>
+					           <th>소분류명</th>
+					           <th>선 택</th>
+					         </tr>
+					       </thead>
+					       <tbody>
+					         <tr th:each="claimSubCategory : ${claimSubCategory}">
+					           <td th:text="${claimSubCategory.claimSubCategoryNo}"></td>
+										 <!--<td th:text="${claimSubCategory.lmdMinorCateName}"></td>-->
+					           <td th:text="${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.smlList}"></td>
+					           <td>
+					             <button class="select-button">선 택</button>
+					           </td>
+					         </tr>
+					       </tbody>
+					     </table>
+							 
+					   </div>
+					 </div>
 				</div>
 			</div>
 		</div>
+		
+		<script>
+		    const modal = document.querySelector('.modal');
+		    const btnOpenModal = document.querySelector('.btn-open-modal');
+		    const closeModalButton = document.createElement('button');
+
+		    closeModalButton.innerText = '닫 기';      // 닫기 버튼 텍스트 설정
+		    closeModalButton.className = 'close-button'; // 스타일 클래스 추가
+		    modal.querySelector('.modal-body').appendChild(closeModalButton); // 모달 바디에 닫기 버튼 추가
+
+		    btnOpenModal.addEventListener("click", (event) => {
+		        event.preventDefault(); // 기본 폼 제출 방지
+		        modal.style.display = "flex"; // 모달 열기
+		    });
+
+		    closeModalButton.addEventListener("click", () => {
+		        modal.style.display = "none"; // 모달 닫기
+		    });
+
+		    // 선택 버튼 클릭 시 모달 닫기
+		    const selectButton = document.querySelector('.select-button');
+		    selectButton.addEventListener("click", () => {
+		        modal.style.display = "none"; // 모달 닫기
+		    });
+		</script>
 		
 		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 	</body>
