@@ -2,6 +2,7 @@ package himedia.project.careops.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -15,8 +16,10 @@ import org.springframework.stereotype.Service;
 import himedia.project.careops.dto.ClaimDTO;
 import himedia.project.careops.dto.ClaimSubCategoryDTO;
 import himedia.project.careops.dto.ListMedicalDevicesDTO;
+import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.ClaimSubCategory;
+import himedia.project.careops.entity.Manager;
 import himedia.project.careops.repository.ClaimRepository;
 import himedia.project.careops.repository.ClaimSubCategoryRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +44,16 @@ public class ClaimService {
 		this.modelMapper = modelMapper;
 	}
 	
-	// [ 공통 ] ==============================================================================
+	// [ 공통 ] ================================================================================
+	// 담당 부서 이름으로 민원 리스트 반환
+	public List<Claim> findByClaimDeptNo(Integer deptNo) {
+		
+		return claimRepository.findAll()
+				.stream()
+				.filter(m -> m.getManagerDeptNo() == deptNo)
+				.collect(Collectors.toList());     
+	}
+	
 	// [ 작업 관리자 ] =========================================================================
 	// 민원 전체 조회 
 	public Page<ClaimDTO> allClaim(Pageable page) {
