@@ -1,15 +1,14 @@
 package himedia.project.careops.controller.admin;
 
-import java.lang.annotation.Target;
 /**
  * @author 최은지 
  * @editDate 2024-09-20 ~ 2024-09-25
  */
+
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,13 +32,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/admin")
-public class AccountController {
+public class AdminAccountController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final ManagerService managerService;
 	private final ManagerDepartmentService managerDepartmentService;
 	
-	public AccountController(ManagerService managerService, ManagerDepartmentService managerDepartmentService) {
+	public AdminAccountController(ManagerService managerService, ManagerDepartmentService managerDepartmentService) {
 		this.managerService = managerService;
 		this.managerDepartmentService = managerDepartmentService;
 	}

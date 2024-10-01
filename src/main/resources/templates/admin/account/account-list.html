@@ -16,7 +16,7 @@
 			}
 			.table-basic-style {
 				width: 1200px;
-				margin: 40px auto;
+				margin: 40px auto 20px auto;
 			}
 
 			.tr-style th {
@@ -35,8 +35,7 @@
 				border-radius: 20px;
 				color: #13254C;
 				background-color: #fff;
-				font-weight: 600;
-				padding: 3px 5px;
+				padding: 3px 8px;
 				line-height:36px;
 			}
 			.manager-edit:hover {
@@ -44,20 +43,22 @@
 				background-color: #13254C;
 			}
 			.button-cover {
-				width: 1220px;
-				display: flex;
+				width: 1260px;
+				text-align: right;
 			}
 			.add-button {
-				padding: 10px 15px;
 				text-align: center;
-				width: 120px;
-				height: 40px;
-				margin-left: auto;
+				margin-left: 15px;
 				border-radius: 10px;
+				border: 1px solid #14254C;
 				background-color: #14254c;
 				color: #FFF;
 			}
-			
+			.add-button:hover {
+				border: 1px solid #13254C;
+				background-color: #FFF;
+				color: #14254C;
+			}
 		</style>
 	</head>
 
@@ -99,6 +100,10 @@
 							</tr>
 						</tbody>
 					</table>
+					<div class="button-cover">
+						<button class="btn add-button" type="button" onclick="location.href='account-department'">부서 목록</button>
+						<button class="btn add-button" type="button" onclick="location.href='account-add'">담당자 등록</button>
+					</div>
 					<!-- 페이지네이션 -->
 					<div id="paging">
 						<nav aria-label="Page navigation">
@@ -131,9 +136,6 @@
 						    </li>
 						  </ul>
 						</nav>
-					</div>
-					<div class="button-cover">
-						<button class="add-button" type="button" onclick="location.href='account-add'">담당자 등록</button>
 					</div>
 				</div>
 			</div>

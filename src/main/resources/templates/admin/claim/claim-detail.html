@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 민원 상세 페이지 </title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			.layout-table {
+				width: 1340px; 
+				min-height: 680px; 
+				border: 3px solid #13254C; 
+				border-radius: 20px; 
+			}
+			.container {
+        padding: 15px;
+        margin: 0 auto;
+				width: 1280px;
+			 }
+	    .claim-detail-table {
+				width: 1250px;
+        border-collapse: separate;
+				border-spacing: 0 5px;
+	    }
+	    .claim-detail-table th, .claim-detail-table td {
+        border-top:  1px solid #13254C;
+        border-bottom:  1px solid #13254C;
+        text-align: center;
+				height: 25px;
+				line-height: 25px;
+	    }
+	    .claim-detail-table th {
+        background-color: #13254C;
+				color: #FFF;
+				width: 220px;
+	    }
+			.claim-content {
+				display: flex;
+				margin-top: 10px;
+			}
+	    .claim-image {
+        text-align: center;
+				border: 1px solid #13254C;
+				border-radius: 5px;
+				width: 400px;
+				min-height: 400px;
+				margin-right: 20px;
+	    }
+			.th-wide {
+				width: 420px;
+			}
+			.td-mid {
+				width: 200px;
+			}
+	    .claim-image img {
+        max-width: 100%;
+	    }
+	    .message {
+        padding: 10px;
+				width: 860px;
+				border: 1px solid #13254C;
+				border-radius: 5px;
+				min-height: 400px;
+	    }
+			.button-cover {
+				width: 100%;
+				margin-top: 10px;
+				text-align: right;
+			}
+	    .submit-button {
+				margin-left: 10px;
+        background-color: #13254C;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+        font-size: 16px;
+	    }
+	    .submit-button:hover {
+        background-color: white;
+				border:1px solid #13254C;
+				color: #13254C;
+	    }
+			.submit-button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+	     }
+
+			/* 모달 스타일 */
+			.modal-header {
+		    background-color: #13254C;
+		    color: white;
+			}
+			.modal-footer {
+		    background-color: #f1f1f1;
+			}
+			.modal-content {
+		    border-radius: 10px;
+			}
+			.modal-body {
+		    padding: 20px;
+				height: 160px;
+		    text-align: center;
+				font-size: 24px;
+			}
+			.confirm-button {
+				width: 80px;
+		    background-color: #13254C;
+		    color: white;
+			}
+			.confirm-button:hover {
+		    border: 1px solid #13254C;
+		    background-color: #FFF;
+		    color: #13254C;
+			}
+			.cancel-button {
+				width: 80px;
+		    border: 1px solid #13254C;
+				background-color: #FFF;
+				color: #13254C;
+			}
+			.cancel-button:hover {
+		    border: 1px solid #13254C;
+				background-color: #13254C;
+				color: #FFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			
+			<!-- section -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">민원<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 상세</h1>
+				<div class="layout-table">
+					<div class="container">
+						<table class="claim-detail-table">
+		        	<tr>
+		          	<th>민원 번호</th>
+		          	<td th:text="${claim.claimNo}" class="th-wide"></td>
+		           	<th>민원 일자</th>
+		           	<td th:text="${claim.claimDate}"></td>
+		       		</tr>
+			        <tr>
+								<th>접수 승인</th>
+								<td th:text="${claim.claimApprove ? '승인' : '미승인'}"></td>
+								<th>처리 상태</th>
+								<td th:text="${claim.claimComplete ? '완료' : '대기'}"></td>
+			         </tr>
+				     </table>
+						 <table class="claim-detail-table">
+								<tr class="claim-th-small">
+									<th>부서 파트</th>
+									<td th:text="${manager.managerDeptPart}" class="td-mid"></td>
+									<th>부서명</th>
+									<td th:text="${manager.managerDeptName}" class="td-mid"></td>
+									<th>담당자</th>
+									<td th:text="${claim.claimManagerName}"></td>
+								</tr>
+								<tr class="claim-th-small">
+									<th>대분류</th>
+									<td th:text="${claim.claimCategoryName}"></td>
+									<th>소분류</th>
+									<td th:text="${claim.claimSubCategoryName}"></td>
+									<th>요청구분</th>
+									<td th:text="${claim.claimCategoryStatus}"></td>
+								</tr>
+						</table>
+						<table class="claim-detail-table">
+							<th>민원 제목</th>
+							<td th:text="${claim.claimTitle}"></td>
+						</table>
+						<div class="claim-content">
+							<div class="claim-image">
+								<img src="" alt="의료기기 이미지">
+							</div>
+							<div class="message" th:text="${claim.claimContent}"></div>
+						</div>
+						<div class="button-cover">
+							<button class="btn submit-button" onclick="openModal()" id="approveButton" th:disabled="${claim.claimApprove}">민원 승인</button>
+							<button class="btn submit-button">민원 처리</button>
+						</div>
+						<!-- 모달 -->
+				    <div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			        <div class="modal-dialog" role="document">
+		            <div class="modal-content">
+	                <div class="modal-header">
+	                  <h5 class="modal-title" id="exampleModalLabel">승인 확인</h5>
+	                </div>
+	                <div class="modal-body">
+	                    민원을 승인하겠습니까?
+	                </div>
+	                <div class="modal-footer">
+										<form action="/admin/claim-approve" method="POST" id="claimNo">
+                 	 		<input type="hidden" id="claimNo" name="claimNo" th:value="${claim.claimNo}" > <!-- 클레임 번호를 숨겨진 필드로 전달 -->
+                    	<button type="submit" class="btn confirm-button">승 인</button>
+                    </form>
+	                  <button type="button" class="btn cancel-button" data-dismiss="modal" onclick="closeModal()">취 소</button>
+	                </div>
+		            </div>
+			        </div>
+				    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script th:src="@{/js/jquery.min.js}"></script>
+		<script>
+		    function openModal() {
+		    	$('#approvalModal').modal('show'); 
+		    }
+				function closeModal() {
+					$('#approvalModal').modal('hide');
+				}
+		</script>
+		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+	</body>
+</html>

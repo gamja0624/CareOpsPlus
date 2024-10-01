@@ -1,15 +1,15 @@
 package himedia.project.careops.controller.manager;
 
+/**
+ * @author 최은지
+ * @editDate 2024-09-24 
+ */
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-
-/**
- * @author 최은지
- * @editDate 2024-09-24 
- */
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,19 +25,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/manager")
-public class ClaimController {
+public class ManagerClaimController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final ClaimService claimService;
 	
-	public ClaimController(ClaimService claimService) {
+	public ManagerClaimController(ClaimService claimService) {
 		this.claimService = claimService;
 	}
 
 	// [ 민원 조회 ] ==========================================================================
 	// (부서 내) 민원 목록
 	@GetMapping("/claim-list")
-	public String managerClaimList() {
+	public String managerClaimList(Model model) {
+		
 		return "/manager/claim/claim-list";
 	}
 	
