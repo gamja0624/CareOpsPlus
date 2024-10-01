@@ -48,7 +48,7 @@ public class ManagerService {
 		List<Manager> managerInfo = managerRepository.findAll();
 		return managerInfo.stream()
 				.map(manager -> modelMapper.map(manager, ManagerDTO.class))
-                .collect(Collectors.toList());
+				.collect(Collectors.toList());
 	}
 	
 	// 작성자 : 진혜정
@@ -86,7 +86,7 @@ public class ManagerService {
     }
     
     // 작성자 : 최은지
-    // 담당자 변경 
+    // 담당자 변경 ( 이름 , 전화번호 변경 )
     public void updateManager(ManagerDTO managerDTO) {
         Manager manager = managerRepository.findByManagerId(managerDTO.getManagerId())
                 .orElseThrow(() -> new RuntimeException("담당자를 변경할 수 없습니다."));

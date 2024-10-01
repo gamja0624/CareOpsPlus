@@ -27,7 +27,7 @@ import himedia.project.careops.service.SafetyService;
 
 @Controller
 @RequestMapping("/admin")
-public class SafetyController {
+public class AdminSafetyController {
 
 	// 로그
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -35,7 +35,7 @@ public class SafetyController {
 	// 서비스
 	private final SafetyService safetyService;
 
-	public SafetyController(SafetyService safetyService) {
+	public AdminSafetyController(SafetyService safetyService) {
 		this.safetyService = safetyService;
 	}
 

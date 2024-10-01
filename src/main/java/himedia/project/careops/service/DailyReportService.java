@@ -5,8 +5,6 @@ package himedia.project.careops.service;
  * @editDate 2024-09-26 ~ 
  */
 
-import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Service;
 import himedia.project.careops.dto.DailyManagementReportDTO;
 import himedia.project.careops.entity.DailyManagementReport;
 import himedia.project.careops.repository.DailyManagementReportRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class DailyReportService {
@@ -44,13 +43,23 @@ public class DailyReportService {
 		return allList.map(reportList -> modelMapper.map(reportList, DailyManagementReportDTO.class));
 	}
 
-	public Optional<DailyManagementReport> findByReportNo(int dmrNo) {
-		Optional<DailyManagementReport> findByDmrNo = dailyManagementReportRepository.findById(dmrNo);
-		return findByDmrNo;
+	// [1개 데이터 조회]
+	public DailyManagementReportDTO findByReportNo(int dmrNo) {
+		
+		DailyManagementReport resultReport = dailyManagementReportRepository.findById(dmrNo).orElseThrow(IllegalArgumentException::new);
+		
+		return modelMapper.map(resultReport, DailyManagementReportDTO.class);
 	}
 
-
-
+	// [수정]
+	@Transactional
+	public void editReportDetail(int dmrNo, DailyManagementReportDTO editReport) {
+		
+		DailyManagementReport beforeReport = dailyManagementReportRepository.findById(dmrNo).get();
+		
+		beforeReport.setDmrReportDetail(editReport.getDmrReportDetail());
+		beforeReport.setDmrIssue(editReport.getDmrIssue());
+	}
 	
 	// 등록 수정 삭제 시 @Transactional 설정 필요
 }

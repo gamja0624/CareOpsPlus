@@ -5,10 +5,14 @@ package himedia.project.careops.service;
  * @editDate 2024-09-23
  */
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -34,28 +38,45 @@ public class MedicalService {
 		this.modelMapper = modelMapper;
 	}
 	
-	// [의료기기 장비세분류코드 찾기]
-	public ListMedicalDevicesDTO findByMedicalLmdMinorCateCode(String lmdMinorCateCode) {
-		
-		ListMedicalDevices medicalDevice = medicalRepository.findById(lmdMinorCateCode).orElseThrow(IllegalArgumentException::new);
-		// log.info("medicalDevice : {}", medicalDevice);
-		
-		return modelMapper.map(medicalDevice, ListMedicalDevicesDTO.class);
-	}
-	
 	// [목록 + 페이지네이션]
 	public Page<ListMedicalDevicesDTO> findByMedicalDevices(Pageable pageable) {
 		
-		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+		pageable = PageRequest.of(pageable.getPageNumber() <= 1 ? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
                 Sort.by("lmdMinorCateCode").ascending());
 		
 		Page<ListMedicalDevices> medicalDevicesList = medicalRepository.findAll(pageable);
-		// log.info("조회된 엔티티 데이터: {}", medicalDevicesList.getContent());
 		
 		return medicalDevicesList.map(medical -> modelMapper.map(medical, ListMedicalDevicesDTO.class));
 	}
+	
+	// [검색 필터]
+	public List<ListMedicalDevices> findFilterMedicalDevices(String filter, String value) {
 
+		List<ListMedicalDevices> medicalDevicesList = medicalRepository.findAll();
+		return medicalDevicesList.stream()
+				.filter(m -> {
+							if (filter.equals("lmdMajorCateName")) { // 장비대분류명
+								return m.getLmdMajorCateName().contains(value);
+							} else if (filter.equals("lmdMinorCateName")) { // 장비세분류명
+								return m.getLmdMinorCateName().contains(value);
+							} else if (filter.equals("lmdDevicesName")) { // 모델명
+								return m.getLmdDevicesName().contains(value);
+							} else if (filter.equals("lmdManagerDeptPart")) { // 부서명
+								return m.getLmdManagerDeptPart().contains(value);
+							} 
+						return false;
+						}).collect(Collectors.toList());
+	}
+	
+	// [의료기기 장비세분류코드 찾기]
+	public ListMedicalDevicesDTO findByMedicalLmdMinorCateCode(String lmdMinorCateCode) {
+		
+		ListMedicalDevices medicalDevice = medicalRepository.findById(lmdMinorCateCode).orElseThrow(IllegalArgumentException::new);
+		
+		return modelMapper.map(medicalDevice, ListMedicalDevicesDTO.class);
+	}
+	
 	// [등록]
 	@Transactional
 	public void addMedicalDevice(ListMedicalDevicesDTO newMedicalDevice) {
@@ -81,6 +102,8 @@ public class MedicalService {
 		ListMedicalDevices findMedical = medicalRepository.findById(editMedical.getLmdMinorCateCode())
 				.orElseThrow(IllegalArgumentException::new);
 		
+		log.info("힝 : {}", findMedical);
+		
 		// 상태, 장비수
 		findMedical.setLmdStatus(lmdStatus);
 		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));
@@ -95,7 +118,7 @@ public class MedicalService {
 		findMedical.setLmdAdminDeptNo(lmdAdminDeptNo);
 		findMedical.setLmdAdminId(lmdAdminId);
 		findMedical.setLmdAdminName(lmdAdminName);
-		findMedical.setLmdLastCheckDate(new java.sql.Date(lmdLastCheckDate.getTime()));
 		
+		findMedical.setLmdLastCheckDate(new java.sql.Date(lmdLastCheckDate.getTime()));
 	}
 }

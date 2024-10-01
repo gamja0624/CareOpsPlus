@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 민원 목록 </title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			.manager-claim-list {
+		    width: 1280px;
+		    text-align: center;
+				margin: 10px auto;
+			}
+			.manager-claim-list tr {
+				height: 30px;
+				line-height: 30px;
+			}
+			.th-style{
+		    border-bottom : 2px solid #000;
+			}
+			.td-style {
+		    border-bottom : 1px solid #000;
+			}
+			.td-title {
+				text-align: left;
+				padding-left: 50px;
+				width: 500px;
+			}
+			.status-button {
+				border-color: #000;
+				border-radius: 50px;
+				width: 100px;
+				height: 24px;
+				line-height: 20px;
+				color: #14254c;
+				background-color: #FFF;
+				
+			}
+			.complete-button {
+				border-color: #14254c;
+				border-radius: 50px;
+				width: 100px;
+				height: 24px;
+				line-height: 20px;
+				color: #FFF;
+				background-color: #14254c;
+			}
+			.button-cover {
+				width: 1280px;
+				text-align: right;
+			}
+			.button-cover button {
+				text-align: center;
+				margin-left: 10px;
+				border: 1px solid #14254c;
+				background-color: #FFF;
+				color: #14254c;
+			}	
+			.button-cover button:hover {
+				border: 1px solid #14254c;
+				background-color: #14254c;
+				color: #FFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			
+			<!-- section -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">민원 목록</h1>
+				<div class="layout-table">
+					<table class="manager-claim-list">
+						<thead>
+				    	<tr class="th-style">
+			        	<th>민원 번호</th>
+			        	<th>민원 제목</th>
+			        	<th>담당자</th>
+			        	<th>민원 일자</th>
+			        	<th>접수승인</th>
+			        	<th>답변 처리</th>
+				    	</tr>
+						</thead>						
+						<tbody>
+					    <tr th:each="claim : ${claim}" class="td-style">
+				        <td th:text="${claim.claimNo}"></td>
+								<td class="td-title">
+									<a th:text="${claim.claimTitle}" th:href="@{./claim-detail/{claimNo}(claimNo=${claim.claimNo})}"></a>
+								</td>
+				        <td th:text="${claim.claimManagerName}"></td>
+				        <td th:text="${claim.claimDate}">
+								</td>
+								<td>
+									<button th:text="${claim.claimApprove ? '승인' : '미승인'}" th:class="${claim.claimApprove} ? 'complete-button' : 'status-button'" disabled></button>
+								</td>
+				        <td><button th:text="${claim.claimComplete ? '완료' : '대기'}" th:class="${claim.claimComplete} ? 'complete-button' : 'status-button'" disabled></button></td>
+					    </tr>
+						</tbody>
+					</table>
+					<div class="button-cover">
+						<button class="btn" type="button" onclick="location.href='#'">미승인</button>
+						<button class="btn" type="button" onclick="location.href='#'">답변대기</button>
+						<button class="btn" type="button" onclick="location.href='#'">완료</button>
+					</div>
+					<!-- 페이지네이션 -->
+					<div id="paging">
+						<nav aria-label="Page navigation">
+						  <ul class="pagination">
+						    <li class="page-item">
+						      <a class="page-link" th:href="@{./account-list?page=1}" aria-label="Previous">
+						        <span aria-hidden="true">&#171;</span>
+						      </a>
+						    </li>
+						    <li class="page-item">
+						    	<a class="page-link" th:href="@{./claim-list?page=} + @{${paging.currentPage - 1}}">&#60;</a>
+					    	</li>
+						    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+							    <li class="page-item">
+							    	<a class="page-link" th:href="@{./claim-list?page=} + @{${page}}"
+							    			th:text="${page}" th:disabled="${ paging.currentPage eq page }"></a>
+						    	</li>
+						    </th:block>
+						    <li class="page-item">
+						    	<a class="page-link" th:href="@{./claim-list?page=} + @{${paging.currentPage + 1}}">&#62;</a>
+					    	</li>
+						    <li class="page-item">
+						      <a class="page-link" th:href="@{./claim-list?page=} + @{${paging.endPage}}" aria-label="Next">
+						        <span aria-hidden="true">&#187;</span>
+						      </a>
+						    </li>
+						  </ul>
+						</nav>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+	</body>
+</html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
@@ -24,6 +24,9 @@
           .pagination a.active { background-color: #4CAF50; color: white; }
           .pagination a:hover:not(.active) { background-color: #ddd; }
           
+          .btn-edit { line-height: 15px; }
+          .btn { background-color: #13254C; color: white; }
+          .btn:hover { border: 1px solid #13254C; }
 		</style>
 	</head>
 
@@ -37,7 +40,7 @@
 			<!-- section -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title"></h1>
+				<h1 class="title">일일 관리 보고서</h1>
 				<div class="layout-table">
                   <table class="table table-hover">
     				  <thead>
@@ -56,7 +59,7 @@
                             <td th:text="${drl.adminDeptName}" ></td>
                             <td th:text="${drl.adminName}" ></td>
                             <td th:text="${drl.dmrDate}" ></td>
-                            <td><button class="btn btn-edit" >수 정</button></td>
+                            <td><button th:onclick="|location.href='@{/admin/daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit" >수 정</button></td>
                             <td><a th:href="@{/admin/daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>
                           </tr>
                         </tbody>
@@ -104,7 +107,7 @@
                 </div>
 			</div>
 		</div>
-		
+    
 		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 	</body>
 </html>
