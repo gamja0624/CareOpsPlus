@@ -1,5 +1,7 @@
 package himedia.project.careops.controller.manager;
 
+import java.util.List;
+
 /**
  * @author 최은지
  * @editDate 2024-09-24 
@@ -16,10 +18,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ch.qos.logback.core.net.LoginAuthenticator;
 import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.ClaimSubCategoryDTO;
+import himedia.project.careops.dto.ManagerDTO;
+import himedia.project.careops.entity.Manager;
 import himedia.project.careops.service.ClaimService;
+import himedia.project.careops.service.ManagerService;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,15 +36,20 @@ public class ManagerClaimController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final ClaimService claimService;
+	private final ManagerService managerService;
 	
-	public ManagerClaimController(ClaimService claimService) {
+	public ManagerClaimController(ClaimService claimService, ManagerService managerService) {
 		this.claimService = claimService;
+		this.managerService = managerService;
 	}
 
 	// [ 민원 조회 ] ==========================================================================
 	// (부서 내) 민원 목록
 	@GetMapping("/claim-list")
-	public String managerClaimList(Model model) {
+	public String managerClaimList(Model model, HttpSession session) {
+		
+		String managerDeptName = (String) session.getAttribute("department");
+		log.info("우리 부서 이름 : {}" , managerDeptName);
 		
 		return "/manager/claim/claim-list";
 	}

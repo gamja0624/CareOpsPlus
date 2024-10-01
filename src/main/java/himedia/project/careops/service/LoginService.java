@@ -84,8 +84,8 @@ public class LoginService {
             Optional<Admin> adminOpt = adminRepository.findByAdminDeptNoAndAdminIdAndAdminPassword(deptNo, userId, userPassword);
             if (adminOpt.isPresent()) {
                 // 관리자 정보가 존재하면 로그인 성공 처리
-                Admin admin = adminOpt.get();
-                setLoginResult(result, "admin", admin.getAdminName(), adminDeptOpt.get().getAdminDeptName());
+                Admin admin = adminOpt.get();   
+                setLoginResult(result, "admin", admin.getAdminName(), adminDeptOpt.get().getAdminDeptName(), deptNo);
                 return true;
             }
         }

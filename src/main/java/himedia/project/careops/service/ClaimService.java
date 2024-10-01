@@ -1,7 +1,11 @@
 package himedia.project.careops.service;
 
+/**
+ * @author 최은지
+ * @editDate 2024-09-27
+ */
+
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -15,19 +19,11 @@ import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ClaimDTO;
 import himedia.project.careops.dto.ClaimSubCategoryDTO;
-import himedia.project.careops.dto.ListMedicalDevicesDTO;
-import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.ClaimSubCategory;
-import himedia.project.careops.entity.Manager;
 import himedia.project.careops.repository.ClaimRepository;
 import himedia.project.careops.repository.ClaimSubCategoryRepository;
 import lombok.extern.slf4j.Slf4j;
-
-/**
- * @author 최은지
- * @editDate 2024-09-27
- */
 
 @Slf4j
 @Service
@@ -45,6 +41,7 @@ public class ClaimService {
 	}
 	
 	// [ 공통 ] ================================================================================
+	// 작성자 : 진혜정
 	// 담당 부서 이름으로 민원 리스트 반환
 	public List<Claim> findByClaimDeptNo(Integer deptNo) {
 		
@@ -87,14 +84,23 @@ public class ClaimService {
 	// 민원 소분류 전체 조회 
 	public Page<ClaimSubCategoryDTO> findAllSubCategory(Pageable page) {
 		log.info("findAllSubCategory 실행");
+		
 		page = PageRequest.of(page.getPageNumber() <= 0 ? 0 : page.getPageNumber() - 1,
                 page.getPageSize(),
                 Sort.by("claimSubCategoryNo").ascending());
 		
 		Page<ClaimSubCategory> claimsubCategory = calimSubCategoryRepository.findAll(page);
 		
-		log.info("findAllSubCategory 종료");
 		return claimsubCategory.map(subCategory -> modelMapper.map(subCategory, ClaimSubCategoryDTO.class));
 	}
+	
+	// 부서별 민원 찾기
+	public List<Claim> findByManagerDeptClaim(Integer managerDeptNo) {
+		return claimRepository.findAll()
+				.stream()
+				.filter(deptNo -> deptNo.getManagerDeptNo() == managerDeptNo)
+				.collect(Collectors.toList());
+	}
+	// 부서 내 민원 목록 조회 ( 페이지 반환 )
 	
 }

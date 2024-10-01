@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymleaf.org">
+ <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
@@ -9,18 +9,11 @@
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
 		<style type="text/css">
-			grid-container {
-		    display: grid;
-		    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		    gap: 16px;
-			}
-			.grid-card {
-		    background-color: #fff;
-		    border: 1px solid #14254C;
-		    border-radius: 8px;
-		    padding: 16px;
-		    text-align: center;
-			}
+			.grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;	padding: 30px; }
+			.grid-card { display: flex; background-color: #14254C;  color: #FFF; height: 120px; border-radius: 10px; padding: 3px; text-align: left;}
+			.grid-card .manager-icon { width: 95px; }
+			.grid-card .profile { margin-top: 15px; }
+			.grid-card h3 { margin-bottom: 5px; font-size: 20px; }
 		</style>
 	</head>
 
@@ -34,14 +27,18 @@
 			<!-- section -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title" ></h1>
+				<h1 class="title" th:text="${session.department} + ' 담당자'"> </h1>
 				<div class="layout-table">
+				<!-- 그리드 카드 -->
 					<div class="grid-container">
-						<h2> </h2>
-					    <!-- 사용자 카드 -->
-					    <div class="grid-card">
-					        <h3></h3>
-					    </div>
+				    <div class="grid-card" th:each = "manager : ${manager}">
+							<img alt="담당자 아이콘" th:src="@{/img/manager-icon.png}" class="manager-icon">
+							<div class="profile">
+								<h3 th:text="${manager.managerDeptPart+ ' ' + manager.managerDeptName}"></h3>
+								<h3 th:text="'이 름 : ' +${manager.managerName}"></h3>
+								<h4 th:text="'연락처 : ' + ${manager.managerPhoneNumber}"></h4>
+							</div>
+				    </div>
 					</div>
 				</div>
 			</div>
