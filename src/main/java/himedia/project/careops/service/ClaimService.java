@@ -5,7 +5,9 @@ package himedia.project.careops.service;
  * @editDate 2024-09-27
  */
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -21,6 +23,7 @@ import himedia.project.careops.dto.ClaimDTO;
 import himedia.project.careops.dto.ClaimSubCategoryDTO;
 import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.ClaimSubCategory;
+import himedia.project.careops.entity.Manager;
 import himedia.project.careops.repository.ClaimRepository;
 import himedia.project.careops.repository.ClaimSubCategoryRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +83,43 @@ public class ClaimService {
 		claim.setClaimApprove(true);
 		claimRepository.save(claim);
 	}
+	
+	// 작성자 : 진혜정
+	// 내가 쓴 민원 리스트로 반환
+	public List<Claim> findByClaimListManagerName(String userName) {
+		
+		return claimRepository.findAll() 										
+				.stream() 
+				.filter(m -> m.getClaimManagerName().equals(userName))
+				.collect(Collectors.toList());
+	}
+	
+	// 작성자 : 진혜정
+	// 민원 접수 대기건과 처리 진행건 개수 반환
+	public Map<String, Integer> findByClaimStatus() {
+		
+		// 키, 값 형태로 저장할 변수 선언
+		Map<String, Integer> ClaimStatusList = new HashMap<>();
+		
+		// 변수 
+		Integer standby = 0;
+		Integer progress = 0;
+		
+		List<Claim> claimList = claimRepository.findAll();
+		
+		for (Claim c: claimList) {
+			if (! c.getClaimApprove()) { 
+				standby ++;
+			} else if (c.getClaimApprove()) {
+				progress ++;
+			}
+			ClaimStatusList.put("standby", standby);
+			ClaimStatusList.put("progress", progress);
+		}
+		
+		return ClaimStatusList;
+	}
+	
 	// [ 부서 담당자 ] =========================================================================
 	// 민원 소분류 전체 조회 
 	public Page<ClaimSubCategoryDTO> findAllSubCategory(Pageable page) {

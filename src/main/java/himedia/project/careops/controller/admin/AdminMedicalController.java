@@ -34,7 +34,6 @@ import himedia.project.careops.service.AdminService;
 import himedia.project.careops.service.ManagerDepartmentService;
 import himedia.project.careops.service.ManagerService;
 import himedia.project.careops.service.MedicalService;
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -64,12 +63,12 @@ public class AdminMedicalController {
 		Page<ListMedicalDevicesDTO> medicalDevicesList = medicalService.findByMedicalDevices(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(medicalDevicesList);
 		
+		//페이지네이션 관련 토탈 페이지 수 BE -> FE
+		// log.info("페이지네이션{}", medicalDevicesList.getTotalPages());	// 총 페이지 수 확인
+		int totalPages = medicalDevicesList.getTotalPages();			    // 총 페이지 수 계산
+		
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
 		model.addAttribute("paging", paging);
-		
-		//페이지네이션 관련 토탈 페이지 수 BE -> FE
-		log.info("페이지네이션{}", medicalDevicesList.getTotalPages());	// 총 페이지 수 확인
-		int totalPages = medicalDevicesList.getTotalPages();			// 총 페이지 수 계산
 		model.addAttribute("totalPages", totalPages);					// 총 페이지 수 View로 전달
 		
 		return "manager/medical/medical-list";
@@ -147,7 +146,6 @@ public class AdminMedicalController {
 			@RequestParam String lmdManagerName, @RequestParam String lmdManagerId,
 			@RequestParam String lmdAdminDeptNo, @RequestParam String lmdAdminId, @RequestParam String lmdAdminName, 
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date lmdLastCheckDate) {
-		log.info("컨트롤러 실행 ====================================");
 		
 //		log.info("lmdStatus : " + lmdStatus);
 //		log.info("lmdDeviceCnt : " + lmdDeviceCnt);
@@ -156,15 +154,14 @@ public class AdminMedicalController {
 //		log.info("lmdManagerName : " + lmdManagerName);
 //		log.info("lmdManagerId : " + lmdManagerId);
 //		log.info("lmdAdminDeptNo : " + lmdAdminDeptNo);
-		log.info("ㅅㅂ lmdAdminId : " + lmdAdminId);
-		log.info("ㅅㅂ lmdAdminName : " + lmdAdminName);
+//		log.info("lmdAdminId : " + lmdAdminId);
+//		log.info("lmdAdminName : " + lmdAdminName);
 //		log.info("lmdLastCheckDate : " + lmdLastCheckDate);
 		
 		// 해당 의료기기 정보 수정
 		medicalService.editMedicalDevice(editMedical, lmdStatus, lmdDeviceCnt,  
 				lmdManagerDeptNo, lmdManagerDeptPart, lmdManagerId, lmdManagerName, 
 				lmdAdminDeptNo, lmdAdminId, lmdAdminName, lmdLastCheckDate);
-		log.info("해결 ㅎㅎ");
 		
 		return "redirect:/admin/medical-detail/" + lmdMinorCateCode;
 	}
