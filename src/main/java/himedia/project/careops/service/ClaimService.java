@@ -1,8 +1,11 @@
 package himedia.project.careops.service;
 
+/**
+ * @author 최은지
+ * @editDate 2024-09-27
+ */
+
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -18,7 +21,6 @@ import org.springframework.stereotype.Service;
 import himedia.project.careops.dto.ClaimCategoryDTO;
 import himedia.project.careops.dto.ClaimDTO;
 import himedia.project.careops.dto.ClaimSubCategoryDTO;
-import himedia.project.careops.dto.ListMedicalDevicesDTO;
 import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.ClaimCategory;
 import himedia.project.careops.entity.ClaimSubCategory;
@@ -26,11 +28,6 @@ import himedia.project.careops.repository.ClaimCategoryRepository;
 import himedia.project.careops.repository.ClaimRepository;
 import himedia.project.careops.repository.ClaimSubCategoryRepository;
 import lombok.extern.slf4j.Slf4j;
-
-/**
- * @author 최은지
- * @editDate 2024-09-27
- */
 
 @Slf4j
 @Service
@@ -49,7 +46,17 @@ public class ClaimService {
 		this.modelMapper = modelMapper;
 	}
 	
-	// [ 공통 ] ==============================================================================
+	// [ 공통 ] ================================================================================
+	// 작성자 : 진혜정
+	// 담당 부서 이름으로 민원 리스트 반환
+	public List<Claim> findByClaimDeptNo(Integer deptNo) {
+		
+		return claimRepository.findAll()
+				.stream()
+				.filter(m -> m.getManagerDeptNo() == deptNo)
+				.collect(Collectors.toList());     
+	}
+	
 	// [ 작업 관리자 ] =========================================================================
 	// 민원 전체 조회 
 	public Page<ClaimDTO> allClaim(Pageable page) {
@@ -137,5 +144,15 @@ public class ClaimService {
     							pageable, 
     							allClaimList.getTotalElements());
     }
+	// 작성자 : 진혜정
+	// 내 민원 목록 리스트로 반환
+	public List<Claim> findByMyClaim(String managerName) {
+		
+		return claimRepository.findAll()
+				.stream() 
+				.filter(m -> m.getClaimManagerName().equals(managerName))
+				.collect(Collectors.toList());     
+	}
+	
 }
 

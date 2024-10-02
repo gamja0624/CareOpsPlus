@@ -1,257 +1,235 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"> <!-- thymeleaf 오타 수정 -->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>CareOps+ | 케어옵스</title>
-    <meta name="viewport" content="width=device-width, initial-scale=5.0">
-
-    <!-- Bootstrap CSS 및 커스텀 CSS 추가 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/web-settings.css}" rel="stylesheet">
-
     <style>
-    /* 전체 레이아웃 스타일  */
-    body {
-         margin: 0;
-         background-color: #13254D;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         flex-direction: column; /* 수직 정렬 */
-         min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정 */
-     }
-     
-		/* 로고 스타일 */
-    .site_logo { margin: -200px auto 150px auto; max-width: 450px; width: 100%; }
-
-		/* 배경 */
-    #background {
-         position: absolute;
-         top: 0;
-         left: 0;
-         width: 100%;
-         height: 100%;
-         overflow: hidden;
-         z-index: -1;
-     }
-     
-		/* 별 */
-    .star {
-         fill: white; /* 별 색상 */
-         animation: twinkle 3s infinite alternate;
-         opacity: 0.8; /* 기본 불투명도 */
-         filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8)); /* 그림자 효과 */
-     }
-     
-		 /* 별 깜빡임 애니메이션 */
-     @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; }}
-
-		 /* 별 이동 애니메이션 */
-     @keyframes moveStar { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); }}
-
-		 /* 로그인 박스 스타일 */
-     .login-box {
-         width: 35%;
-         max-width: 800px;
-         margin-top: -50px;
-         padding: 60px;
-         background-color: #13254D;
-         border-radius: 5px;
-         color: white;
-         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-     }
-			
-			/* 폼 라벨 스타일  */
-     .col-form-label { color: white; text-align: left; font-size: 1.1rem; }
-			/* 입력 필드 스타일 */
-     .form-control { width: 100%; font-size: 1.1rem; }
-     
-     /* 로그인 버튼 스타일 */
-     .btn-login {
-         width: 100%; 
-         padding: 15px;
-         background-color: rgb(0, 0, 0);
-         border-radius: 10px;
-         border: none;
-         font-size: 1.2rem;
-         transition: background-color 0.3s ease;  
-     }
-     /* 로그인 버튼 호버 할때 색상 */
-     .btn-login:hover { background-color: #0d1d40; }
-
-		 /* 페이드 아웃 애니메이션 */
-      @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px); }}
-     
-	    .fade-out { animation: fadeOut 0.5s forwards; }
-
-			/* 입력 필드 폰트 사이즈 조정 */
-      .form-label { font-size: 20px; border-radius: 5px; }
-     
-     /* 반응형 스타일 */
-    /*  @media (max-width: 1920px) { .login-box { width: 100%; height:100%; margin-top: 0; } } */
-         
-     /* 모달 스타일 */
-		 	.modal.fade .modal-dialog { transform: translate(-50%, -92%) !important; }
-		 	.modal-content {
-            background-color: white;
-            color: #ff0000;
-            border-radius: 10px;
-            padding: 20px;
-            border: none;
-            margin: 0 auto;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-dialog {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 550px;
+        body {
             margin: 0;
+            background-color: #13254D;
+            display: flex;
+            justify-content: flex;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-
-        .modal-header { border-bottom: none; padding: 0 0 15px 0; }
-        .modal-title { font-size: 18px; }
-        .modal-body { padding: 15px 0; font-size: 20px; text-align: center; }
-        .modal-footer { border-top: none; padding: 15px 0 0 0; justify-content: center; }
         
-        .btn-close {
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0px;
+            margin-top: 0; /* 위치조정 */
+        }
+        
+        .site_logo {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            margin-bottom: 30px;
+            margin-top: 20px; /* 상단 여백 추가 */
+        }
+        
+        .login-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            background-color: rgba(19, 37, 77, 0.8);
+            border-radius: 5px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-top: 30px; /* 로고와 로그인 박스 간격 추가 */
+            margin-bottom: 40px; /* 하단 여백 추가 */
+        }
+        
+        .form-label {
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background-color: rgb(0, 0, 0);
+            border-radius: 10px;
+            border: none;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-login:hover {
+            background-color: #0d1d40;
+        }
+        
+        #background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .star {
             position: absolute;
-            right: 20px;
-            top: 20px;
-            font-size: 24px;
-            font-weight: 700;
-            opacity: 0.5;
+            background-color: white;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
         }
-        .btn-close:hover { opacity: 1; }
         
-        /* 모달 배경 스타일 */
-        .modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
         
-        /* 모달이 화면 맨 위로 오도록 z-index 조정 */
-        .modal { z-index: 1050; }
-        .modal-backdrop { z-index: 1040; }
+        @media (max-width: 768px) {
+            .site_logo {
+                max-width: 300px;
+                margin-top: 15px;
+            }
+            
+            .login-box {
+                padding: 20px;
+                margin-bottom: 30px;
+            }
+        }
         
-        /* 모달 내 버튼 스타일 */
-        .modal-footer .btn { font-size: 16px; }
-        
+        @media (max-width: 480px) {
+            .site_logo {
+                max-width: 250px;
+                margin-top: 15px;
+            }
+            
+            .login-box {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .form-label {
+                font-size: 1rem;
+            }
+            
+            .form-control {
+                font-size: 0.9rem;
+            }
+            
+            .btn-login {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
     </style>
-
-  </head>
-  <body>
-
-    <div id="background">
-        <svg id="sky" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></svg> <!-- 위치 및 크기 설정 -->
+</head>
+<body>
+    <div id="background"></div>
+    
+    <div class="container" id="main-container">
+        <img src="img/logo.png" class="site_logo" alt="사이트 로고" id="site-logo">
+        
+        <div class="login-box" id="login-container">
+            <form id="loginForm" action="/" method="post"> 
+                <div class="mb-3">
+                    <label for="inputDepartments" class="form-label">부서 번호</label>
+                    <input type="text" class="form-control" id="inputDepartments" name="departmentDeptNo" required>
+                </div>  
+                <div class="mb-3">
+                    <label for="inputUserId" class="form-label">아이디</label>
+                    <input type="text" class="form-control" id="inputUserId" name="userId" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">비밀번호</label>
+                    <input type="password" class="form-control" id="inputPassword" name="userPassword" required>
+                </div>
+                <button type="submit" class="btn btn-dark btn-login" aria-label="로그인">로그인</button>
+            </form>
+        </div>
     </div>
 
-    <img src="img/logo.png" class="site_logo" alt="사이트 로고">
-
-    <div class="login-box">
-        <form id="loginForm" action="/" method="post"> 
-        <div class="mb-3">
-            <label for="inputDepartments" class="form-label">부서 번호</label>
-            <input type="text" class="form-control" id="inputDepartments" name="department_dept_no" required>
-        </div>  
-        <div class="mb-3">
-            <label for="inputUserId" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="inputUserId" name="user_id" required>
-        </div>
-        <div class="mb-3">
-            <label for="inputPassword" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="inputPassword" name="user_password" required>
-        </div>
-        <button type="submit" class="btn btn-dark btn-login" aria-label="로그인">로그인</button>
-        </form>
-    </div>  
-
-	<!-- 로그인 실패 모달 추가 -->
-	<div class="modal fade" id="loginErrorModal" tabindex="-1" role="dialog" aria-labelledby="loginErrorModalLabel" aria-hidden="true">
-	    <div class="modal-dialog modal-dialog-centered" role="document">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="loginErrorModalLabel">로그인 오류</h5>
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	            </div>
-	            <div class="modal-body text-center">
-	                <p id="loginErrorMessage">부서번호, 아이디 또는 비밀번호를 다시 입력해주세요</p>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫기</button>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-
-<!-- Bootstrap JS 및 jQuery 추가 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    // 배경 설정 및 별 생성
-    const backgroundSetting = () => {
-        const $sky = document.querySelector("#sky");
-        const maxSize = Math.max(window.innerWidth, window.innerHeight) * 1.5; // 배경 크기 조정
-        const getRandomX = () => Math.random() * maxSize;
-        const getRandomY = () => Math.random() * maxSize;
-        const randomRadius = () => Math.random() * 1.5 + 1; // 랜덤 반지름 생성
-        const randomDuration = () => Math.random() * 20 + 10; // 랜덤 지속 시간
-
-        const starCount = Math.floor(maxSize / 10);
-        $sky.setAttribute('viewBox', `0 0 ${maxSize} ${maxSize}`);
-
-        $sky.innerHTML = ''; // 기존 별들 제거
-
-        for (let i = 0; i < starCount; i++) {
-            const $$circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            $$circle.classList.add("star");
-            $$circle.setAttribute("cx", getRandomX());
-            $$circle.setAttribute("cy", getRandomY());
-            $$circle.setAttribute("r", randomRadius());
-
-            const duration = randomDuration();
-            $$circle.style.animation = `twinkle 3s infinite alternate, moveStar ${duration}s linear infinite`;
-
-            $sky.appendChild($$circle);
+    <!-- Bootstrap JS 및 jQuery 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 별 생성 및 애니메이션
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            star.style.opacity = Math.random();
+            
+            const size = Math.random() * 2 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            star.style.animation = `fall ${star.style.animationDuration} linear infinite`;
+            
+            document.getElementById('background').appendChild(star);
+            
+            setTimeout(() => {
+                star.remove();
+            }, parseFloat(star.style.animationDuration) * 1000);
         }
-    };
-		// 페이지 로드 및 리사이즈 시 배경 설정
-    window.addEventListener("DOMContentLoaded", backgroundSetting);
-    window.addEventListener("resize", backgroundSetting);
 
-    // 로그인 폼 제출 처리
-   $(document).ready(function() {
-        $('#loginForm').submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                url: '/',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    if (response.success) {
-                        // 세션 스토리지에 사용자 정보 저장
-                        sessionStorage.setItem('userType', response.userType);
-                        sessionStorage.setItem('deptNo', response.deptNo);
-                        sessionStorage.setItem('userId', response.userId);
-                        sessionStorage.setItem('userName', response.userName);
-                        sessionStorage.setItem('department', response.department);
+        // 초기 별 생성
+        for (let i = 0; i < 100; i++) {
+            setTimeout(createStar, Math.random() * 3000);
+        }
 
-                        window.location.href = response.redirectUrl;
-                    } else {
-                        $('#loginErrorMessage').text(response.message);
-                        var loginErrorModal = new bootstrap.Modal(document.getElementById('loginErrorModal'));
-                        loginErrorModal.show();
-                    }
-                },
-                error: function(xhr, status, error) {
-                    $('#loginErrorMessage').text('서버와의 통신 중 오류가 발생했습니다.');
-                    var loginErrorModal = new bootstrap.Modal(document.getElementById('loginErrorModal'));
-                    loginErrorModal.show();
-                }
-            });
-        });
-    });
-</script>
+        // 지속적인 별 생성
+        setInterval(createStar, 100);
+
+        // 로그인 폼 제출 처리
+		$(document).ready(function() {
+		     $('#loginForm').submit(function(e) {
+		         e.preventDefault();
+		         $.ajax({
+		             url: '/',
+		             type: 'POST',
+		             data: $(this).serialize(),
+		             success: function(response) {
+						console.log('Login response:', response);
+						if (response.success) {
+						    sessionStorage.setItem('userType', response.userType);
+						    sessionStorage.setItem('deptNo', response.deptNo);
+						    sessionStorage.setItem('userId', response.userId);
+						    sessionStorage.setItem('userName', response.userName);
+						    sessionStorage.setItem('department', response.department);
+						    
+						    console.log('Session storage after login:', {
+						        userType: sessionStorage.getItem('userType'),
+						        deptNo: sessionStorage.getItem('deptNo'),
+						        userId: sessionStorage.getItem('userId'),
+						        userName: sessionStorage.getItem('userName'),
+						        department: sessionStorage.getItem('department')
+						    });
+						    
+						    console.log('Redirecting to:', response.redirectUrl);
+						    window.location.href = response.redirectUrl;
+						} else {
+						    console.log('Login failed:', response.message);
+						    alert(response.message);
+						}
+		             },
+		             error: function(xhr, status, error) {
+		                 console.error('Login error:', error);
+		                 alert('서버와의 통신 중 오류가 발생했습니다.');
+		             }
+		         });
+		     });
+		 });
+    </script>
 </body>
 </html>

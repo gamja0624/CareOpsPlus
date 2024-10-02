@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymleaf.org" lang="ko">
 	<head>
 		<meta charset="UTF-8">
-		<!-- 관리자 manager dashboard -->
+		<!-- 관리자 manager -->
 		<title>CareOps+ | 대시보드</title>
 		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,8 +19,9 @@
 		
 			/* 기본 세팅 */
 			.title { width: 700px; height: 40px; margin-bottom: 30px; }
-			.sub-title { font-size: 20px; }
-			.status { text-align: right; }
+			.sub-title { font-size: 30px; }
+			.today { font-size: 20px; }
+			.status { text-align: right; margin: 10px 0 40px 0; }
 			.icon-next { width: 30px; margin-left: 10px; }
 		
 			/* 서비스 미리보기 */
@@ -37,70 +38,47 @@
 		 	.box-sub { display: flex; align-items: center; font-size: 35px; font-weight: 900;  }
 		 	
 		 	/* 의료기기 상태 현황 */
-		 	.medical-table { padding: 20px; margin: 35px 0; width: 700px; height: 290px; border: 3px solid #13254C; border-radius: 10px; }
-		 	.medical-content { display: grid; grid-template-columns: 1fr 1fr; }
-		 	.chart-table { 
-			 		width: 500px;
-			 		display: flex; 
-			 		justify-content: space-around; /* 좌우 여백을 균등하게 분배 */
-          align-items: center; /* 세로 가운데 정렬 */ 
-       	}
-       .chart {
-					width: 200px;
-					height: 200px;
-					border-radius: 50%;
-					background: lightgray;
-					position: relative; /* 차트를 중앙에 맞추기 위해 필요 */
-					display: flex;
-					align-items: center;
-					justify-content: center;
-       }
-      .chart:after {
-	       content: '';
-	       background: #fff;
-	       position: absolute;
-	       width: 130px;
-	       height: 130px;
-	       border-radius: 50%;
-      }
-      .chart-bar {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background: conic-gradient(
-            #4caf50 0% 40%,    /* 정상 */
-            #ff9800 40% 45%,   /* 점검 */
-            #f44336 40% 60%,   /* 수리 */
-            #9e9e9e 60% 80%,   /* 노후 */
-            #616161 80% 100%   /* 만료 */ );
-   		}
-      .color-tag { text-align: right; margin-top: auto; margin-bottom: 0; }
-      .color-tag-content { display: flex; justify-content: right; margin-bottom: 5px; } 
-      .color { width: 25px; height: 25px; margin-right: 10px; }
-      .green {  background-color: green; } 
-      .orange {  background-color: orange; } 
-      .blue {  background-color: blue; } 
-      .yellow {  background-color: yellow; } 
-      .red {  background-color: red; } 
-		 	
-		 	/* 안전 관리 현황 */
-		 	.safety-table { padding: 20px; margin-top: 35px; width: 700px; height: 250px; border: 3px solid #13254C; border-radius: 10px; }
+		 	.medical-table { padding: 20px; margin-top: 70px; width: 700px; height: 515px; border: 3px solid #13254C; border-radius: 10px; }
 		 	
 		 	/* 캘린더 */
 		 	.calendar { 
 				display: flex;
 				margin: 70px 0 30px 0; 
 				width: 500px; 
-				height: 350px; 
+				height: 300px; 
 				border: 3px solid #13254C; 
 				border-radius: 10px; 
 				background-color: #13254C;
 			}
+			
 		 	/* 내 민원 */
-		 	.claim-content { padding: 20px; margin-bottom: 15px; width: 500px; height: 95px; border: 3px solid #13254C; border-radius: 10px; }
 		 	.claim-add { display: flex; width: 500px; }
 		 	.claim-add-next { margin-left: auto; margin-bottom: 5px; }
-		 	
+		 	.claim-content { 
+		 		display: flex;
+		 		padding: 20px; 
+		 		margin-bottom: 15px; 
+		 		width: 500px; 
+		 		height: 100px; 
+		 		background-color: #13254C; 
+		 		border: 3px solid #13254C; 
+		 		border-radius: 10px; 
+		 		color: white;
+	 		}
+	 		.claim-content-info { padding: 5px auto; height: 60px; margin-right: 20px; }
+	 		.claim-content-title { font-size: 25px; margin-bottom: 5px; }
+	 		.claim-content-detail { font-size: 20px; }
+	 		.claim-content-btn { 
+	 			margin-left: auto;
+	 			width: 100px;
+	 			border-radius: 40px; 
+	 			border: 2px solid white; 
+	 			font-size: 18px;
+	 			/* margin: 0 auto; */
+	 			font-weight: 600;
+	 			color: #13254C;
+	 			background-color: white;
+ 			}
 		</style>
 	</head>
 
@@ -117,23 +95,32 @@
 				
 				<!-- 서비스 미리보기 -->
 				<div class="service">
-					<div class="box box-text">
-						내 민원보러가기
-						<a href="" class="box-text box-sub">총 7건
+					<!-- 민원 -->
+					<div class="box box-text">마이 페이지
+						<a th:href="@{/mypage}" class="box-text box-sub">이동
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
 						</a>
 					</div>
-					<div class="box box-text">
-						담당 의료기기 수
-						<a href="" class="box-text box-sub">총 48개<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next"></a>
+					
+					<!-- 민원 -->
+					<div class="box box-text">부서 민원 보러가기
+						<a href="" class="box-text box-sub" th:text="'총 ' + ${ claimCnt } + '건'">
+							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
+						</a>
 					</div>
-					<div class="box box-text">
-						민원 관리 현황
-						<a href="" class="box-text box-sub">이동<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next"></a>
+					
+					<!-- 의료기기 -->
+					<div class="box box-text">부서 민원 보러가기
+						<a href="" class="box-text box-sub" th:text="'총 ' + ${ medicalCnt } + '개'">
+							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
+						</a>
 					</div>
-					<div class="box box-text">
-						시설물 관리
-						<a href="" class="box-text box-sub">이동<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next"></a>
+					
+					<!-- 시설물 -->
+					<div class="box box-text">시설물 관리
+						<a href="" class="box-text box-sub">이동
+							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
+						</a>
 					</div>
 				</div>
 				
@@ -142,51 +129,11 @@
 					<!-- 의료기기 상태 날짜 -->
 					<div class="status">
 						<p class="sub-title">의료기기 상태 현황</p>
-						<p class="today">2024-09-11</p>
+						<p class="today"></p>
 					</div>
-					<div class="medical-content">
-						<!-- 의료기기 도넛 차트 -->
-						<div class="chart-table">
-							<div class="chart">
-								<div class="chart-bar"></div>
-							</div>
-							<div class="chart">
-								<div class="chart-bar"></div>
-							</div>
-						</div>
-						
-						<!-- 의료기기 상태 색상표 -->
-						<div class="color-tag">
-							<div class="color-tag-content">
-								<p class="color green"></p>
-								<p>정상</p>
-							</div>
-							<div class="color-tag-content">
-								<p class="color orange"></p>
-								<p>점검</p>
-							</div>
-							<div class="color-tag-content">
-								<p class="color blue"></p>
-								<p>수리</p>
-							</div>
-							<div class="color-tag-content">
-								<p class="color yellow"></p>
-								<p>노후</p>
-							</div>
-							<div class="color-tag-content">
-								<p class="color red"></p>
-								<p>만료</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<!-- 안전 관리 현황  -->
-				<div class="safety-table">
-					<div class="status">
-						<p class="sub-title">안전 관리 현황</p>
-						<p class="today">2024-09-11</p>
-					</div>
+					
+					<!-- 세로 막대 그래프 -->
+					<canvas id="medicalChart"></canvas>
 				</div>
 			</div>
 			
@@ -196,9 +143,9 @@
 					<section class="ftco-section">
 						<div class="calendar-first" id="calendar_first">
 					    <div class="calendar_header">
-					        <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
-					         <h2></h2>
-					        <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
+				        <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
+				         <h2></h2>
+				        <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
 					    </div>
 					    <div class="calendar_weekdays"></div>
 					    <div class="calendar_content"></div>
@@ -206,14 +153,27 @@
 					</section>
 				</div>
 				
-				<!-- 내가 쓴 민원 (최신순 3가지 ) -->
+				<!-- 민원 -->
 				<div class="claim">
 					<div class="claim-add">
 						<a href="" class="claim-add-next">더보기</a>
 					</div>
-		 			<div class="claim-content">a</div>
-		 			<div class="claim-content">a</div>
-		 			<div class="claim-content">a</div>
+					<th:block th:each="claim : ${ ClaimList }">
+			 			<div class="claim-content">
+			 				<div class="claim-content-info">
+				 				<p class="claim-content-title">의료기기 -> 수정</p>
+				 				<p class="claim-content-detail">간호 부서 의료기기 수정 부탁드립니다. 담 ...</p>
+			 				</div>
+			 				<button class="btn claim-content-btn">접수 대기</button>
+			 			</div>
+					</th:block>
+		 			<!-- <div class="claim-content">
+		 				<div class="claim-content-info">
+			 				<p class="claim-content-title">안전 관리</p>
+			 				<p class="claim-content-detail">응급실 앞에 환자 난동으로 소화전 파손 되었...</p>
+		 				</div>
+		 				<button class="btn claim-content-btn">접수 완료</button>
+		 			</div> -->
 				</div>
 			</div>
 		</div>
@@ -221,5 +181,58 @@
 		<script th:src="@{/js/jquery.min.js}" ></script>
 	  <script th:src="@{/js/main.js}" ></script>
 	  <script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+  	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  	
+	  <script type="text/javascript">
+			// className 이 today 인 p 태그 오늘 날짜로 기본값 설정
+			var pList = document.querySelectorAll('.today');
+			
+			pList.forEach(function (item) {
+				item.innerText = new Date().toISOString().substring(0, 10);
+			})
+			
+			// 세로 막대 그래프
+			var ctx = document.getElementById('medicalChart');
+	    var myChart = new Chart(ctx, {
+	      type: 'bar',
+	      data: {
+	        labels: ['정상', '점검', '수리', '노후', '만료'],
+	        datasets: [{
+	          label: '현황 ',
+	          data: ['[[${MedicalStatus.normal}]]', '[[${MedicalStatus.check}]]', 
+	        	  '[[${MedicalStatus.repair}]]', '[[${MedicalStatus.old}]]', '[[${MedicalStatus.expire}]]'],
+	          backgroundColor: [
+	            'rgba(0, 204, 0, 0.5)',    // 정상
+	            'rgba(255, 159, 64, 0.5)', // 점검
+	            'rgba(54, 162, 235, 0.5)', // 수리
+	            'rgba(255, 206, 86, 0.5)', // 노후
+	            'rgba(255, 99, 132, 0.5)'  // 만료
+	          ],
+	          borderColor: [
+	            'rgba(0, 204, 0, 1)',    // 정상
+	            'rgba(255, 159, 64, 1)', // 점검
+	            'rgba(54, 162, 235, 1)', // 수리
+	            'rgba(255, 206, 86, 1)', // 노후
+	            'rgba(255, 99, 132, 1)'  // 만료
+	          ],
+	          borderWidth: 1
+	        }]
+	      },
+	      options: {
+	    	  legend: {
+    	        display: false // label 숨기기
+    	    },
+	        scales: {
+	          yAxes: [{
+	            ticks: {
+	              beginAtZero: true
+	            }
+	          }]
+	        },
+	      }
+	    });
+			
+	  </script>
+	  
 	</body>
 </html>

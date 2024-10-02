@@ -143,5 +143,7 @@ public class LoginService {
         result.put("deptNo", deptNo); // 부서 번호
         result.put("departmentName", departmentName); // 부서 이름
         result.put("userName", userName); // 사용자 이름
+        // redirectUrl 추가
+        result.put("redirectUrl", "/" + userType + "/dash-board");
     }
 }

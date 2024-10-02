@@ -5,14 +5,16 @@ package himedia.project.careops.service;
  * @editDate 2024-09-23
  */
 
+import java.util.HashMap;
+
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,7 +43,7 @@ public class MedicalService {
 	// [목록 + 페이지네이션]
 	public Page<ListMedicalDevicesDTO> findByMedicalDevices(Pageable pageable) {
 		
-		pageable = PageRequest.of(pageable.getPageNumber() <= 1 ? 0 : pageable.getPageNumber() - 1,
+		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
                 Sort.by("lmdMinorCateCode").ascending());
 		
@@ -77,6 +79,54 @@ public class MedicalService {
 		return modelMapper.map(medicalDevice, ListMedicalDevicesDTO.class);
 	}
 	
+	// [담당 부서 이름으로 의료기기 리스트 반환]
+	public List<ListMedicalDevices> findByMedicalDeptName(String department) {
+		return medicalRepository.findAll()
+				.stream() 
+				.filter(m -> m.getLmdManagerDeptPart().equals(department))
+				.collect(Collectors.toList());     
+	}
+	
+	// [의료기기 상태에 따라 리스트 반환]
+	public Map<String, Integer> findByMedicalStatus() {
+
+		// 의료기기 상태 값에 따라 저장되는 딕셔너리
+		// 변수
+		Map<String, Integer> medicalStatusList = new HashMap<>();
+		
+		Integer normal = 0;
+		Integer check = 0;
+		Integer repair = 0;
+		Integer old = 0;
+		Integer expire = 0;
+		
+		// 전체 의료기기
+		List<ListMedicalDevices> medicalList = medicalRepository.findAll();
+		
+		for (ListMedicalDevices m: medicalList) {
+			if (m.getLmdStatus().equals("정상")) {
+				normal ++;
+			} else if (m.getLmdStatus().equals("점검요망")) {
+				check ++;
+			} else if (m.getLmdStatus().equals("수리필요")) {
+				repair ++;
+			} else if (m.getLmdStatus().equals("노후")) {
+				old ++;
+			} else if (m.getLmdStatus().equals("만료")) {
+				expire ++;
+			} 
+			
+			medicalStatusList.put("normal", normal);
+			medicalStatusList.put("check", check);
+			medicalStatusList.put("repair", repair);
+			medicalStatusList.put("old", old);
+			medicalStatusList.put("expire", expire);
+		}
+		
+		return medicalStatusList;
+	}
+	
+
 	// [등록]
 	@Transactional
 	public void addMedicalDevice(ListMedicalDevicesDTO newMedicalDevice) {

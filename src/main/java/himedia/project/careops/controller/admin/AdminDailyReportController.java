@@ -26,15 +26,15 @@ import himedia.project.careops.entity.DailyManagementReport;
 import himedia.project.careops.service.DailyReportService;
 
 @Controller
-@RequestMapping("/admin")
-public class DailyReportController {
+@RequestMapping("admin")
+public class AdminDailyReportController {
 	
 	// 로그
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	private final DailyReportService dailyReportService;
 	
-	public DailyReportController(DailyReportService dailyReportService) {
+	public AdminDailyReportController(DailyReportService dailyReportService) {
 		this.dailyReportService = dailyReportService;
 	}
 	
