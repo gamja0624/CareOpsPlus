@@ -72,7 +72,7 @@ public class LoginController {
 	        session.setAttribute("deptNo", deptNo);
 	        session.setAttribute("department", departmentName);
 	        session.setAttribute("userId", userId);
-	        session.setAttribute("name", userName);
+	        session.setAttribute("userName", userName);
 
 	        String redirectUrl = "/" + userType + "/dash-board";
 	        response.put("success", true);
@@ -83,8 +83,6 @@ public class LoginController {
 	        response.put("userName", userName);
 	        response.put("department", departmentName);
 
-	        logger.info("세션 스토리지에 저장할 사용자 정보: userType={}, deptNo={}, userId={}, userName={}, department={}", 
-	            userType, deptNo, userId, userName, departmentName);
 	    } else {
 	        logger.warn("로그인 실패: deptNo={}, userId={}", deptNo, userId);
 	        response.put("success", false);
