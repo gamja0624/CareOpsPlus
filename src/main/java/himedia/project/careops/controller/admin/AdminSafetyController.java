@@ -60,7 +60,7 @@ public class AdminSafetyController {
 		List<SafetyManagementListDTO> safetyListAll = safetyService.safetyListAll();
 		log.info("목록 페이지 safetyListAll 실행");
 		log.info("safetyListAll>>>{}", safetyListAll);
-
+		
 		model.addAttribute("safetyResultList", safetyResultList);
 		model.addAttribute("safetyListAll", safetyListAll);
 
@@ -81,9 +81,12 @@ public class AdminSafetyController {
 
 		Page<SafetyManagementChecklistDTO> allChecklist = safetyService.findAllChecklist(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(allChecklist);
-
+		int totalPages = allChecklist.getTotalPages();
+		
 		model.addAttribute("allChecklist", allChecklist);
 		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages", totalPages);
+		
 		log.info("allChecklist >>>>>> {}", allChecklist);
 		
 		return "admin/safety/checklist-edit-detail";

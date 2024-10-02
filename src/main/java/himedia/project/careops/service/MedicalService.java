@@ -90,10 +90,10 @@ public class MedicalService {
 	// [의료기기 상태에 따라 리스트 반환]
 	public Map<String, Integer> findByMedicalStatus() {
 
-		// 의료기기 상태 값에 따라 저장되는 딕셔너리
-		// 변수
+		// 키, 값 형태로 저장할 변수 선언
 		Map<String, Integer> medicalStatusList = new HashMap<>();
 		
+		// 변수
 		Integer normal = 0;
 		Integer check = 0;
 		Integer repair = 0;

@@ -40,9 +40,11 @@ public class ManagerDailyReportController {
 			
 			Page<DailyManagementReportDTO> reportAllList = dailyReportService.reportAllList(pageable);
 			PagingButtonInfo paging = Pagenation.getPagingButtonInfo(reportAllList);
+			int totalPages = reportAllList.getTotalPages();
 			
 			model.addAttribute("reportAllList", reportAllList);
 			model.addAttribute("paging", paging);
+			model.addAttribute("totalPages", totalPages);
 			
 			return "admin/report/report-list";
 		}

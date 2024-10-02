@@ -22,7 +22,8 @@
 			.sub-title { font-size: 30px; }
 			.today { font-size: 20px; }
 			.status { text-align: right; margin: 10px 0 40px 0; }
-			.icon-next { width: 30px; margin-left: 10px; }
+			.icon-next { width: 30px; margin: 0 10px; }
+			.icon-nex-claim { width: 25px; height: 25px; margin: 0 10px; margin-bottom: 5px; }
 		
 			/* 서비스 미리보기 */
 			.service { margin-bottom: 35px; width: 700px; display: flex; justify-content: space-between; } 
@@ -54,6 +55,22 @@
 		 	/* 내 민원 */
 		 	.claim-add { display: flex; width: 500px; }
 		 	.claim-add-next { margin-left: auto; margin-bottom: 5px; }
+		 	
+		 	.claim-content-zero { 
+		 		display: grid;
+		 		padding: 20px; 
+		 		margin-bottom: 15px; 
+		 		width: 500px; 
+		 		height: 180px; 
+		 		background-color: #13254C;
+		 		border: 3px solid #13254C; 
+		 		border-radius: 10px; 
+		 		color: white;
+	 		}
+		 	.claim-content-info-zero { display: contents; }
+		 	.icon-box { width: 80px; margin: auto; }
+	 		.claim-content-title-zero { font-size: 25px; margin: auto; }
+		 	
 		 	.claim-content { 
 		 		display: flex;
 		 		padding: 20px; 
@@ -66,6 +83,7 @@
 		 		color: white;
 	 		}
 	 		.claim-content-info { padding: 5px auto; height: 60px; margin-right: 20px; }
+	 		.claim-content-title-info { display: flex; align-items: center; }
 	 		.claim-content-title { font-size: 25px; margin-bottom: 5px; }
 	 		.claim-content-detail { font-size: 20px; }
 	 		.claim-content-btn { 
@@ -78,7 +96,10 @@
 	 			font-weight: 600;
 	 			color: #13254C;
 	 			background-color: white;
+	 			pointer-events: none;
  			}
+ 			
+ 			.claim-btn-false { background-color: #13254C; color: white; }
 		</style>
 	</head>
 
@@ -104,21 +125,22 @@
 					
 					<!-- 민원 -->
 					<div class="box box-text">부서 민원 보러가기
-						<a href="" class="box-text box-sub" th:text="'총 ' + ${ claimCnt } + '건'">
+						<a th:href="@{/}" class="box-text box-sub" th:text="'총 ' + ${ claimCnt } + '건'">
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
 						</a>
 					</div>
 					
 					<!-- 의료기기 -->
-					<div class="box box-text">부서 민원 보러가기
-						<a href="" class="box-text box-sub" th:text="'총 ' + ${ medicalCnt } + '개'">
+					<div class="box box-text">부서 담당 의료기기
+						<a th:href="@{ './medical-list/search?filter=lmdManagerDeptPart&value=' + ${ session.department } }"
+							 class="box-text box-sub" th:text="'총 ' + ${ medicalCnt } + '개'">
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
 						</a>
 					</div>
 					
-					<!-- 시설물 -->
-					<div class="box box-text">시설물 관리
-						<a href="" class="box-text box-sub">이동
+					<!-- 예약 시설물 -->
+					<div class="box box-text">시설물 예약 관리
+						<a th:href="@{/}" class="box-text box-sub">이동
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
 						</a>
 					</div>
@@ -155,16 +177,33 @@
 				
 				<!-- 민원 -->
 				<div class="claim">
-					<div class="claim-add">
-						<a href="" class="claim-add-next">더보기</a>
-					</div>
-					<th:block th:each="claim : ${ ClaimList }">
-			 			<div class="claim-content">
+					<th:block th:if="${ claimList != null }">
+						<div class="claim-add">
+							<a href="" class="claim-add-next">더보기</a>
+						</div>
+			 			<div class="claim-content" th:each="claim : ${ claimList.subList(0, 3) }">
 			 				<div class="claim-content-info">
-				 				<p class="claim-content-title">의료기기 -> 수정</p>
-				 				<p class="claim-content-detail">간호 부서 의료기기 수정 부탁드립니다. 담 ...</p>
+			 					<div class="claim-content-title-info">
+					 				<p class="claim-content-title" th:text="${ claim.claimCategoryName }"></p>
+					 				<th:block th:if="${ claim.claimCategoryName.equals('의료기기') }">
+						 				<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-nex-claim">
+						 				<p class="claim-content-title" th:text="${ claim.claimCategoryStatus }"></p>
+					 				</th:block>
+			 					</div>
+				 				<p class="claim-content-detail" 
+				 					th:text="${ #strings.length(claim.claimContent) > 25 ? #strings.substring(claim.claimContent, 0, 20) + ' ...' : claim.claimContent }"></p>
 			 				</div>
-			 				<button class="btn claim-content-btn">접수 대기</button>
+			 				<button class="btn claim-content-btn claim-btn-false" th:if="${ claim.claimApprove == false }">접수 대기</button>
+			 				<button class="btn claim-content-btn claim-btn-true" th:unless="${ claim.claimApprove == false }">접수 완료</button>
+			 			</div>
+					</th:block>
+					
+					<th:block th:unless="${ claimList != null }">
+						<div class="claim-content-zero" >
+			 				<div class="claim-content-info-zero">
+				 				<img alt="상자" th:src="@{/img/box.png}" class="icon-box">
+				 				<p class="claim-content-title-zero">작성한 민원 요청이 없습니다 :)</p>
+			 				</div>
 			 			</div>
 					</th:block>
 		 			<!-- <div class="claim-content">
