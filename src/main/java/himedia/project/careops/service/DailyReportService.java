@@ -1,5 +1,8 @@
 package himedia.project.careops.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author 이홍준
  * @editDate 2024-09-26 ~ 
@@ -9,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -61,5 +65,31 @@ public class DailyReportService {
 		beforeReport.setDmrIssue(editReport.getDmrIssue());
 	}
 	
+	// [등록]
+	@Transactional
+	public void reportRegistation(String adminid, String adminName, String adminDeptNo, String adminDeptName, DailyManagementReportDTO newReport) {
+		
+		newReport.setAdminId(adminid);
+		newReport.setAdminDeptNo(adminDeptNo);
+		newReport.setAdminName(adminName);
+		newReport.setAdminDeptName(adminDeptName);
+		
+		dailyManagementReportRepository.save(modelMapper.map(newReport, DailyManagementReport.class));
+	}
+
+	// [adminName별 조회 + 페이지네이션]
+	public Page<DailyManagementReportDTO> searchMyReport(Pageable pageable, String adminName) {
+
+	    pageable = PageRequest.of(
+	        pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+	        pageable.getPageSize(),
+	        Sort.by("dmrNo").descending()
+	    );
+
+	    // Pageable을 사용하여 데이터를 가져옴
+	    Page<DailyManagementReport> allList = dailyManagementReportRepository.findByAdminName(adminName ,pageable);
+
+	    return allList.map(list -> modelMapper.map(list, DailyManagementReportDTO.class));
+	}
 	// 등록 수정 삭제 시 @Transactional 설정 필요
 }

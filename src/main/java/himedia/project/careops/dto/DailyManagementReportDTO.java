@@ -105,7 +105,7 @@ public class DailyManagementReportDTO {
 	
 	@Override
 	public String toString() {
-		return "DailyManagementReportDTO [ dmrNo=" + dmrNo + "adminId=" + adminId + "adminDeptNo=" + adminDeptNo + "adminName=" + adminName 
-				+ "adminDeptName" + adminDeptName + "dmrReportDetail=" + dmrReportDetail + "dmrIssue=" + dmrIssue + "dmrDate=" + dmrDate;
+		return "DailyManagementReportDTO [ dmrNo=" + dmrNo + " adminId=" + adminId + " adminDeptNo=" + adminDeptNo + " adminName=" + adminName 
+				+ " adminDeptName=" + adminDeptName + " dmrReportDetail=" + dmrReportDetail + " dmrIssue=" + dmrIssue + " dmrDate=" + dmrDate;
 	}
 }
