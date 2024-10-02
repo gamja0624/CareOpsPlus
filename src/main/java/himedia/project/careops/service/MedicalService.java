@@ -152,8 +152,6 @@ public class MedicalService {
 		ListMedicalDevices findMedical = medicalRepository.findById(editMedical.getLmdMinorCateCode())
 				.orElseThrow(IllegalArgumentException::new);
 		
-		log.info("힝 : {}", findMedical);
-		
 		// 상태, 장비수
 		findMedical.setLmdStatus(lmdStatus);
 		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));

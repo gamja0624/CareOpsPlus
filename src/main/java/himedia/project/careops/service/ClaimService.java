@@ -1,10 +1,12 @@
 package himedia.project.careops.service;
 
+
 /**
  * @author 최은지
  * @editDate 2024-09-27
  */
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,30 +105,103 @@ public class ClaimService {
 	}
 	
 	// 작성자 : 진혜정
-	// 민원 접수 대기건과 처리 진행건 개수 반환
+	// 민원 접수 대기건과 처리 진행건, 의료기기건, 안전관리 건 키, 값 형태로 반환
 	public Map<String, Integer> findByClaimStatus() {
 		
 		// 키, 값 형태로 저장할 변수 선언
 		Map<String, Integer> ClaimStatusList = new HashMap<>();
 		
 		// 변수 
-		Integer standby = 0;
-		Integer progress = 0;
+		ClaimStatusList.put("standby", 0);
+		ClaimStatusList.put("progress", 0);
+		ClaimStatusList.put("medicalCnt", 0);
+		ClaimStatusList.put("safetyCnt", 0);
 		
 		List<Claim> claimList = claimRepository.findAll();
 		
 		for (Claim c: claimList) {
 			if (! c.getClaimApprove()) { 
-				standby ++;
+				ClaimStatusList.put("standby", ClaimStatusList.get("standby") + 1);
 			} else if (c.getClaimApprove()) {
-				progress ++;
-			}
-			ClaimStatusList.put("standby", standby);
-			ClaimStatusList.put("progress", progress);
+				ClaimStatusList.put("progress", ClaimStatusList.get("progress") + 1);
+			} 
+			
+			if (c.getClaimCategoryName().equals("의료기기") && ! c.getClaimApprove()) {
+				ClaimStatusList.put("medicalCnt", ClaimStatusList.get("medicalCnt") + 1);
+			} else if (c.getClaimCategoryName().equals("안전") && ! c.getClaimApprove())	{
+				ClaimStatusList.put("safetyCnt", ClaimStatusList.get("safetyCnt") + 1);
+			}		
 		}
 		
 		return ClaimStatusList;
 	}
+	
+	// 작성자 : 진혜정
+	// 년도, 월별로 민원수 카운트
+	public Map<String, Integer> findByClaimDateStatus(int year) {
+	    // 키, 값 형태로 저장할 변수 선언
+	    Map<String, Integer> ClaimDateStatusList = new HashMap<>();
+	    
+	    // 1 ~ 12월 초기화
+	    ClaimDateStatusList.put("jan", 0);
+	    ClaimDateStatusList.put("feb", 0);
+	    ClaimDateStatusList.put("mar", 0);
+	    ClaimDateStatusList.put("apr", 0);
+	    ClaimDateStatusList.put("may", 0);
+	    
+	    ClaimDateStatusList.put("jun", 0);
+	    ClaimDateStatusList.put("jul", 0);
+	    ClaimDateStatusList.put("aug", 0);
+	    ClaimDateStatusList.put("sep", 0);
+	    ClaimDateStatusList.put("oct", 0);
+	    
+	    ClaimDateStatusList.put("nov", 0);
+	    ClaimDateStatusList.put("dec", 0);
+	    
+	    List<Claim> claimList = claimRepository.findAll();
+	    
+	    for (Claim c : claimList) {
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.setTime(c.getClaimDate());
+	        
+	        int dateYear = calendar.get(Calendar.YEAR); 		// 연도 추출
+	        int dateMonth = calendar.get(Calendar.MONTH) + 1; 	// 월 추출 
+	        
+	        if (dateYear == year) {
+	            // 각 월에 해당하는 카운트 증가
+	        	log.info("{}", dateMonth);
+	            switch (dateMonth) {
+	                case 1: 
+	                	ClaimDateStatusList.put("jan", ClaimDateStatusList.get("jan") + 1); break;
+	                case 2: 
+	                	ClaimDateStatusList.put("feb", ClaimDateStatusList.get("feb") + 1); break;
+	                case 3: 
+	                	ClaimDateStatusList.put("mar", ClaimDateStatusList.get("mar") + 1); break;
+	                case 4: 
+	                	ClaimDateStatusList.put("apr", ClaimDateStatusList.get("apr") + 1); break;
+	                case 5: 
+	                	ClaimDateStatusList.put("may", ClaimDateStatusList.get("may") + 1); break;
+	                case 6: 
+	                	ClaimDateStatusList.put("jun", ClaimDateStatusList.get("jun") + 1); break;
+	                case 7: 
+	                	ClaimDateStatusList.put("jul", ClaimDateStatusList.get("jul") + 1); break;
+	                case 8: 
+	                	ClaimDateStatusList.put("aug", ClaimDateStatusList.get("aug") + 1); break;
+	                case 9: 
+	                	ClaimDateStatusList.put("sep", ClaimDateStatusList.get("sep") + 1); break;
+	                case 10: 
+	                	ClaimDateStatusList.put("oct", ClaimDateStatusList.get("oct") + 1); break;
+	                case 11: 
+	                	ClaimDateStatusList.put("nov", ClaimDateStatusList.get("nov") + 1); break;
+	                case 12: 
+	                	ClaimDateStatusList.put("dec", ClaimDateStatusList.get("dec") + 1); break;
+	            }
+	        }
+	    }
+	    
+	    return ClaimDateStatusList;
+	}
+
 	
 	// [ 부서 담당자 ] =========================================================================
 	// 작성자 : 최은지
@@ -220,6 +295,5 @@ public class ClaimService {
 				.filter(m -> m.getClaimManagerName().equals(managerName))
 				.collect(Collectors.toList());     
 	}
-	
 }
 

@@ -20,44 +20,33 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
-            max-width: 1200px;
+            width: 1200px;
             padding: 0px;
-            margin-top: 0; /* 위치조정 */
+            margin-top: 0;
         }
         
         .site_logo {
-            width: 100%;
-            max-width: 500px;
+            width: 500px;
             height: auto;
-            margin-bottom: 30px;
-            margin-top: 20px; /* 상단 여백 추가 */
+            margin-bottom: 100px;
         }
         
         .login-box {
-            width: 100%;
-            max-width: 500px;
+            width: 500px;
             padding: 30px;
             background-color: rgba(19, 37, 77, 0.8);
             border-radius: 5px;
             color: white;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            margin-top: 30px; /* 로고와 로그인 박스 간격 추가 */
-            margin-bottom: 40px; /* 하단 여백 추가 */
+            margin-top: 30px;
+            margin-bottom: 40px;
         }
         
-        .form-label {
-            color: white;
-            font-size: 1.1rem;
-        }
-        
-        .form-control {
-            width: 100%;
-            font-size: 1rem;
-        }
+        .form-label { color: white; font-size: 1.1rem; }
+        .form-control { width: 440px; font-size: 1rem; }
         
         .btn-login {
-            width: 100%;
+            width: 440px;
             padding: 15px;
             background-color: rgb(0, 0, 0);
             border-radius: 10px;
@@ -66,9 +55,7 @@
             transition: background-color 0.3s ease;
         }
         
-        .btn-login:hover {
-            background-color: #0d1d40;
-        }
+        .btn-login:hover { background-color: #0d1d40; }
         
         #background {
             position: fixed;
@@ -86,33 +73,53 @@
             width: 2px;
             height: 2px;
             border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
         }
         
         @keyframes fall {
-            to {
-                transform: translateY(100vh);
+            from {
+                transform: translateY(-5vh);
             }
+            to {
+                transform: translateY(105vh);
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
         
         @media (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
+            
             .site_logo {
-                max-width: 300px;
+                width: 300px;
                 margin-top: 15px;
             }
             
             .login-box {
+                width: 90%;
                 padding: 20px;
                 margin-bottom: 30px;
+            }
+            
+            .form-control, .btn-login {
+                width: 100%;
             }
         }
         
         @media (max-width: 480px) {
             .site_logo {
-                max-width: 250px;
+                width: 250px;
                 margin-top: 15px;
             }
             
             .login-box {
+                width: 95%;
                 padding: 15px;
                 margin-bottom: 20px;
             }
@@ -130,6 +137,53 @@
                 padding: 10px;
             }
         }
+        
+        /* 모달 스타일 */
+        .modal-content {
+			transform: translate(-0%, -170%) !important;
+            background-color: white;
+            color: #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            border: none;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-dialog {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%) !important;
+            width: 90%;
+            max-width: 550px;
+            margin: 0;
+        }
+
+        .modal-header { border-bottom: none; padding: 0 0 15px 0; }
+        .modal-title { font-size: 18px; }
+        .modal-body { padding: 15px 0; font-size: 20px; text-align: center; }
+        .modal-footer { border-top: none; padding: 15px 0 0 0; justify-content: center; }
+        
+        .btn-close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            font-weight: 700;
+            opacity: 0.5;
+        }
+        .btn-close:hover { opacity: 1; }
+        
+        /* 모달 배경 스타일 */
+        .modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
+        
+        /* 모달이 화면 맨 위로 오도록 z-index 조정 */
+        .modal { z-index: 1050; }
+        .modal-backdrop { z-index: 1040; }
+        
+        /* 모달 내 버튼 스타일 */
+        .modal-footer .btn { font-size: 16px; }
     </style>
 </head>
 <body>
@@ -157,6 +211,24 @@
         </div>
     </div>
 
+    <!-- 로그인 실패 모달 추가 -->
+    <div class="modal fade" id="loginErrorModal" tabindex="-1" role="dialog" aria-labelledby="loginErrorModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginErrorModalLabel">로그인 오류</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p id="loginErrorMessage">부서번호, 아이디 또는 비밀번호를 다시 입력해주세요</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS 및 jQuery 추가 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -167,69 +239,67 @@
             const star = document.createElement('div');
             star.className = 'star';
             star.style.left = `${Math.random() * 100}vw`;
-            star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-            star.style.opacity = Math.random();
+            star.style.top = `${Math.random() * 100}vh`;
             
-            const size = Math.random() * 2 + 1;
+            const size = Math.random() * 3 + 1;
             star.style.width = `${size}px`;
             star.style.height = `${size}px`;
             
-            star.style.animation = `fall ${star.style.animationDuration} linear infinite`;
+            const duration = Math.random() * 100 + 50;
+            star.style.animation = `fall ${duration}s linear infinite, twinkle 5s infinite`;
             
             document.getElementById('background').appendChild(star);
-            
-            setTimeout(() => {
-                star.remove();
-            }, parseFloat(star.style.animationDuration) * 1000);
         }
 
         // 초기 별 생성
-        for (let i = 0; i < 100; i++) {
-            setTimeout(createStar, Math.random() * 3000);
+        for (let i = 0; i < 200; i++) {
+            createStar();
         }
 
         // 지속적인 별 생성
-        setInterval(createStar, 100);
+        setInterval(createStar, 1000);
 
         // 로그인 폼 제출 처리
-		$(document).ready(function() {
-		     $('#loginForm').submit(function(e) {
-		         e.preventDefault();
-		         $.ajax({
-		             url: '/',
-		             type: 'POST',
-		             data: $(this).serialize(),
-		             success: function(response) {
-						console.log('Login response:', response);
-						if (response.success) {
-						    sessionStorage.setItem('userType', response.userType);
-						    sessionStorage.setItem('deptNo', response.deptNo);
-						    sessionStorage.setItem('userId', response.userId);
-						    sessionStorage.setItem('userName', response.userName);
-						    sessionStorage.setItem('department', response.department);
-						    
-						    console.log('Session storage after login:', {
-						        userType: sessionStorage.getItem('userType'),
-						        deptNo: sessionStorage.getItem('deptNo'),
-						        userId: sessionStorage.getItem('userId'),
-						        userName: sessionStorage.getItem('userName'),
-						        department: sessionStorage.getItem('department')
-						    });
-						    
-						    console.log('Redirecting to:', response.redirectUrl);
-						    window.location.href = response.redirectUrl;
-						} else {
-						    console.log('Login failed:', response.message);
-						    alert(response.message);
-						}
-		             },
-		             error: function(xhr, status, error) {
-		                 console.error('Login error:', error);
-		                 alert('서버와의 통신 중 오류가 발생했습니다.');
-		             }
-		         });
-		     });
-		 });
+        $(document).ready(function() {
+             $('#loginForm').submit(function(e) {
+                 e.preventDefault();
+                 $.ajax({
+                     url: '/',
+                     type: 'POST',
+                     data: $(this).serialize(),
+                     success: function(response) {
+                        console.log('Login response:', response);
+                        if (response.success) {
+                            sessionStorage.setItem('userType', response.userType);
+                            sessionStorage.setItem('deptNo', response.deptNo);
+                            sessionStorage.setItem('userId', response.userId);
+                            sessionStorage.setItem('userName', response.userName);
+                            sessionStorage.setItem('department', response.department);
+                            
+                            console.log('Session storage after login:', {
+                                userType: sessionStorage.getItem('userType'),
+                                deptNo: sessionStorage.getItem('deptNo'),
+                                userId: sessionStorage.getItem('userId'),
+                                userName: sessionStorage.getItem('userName'),
+                                department: sessionStorage.getItem('department')
+                            });
+                            
+                            console.log('Redirecting to:', response.redirectUrl);
+                            window.location.href = response.redirectUrl;
+                        } else {
+                            console.log('Login failed:', response.message);
+                            $('#loginErrorMessage').text(response.message);
+                            $('#loginErrorModal').modal('show');
+                        }
+                     },
+                     error: function(xhr, status, error) {
+                         console.error('Login error:', error);
+                         $('#loginErrorMessage').text('서버와의 통신 중 오류가 발생했습니다.');
+                         $('#loginErrorModal').modal('show');
+                     }
+                 });
+             });
+         });
     </script>
 </body>
 </html>
