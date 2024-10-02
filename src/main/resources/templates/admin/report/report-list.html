@@ -52,7 +52,7 @@
     				      <th scope="col">작성자</th>
     				      <th scope="col">작성일자</th>
     				      <th scope="col">상세</th>
-    				      <th scope="col"  th:if="${session.user_userType == 'admin' and (session.departmentName == '안전 관리팀' or session.departmentName == '의료기기 관리팀')}">상태</th>
+    				      <th scope="col"  th:if="${session.userType == 'admin' and (session.department == '안전 관리팀' or session.department == '의료기기 관리팀')}">상태</th>
     				    </tr>
     				  </thead>
                         <tbody>
@@ -62,7 +62,7 @@
                             <td th:text="${drl.adminName}" ></td>
                             <td th:text="${drl.dmrDate}" ></td>
                               <td><a th:if="${session.userType != null}" th:href="@{daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>  
-                            <td><button th:onclick="|location.href='@{daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit"  th:if="${session.userType} == 'admin' and ${session.departmentName} == ${drl.adminDeptName}" >수 정</button></td>
+                            <td><button th:onclick="|location.href='@{daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit"  th:if="${session.userType} == 'admin' and ${session.department} == ${drl.adminDeptName}" >수 정</button></td>
                           </tr>
                         </tbody>
     				</table>
