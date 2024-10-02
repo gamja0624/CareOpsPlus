@@ -79,38 +79,38 @@
                       </form>
                     </div>
                     
-                  <!-- 페이지 네이션 -->
-                  <div class="page" >
+                    <!-- 페이지 네이션 -->
+                  <div class="page" > 
                     <nav aria-label="Page navigation">
                       <ul class="pagination">
                         <!-- 맨 앞으로 이동 -->
                         <li class="page-item">
-                          <a class="page-link" th:href="@{./detail?page=1}" aria-label="Previous">
+                          <a class="page-link " th:href="@{./detail?page=1}" aria-label="Previous">
                             <span aria-hidden="true">&#171;</span>
                           </a>
                         </li>
                         
-                        <!-- 다음 페이지 이동 -->
+                        <!-- 이전 페이지 이동 -->
                         <li class="page-item">
-                          <a class="page-link" th:href="@{./detail?page=} + @{${paging.currentPage + 1}}">&#60;</a>
+                         <a class="page-link"  th:href="@{./detail(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
                         </li>
                         
                         <!-- 숫자 -->
-                        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+                        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}" >
                           <li class="page-item">
                             <a class="page-link" th:href="@{./detail?page=} + @{${page}}"
-                                th:text="${ page }" th:disabled="${ paging.currentPage eq page }"></a>
+                                th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''" ></a>
                           </li>
                         </th:block>
                         
                         <!-- 다음 페이지 이동 -->
-                        <li class="page-item">
-                          <a class="page-link" th:href="@{./detail?page=} + @{${paging.currentPage + 1}}">&#62;</a>
+                        <li class="page-item" >
+                          <a class="page-link" th:href="@{./detail(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}" >&#62;</a>
                         </li>
                         
                         <!-- 맨 끝으로 이동 -->
                         <li class="page-item">
-                          <a class="page-link" th:href="@{./detail?page=} + @{${paging.endPage}}" aria-label="Next">
+                          <a class="page-link" th:href="@{./detail?page={totalPages}(totalPages = ${totalPages})}" aria-label="Next">
                             <span aria-hidden="true">&#187;</span>
                           </a>
                         </li>
