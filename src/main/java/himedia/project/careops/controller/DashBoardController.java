@@ -5,6 +5,8 @@ package himedia.project.careops.controller;
  * @editDate 2024-09-24 ~ 
  */
 
+import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Map;
 
@@ -43,11 +45,6 @@ public class DashBoardController {
     	String userId = (String) session.getAttribute("user_id");
     	String userName = (String) session.getAttribute("name");
 
-    	log.info("deptNo : {}", departmentNo);
-    	log.info("department : {}", department);
-    	log.info("userId : {}", userId);
-    	log.info("userName : {}", userName);
-    	
     	// [서비스 미리보기]
     	// 담당 부서 민원 개수 반환
     	Integer deptNo = Integer.parseInt(departmentNo); // 부서 번호 Integer 형변환
@@ -64,7 +61,7 @@ public class DashBoardController {
     	
     	// [민원 최신순 3개 정렬]
     	List<Claim> claimList = claimService.findByClaimListManagerName(userName);
-    	log.info("claimList : {}", claimList);
+    	model.addAttribute("claimList", claimList);
     	
     	return "manager/dash-board";
     }
@@ -73,20 +70,21 @@ public class DashBoardController {
     public String adminDashBoard(HttpSession session, Model model) {
     	
     	// session 받아온 부서 번호, 이름
-//    	String departmentNo = (String) session.getAttribute("deptNo");
-//    	String department = (String) session.getAttribute("department");
-//    	String userName = (String) session.getAttribute("name");
+    	String departmentNo = (String) session.getAttribute("deptNo");
+    	String department = (String) session.getAttribute("department");
+    	String userName = (String) session.getAttribute("name");
 
     	// [서비스 미리보기]
-    	// 민원 접수 대기 / 접수 진행건
+    	// 민원 접수 대기 / 접수 진행건 / 의료기기 대기건 / 안전 관리 대기건
     	Map<String, Integer> claimStatus = claimService.findByClaimStatus();
     	model.addAttribute("claimStatus", claimStatus);
     	
-    	// 담당 부서 의료기기 개수 반환
-    	
     	// [민원 현황]
-//    	List<Claim> ClaimList = claimService.findByMyClaim(userName);
-//    	model.addAttribute("ClaimList", ClaimList);
+    	LocalDate now = LocalDate.now(); // 현재 날짜
+    	int year = now.getYear();
+    	
+    	Map<String, Integer> ClaimDateStatus = claimService.findByClaimDateStatus(year);
+    	model.addAttribute("ClaimDateStatus", ClaimDateStatus);
     	
     	return "admin/dash-board";
     }

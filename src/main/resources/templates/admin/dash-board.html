@@ -22,20 +22,20 @@
 			.sub-title { font-size: 30px; }
 			.today { font-size: 20px; }
 			.status { text-align: right; margin: 10px 0 40px 0; }
-			.icon-next { width: 30px; margin-left: 10px; }
+			.icon-next { width: 30px; margin: auto 10px; }
 		
 			/* 서비스 미리보기 */
 			.service { margin-bottom: 35px; width: 700px; display: flex; justify-content: space-between; } 
+			.box-flex { display: flex; }
 			.box { 
 				padding: 10px;
 				width: 160px; /* 180 */
 				height: 100px; /* 120 */
 				background-color: #13254C; 
 				border-radius: 10px;
-				display: inline-block;
 		 	}
  		 	.box-text { font-size: 20px; color: white; }
-		 	.box-sub { display: flex; align-items: center; font-size: 35px; font-weight: 900;  }
+		 	.box-sub { font-size: 35px; font-weight: 900; }
 		 	
 		 	/* 민원 현황 */
 		 	.claim-table { padding: 20px; margin-top: 70px; width: 700px; height: 515px; border: 3px solid #13254C; border-radius: 10px; }
@@ -93,31 +93,39 @@
 				<!-- 서비스 미리보기 -->
 				<div class="service">
 					<!-- 민원 접수 -->
-					<div class="box box-text">민원 접수 대기건
-						<a th:href="@{/mypage}" class="box-text box-sub">7건
+					<div class="box box-text">
+						<p>민원 접수 대기건</p>
+						<div class="box-flex">
+							<a th:href="@{/}" class="box-text box-sub" th:text="${ claimStatus.standby + '건' }"></a>
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-						</a>
+						</div>
 					</div>
 					
 					<!-- 민원 처리 -->
-					<div class="box box-text">민원 처리 진행건
-						<a href="" class="box-text box-sub">18건
+					<div class="box box-text">
+						<p>민원 처리 진행건</p>
+						<div class="box-flex">
+							<a href="" class="box-text box-sub" th:text="${ claimStatus.progress + '건' }"></a>
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-						</a>
+						</div>
 					</div>
 					
 					<!-- 의료기기 -->
-					<div class="box box-text">의료기기 대기건
-						<a href="" class="box-text box-sub">4건
+					<div class="box box-text">
+						<p>의료기기 대기건</p>
+						<div class="box-flex">
+							<a href="" class="box-text box-sub" th:text="${ claimStatus.medicalCnt + '건' }"></a>
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-						</a>
+						</div>
 					</div>
 					
 					<!-- 안전관리 -->
-					<div class="box box-text">안전관리 대기건
-						<a href="" class="box-text box-sub">3건
+					<div class="box box-text">
+						<p>안전관리 대기건</p>
+						<div class="box-flex">
+							<a href="" class="box-text box-sub" th:text="${ claimStatus.safetyCnt + '건' }"></a>
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-						</a>
+						</div>
 					</div>
 				</div>
 				
@@ -186,10 +194,10 @@
   	
 	  <script type="text/javascript">
 			// className 이 today 인 p 태그 오늘 날짜로 기본값 설정
-			var pList = document.querySelectorAll('.today');
+			var today = document.querySelectorAll('.today');
 			
-			pList.forEach(function (item) {
-				item.innerText = new Date().toISOString().substring(0, 10);
+			today.forEach(function (item) {
+				item.innerText = new Date().toISOString().substring(0, 4) + "년 기준";
 			})
 			
 			// 세로 막대 그래프
@@ -200,7 +208,14 @@
 	        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
 	        datasets: [{
 	          label: '현황 ',
-	          data: [1, 2, 3, 4, 5],
+	          data: [
+	        	  // 1 ~ 4월
+	        	  '[[${ClaimDateStatus.jan}]]', '[[${ClaimDateStatus.feb}]]', '[[${ClaimDateStatus.mar}]]', '[[${ClaimDateStatus.apr}]]', 
+	        	  // 5 ~ 8월
+	        	  '[[${ClaimDateStatus.may}]]', '[[${ClaimDateStatus.jun}]]', '[[${ClaimDateStatus.jul}]]', '[[${ClaimDateStatus.aug}]]', 
+	        	  // 9 ~ 12월
+	        	  '[[${ClaimDateStatus.sep}]]', '[[${ClaimDateStatus.oct}]]', '[[${ClaimDateStatus.nov}]]', '[[${ClaimDateStatus.dec}]]' 
+        	  ],
 	          backgroundColor: [
 	            'rgba(0, 204, 0, 0.5)',    // 정상
 	            'rgba(255, 159, 64, 0.5)', // 점검
