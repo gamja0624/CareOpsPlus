@@ -19,7 +19,8 @@
 		
 			/* 기본 세팅 */
 			.title { width: 700px; height: 40px; margin-bottom: 30px; }
-			.sub-title { font-size: 25px; }
+			.sub-title { font-size: 30px; }
+			.today { font-size: 20px; }
 			.status { text-align: right; margin: 10px 0 40px 0; }
 			.icon-next { width: 30px; margin-left: 10px; }
 		
@@ -37,7 +38,7 @@
 		 	.box-sub { display: flex; align-items: center; font-size: 35px; font-weight: 900;  }
 		 	
 		 	/* 의료기기 상태 현황 */
-		 	.medical-table { padding: 20px; margin-top: 70px; width: 700px; height: 500px; border: 3px solid #13254C; border-radius: 10px; }
+		 	.medical-table { padding: 20px; margin-top: 70px; width: 700px; height: 515px; border: 3px solid #13254C; border-radius: 10px; }
 		 	
 		 	/* 캘린더 */
 		 	.calendar { 
@@ -49,11 +50,35 @@
 				border-radius: 10px; 
 				background-color: #13254C;
 			}
+			
 		 	/* 내 민원 */
-		 	.claim-content { padding: 20px; margin-bottom: 15px; width: 500px; height: 95px; border: 3px solid #13254C; border-radius: 10px; }
 		 	.claim-add { display: flex; width: 500px; }
 		 	.claim-add-next { margin-left: auto; margin-bottom: 5px; }
-		 	
+		 	.claim-content { 
+		 		display: flex;
+		 		padding: 20px; 
+		 		margin-bottom: 15px; 
+		 		width: 500px; 
+		 		height: 100px; 
+		 		background-color: #13254C; 
+		 		border: 3px solid #13254C; 
+		 		border-radius: 10px; 
+		 		color: white;
+	 		}
+	 		.claim-content-info { padding: 5px auto; height: 60px; margin-right: 20px; }
+	 		.claim-content-title { font-size: 25px; margin-bottom: 5px; }
+	 		.claim-content-detail { font-size: 20px; }
+	 		.claim-content-btn { 
+	 			margin-left: auto;
+	 			width: 100px;
+	 			border-radius: 40px; 
+	 			border: 2px solid white; 
+	 			font-size: 18px;
+	 			/* margin: 0 auto; */
+	 			font-weight: 600;
+	 			color: #13254C;
+	 			background-color: white;
+ 			}
 		</style>
 	</head>
 
@@ -128,14 +153,27 @@
 					</section>
 				</div>
 				
-				<!-- 내가 쓴 민원 (최신순 3가지 ) -->
+				<!-- 민원 -->
 				<div class="claim">
 					<div class="claim-add">
 						<a href="" class="claim-add-next">더보기</a>
 					</div>
-		 			<div class="claim-content">a</div>
-		 			<div class="claim-content">a</div>
-		 			<div class="claim-content">a</div>
+					<th:block th:each="claim : ${ ClaimList }">
+			 			<div class="claim-content">
+			 				<div class="claim-content-info">
+				 				<p class="claim-content-title">의료기기 -> 수정</p>
+				 				<p class="claim-content-detail">간호 부서 의료기기 수정 부탁드립니다. 담 ...</p>
+			 				</div>
+			 				<button class="btn claim-content-btn">접수 대기</button>
+			 			</div>
+					</th:block>
+		 			<!-- <div class="claim-content">
+		 				<div class="claim-content-info">
+			 				<p class="claim-content-title">안전 관리</p>
+			 				<p class="claim-content-detail">응급실 앞에 환자 난동으로 소화전 파손 되었...</p>
+		 				</div>
+		 				<button class="btn claim-content-btn">접수 완료</button>
+		 			</div> -->
 				</div>
 			</div>
 		</div>

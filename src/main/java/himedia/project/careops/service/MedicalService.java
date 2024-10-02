@@ -43,7 +43,7 @@ public class MedicalService {
 	// [목록 + 페이지네이션]
 	public Page<ListMedicalDevicesDTO> findByMedicalDevices(Pageable pageable) {
 		
-		pageable = PageRequest.of(pageable.getPageNumber() <= 1 ? 0 : pageable.getPageNumber() - 1,
+		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
                 Sort.by("lmdMinorCateCode").ascending());
 		
@@ -100,8 +100,6 @@ public class MedicalService {
 		Integer old = 0;
 		Integer expire = 0;
 		
-		System.out.println(medicalStatusList);
-		
 		// 전체 의료기기
 		List<ListMedicalDevices> medicalList = medicalRepository.findAll();
 		
@@ -124,8 +122,6 @@ public class MedicalService {
 			medicalStatusList.put("old", old);
 			medicalStatusList.put("expire", expire);
 		}
-		
-		System.out.println(medicalStatusList);
 		
 		return medicalStatusList;
 	}

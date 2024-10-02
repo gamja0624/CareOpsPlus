@@ -103,4 +103,14 @@ public class ClaimService {
 	}
 	// 부서 내 민원 목록 조회 ( 페이지 반환 )
 	
+	// 작성자 : 진혜정
+	// 내 민원 목록 리스트로 반환
+	public List<Claim> findByMyClaim(String managerName) {
+		
+		return claimRepository.findAll()
+				.stream() 
+				.filter(m -> m.getClaimManagerName().equals(managerName))
+				.collect(Collectors.toList());     
+	}
+	
 }
