@@ -1,13 +1,12 @@
 package himedia.project.careops.controller.admin;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
-
 /**
  * @author 이홍준 
  * @editDate 2024-09-29 ~
  */
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,16 +16,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.DailyManagementReportDTO;
-import himedia.project.careops.entity.DailyManagementReport;
 import himedia.project.careops.service.DailyReportService;
 import jakarta.servlet.http.HttpSession;
 
@@ -83,7 +79,7 @@ public class AdminDailyReportController {
 	
 	// 일일관리 보고서 수정 후 상세 페이지 이동
 	@PostMapping("daily-report-detail/{dmrNo}")
-	public String edit(@PathVariable int dmrNo, DailyManagementReportDTO editReport,  Model model) {
+	public String edit(@PathVariable int dmrNo, DailyManagementReportDTO editReport, HttpSession session,  Model model) {
 		
 		log.info("모델로 넘어온 모델 {}", editReport);
 		dailyReportService.editReportDetail(dmrNo, editReport);
@@ -111,7 +107,7 @@ public class AdminDailyReportController {
 		String adminid = (String)session.getAttribute("userId");
 		String adminName = (String)session.getAttribute("userName");
 		String adminDeptNo = (String)session.getAttribute("deptNo");
-		String adminDeptName = (String)session.getAttribute("departmentName");
+		String adminDeptName = (String)session.getAttribute("department");
 		
 		
 		log.info("제출된 리포트 =={}", newReport);
