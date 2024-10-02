@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymleaf.org">
+	<head>
+		<style type="text/css">
+			/* 로고 */
+			.logo { margin: 10px 0; }
+			
+			/* 메뉴 */	
+			.hr { margin: 16px 0; background-color: white; height: 1px; }
+			.side-bar { width: 280px; background-color: #13254C; display: flex; }  
+			.nav-color { color: white; }
+			.nav-item { margin: 10px 0; }
+			
+			/* 내 정보 */
+			.mypage-icon { background-color: white; }
+			.mypage { margin: 0 auto; }
+			.dropup .dropdown-toggle::after { color: white; }
+		</style>
+	</head>
+
+	<body>
+		<div class="side-bar">
+			<div class="d-flex flex-column flex-shrink-0 p-3">
+		    <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+		    	<img th:src="@{/img/logo.png}" class="logo" alt="사이트 로고" width="248">
+		    </a>
+		    <div class="hr"></div>
+		    <ul class="nav nav-pills flex-column mb-auto">
+		      <li class="nav-item">
+		        <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="nav-link active" aria-current="page">담당자 관리</a>
+		      </li>
+		      <li class="nav-item">
+		        <a th:href="@{'/' + ${session.userType} + '/medical-list'}" class="nav-link nav-color">의료기기 관리</a>
+		      </li>
+		      <li class="nav-item">
+		        <a th:href="@{'/' + ${session.userType} + '/safety-list'}" class="nav-link nav-color">안전 관리</a>
+		      </li>
+		      <li class="nav-item">
+		        <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="nav-link nav-color">시설 예약 시스템</a>
+		      </li>
+		      <li class="nav-item">
+		        <a th:href="@{'/' + ${session.userType} + '/daily-report-list'}" class="nav-link nav-color">일일 관리 보고서</a>
+		      </li>
+		      <li class="nav-item">
+		        <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="nav-link nav-color">민원 관리</a>
+		      </li>
+		    </ul>
+		    <div class="hr"></div>
+		    <div class="mypage dropup">
+		      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		        <img th:src="@{/img/hospital-icon.png}" alt="사용자 로고" width="45" height="45" class="rounded-circle me-2 mypage-icon">
+		        <span class="nav-color" th:text="${ session.userName != null ? session.userName + '님' : '사용자님' }"></span>
+		      </a>
+		      <ul class="dropdown-menu text-small shadow">
+		        <li th:if="${session.userType} == 'admin'"  ><a class="dropdown-item" th:href="@{/admin/my-report}" >내 보고서</a></li> 
+		        <li th:if="${session.userType} == 'manager'" ><a class="dropdown-item" th:href="@{/}">예약 목록</a></li>
+		        <li><hr class="dropdown-divider"></li>
+		        <li><a class="dropdown-item" th:href="@{/mypage}">내 정보</a></li>
+		        <li><a class="dropdown-item" th:href="@{/mypage-change-pw}">비밀번호 변경</a></li>
+		        <li><hr class="dropdown-divider"></li>
+		        <li><a class="dropdown-item" th:href="@{/logout}">로그아웃</a></li>
+		      </ul>
+		    </div>
+		  </div>
+		</div>
+	</body>
+</html>
