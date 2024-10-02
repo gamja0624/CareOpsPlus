@@ -10,8 +10,8 @@
 		
 		<style type="text/css">
 			.manager-claim-list {
-			    width: 1280px;
-			    text-align: center;
+		    width: 1280px;
+		    text-align: center;
 				margin: 10px  auto;
 			}
 			.manager-claim-list tr {
@@ -19,10 +19,10 @@
 				line-height: 30px;
 			}
 			.th-style{
-			    border-bottom : 2px solid #000;
+		    border-bottom : 2px solid #000;
 			}
 			.td-style {
-			    border-bottom : 1px solid #000;
+		    border-bottom : 1px solid #000;
 			}
 			.status-button {
 				border-color: #000;
@@ -33,6 +33,15 @@
 				color: #000;
 				background-color: #FFF;
 				
+			}
+			.complete-button {
+				border-color: #14254c;
+				border-radius: 50px;
+				width: 100px;
+				height: 24px;
+				line-height: 20px;
+				color: #FFF;
+				background-color: #14254c;
 			}
 			.button-cover {
 				width: 1200px;
@@ -67,35 +76,71 @@
 			<!-- section -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title"> xx 부서 민원 목록</h1>
+				<h1 class="title">부서 민원 목록</h1>
 				<div class="layout-table">
 					<table class="manager-claim-list">
 						<thead>
-					    	<tr class="th-style">
-					        	<th>민원 번호</th>
-					        	<th>민원 제목</th>
-					        	<th>담당자</th>
-					        	<th>민원 일자</th>
-					        	<th>접수승인</th>
-					        	<th>답변 처리</th>
-					    	</tr>
+					  	<tr class="th-style">
+					    	<th>민원 번호</th>
+					    	<th>민원 제목</th>
+					    	<th>담당자</th>
+					    	<th>민원 일자</th>
+					    	<th>접수승인</th>
+					    	<th>답변 처리</th>
+					  	</tr>
 						</thead>						
 						<tbody>
-						    <tr class="td-style">
-						        <td>1000321</td>
-						        <td>
-											<a href="/manager/claim/claim-detail">1층 진료부서 응급의학과 기기 수리요청 드립니다.</a>
-										</td>
-						        <td>홍길동</td>
-						        <td>2024.09.09</td>
-						        <td><button class="status-button" disabled>미승인</button></td>
-						        <td><button class="status-button" disabled>대기</button></td>
-						    </tr>
+					    <tr th:each="claim : ${claim}" class="td-style">
+					      <td th:text="${claim.claimNo}"></td>
+								<td class="td-title">
+									<a th:text="${claim.claimTitle}" th:href="@{./claim-detail/{claimNo}(claimNo=${claim.claimNo})}"></a>
+								</td>
+					      <td th:text="${claim.claimManagerName}"></td>
+					      <td th:text="${claim.claimDate}">
+								</td>
+								<td>
+									<button th:text="${claim.claimApprove ? '승인' : '미승인'}" th:class="${claim.claimApprove} ? 'complete-button' : 'status-button'" disabled></button>
+								</td>
+					      <td><button th:text="${claim.claimComplete ? '완료' : '대기'}" th:class="${claim.claimComplete} ? 'complete-button' : 'status-button'" disabled></button></td>
+					    </tr>
 						</tbody>
-						
 					</table>
 					<div class="button-cover">
-						<button type="button" onclick="location.href='claim-application'">민원 신청</button>
+						<button type="button" onclick="location.href='claim-application'" >민원 신청</button>
+					</div>
+					
+					<!-- 페이지네이션 -->
+					<div id="paging">
+						<nav aria-label="Page navigation">
+						  <ul class="pagination">
+						    <li class="page-item">
+						      <a class="page-link" th:href="@{./claim-list?page=1}" aria-label="Previous">
+						        <span aria-hidden="true">&#171;</span>
+						      </a>
+						    </li>
+						    
+						    <li class="page-item">
+						    	<a class="page-link" th:href="@{./claim-list?page=} + @{${paging.currentPage - 1}}">&#60;</a>
+					    	</li>
+						    
+						    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+							    <li class="page-item">
+							    	<a class="page-link" th:href="@{./claim-list?page=} + @{${page}}"
+							    			th:text="${page}" th:disabled="${ paging.currentPage eq page }"></a>
+						    	</li>
+						    </th:block>
+						    
+						    <li class="page-item">
+						    	<a class="page-link" th:href="@{./claim-list?page=} + @{${paging.currentPage + 1}}">&#62;</a>
+					    	</li>
+						    
+						    <li class="page-item">
+						      <a class="page-link" th:href="@{./claim-list?page=} + @{${paging.endPage}}" aria-label="Next">
+						        <span aria-hidden="true">&#187;</span>
+						      </a>
+						    </li>
+						  </ul>
+						</nav>
 					</div>
 				</div>
 			</div>
