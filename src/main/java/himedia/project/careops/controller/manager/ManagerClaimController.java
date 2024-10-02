@@ -16,7 +16,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import himedia.project.careops.common.Pagenation;
@@ -111,6 +113,13 @@ public class ManagerClaimController {
 		model.addAttribute("paging", paging);
 		
 		return "/manager/claim/claim-edit";
+	}
+	
+	@PostMapping("/claim-edit-complete")
+	public String managerClaimEditSave(@ModelAttribute ClaimDTO claimDTO) {
+		log.info("민원 수정 컨트롤러 실행");
+		claimService.updateClaim(claimDTO);
+		return "redirect:./claim-list";
 	}
 	
 	// [ 민원 신청 ] ==========================================================================

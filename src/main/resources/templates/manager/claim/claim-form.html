@@ -22,74 +22,32 @@
 			  color: #FFF;     
 			  font-size: 16px;
 			}
-			.mr-st {
-			  margin-left: 25px;
-			}
-			/*   첨 부 파 일  */
-			.filebox { 
-				display: flex; 
-				gap: 15px; 
-				margin : 10px 0;
-			}
-		 	.filebox input { 
-				border: 1px solid #14254C; 
-				border-radius: 5px; 
-				font-size: 16px; 
-			}
-		 	.filebox .upload-name { 
-				width: 1200px; 
-				height: 35px; 
-				padding: 4.5px 15px;
-			 }
-		 	.filebox .file { 
-				position: absolute;
-			 	width: 1px; 
-			 	height: 1px; 
-			 	margin: -1px; 
-			 	padding: 0; 
-			 	overflow: hidden; 
-			 	border: 0; 
-			 	white-space:
-			  nowrap; clip: rect(0, 0, 0, 0); 
-			}
-		 	.filebox .upload-button { 
-				display: inline-flex; 
-				align-items:center; 
-				justify-content: center;  
-				cursor: pointer; 
-				line-height: 1; 
-				width: 140px;
-			}
 			.claim-form {
 				width: 1180px;
 				margin: 25px auto 0 auto;
 			}
-			.claim-submit-button:hover {
-			  border: 1px solid #14254C;
-			  background-color: #FFF;
-			  color: #14254C; 
-			}
-			/*  제목  */
-			.claim-title{
-			  margin: 18px auto;
-			  font-weight: 600;
-			  font-size: 18px;
+
+			.claim-box {
+			  display: flex;
 			  width: 1200px;
+				gap: 20px;
+				margin-bottom: 10px;
 			}
+			.claim-title {
+				font-size: 21px;
+			  font-weight: 600;
+				width: 120px;
+			}
+			/*  민원 제목  */
 			.claim-input-wide {
-			  width: 1080px;
+			  width: 1040px;
 			  height: 35px;
 				line-height: 1;
 			  border: 1px solid #14254C;
 			  border-radius: 5px;
-			  margin-left: 30px;
+				padding: 10px;
 			}
 			/*  카테고리  */
-			.claim-categories {
-			  display: flex;
-			  width: 1200px;
-			  margin: 0 auto;
-			}
 			.category-label {
 			  width: 120px;
 			  height: 35px;
@@ -101,33 +59,58 @@
 			  border-radius: 5px;
 			  width: 240px;
 				height: 35px;
-			  margin-left: 15px;
+				padding: 8px;
 			}
+			/*   첨 부 파 일  */
+			.filebox { display: flex; gap: 20px; margin-bottom: 10px; }
+			.filebox input { border: 1px solid #14254C; border-radius: 5px; }
+			.filebox .upload-name { width: 900px; height: 35px; padding: 4.5px 15px; pointer-events: none; }
+			.filebox .file { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; border: 0; white-space: nowrap; clip: rect(0, 0, 0, 0); }
+			.filebox .upload-button { 
+				display: inline-flex; 
+				align-items:center; 
+				justify-content: center;  
+				padding: 4.5px 15px; 
+			  border-radius: 10px; 
+				border: 1px solid #14254C; 
+				background-color: #14254C; 
+				color: #fff; 
+				cursor: pointer; 
+				line-height: 1; 
+				width: 120px;
+			}
+			.filebox .upload-button:hover, .filebox .upload-button:focus { background-color: #fff; color: #14254C; }
 			/*  내 용  */
 			.claim-content {
 			  width: 1200px;
 			  margin: 0 auto ;
 			}
 			.claim-content-box {
-			  width: 1188px;
+			  width: 1180px;
 			  height: 400px;
-			  margin: 0 auto 5px auto;
 			  border: 1px solid #14254C;
 			  border-radius: 5px;
+				padding: 15px;
+				text-align: justify;
+				line-height: 25px;
 			}
 			/*  민원 신청 버튼   */
 			.clm-sb-btn-cover {
 			  width: 1300px;
-			  margin: 10px auto;
+			  margin: 20px auto;
 			  text-align: center;
 			}
 			.claim-submit-button {
 			  width: 140px;
 			  height: 40px;
 			}
-			
+			.claim-submit-button:hover {
+			  border: 1px solid #14254C;
+			  background-color: #FFF;
+			  color: #14254C; 
+			}
 			/* 모달창 */
-			.btn-open-modal { width: 120px; height: 30px; margin: 0 15px 0 25px; }
+			.btn-open-modal { width: 120px; height: 35px; }
 			.modal{ position:absolute; display:none; justify-content: center; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.4); }
 		  .modal-body{
 		    position:absolute;
@@ -216,14 +199,14 @@
 			<!-- section -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title">민원 신청</h1>
+				<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 민원 신청 </h1>
 				<div class="layout-table">
 					<form action="" class="claim-form">
-					  <div class="claim-title">
-					    <label for="">민 원 제 목</label>
+					  <div class="claim-box">
+					    <label for="claim-title" class="claim-title">민&nbsp;&nbsp; 원&nbsp;&nbsp;&nbsp; 제&nbsp;&nbsp; 목</label>
 					    <input type="text" class="claim-input-wide ">
 					  </div>
-					  <div class="claim-categories">
+					  <div class="claim-box">
 					    <label for="claim-categories" class="btn-basic category-label ">대 분 류</label>
 							<select name="" id="" class="category-input">
 								<option value="disabled" disabled selected>선택하기</option>
@@ -243,9 +226,10 @@
 							</select>
 						</div>
 						<div class="filebox">
-						  <label for="file_01" class="btn-basic upload-button">첨 부 파 일</label> 
+							<label class="claim-title">첨&nbsp;&nbsp; 부&nbsp;&nbsp;&nbsp; 파&nbsp;&nbsp; 일</label>
 						  <input class="upload-name" type="text" readonly>
 						  <input type="file" id="file_01" class="file" title="파일 업로드">
+						  <label for="file_01" class="btn-basic upload-button">파 일 선 택</label> 
 						</div>
 				  	<div class="claim-content">
 				    	<textarea class="claim-content-box" name="" id=""></textarea>
@@ -318,22 +302,20 @@
 				
 				// 파일박스 ================================================================ 
 				const fileInput = document.querySelector('.filebox .file');
-				    const nameInput = document.querySelector('.filebox .upload-name');
+				const nameInput = document.querySelector('.filebox .upload-name');
 
-				    fileInput.addEventListener('change', function(e){
-				  
-				      const input = e.target.closest('.file');
-				  
-				      if (!input) return;  
+				fileInput.addEventListener('change', function(e){
 
-				      let fileName = input.value.split('/').pop().split('\\').pop();
-				      nameInput.value = fileName;
+				  const input = e.target.closest('.file');
 
-				    });
+				  if (!input) return;  
+
+				  let fileName = input.value.split('/').pop().split('\\').pop();
+				  nameInput.value = fileName;
+
+				});
 		</script>
 		
 		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 	</body>
 </html>
-message.txt
-10KB
