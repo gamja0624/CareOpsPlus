@@ -67,6 +67,11 @@ public class AdminMedicalController {
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
 		model.addAttribute("paging", paging);
 		
+		//페이지네이션 관련 토탈 페이지 수 BE -> FE
+		log.info("페이지네이션{}", medicalDevicesList.getTotalPages());	// 총 페이지 수 확인
+		int totalPages = medicalDevicesList.getTotalPages();			// 총 페이지 수 계산
+		model.addAttribute("totalPages", totalPages);					// 총 페이지 수 View로 전달
+		
 		return "manager/medical/medical-list";
 	}
 	

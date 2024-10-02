@@ -22,10 +22,6 @@
 			.btn-css { width: 80px; border-radius: 50px; }
 			.btn-add { margin-left: auto; background-color: #13254C; color: white; }
 			.btn-add:hover { border: 1px solid #13254C; }
-			
-			/* 페이지네이션 */
-			.page-disabled{ pointer-events: none;}
-			
 		</style>
 	</head>
 
@@ -112,18 +108,14 @@
 					  <ul class="pagination">
 					  	<!-- 맨 앞으로 이동 -->
 					    <li class="page-item">
-					      <a class="page-link" th:if="${paging.startPage} != ${paging.currentPage}" th:href="@{./medical-list?page=1}" aria-label="Previous">
-					        <span aria-hidden="true">&#171;</span>
-					      </a>
-					      <a class="page-link page-disabled" th:unless="${paging.startPage} != ${paging.currentPage}" aria-label="Previous">
+					      <a class="page-link" th:href="@{./medical-list?page=1}" aria-label="Previous">
 					        <span aria-hidden="true">&#171;</span>
 					      </a>
 					    </li>
 					    
 					    <!-- 이전 페이지 이동 -->
 					    <li class="page-item">
-					    	<a class="page-link" th:if="${paging.startPage} != ${paging.currentPage}" th:href="@{./medical-list?page=} + @{${paging.currentPage - 1}}">&#60;</a>
-					    	<a class="page-link page-disabled" th:unless="${paging.startPage} != ${paging.currentPage}" >&#60;</a>
+					    	<a class="page-link" th:href="@{./medical-list(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
 				    	</li>
 					    
 					    <!-- 숫자 -->
@@ -136,13 +128,12 @@
 					    
 					    <!-- 다음 페이지 이동 -->
 					    <li class="page-item">
-					    	<a class="page-link" th:href="@{./medical-list?page=} + @{${paging.currentPage + 1}}">&#62;</a>
-					    	<!-- <a class="page-link page-disabled" th:unless="${paging.endPage} != ${paging.currentPage}" >&#62;</a> -->
+					    	<a class="page-link" th:href="@{./medical-list(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}">&#62;</a>
 				    	</li>
 					    
 					    <!-- 맨 끝으로 이동 -->
 					    <li class="page-item">
-					      <a class="page-link" th:href="@{./medical-list?page=} + @{${paging.endPage}}" aria-label="Next">
+					      <a class="page-link" th:href="@{./medical-list?page={totalPages}(totalPages = ${totalPages})}" aria-label="Next">
 					        <span aria-hidden="true">&#187;</span>
 					      </a>
 					      <!-- <a class="page-link page-disabled" th:unless="${paging.endPage} != ${paging.currentPage}" aria-label="Next">
