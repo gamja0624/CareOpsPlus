@@ -139,9 +139,11 @@ public class LoginService {
     // @param deptNo 부서 번호
     private void setLoginResult(Map<String, Object> result, String userType, String userName, String departmentName, String deptNo) {
         result.put("success", true); // 로그인 성공 상태
-        result.put("deptNo", deptNo); // 부서 번호
         result.put("userType", userType); // 사용자 유형
+        result.put("deptNo", deptNo); // 부서 번호
         result.put("departmentName", departmentName); // 부서 이름
         result.put("userName", userName); // 사용자 이름
+        // redirectUrl 추가
+        result.put("redirectUrl", "/" + userType + "/dash-board");
     }
 }

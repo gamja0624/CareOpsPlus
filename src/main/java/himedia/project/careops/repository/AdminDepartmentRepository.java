@@ -18,6 +18,8 @@ import himedia.project.careops.entity.AdminDepartment;
 @Repository
 public interface AdminDepartmentRepository extends JpaRepository<AdminDepartment, String> {
 	
+	// 노태윤
+	// admin 부서명찾는 메서드
     Optional<AdminDepartment> findByAdminDeptNo(String adminDeptNo);
     
 }

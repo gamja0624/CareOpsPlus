@@ -62,7 +62,22 @@ public class DashBoardController {
     }
     
     @GetMapping("/admin/dash-board")
-    public String adminDashBoard(HttpSession session) {
+    public String adminDashBoard(HttpSession session, Model model) {
+    	
+    	// session 받아온 부서 번호, 이름
+    	String departmentNo = (String) session.getAttribute("deptNo");
+    	String department = (String) session.getAttribute("department");
+    	String userName = (String) session.getAttribute("userName");
+
+    	// [서비스 미리보기]
+    	// 담당 부서 민원 개수 반환
+    	
+    	// 담당 부서 의료기기 개수 반환
+    	
+    	// [민원 현황]
+    	List<Claim> ClaimList = claimService.findByMyClaim(userName);
+    	model.addAttribute("ClaimList", ClaimList);
+    	
     	return "admin/dash-board";
     }
     
