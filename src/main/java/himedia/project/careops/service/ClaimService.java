@@ -62,6 +62,7 @@ public class ClaimService {
 	}
 	
 	// [ 작업 관리자 ] =========================================================================
+	// 작성자 : 최은지
 	// 민원 전체 조회 
 	public Page<ClaimDTO> allClaim(Pageable page) {
 		
@@ -74,6 +75,7 @@ public class ClaimService {
 		return claimList.map(claim -> modelMapper.map(claim, ClaimDTO.class));
 	}
 	
+	// 작성자 : 최은지
 	// 민원 상세 조회 
 	public ClaimDTO findByClaimNo(Integer claimNo) {
 		
@@ -82,6 +84,7 @@ public class ClaimService {
 		return modelMapper.map(claim, ClaimDTO.class);	
 	}
 	
+	// 작성자 : 최은지
 	// 민원 승인
 	public void ApprveClaim(ClaimDTO claimDTO) {
 		log.info("민원승인 서비스 실행");
@@ -200,6 +203,7 @@ public class ClaimService {
 
 	
 	// [ 부서 담당자 ] =========================================================================
+	// 작성자 : 최은지
 	// 민원 대분류 전체 조회 
 	public List<ClaimCategoryDTO> findAllCategory() {
 		
@@ -211,6 +215,7 @@ public class ClaimService {
                    .map(category -> modelMapper.map(category, ClaimCategoryDTO.class))
                    .collect(Collectors.toList());
 	}
+	// 작성자 : 최은지
 	// 민원 소분류 전체 조회 
 	public Page<ClaimSubCategoryDTO> findAllSubCategory(Pageable page) {
 		log.info("findAllSubCategory 실행");
@@ -224,6 +229,7 @@ public class ClaimService {
 		return claimsubCategory.map(subCategory -> modelMapper.map(subCategory, ClaimSubCategoryDTO.class));
 	}
 	
+	// 작성자 : 최은지
 	// 부서별 민원 조회 ( 삭제 할 수도 있음 )
 	public List<Claim> findByManagerDeptClaim(Integer managerDeptNo) {
 		log.info("managerDeptNo : {}", managerDeptNo);
@@ -234,9 +240,10 @@ public class ClaimService {
 				.collect(Collectors.toList());
 	}
 	
+	// 작성자 : 최은지
 	// 부서 내 민원 목록 조회 ( 페이지 반환 )
-	 public Page<ClaimDTO> ManagerDeptClaim(Integer managerDeptNo, Pageable pageable) {
-        log.info("managerDeptNo : {}", managerDeptNo);
+	public Page<ClaimDTO> ManagerDeptClaim(Integer managerDeptNo, Pageable pageable) {
+		log.info("managerDeptNo : {}", managerDeptNo);
 	        
         pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
                                    pageable.getPageSize(),
@@ -257,6 +264,27 @@ public class ClaimService {
     							pageable, 
     							allClaimList.getTotalElements());
     }
+	
+	// 작성자 : 최은지 
+	// 민원 수정
+	public void updateClaim(ClaimDTO claimDTO) {
+		
+		Claim claim = claimRepository.findById(claimDTO.getClaimNo()).orElseThrow(IllegalArgumentException::new);
+		
+		// 수정 가능한 정보 : (1) 제목 , (2) 대분류, (3) 소분류, (4) 요청 구분, (5) 첨부파일, (6) 내용
+		claim.setClaimTitle(claimDTO.getClaimTitle());                     // 제목
+		claim.setClaimCategoryNo(claimDTO.getClaimCategoryNo());           // 대분류 번호   
+		claim.setClaimCategoryName(claimDTO.getClaimCategoryName());       // 대분류 이름
+		claim.setClaimSubCategoryNO(claimDTO.getClaimSubCategoryNO());     // 소분류 번호
+		claim.setClaimSubCategoryName(claimDTO.getClaimSubCategoryName()); // 소분류 이름
+		claim.setClaimCategoryStatus(claimDTO.getClaimCategoryStatus());   // 요청 구분
+		// claim.setClaimAttachment(claimDTO.getClaimAttachment());        // 첨부 파일 ( 이미지 등록 구현 후 수정 )
+		claim.setClaimContent(claimDTO.getClaimContent());                 // 내용
+		
+		// 변경 사항 저장
+		claimRepository.save(claim);         
+	}
+ 
 	// 작성자 : 진혜정
 	// 내 민원 목록 리스트로 반환
 	public List<Claim> findByMyClaim(String managerName) {

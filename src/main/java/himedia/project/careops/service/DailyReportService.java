@@ -54,17 +54,19 @@ public class DailyReportService {
 		return modelMapper.map(resultReport, DailyManagementReportDTO.class);
 	}
 
-	// [수정]
+	// [수정] 수정목록 : adminId, adminName, dmrReportDetail, DmrIssue
 	@Transactional
-	public void editReportDetail(int dmrNo, DailyManagementReportDTO editReport) {
+	public void editReportDetail(int dmrNo, String adminId, String adminName, DailyManagementReportDTO editReport) {
 		
 		DailyManagementReport beforeReport = dailyManagementReportRepository.findById(dmrNo).get();
 		
 		beforeReport.setDmrReportDetail(editReport.getDmrReportDetail());
+		beforeReport.setAdminId(adminId);
+		beforeReport.setAdminName(adminName);
 		beforeReport.setDmrIssue(editReport.getDmrIssue());
 	}
 	
-	// [등록]
+	// [등록] 
 	@Transactional
 	public void reportRegistation(String adminid, String adminName, String adminDeptNo, String adminDeptName, DailyManagementReportDTO newReport) {
 		

@@ -11,10 +11,12 @@
 		<style type="text/css">
           .layout-table {height: 670px;}
           /* 상세보기 박스 */
+          .table { display: none; }
           .regist-report { margin: 20px auto; width: 1200px; }
           .detail { display: inline-block; margin-top: 15px; margin-bottom: 5px; font-size: 20px; font-weight: 600; }
           .intitle { margin-bottom:15px ; font-size: 30px; font-weight: 600; }
-          .detail-block { width: 90px; text-align: right; }
+          .detail-block { width: 90px; text-align: justify; }
+          .admin-dept-name { text-align: justify; }
           .report-detail-detail { margin-top: 5px; padding: 10px; width: 1200px; border: 1px solid #13254C; border-radius: 5px; height: 200px; font-weight: lighter; }
           .report-issue-detail { margin-top: 5px; padding: 10px; width: 1200px; border: 1px solid #13254C; border-radius: 5px; height: 80px; font-weight: lighter; }
            
@@ -44,7 +46,7 @@
                       <div class="regist-report">
                           <div class="intitle" >일일 관리 보고서</div>
                           <div>
-                            <label class="detail detail-block admin-dept-name" for="adminDeptName" >부서 :</label>
+                            <label class="detail detail-block admin-dept-name" for="adminDeptName" >부서:</label>
                             <input class="detail" th:value="${session.department}" name="adminDeptName" disabled="disabled" ></input>
                           </div>
                           <div>
