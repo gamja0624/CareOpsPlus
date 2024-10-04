@@ -23,4 +23,6 @@ public interface DailyManagementReportRepository extends JpaRepository<DailyMana
 	// adminName 조회 후 Page
 	Page<DailyManagementReport> findByAdminName(String adminName, Pageable pageable);
 
+	//Page<DailyManagementReport> findAllById(Integer value, Pageable pageable);
+
 }

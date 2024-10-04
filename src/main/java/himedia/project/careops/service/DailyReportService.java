@@ -37,7 +37,8 @@ public class DailyReportService {
 		
 		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() -1,
 				pageable.getPageSize(),
-				Sort.by("dmrNo").descending());
+				Sort.by("dmrNo").descending()
+				);
 		
 		Page<DailyManagementReport> allList = dailyManagementReportRepository.findAll(pageable);
 		
@@ -83,7 +84,7 @@ public class DailyReportService {
 	        pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
 	        pageable.getPageSize(),
 	        Sort.by("dmrNo").descending()
-	    );
+	        );
 
 	    // Pageable을 사용하여 데이터를 가져옴
 	    Page<DailyManagementReport> allList = dailyManagementReportRepository.findByAdminName(adminName ,pageable);
@@ -91,4 +92,24 @@ public class DailyReportService {
 	    return allList.map(list -> modelMapper.map(list, DailyManagementReportDTO.class));
 	}
 	// 등록 수정 삭제 시 @Transactional 설정 필요
+
+	// 목록뷰 검색(카테고리 : dmrNo, adminDeptName, adminName, dmrDate)
+	public Page<DailyManagementReportDTO> reportSearch(String filter, String value, Pageable pageable) {
+		
+	    pageable = PageRequest.of(
+		        pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+		        pageable.getPageSize(),
+		        Sort.by("dmrNo").descending()
+		        );
+		
+	    switch (value) {
+		case "dmrNo": {
+			Integer searchId = Integer.parseInt(value);
+			Page<DailyManagementReport> findById = dailyManagementReportRepository.findAllById(searchId, pageable);
+			return findById.map(list -> modelMapper.map(list, DailyManagementReportDTO.class));
+		}
+		default:
+			throw new IllegalArgumentException("해당 검색어는 존재하지 않습니다. 검색어 : " + value);
+		}
+	}
 }

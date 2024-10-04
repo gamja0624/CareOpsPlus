@@ -108,6 +108,20 @@
                     </nav>
                   </div>
                 </div>
+<!--                 <div class="search-box">
+                  <form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/daily-report-list/search' }" method="get">
+                    <label class="report-category" for="column"></label> 
+                    <select id="filter" name="filter">
+                      <option value="dmrNo">보고서 번호</option>
+                      <option value="adminDeptName">부서</option>
+                      <option value="adminName">작성자</option>
+                      <option value="dmrDate">작성일자</option>
+                    </select> 
+                    <label for="value"></label> 
+                    <input class="input" type="search" name="value" id="search"> 
+                    <input class="input" type="submit" id="search-submit" value="검색">
+                  </form>
+                </div> -->
                 <div class="btn-line" >
                   <div class="btn-regist">
                       <button class="btn btn-regist" th:onclick="|location.href='@{daily-report-regist}'|"  type="submit" >보고서 등록</button>
