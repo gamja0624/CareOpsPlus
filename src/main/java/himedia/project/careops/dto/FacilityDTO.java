@@ -20,30 +20,21 @@ public class FacilityDTO {
 	private int facilityFloor;					// 층별
 	private String facilityName;				// 시설물 이름
 	
-	private int facilityReservationNo;			// 예약 번호
+	private Integer facilityReservationNo;		// 예약 번호
 	private boolean facilityReservationStatus;	// 예약 상태
 	private Date facilityReservationDate;		// 예약 날짜
 	
-	private int facilityManagerDeptNo;			// 담당자 부서 번호
+	private Integer facilityManagerDeptNo;		// 담당자 부서 번호
 	private String facilityManagerDeptName;		// 담당자 부서 이름
 	private String facilityManagerId;			// 담당자 아이디
 	private String facilityManagerName;			// 담당자 이름
 	
 	public FacilityDTO() {}
 	
-	public FacilityDTO(int facilityFloor, String facilityName, int facilityReservationNo, boolean facilityReservationStatus, Date facilityReservationDate,
-			int facilityManagerDeptNo, String facilityManagerDeptName, String facilityManagerId, String facilityManagerName) {
+	public FacilityDTO(int facilityFloor, String facilityName, boolean facilityReservationStatus) {
 		this.facilityFloor = facilityFloor;
 		this.facilityName = facilityName;
-		
-		this.facilityReservationNo = facilityReservationNo;
 		this.facilityReservationStatus = facilityReservationStatus;
-		this.facilityReservationDate = facilityReservationDate;
-		
-		this.facilityManagerDeptNo = facilityManagerDeptNo;
-		this.facilityManagerDeptName = facilityManagerDeptName;
-		this.facilityManagerId = facilityManagerId;
-		this.facilityManagerName = facilityManagerName;
 	}
 	
 	public Integer getFacilityNo() {
@@ -70,11 +61,11 @@ public class FacilityDTO {
 		this.facilityName = facilityName;
 	}
 
-	public int getFacilityReservationNo() {
+	public Integer getFacilityReservationNo() {
 		return facilityReservationNo;
 	}
 
-	public void setFacilityReservationNo(int facilityReservationNo) {
+	public void setFacilityReservationNo(Integer facilityReservationNo) {
 		this.facilityReservationNo = facilityReservationNo;
 	}
 
@@ -94,11 +85,11 @@ public class FacilityDTO {
 		this.facilityReservationDate = facilityReservationDate;
 	}
 
-	public int getFacilityManagerDeptNo() {
+	public Integer getFacilityManagerDeptNo() {
 		return facilityManagerDeptNo;
 	}
 
-	public void setFacilityManagerDeptNo(int facilityManagerDeptNo) {
+	public void setFacilityManagerDeptNo(Integer facilityManagerDeptNo) {
 		this.facilityManagerDeptNo = facilityManagerDeptNo;
 	}
 

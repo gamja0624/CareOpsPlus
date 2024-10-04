@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 시설 예약 시스템</title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			/* 테이블 */
+			.table { text-align: center; vertical-align: inherit; }
+			.table-row { line-height: 40px; }
+			.table-head { font-size: 20px; font-weight: 600; }
+			tr { height: 30px;  border-bottom: 1px solid #d9d9d9; }
+			
+			/* 상세보기 */
+			.data-add { line-height: 40px; vertical-align: middle; }
+			
+			/* 버튼 */
+			.btn-status { display: flex; }
+			.btn-css { width: 80px; border-radius: 50px; }
+			.btn-add { margin-left: auto; background-color: #13254C; color: white; }
+			.btn-add:hover { border: 1px solid #13254C; }
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			<!-- 서비스 미리보기 -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">시설 예약 시스템 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">목록</h1>
+				
+				<table class="table table-hover">
+				  <thead class="table-group">
+				    <tr class="table-row table-head">
+				      <th scope="col">시설 번호</th>
+				      <th scope="col">층 F</th>
+				      <th scope="col">시설 이름</th>
+				      <th scope="col">예약 부서</th>
+				      <th scope="col">부서 담당자</th>
+				      <th scope="col">예약 날짜</th>
+				      <th scope="col">예약 상태</th>
+				    </tr>
+				  </thead>
+				  <tbody class="table-group-se">
+				  	<tr th:each="facility : ${ facilityList }" class="table-row">
+				    	<!-- 시설 번호 -->
+				    	<td th:text="${ facility.facilityNo }"></td>
+				      
+				      <!-- 층 -->
+				      <td th:text="${ facility.facilityFloor }"></td>
+				      
+				      <!-- 시설 이름 -->
+				      <td th:text="${ facility.facilityName }"></td>
+				      
+				      <!-- 예약 부서 -->
+				      <td th:text="${ facility.facilityManagerDeptName == null ? '-' : facility.facilityManagerDeptName }"></td>
+				      
+				      <!-- 부서 담당자 -->
+				      <td th:text="${ facility.facilityManagerName == null ? '-' : facility.facilityManagerName }"></td>
+				      
+				      <!-- 예약 날짜 -->
+				      <td th:text="${ facility.facilityReservationDate == null ? '-' : facility.facilityReservationDate }"></td>
+				      
+				      <!-- 예약 상태 -->
+			      	<td th:switch="${ facility.facilityReservationStatus }">
+			      		<button th:case="true" type="button" class="btn btn-css btn-danger" disabled>사용</button>
+			      		<button th:case="false" type="button" class="btn btn-css btn-success" disabled>미사용</button>
+			      	</td>
+				    </tr>
+				  </tbody>
+				</table>
+				
+				<th:block th:if="${ session.userType == 'manager' }">
+			    <div class="btn-status">
+		        <button th:onclick="'location.href=\'./facility-add\''" class="btn btn-add" type="button">예약 신청</button>
+			    </div>
+				</th:block>
+				
+				<!-- 페이지네이션 -->
+				<div id="paging">
+					<nav aria-label="Page navigation">
+					  <ul class="pagination">
+					  	<!-- 맨 앞으로 이동 -->
+					    <li class="page-item">
+					      <a class="page-link" th:href="@{./facility-list?page=1}" aria-label="Previous">
+					        <span aria-hidden="true">&#171;</span>
+					      </a>
+					    </li>
+					    
+					    <!-- 이전 페이지 이동 -->
+					    <li class="page-item">
+					    	<a class="page-link" th:href="@{./facility-list(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
+				    	</li>
+					    
+					    <!-- 숫자 -->
+					    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+						    <li class="page-item">
+						    	<a class="page-link" th:href="@{./facility-list?page=} + @{${page}}"
+						    			th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''" ></a>
+					    	</li>
+					    </th:block>
+					    
+					    <!-- 다음 페이지 이동 -->
+					    <li class="page-item">
+					    	<a class="page-link" th:href="@{./facility-list(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}">&#62;</a>
+				    	</li>
+					    
+					    <!-- 맨 끝으로 이동 -->
+					    <li class="page-item">
+					      <a class="page-link" th:href="@{./facility-list?page={totalPages}(totalPages = ${totalPages})}" aria-label="Next">
+					        <span aria-hidden="true">&#187;</span>
+					      </a>
+					    </li>
+					  </ul>
+					</nav>
+				</div>
+				
+				<div class="search-box">
+					<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/facility-list/search' }" method="get">
+						<label class="facility-category" for="column"></label> 
+						<select id="filter" name="filter">
+							<option value="facilityFloor">층별</option>
+							<option value="facilityName">시설물 이름</option>
+							<option value="facilityManagerDeptName">예약 부서</option>
+						</select> 
+						<label for="value"></label> 
+						<input class="input" type="search" name="value" id="search"> 
+						<input class="input" type="submit" id="search-submit" value="검색">
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	</body>
+</html>

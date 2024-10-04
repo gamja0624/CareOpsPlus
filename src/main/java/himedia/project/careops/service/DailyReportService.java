@@ -5,11 +5,13 @@ package himedia.project.careops.service;
  * @editDate 2024-09-26 ~ 
  */
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -94,22 +96,28 @@ public class DailyReportService {
 	// 등록 수정 삭제 시 @Transactional 설정 필요
 
 	// 목록뷰 검색(카테고리 : dmrNo, adminDeptName, adminName, dmrDate)
-	public Page<DailyManagementReportDTO> reportSearch(String filter, String value, Pageable pageable) {
+	/*
+	 * public Page<DailyManagementReportDTO> reportSearch(String filter, String
+	 * value, Pageable pageable) {
+	 * 
+	 * pageable = PageRequest.of( pageable.getPageNumber() <= 0 ? 0 :
+	 * pageable.getPageNumber() - 1, pageable.getPageSize(),
+	 * Sort.by("dmrNo").descending() );
+	 * 
+	 * switch (value) { case "dmrNo": { Integer searchId = Integer.parseInt(value);
+	 * Page<DailyManagementReport> findById =
+	 * dailyManagementReportRepository.findAllById(searchId, pageable); return
+	 * findById.map(list -> modelMapper.map(list, DailyManagementReportDTO.class));
+	 * } default: throw new IllegalArgumentException("해당 검색어는 존재하지 않습니다. 검색어 : " +
+	 * value); } }
+	 */
+	
+	// 작성자 : 진혜정
+	// [전체 보고서 List 로 반환]
+	public List<DailyManagementReport> findBydailyReportList() {
 		
-	    pageable = PageRequest.of(
-		        pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
-		        pageable.getPageSize(),
-		        Sort.by("dmrNo").descending()
-		        );
-		
-	    switch (value) {
-		case "dmrNo": {
-			Integer searchId = Integer.parseInt(value);
-			Page<DailyManagementReport> findById = dailyManagementReportRepository.findAllById(searchId, pageable);
-			return findById.map(list -> modelMapper.map(list, DailyManagementReportDTO.class));
-		}
-		default:
-			throw new IllegalArgumentException("해당 검색어는 존재하지 않습니다. 검색어 : " + value);
-		}
+		return dailyManagementReportRepository.findAll()									
+				.stream() 
+				.collect(Collectors.toList());
 	}
 }
