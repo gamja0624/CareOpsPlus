@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 일일관리보고서</title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+          /* 페이지 레이아웃 */
+          .layout-table { height: 680px; text-align: center; }
+          .inner-layout-table { height: 600px; }
+          /* 목록 테이블 */
+          .table { margin: 0 auto; width: 800px;  text-align: center; vertical-align: inherit; }
+          .table-head { font-weight: 600; font-size: 20px; }
+          .table-row { line-height: 35px; border-bottom: 1px solid #d9d9d9;  }
+          .detail-a { cursor: pointer; }
+          .detail-icon { width: 30px; line-height: 30px; vertical-align: middle; }
+          .empty-row { font-size: 25px; font-weight: 600; }
+          
+          /* 페이지네이션 */
+          .pagination { text-align: center; margin: 20px 0; }
+          .pagination a { color: black; float: left; padding: 8px 16px; text-decoration: none; }
+          .pagination a.active { background-color: #4CAF50; color: white; }
+          .pagination a:hover:not(.active) { background-color: #ddd; }
+          
+          /* 검색박스 라인 */
+          .down-side {display: flex; align-items: center;}
+          .down-left-side { margin-left: auto; text-align: right; }
+          .down-right-side { margin-right: auto;}
+          
+          /* 버튼 라인 */
+          .btn-line { text-align: left; width: 300px; margin-left: 50px; }
+          .btn { background-color: #13254C; color: white; }
+          .btn:hover { border: 1px solid #13254C; }
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			
+			<!-- section -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">일일 관리 보고서<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">검색 결과</h1>
+				<div class="layout-table">
+                  <div class="inner-layout-table">
+                    <table class="table table-hover">
+      				  <thead>
+      				    <tr class="table-row table-head" >
+      				      <th scope="col">No.</th>  
+      				      <th scope="col">부서</th>
+      				      <th scope="col">작성자</th>
+      				      <th scope="col">작성일자</th>
+      				      <th scope="col">상세</th>
+      				      <th scope="col"  th:if="${session.userType == 'admin' and (session.department == '안전 관리팀' or session.department == '의료기기 관리팀')}">상태</th>
+      				    </tr>
+      				  </thead>
+                          <tbody>
+                            
+                            <tr class="table-row data-row" th:if="${! reportAllList.isEmpty()}" th:each="drl : ${reportAllList}" >
+                              <td th:text="${drl.dmrNo}" > </td>
+                              <td th:text="${drl.adminDeptName}" ></td>
+                              <td th:text="${drl.adminName}" ></td>
+                              <td th:text="${drl.dmrDate}" ></td>
+                                <td><a th:if="${session.userType != null}" th:href="@{../daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>  
+                              <td><button th:onclick="|location.href='@{../daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit"  th:if="${session.userType} == 'admin' and ${session.department} == ${drl.adminDeptName}" >수 정</button></td>
+                            </tr>
+                            <tr class="table-row data-row empty-row" th:unless="${! reportAllList.isEmpty()}" >
+                              <td th:attr="colspan=${session.userType == 'admin' ? '6' : '5'}">
+                                  결과 없음
+                              </td>
+                            </tr>
+                          </tbody>
+      				</table>
+                    </div>
+                    <!-- 페이지 네이션 -->
+                  <div class="page" > 
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                        <!-- 맨 앞으로 이동 -->
+                        <li class="page-item">
+                          <a class="page-link " th:href="@{./search(filter=${filter}, value=${value}, page=1)}" aria-label="Previous">
+                            <span aria-hidden="true">&#171;</span>
+                          </a>
+                        </li>
+                        
+                        <!-- 이전 페이지 이동 -->
+                        <li class="page-item">
+                         <a class="page-link"  th:href="@{./search(filter=${filter}, value=${value}, page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
+                        </li>
+                        
+                        <!-- 숫자 -->
+                        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}" >
+                          <li class="page-item">
+                            <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${page})}"
+                                th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''" ></a>
+                          </li>
+                        </th:block>
+                        
+                        <!-- 다음 페이지 이동 -->
+                        <li class="page-item" >
+                           <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}" >&#62;</a> 
+                        </li>
+                        
+                        <!-- 맨 끝으로 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${totalPages})}" aria-label="Next">
+                            <span aria-hidden="true">&#187;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+                <div class="down-side">
+                  <div class="down-left-side">
+                    <div class="search-box">
+                      <form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/daily-report-list/search' }" method="get">
+                        <label class="report-category" for="column"></label> 
+                        <select id="filter" name="filter">
+                          <option value="dmrNo">보고서 번호</option>
+                          <option value="adminDeptName">부서</option>
+                          <option value="adminName">작성자</option>
+                          <option value="dmrDate">작성일자</option>
+                        </select> 
+                        <label for="value"></label> 
+                        <input class="input" type="search" name="value" id="search"> 
+                        <input class="input" type="submit" id="search-submit" value="검색">
+                      </form>
+                    </div>
+                  </div>
+                  <div class="down-right-side">
+                    <div class="btn-line"  >
+                      <div class="btn-regist">
+                          <button class="btn btn-regist" th:if="${session.userType == 'admin'}"  th:onclick="|location.href='@{../daily-report-regist}'|"  type="submit" >보고서 등록</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+			</div>
+		</div>
+        <script type="text/javascript">
+        	
+        
+        
+          function updateInputType() {
+              const filter = document.getElementById('filter').value;
+              const searchInput = document.getElementById('search');
+          
+              // filter가 'dmrDate'일 경우 input type을 'date'로 변경
+              if (filter === 'dmrDate') {
+                  searchInput.type = 'date';
+              } else {
+                  searchInput.type = 'search';
+              }
+          }
+          
+          // 페이지 로드 시 필터 값에 따라 초기 input type을 설정
+          document.addEventListener('DOMContentLoaded', function () {
+              updateInputType();
+          });
+          
+          // 필터 변경 시 호출
+          document.getElementById('filter').addEventListener('change', updateInputType);
+        </script>
+		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+	</body>
+</html>

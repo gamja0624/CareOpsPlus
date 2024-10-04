@@ -4,6 +4,7 @@ package himedia.project.careops.repository;
  * @author 이홍준
  * @editDate 2024-09-26 ~ 
  */
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -22,7 +23,5 @@ public interface DailyManagementReportRepository extends JpaRepository<DailyMana
 
 	// adminName 조회 후 Page
 	Page<DailyManagementReport> findByAdminName(String adminName, Pageable pageable);
-
-	//Page<DailyManagementReport> findAllById(Integer value, Pageable pageable);
 
 }

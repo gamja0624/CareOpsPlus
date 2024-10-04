@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 public class DailyManagementReportDTO {
 
-	private int dmrNo;
+	private Integer dmrNo;
 	private String adminId;
 	private String adminDeptNo;
 	private String adminName;
@@ -27,7 +27,7 @@ public class DailyManagementReportDTO {
 	
 	public DailyManagementReportDTO() {}
 	
-	public DailyManagementReportDTO(int dmrNo, String adminId, String adminDeptNo, String adminName,
+	public DailyManagementReportDTO(Integer dmrNo, String adminId, String adminDeptNo, String adminName,
 			String adminDeptName, String dmrReportDetail, String dmrIssue, Date dmrDate) {
 		this.dmrNo = dmrNo;
 		this.adminId = adminId;
@@ -39,11 +39,11 @@ public class DailyManagementReportDTO {
 		this.dmrDate = dmrDate;
 	}
 
-	public int getDmrNo() {
+	public Integer getDmrNo() {
 		return dmrNo;
 	}
 
-	public void setDmrNo(int dmrNo) {
+	public void setDmrNo(Integer dmrNo) {
 		this.dmrNo = dmrNo;
 	}
 

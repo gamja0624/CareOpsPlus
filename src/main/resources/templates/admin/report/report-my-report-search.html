@@ -18,6 +18,7 @@
           .detail-a { cursor: pointer; }
           .detail-icon { width: 30px; line-height: 30px; vertical-align: middle; }
           .inner-layout-table { height: 600px; }
+          .empty-row { font-size: 25px; font-weight: 600; }
           
           /* 페이지네이션 */
           .pagination { text-align: center; margin: 20px 0; }
@@ -58,60 +59,65 @@
                     </tr>
                   </thead>
                     <tbody>
-                      <tr class="table-row data-row" th:each="drl : ${searchMyReport}" >
+                      <tr class="table-row data-row" th:if="${! searchMyReport.isEmpty()}"  th:each="drl : ${searchMyReport}" >
                         <td th:text="${drl.dmrNo}" > </td>
                         <td th:text="${drl.adminDeptName}" ></td>
                         <td th:text="${drl.adminName}" ></td>
                         <td th:text="${drl.dmrDate}" ></td>
-                          <td><a th:if="${session.userType != null}" th:href="@{daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>  
-                        <td><button th:onclick="|location.href='@{daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit"  th:if="${session.userType} == 'admin' and ${session.department} == ${drl.adminDeptName}" >수 정</button></td>
+                          <td><a th:if="${session.userType != null}" th:href="@{../daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>  
+                        <td><button th:onclick="|location.href='@{../daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit"  th:if="${session.userType} == 'admin' and ${session.department} == ${drl.adminDeptName}" >수 정</button></td>
+                      </tr>
+                      <tr class="table-row data-row empty-row" th:unless="${! searchMyReport.isEmpty()}" >
+                        <td th:attr="colspan=${session.userType == 'admin' ? '6' : '5'}">
+                            결과 없음
+                        </td>
                       </tr>
                     </tbody>
                 </table>
               </div>
                         <!-- 페이지 네이션 -->
               <div class="page" > 
-                <nav aria-label="Page navigation">
-                  <ul class="pagination">
-                    <!-- 맨 앞으로 이동 -->
-                    <li class="page-item">
-                      <a class="page-link " th:href="@{./my-report?page=1}" aria-label="Previous">
-                        <span aria-hidden="true">&#171;</span>
-                      </a>
-                    </li>
-                    
-                    <!-- 이전 페이지 이동 -->
-                    <li class="page-item">
-                     <a class="page-link"  th:href="@{./my-report(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
-                    </li>
-                    
-                    <!-- 숫자 -->
-                    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}" >
-                      <li class="page-item">
-                        <a class="page-link" th:href="@{./dmy-report?page=} + @{${page}}"
-                            th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''" ></a>
-                      </li>
-                    </th:block>
-                    
-                    <!-- 다음 페이지 이동 -->
-                    <li class="page-item" >
-                      <a class="page-link" th:href="@{./my-report(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}" >&#62;</a>
-                    </li>
-                    
-                    <!-- 맨 끝으로 이동 -->
-                      <li class="page-item">
-                        <a class="page-link" th:href="@{./my-report?page={totalPages}(totalPages = ${totalPages})}" aria-label="Next">
-                          <span aria-hidden="true">&#187;</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                        <!-- 맨 앞으로 이동 -->
+                        <li class="page-item">
+                          <a class="page-link " th:href="@{./search(filter=${filter}, value=${value}, page=1)}" aria-label="Previous">
+                            <span aria-hidden="true">&#171;</span>
+                          </a>
+                        </li>
+                        
+                        <!-- 이전 페이지 이동 -->
+                        <li class="page-item">
+                         <a class="page-link"  th:href="@{./search(filter=${filter}, value=${value}, page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
+                        </li>
+                        
+                        <!-- 숫자 -->
+                        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}" >
+                          <li class="page-item">
+                            <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${page})}"
+                                th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''" ></a>
+                          </li>
+                        </th:block>
+                        
+                        <!-- 다음 페이지 이동 -->
+                        <li class="page-item" >
+                           <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}" >&#62;</a> 
+                        </li>
+                        
+                        <!-- 맨 끝으로 이동 -->
+                        <li class="page-item">
+                          <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${totalPages})}" aria-label="Next">
+                            <span aria-hidden="true">&#187;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
               </div>
               <div class="search-box">
                 <form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/my-report/search' }" method="get">
                   <label class="report-category" for="column"></label> 
-                  <select id="filter" name="filter">
+                  <select id="filter" name="filter" >
                     <option value="dmrDate">작성일자</option>
                   </select> 
                   <label for="value"></label> 

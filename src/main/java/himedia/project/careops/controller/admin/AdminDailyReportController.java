@@ -56,22 +56,22 @@ public class AdminDailyReportController {
 	}
 	
 	// 일일관리보고서 Search 페이지
-	/*
-	 * @GetMapping("/daily-report-list/search") public String
-	 * reportSearch(@PageableDefault Pageable pageable, @RequestParam String
-	 * filter, @RequestParam String value, Model model) {
-	 * 
-	 * Page<DailyManagementReportDTO> reportSearch =
-	 * dailyReportService.reportSearch(filter, value, pageable); PagingButtonInfo
-	 * paging = Pagenation.getPagingButtonInfo(reportSearch); int totalPages =
-	 * reportSearch.getTotalPages();
-	 * 
-	 * model.addAttribute("reportAllList", reportSearch);
-	 * model.addAttribute("paging", paging); model.addAttribute("totalPages",
-	 * totalPages);
-	 * 
-	 * return "redirect:/admin/daily-report-list"; }
-	 */
+  @GetMapping("/daily-report-list/search")
+  public String searchReport(@PageableDefault Pageable pageable, @RequestParam String filter, @RequestParam String value, Model model) {
+  
+	  Page<DailyManagementReportDTO> reportSearch = dailyReportService.reportSearch(filter, value, pageable); 
+	  PagingButtonInfo paging = Pagenation.getPagingButtonInfo(reportSearch); 
+	  int totalPages = reportSearch.getTotalPages();
+	  
+	  model.addAttribute("reportAllList", reportSearch);
+	  model.addAttribute("paging", paging);
+	  model.addAttribute("totalPages",totalPages);
+	  model.addAttribute("filter", filter);
+	  model.addAttribute("value", value);
+  
+	  return "/admin/report/report-search-list"; 
+  }
+	 
 	
 	// 일일관리보고서 상세 페이지
 	@GetMapping("daily-report-detail/{dmrNo}")
@@ -142,7 +142,7 @@ public class AdminDailyReportController {
 		return "redirect:/admin/daily-report-list";
 	}
 	
-	// 내가 쓴 보고서 보기 페이지 이동
+	// 내 보고서 페이지 이동
 	@GetMapping("/my-report")
 	public String myReport(@PageableDefault Pageable pageable, HttpSession session, Model model) {
 		
@@ -158,5 +158,25 @@ public class AdminDailyReportController {
 		
 		return "admin/report/report-my-report";
 	}
+	
+	// 내가 보고서 페이지 검색페이지
+	@GetMapping("/my-report/search")
+	public String searchInMyReport(@PageableDefault Pageable pageable, @RequestParam String filter, @RequestParam String value,HttpSession session, Model model) {
+		
+		String adminName = (String)session.getAttribute("userName");
+		
+		Page<DailyManagementReportDTO> searchMyReport = dailyReportService.searchReporByDate(adminName, filter, value, pageable); 
+		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(searchMyReport); 
+		int totalPages = searchMyReport.getTotalPages();
+	  
+		model.addAttribute("searchMyReport", searchMyReport);
+		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("filter", filter);
+		model.addAttribute("value", value);
+		  
+		return "admin/report/report-my-report-search";
+	}
+	
 	
 }
