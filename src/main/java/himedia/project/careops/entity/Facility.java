@@ -8,6 +8,8 @@ package himedia.project.careops.entity;
 import java.sql.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.ToString;
@@ -18,6 +20,7 @@ import lombok.ToString;
 public class Facility {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "facility_no", nullable = false)	// 시설물 번호
 	private Integer facilityNo; 
 	
@@ -28,7 +31,7 @@ public class Facility {
 	private String facilityName;
 	
 	@Column(name = "facility_reservation_no") // 예약 번호
-	private int facilityReservationNo;
+	private Integer facilityReservationNo;
 	
 	@Column(name = "facility_reservation_status", nullable = false) // 예약 상태
 	private boolean facilityReservationStatus;
@@ -37,7 +40,7 @@ public class Facility {
 	private Date facilityReservationDate;
 	
 	@Column(name = "facility_manager_dept_no") // 담당자 부서 번호
-	private int facilityManagerDeptNo;
+	private Integer facilityManagerDeptNo;
 	
 	@Column(name = "facility_manager_dept_name") // 담당자 부서 이름
 	private String facilityManagerDeptName;
@@ -50,19 +53,10 @@ public class Facility {
 	
 	public Facility() {}
 	
-	public Facility(int facilityFloor, String facilityName, int facilityReservationNo, boolean facilityReservationStatus, Date facilityReservationDate,
-			int facilityManagerDeptNo, String facilityManagerDeptName, String facilityManagerId, String facilityManagerName) {
+	public Facility(int facilityFloor, String facilityName, boolean facilityReservationStatus) {
 		this.facilityFloor = facilityFloor;
 		this.facilityName = facilityName;
-		
-		this.facilityReservationNo = facilityReservationNo;
 		this.facilityReservationStatus = facilityReservationStatus;
-		this.facilityReservationDate = facilityReservationDate;
-		
-		this.facilityManagerDeptNo = facilityManagerDeptNo;
-		this.facilityManagerDeptName = facilityManagerDeptName;
-		this.facilityManagerId = facilityManagerId;
-		this.facilityManagerName = facilityManagerName;
 	}
 	
 	public Integer getFacilityNo() {
@@ -89,11 +83,11 @@ public class Facility {
 		this.facilityName = facilityName;
 	}
 
-	public int getFacilityReservationNo() {
+	public Integer getFacilityReservationNo() {
 		return facilityReservationNo;
 	}
 
-	public void setFacilityReservationNo(int facilityReservationNo) {
+	public void setFacilityReservationNo(Integer facilityReservationNo) {
 		this.facilityReservationNo = facilityReservationNo;
 	}
 
@@ -113,11 +107,11 @@ public class Facility {
 		this.facilityReservationDate = facilityReservationDate;
 	}
 
-	public int getFacilityManagerDeptNo() {
+	public Integer getFacilityManagerDeptNo() {
 		return facilityManagerDeptNo;
 	}
 
-	public void setFacilityManagerDeptNo(int facilityManagerDeptNo) {
+	public void setFacilityManagerDeptNo(Integer facilityManagerDeptNo) {
 		this.facilityManagerDeptNo = facilityManagerDeptNo;
 	}
 

@@ -5,11 +5,13 @@ package himedia.project.careops.service;
  * @editDate 2024-09-26 ~ 
  */
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -89,4 +91,13 @@ public class DailyReportService {
 	    return allList.map(list -> modelMapper.map(list, DailyManagementReportDTO.class));
 	}
 	// 등록 수정 삭제 시 @Transactional 설정 필요
+	
+	// 작성자 : 진혜정
+	// [전체 보고서 List 로 반환]
+	public List<DailyManagementReport> findBydailyReportList() {
+		
+		return dailyManagementReportRepository.findAll()									
+				.stream() 
+				.collect(Collectors.toList());
+	}
 }
