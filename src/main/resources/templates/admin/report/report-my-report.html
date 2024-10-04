@@ -12,11 +12,12 @@
           /* 페이지 레이아웃 */
           .layout-table { height: 680px; text-align: center; }
           /* 목록 테이블 */
-          .table { margin: 0 auto; width: 800px; height: 590px; text-align: center; vertical-align: inherit; }
+          .table { margin: 0 auto; width: 800px;  text-align: center; vertical-align: inherit; }
           .table-head { font-weight: 600; font-size: 20px; }
           .table-row { line-height: 35px; border-bottom: 1px solid #d9d9d9;  }
           .detail-a { cursor: pointer; }
           .detail-icon { width: 30px; line-height: 30px; vertical-align: middle; }
+          .inner-layout-table { height: 600px; }
           
           /* 페이지네이션 */
           .pagination { text-align: center; margin: 20px 0; }
@@ -42,63 +43,64 @@
 			<!-- section -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title">일일 관리 보고서</h1>
+				<h1 class="title">내 보고서</h1>
 				<div class="layout-table">
-                  <table class="table table-hover">
-    				  <thead>
-    				    <tr class="table-row table-head" >
-    				      <th scope="col">No.</th>  
-    				      <th scope="col">부서</th>
-    				      <th scope="col">작성자</th>
-    				      <th scope="col">작성일자</th>
-    				      <th scope="col">상세</th>
-    				      <th scope="col"  th:if="${session.user_userType == 'admin' and (session.departmentName == '안전 관리팀' or session.departmentName == '의료기기 관리팀')}">상태</th>
-    				    </tr>
-    				  </thead>
-                        <tbody>
-                          <tr class="table-row" th:each="drl : ${reportAllList}" >
-                            <td th:text="${drl.dmrNo}" > </td>
-                            <td th:text="${drl.adminDeptName}" ></td>
-                            <td th:text="${drl.adminName}" ></td>
-                            <td th:text="${drl.dmrDate}" ></td>
-                              <td><a th:if="${session.userType != null}" th:href="@{daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>  
-                            <td><button th:onclick="|location.href='@{daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit"  th:if="${session.userType} == 'admin' and ${session.departmentName} == ${drl.adminDeptName}" >수 정</button></td>
-                          </tr>
-                        </tbody>
-    				</table>
-          
+                  <div class="inner-layout-table">
+                    <table class="table table-hover">
+      				  <thead>
+      				    <tr class="table-row table-head" >
+      				      <th scope="col">No.</th>  
+      				      <th scope="col">부서</th>
+      				      <th scope="col">작성자</th>
+      				      <th scope="col">작성일자</th>
+      				      <th scope="col">상세</th>
+      				      <th scope="col"  th:if="${session.userType == 'admin' and (session.department == '안전 관리팀' or session.department == '의료기기 관리팀')}">상태</th>
+      				    </tr>
+      				  </thead>
+                          <tbody>
+                            <tr class="table-row data-row" th:each="drl : ${searchMyReport}" >
+                              <td th:text="${drl.dmrNo}" > </td>
+                              <td th:text="${drl.adminDeptName}" ></td>
+                              <td th:text="${drl.adminName}" ></td>
+                              <td th:text="${drl.dmrDate}" ></td>
+                                <td><a th:if="${session.userType != null}" th:href="@{daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>  
+                              <td><button th:onclick="|location.href='@{daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit"  th:if="${session.userType} == 'admin' and ${session.department} == ${drl.adminDeptName}" >수 정</button></td>
+                            </tr>
+                          </tbody>
+      				</table>
+                    </div>
                     <!-- 페이지 네이션 -->
                   <div class="page" > 
                     <nav aria-label="Page navigation">
                       <ul class="pagination">
                         <!-- 맨 앞으로 이동 -->
                         <li class="page-item">
-                          <a class="page-link " th:href="@{./daily-report-list?page=1}" aria-label="Previous">
+                          <a class="page-link " th:href="@{./my-report?page=1}" aria-label="Previous">
                             <span aria-hidden="true">&#171;</span>
                           </a>
                         </li>
                         
                         <!-- 이전 페이지 이동 -->
                         <li class="page-item">
-                         <a class="page-link"  th:href="@{./daily-report-list(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
+                         <a class="page-link"  th:href="@{./my-report(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
                         </li>
                         
                         <!-- 숫자 -->
                         <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}" >
                           <li class="page-item">
-                            <a class="page-link" th:href="@{./daily-report-list?page=} + @{${page}}"
+                            <a class="page-link" th:href="@{./dmy-report?page=} + @{${page}}"
                                 th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''" ></a>
                           </li>
                         </th:block>
                         
                         <!-- 다음 페이지 이동 -->
                         <li class="page-item" >
-                          <a class="page-link" th:href="@{./daily-report-list(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}" >&#62;</a>
+                          <a class="page-link" th:href="@{./my-report(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}" >&#62;</a>
                         </li>
                         
                         <!-- 맨 끝으로 이동 -->
                         <li class="page-item">
-                          <a class="page-link" th:href="@{./daily-report-list?page={totalPages}(totalPages = ${totalPages})}" aria-label="Next">
+                          <a class="page-link" th:href="@{./my-report?page={totalPages}(totalPages = ${totalPages})}" aria-label="Next">
                             <span aria-hidden="true">&#187;</span>
                           </a>
                         </li>

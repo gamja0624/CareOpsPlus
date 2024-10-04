@@ -6,7 +6,8 @@ package himedia.project.careops.controller;
  */
 
 import java.time.LocalDate;
-
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import himedia.project.careops.entity.Claim;
+import himedia.project.careops.entity.DailyManagementReport;
 import himedia.project.careops.entity.ListMedicalDevices;
 import himedia.project.careops.service.ClaimService;
+import himedia.project.careops.service.DailyReportService;
 import himedia.project.careops.service.MedicalService;
 import jakarta.servlet.http.HttpSession;
 
@@ -30,10 +33,12 @@ public class DashBoardController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     private final ClaimService claimService;
     private final MedicalService medicalService;
+    private final DailyReportService dailyReportService;
     
-    public DashBoardController(ClaimService claimService, MedicalService medicalService) {
+    public DashBoardController(ClaimService claimService, MedicalService medicalService, DailyReportService dailyReportService) {
     	this.claimService = claimService;
     	this.medicalService = medicalService;
+    	this.dailyReportService = dailyReportService;
     }
     
     @GetMapping("/manager/dash-board")
@@ -41,9 +46,9 @@ public class DashBoardController {
     	
     	// session 받아온 부서 번호, 이름
     	String departmentNo = (String) session.getAttribute("deptNo");
-    	String department = (String) session.getAttribute("department");
-    	String userId = (String) session.getAttribute("user_id");
-    	String userName = (String) session.getAttribute("name");
+    	String departmentName = (String) session.getAttribute("departmentName");
+    	String userId = (String) session.getAttribute("userId");
+    	String userName = (String) session.getAttribute("userName");
 
     	// [서비스 미리보기]
     	// 담당 부서 민원 개수 반환
@@ -52,7 +57,7 @@ public class DashBoardController {
     	model.addAttribute("claimCnt", claimCnt.size());
     	
     	// 담당 부서 의료기기 개수 반환
-    	List<ListMedicalDevices> medicalList = medicalService.findByMedicalDeptName(department);
+    	List<ListMedicalDevices> medicalList = medicalService.findByMedicalDeptName(departmentName);
     	model.addAttribute("medicalCnt", medicalList.size());
     	
     	// [의료기기 상태 현황]
@@ -61,6 +66,7 @@ public class DashBoardController {
     	
     	// [민원 최신순 3개 정렬]
     	List<Claim> claimList = claimService.findByClaimListManagerName(userName);
+    	Collections.reverse(claimList); // 역순 정렬
     	model.addAttribute("claimList", claimList);
     	
     	return "manager/dash-board";
@@ -69,11 +75,6 @@ public class DashBoardController {
     @GetMapping("/admin/dash-board")
     public String adminDashBoard(HttpSession session, Model model) {
     	
-    	// session 받아온 부서 번호, 이름
-    	String departmentNo = (String) session.getAttribute("deptNo");
-    	String department = (String) session.getAttribute("department");
-    	String userName = (String) session.getAttribute("name");
-
     	// [서비스 미리보기]
     	// 민원 접수 대기 / 접수 진행건 / 의료기기 대기건 / 안전 관리 대기건
     	Map<String, Integer> claimStatus = claimService.findByClaimStatus();
@@ -85,6 +86,11 @@ public class DashBoardController {
     	
     	Map<String, Integer> ClaimDateStatus = claimService.findByClaimDateStatus(year);
     	model.addAttribute("ClaimDateStatus", ClaimDateStatus);
+    	
+    	// [보고서 최신순 3개 정렬]
+    	List<DailyManagementReport> dailyReportList =  dailyReportService.findBydailyReportList();
+    	Collections.reverse(dailyReportList); // 역순 정렬
+    	model.addAttribute("dailyReportList", dailyReportList);
     	
     	return "admin/dash-board";
     }

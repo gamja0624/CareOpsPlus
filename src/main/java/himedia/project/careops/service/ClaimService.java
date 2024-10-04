@@ -169,7 +169,6 @@ public class ClaimService {
 	        
 	        if (dateYear == year) {
 	            // 각 월에 해당하는 카운트 증가
-	        	log.info("{}", dateMonth);
 	            switch (dateMonth) {
 	                case 1: 
 	                	ClaimDateStatusList.put("jan", ClaimDateStatusList.get("jan") + 1); break;
