@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
@@ -11,7 +11,7 @@
 		<style type="text/css">
 			.layout-table {
 				width: 1340px; 
-				min-height: 800px; 
+				height: 100%; 
 				border: 3px solid #13254C; 
 				border-radius: 20px; 
 			}
@@ -24,14 +24,58 @@
 				text-align: center;
 				margin: 20px auto;
 			}
-			.dept-table thead { 
-				font-weight: 600;	
-			}
-			
 			.dept-table tr {
-				border-bottom: 1px solid #000;
+				border: 1px solid #000;
 			}
 				 
+			.dept-table th { 
+				background-color: #14254C;
+				color: #FFF;
+				width: 180px;	
+				height: 25px;
+				line-height: 25px;
+			}
+			.dept-table td {
+				width: 180px;	
+			}
+			
+			.grid-cover {
+				padding: 20px;
+				width: 1280px;
+				margin: 0 auto
+			}
+			.grid-container02 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+			.grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .dept-card02 {
+        background-color: white;
+      }
+      .dept-card {
+        display: flex;
+        background-color: white;
+        border: 1px solid #14254C;
+      }
+      .card-header {
+        background-color: #14254C;
+        color: white;
+        padding: 10px;
+        width: 200px;
+        text-align: center;
+      }
+      .card-body {
+        border: 1px solid #14254C;
+        padding: 10px;
+        width: 200px;
+        text-align: center;
+      } 
+			
 		</style>
 	</head>
 
@@ -47,26 +91,36 @@
 				<!-- 제목 -->
 				<h1 class="title">전체 부서 목록</h1>
 				<div class="layout-table">
-					<div>
+					
+					<div class="grid-cover">
+						<div class="grid-container">
+					    <div class="dept-card" th:each="managerDepartment : ${ managerDepartment }">
+					        <div class="card-header" th:text="${managerDepartment.managerDeptPart}"></div>
+					        <div class="card-body" th:text="${managerDepartment.managerDeptNo}"></div>
+					        <div class="card-body" th:text="${managerDepartment.managerDeptName}"></div>
+					    </div>
+						</div>
+						<div class="grid-cover">
+							<div class="grid-container02">
+						    <div class="dept-card02" th:each="managerDepartment : ${ managerDepartment }">
+						        <div class="card-header" th:text="${managerDepartment.managerDeptPart}"></div>
+										<div class="card-body" th:text="${managerDepartment.managerDeptNo} + '&nbsp; &nbsp; ' + ${managerDepartment.managerDeptName}"></div>
+						    </div>
+							</div>
 						<div class="dept-table-cover">
-							<table class="dept-table">
-								<thead>
-									<tr>
-										<th>부서 번호</th>
-										<th>부서 파트</th>
-										<th>부서 이름 </th>
-									</tr>
-								</thead>
+<!--							<table class="dept-table">
 								<tbody>
 									<tr th:each="managerDepartment : ${ managerDepartment }">
-									    <td th:text="${managerDepartment.managerDeptNo}"></td>
-									    <td th:text="${managerDepartment.managerDeptPart}"></td>
-									    <td th:text="${managerDepartment.managerDeptName}"></td>
+										<th>부서 파트</th>
+								    <td th:text="${managerDepartment.managerDeptPart}"></td>
+										<th>부서 번호</th>
+										<th>부서 이름 </th>
+								    <td th:text="${managerDepartment.managerDeptNo}"></td>
+								    <td th:text="${managerDepartment.managerDeptName}"></td>
 									</tr>
 								</tbody>
-							</table>
+							</table>-->
 						</div>
-						
 					</div>
 					
 				</div>
