@@ -6,10 +6,14 @@ package himedia.project.careops.repository;
  */
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import himedia.project.careops.entity.Facility;
 
 @Repository
 public interface FacilityRepository extends JpaRepository<Facility, Integer> {
 	
+	@Query(value = "SELECT MAX(facility_reservation_no) FROM facility", nativeQuery = true)
+    Integer findMaxReservationNo();
 }

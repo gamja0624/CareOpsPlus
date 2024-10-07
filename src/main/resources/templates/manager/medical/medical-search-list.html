@@ -99,7 +99,7 @@
 		      		</td>
 				    </tr>
 				    <tr th:unless="${ ! medicalDevicesList.isEmpty() }">
-				    	<td class="empty-row" colspan="10">결과 없음</td>
+				    	<td class="empty-row" colspan="10">예약한 시설물이 없습니다 :) </td>
 				    </tr>
 			  	</tbody>
 				</table>
@@ -111,7 +111,7 @@
 				</th:block>
 				
 				<div class="search-box">
-					<form class="category-search-box" th:attr="action=@{ '/' + ${session.user_type} + '/medical-list/search' }" method="get">
+					<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/medical-list/search' }" method="get">
 						<label class="notice-category" for="column"></label> 
 						<select id="filter" name="filter">
 							<option value="lmdMajorCateName">장비대분류명</option>

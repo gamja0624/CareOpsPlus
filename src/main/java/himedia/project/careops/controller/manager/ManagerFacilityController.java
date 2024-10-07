@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.FacilityDTO;
-import himedia.project.careops.dto.ListMedicalDevicesDTO;
 import himedia.project.careops.dto.ManagerDepartmentDTO;
 import himedia.project.careops.entity.Facility;
-import himedia.project.careops.entity.Manager;
 import himedia.project.careops.service.FacilityService;
+import himedia.project.careops.service.ManagerDepartmentService;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,9 +37,11 @@ public class ManagerFacilityController {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final FacilityService facilityService;
+	private final ManagerDepartmentService managerDepartmentService;
 	
-	public ManagerFacilityController(FacilityService facilityService) {
+	public ManagerFacilityController(FacilityService facilityService, ManagerDepartmentService managerDepartmentService) {
 		this.facilityService = facilityService;
+		this.managerDepartmentService = managerDepartmentService;
 	}
 	
 	// [목록 조회] ======================================================================================
@@ -72,26 +74,50 @@ public class ManagerFacilityController {
 		return "manager/facility/facility-search-list";
 	}
 
-	// [등록] ==========================================================================================
-//	@GetMapping("/facility-add")
-//	@ResponseBody
-//	// 담당 부서 이름에 해당하는 담당자 목록을 가져오는 메서드
-//	public List<Manager> getManagersByDeptName(@RequestParam String managerDeptName) {
-//	    return facilityService.findByManagerList(managerDeptName);
-//	}
+	// [수정(예약 신청)] ==========================================================================================
+	@GetMapping("/getfindByFacilityList")
+	@ResponseBody
+	// 층수 선택하면 시설 이름, 시설 번호를 가져오는 메서드
+	public List<Facility> getfindByFacilityList(@RequestParam String facilityFloor) {
+	    return facilityService.findByFloorFacilityList(Integer.parseInt(facilityFloor));
+	}
 	
 	@GetMapping("/facility-add")
-	public String facilityAddPage(Model model) {
+	public String facilityEditPage(Model model) {
+		
+		// 담당 부서 목록 반환 
+		List<ManagerDepartmentDTO> departments = managerDepartmentService.findAllDepartmentsList();
+		model.addAttribute("departments", departments);
 		
 		return "manager/facility/facility-add";
 	}
 	
-//	@PostMapping("/facility-add")
-//	public String facilityAdd(FacilityDTO newFacilityDevice) {
-//		
-//		facilityService.addFacilityRSVD(newFacilityRSVD);
-//		
-//		return "redirect:/facility/facility-list";
-//	}
+	@PostMapping("/facility-add")
+	public String facilityEdit(FacilityDTO editFacility) {
+		
+		facilityService.editFacility(editFacility);
+		
+		return "redirect:./facility-list";
+	}
 	
+	// [수정(예약 취소)] ==========================================================================================
+	@GetMapping("/facility-dept-list")
+	public String DeptByfacilityPage(HttpSession session, @PageableDefault Pageable pageable, Model model) {
+		
+		String department = (String) session.getAttribute("department");
+		
+		List<FacilityDTO> facilityList = facilityService.findByDeptNoFacilityList(department);
+		model.addAttribute("facilityList", facilityList);
+		
+		return "manager/facility/facility-dept-list";
+	}
+	
+	@PostMapping("/facility-dept-list")
+	public String DeptByfacility(@RequestParam String facilityNo) {
+		
+		Facility editFacility = facilityService.findByFacilityNo(facilityNo); 
+		facilityService.cancelFacility(editFacility);
+		
+		return "redirect:./facility-dept-list";
+	}
 }
