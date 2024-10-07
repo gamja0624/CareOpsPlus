@@ -23,4 +23,7 @@ public interface ManagerRepository extends JpaRepository<Manager, String> {
     // 매니저 id 찾는 메서드
     Optional<Manager> findByManagerId(String managerId);
 
+    // 작성자 : 노태윤
+    // 부서 번호와 매니저 ID를 기반으로 매니저 정보를 조회하는 메서드
+    Optional<Manager> findByManagerDeptNoAndManagerId(int managerDeptNo, String managerId);
 }

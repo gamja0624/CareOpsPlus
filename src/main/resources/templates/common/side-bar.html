@@ -26,7 +26,7 @@
 		    <div class="hr"></div>
 		    <ul class="nav nav-pills flex-column mb-auto">
 		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="nav-link active" aria-current="page">담당자 관리</a>
+		        <a th:href="@{'/' + ${session.userType} + '/account-list'}" class="nav-link active" aria-current="page">담당자 관리</a>
 		      </li>
 		      <li class="nav-item">
 		        <a th:href="@{'/' + ${session.userType} + '/medical-list'}" class="nav-link nav-color">의료기기 관리</a>
@@ -41,7 +41,7 @@
 		        <a th:href="@{'/' + ${session.userType} + '/daily-report-list'}" class="nav-link nav-color">일일 관리 보고서</a>
 		      </li>
 		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="nav-link nav-color">민원 관리</a>
+		        <a th:href="@{'/' + ${session.userType} + '/claim-list'}" class="nav-link nav-color">민원 관리</a>
 		      </li>
 		    </ul>
 		    <div class="hr"></div>
@@ -52,7 +52,7 @@
 		      </a>
 		      <ul class="dropdown-menu text-small shadow">
 		        <li th:if="${session.userType} == 'admin'"  ><a class="dropdown-item" th:href="@{/admin/my-report}" >내 보고서</a></li> 
-		        <li th:if="${session.userType} == 'manager'" ><a class="dropdown-item" th:href="@{/}">예약 목록</a></li>
+		        <li th:if="${session.userType} == 'manager'" ><a class="dropdown-item" th:href="@{ '/' + ${ session.userType } + '/facility-dept-list'}">예약 목록</a></li>
 		        <li><hr class="dropdown-divider"></li>
 		        <li><a class="dropdown-item" th:href="@{/mypage}">내 정보</a></li>
 		        <li><a class="dropdown-item" th:href="@{/mypage-change-pw}">비밀번호 변경</a></li>

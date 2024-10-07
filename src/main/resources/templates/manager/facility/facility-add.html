@@ -10,15 +10,12 @@
 		
 		<style type="text/css">
 			/* layout-table */
-			.layout-table { height: 630px; }
+			.layout-table { height: 400px; }
 		
-			/* 의료기기 상태 토글 */
-			.form-select { width: 130px; margin: 30px auto; text-align: center; font-size: 20px; }
-			.btn-success { border-radius: 50px; width: 90px; height: 50px; font-size: 20px; } 
-			
 			/* 데이터 테이블 */
-			.data-table-b { display: flex; width: 1000px; margin: 50px auto; }
-			.data-input-b { 
+			.data-table { display: flex; width: 1000px; margin: 120px auto; }
+			.data-title { font-size: 25px; margin-right: 40px; }
+			.data-input { 
 				width: 300px; 
 				font-size: 20px; 
 				padding-left: 10px;
@@ -27,10 +24,8 @@
 				background-color: #13254C; 
 				color: white; 
 			}
-			.data-title { font-size: 25px; margin-right: 40px; }
 			.data { display: flex; margin-bottom: 20px; }
 			.data-t-2 { margin-left: auto; }
-			.data-disabled { background-color: #d9d9d9; color: #717171; }
 			
 			/* 버튼 - 뒤로가기, 수정 */
 			.btn-table { width: 1340px; }
@@ -54,51 +49,47 @@
 				
 				<form th:attr="action=@{'/manager/facility-add'}" method="post">
 					<div class="layout-table">
-						<div class="data-table-b">
-							<!-- 층 / 시설 이름 / 시설 번호 -->
+						<div class="data-table">
+						
+							<!-- 층 / 시설이름 / 시설 번호 -->
 							<div class="data-t-1">
 								<div class="data">
 									<p class="data-title">층 F</p>
-									<input type="text" name="lmdMajorCateCode" class="data-input-b" oninput="checkFields()">
+									<select id="floor-select" name="facilityFloor" class="data-input" aria-label="Default select" onchange="onFacilityChange()" oninput="checkFields()">
+						        <option value="" selected>==층 선택==</option>
+						        <option th:each="idx : ${#numbers.sequence(1,10)}" th:value="${ idx }" th:text="${ idx }"></option>
+							    </select>
 								</div>
 								<div class="data">
 									<p class="data-title">시설 이름</p>
-							    <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()" oninput="checkFields()">
-						        <option value="" selected>==부서 선택==</option>
-						        <option th:each="dept : ${ departments }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }"></option> 
+							    <select id="floor-name-select" name="facilityName" class="data-input" aria-label="Default select" oninput="checkFields()">
+						        <option value="" selected>==시설 선택==</option>
 							    </select>
 								</div>
 								<div class="data">
 								 	<p class="data-title">시설 번호</p>
-									<input type="text" name="lmdLicenseNumber" class="data-input-b" oninput="checkFields()">
+									<input type="text" id="facility-no" name="facilityNo" class="data-input" readonly="readonly" oninput="checkFields()">
 								</div>
 							</div>
 							
-							<!-- 장비세분류코드/장비수/담당자 -->
+							<!-- 예약부서 / 담당자 / 예약날짜 -->
 							<div class="data-t-2">
 								<div class="data">
-									<p class="data-title">예약 부서</p>
-									<select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()" oninput="checkFields()">
-						        <option value="" selected>==부서 선택==</option>
-						        <option th:each="dept : ${ departments }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }"></option> 
-							    </select>
+								 	<p class="data-title">담당 부서</p>
+								 	<input type="hidden" th:value="${ session.deptNo }" name="facilityManagerDeptNo">
+								 	<input type="text" th:value="${ session.department }" name="facilityManagerDeptName" class="data-input" readonly="readonly" oninput="checkFields()">
 								</div>
 								<div class="data">
 									<p class="data-title">담당자</p>
-							    <select id="manager-select" name="lmdManagerId" class="data-input-b" aria-label="Default select" oninput="checkFields()">
-						        <option value="" selected>==담당자 선택==</option>
-							    </select>
+								 	<input type="hidden" th:value="${ session.userId }" name="facilityManagerId">
+								 	<input type="text" th:value="${ session.userName }" name="facilityManagerName" class="data-input" readonly="readonly" oninput="checkFields()">
 								</div>
 								<div class="data">
 									<p class="data-title">예약 날짜</p>
-									<input type="text" name="lmdMinorCateCode" class="data-input-b" oninput="checkFields()">
+									<input type="date" id="current-date" name="facilityReservationDate" class="data-input" oninput="checkFields()">
 								</div>
 							</div>
 						</div>
-
-						<!-- hidden -->
-		        <input type="hidden" id="lmd-dapt-part" name="lmdManagerDeptPart">
-		        <input type="hidden" id="lmd-manager-name" name="lmdManagerName">
 					</div>
 					
 					<div class="btn-table btn-status">
@@ -112,70 +103,72 @@
 		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 		
 		<script type="text/javascript">
-			// 오늘 날짜로 기본값 설정
+			// [오늘 날짜로 기본값 설정]
 			document.getElementById('current-date').value = new Date().toISOString().substring(0, 10);
-		
-			// 담당 부서 선택 후 담당자 옵션이 동적으로 추가되는 함수
-			function onDepartmentChange() {
-				var deptSelect = document.getElementById('dept-select');
-				var managerSelect = document.getElementById('manager-select');
-				var selectedDeptName = deptSelect.options[deptSelect.selectedIndex].text; 
+			
+			// [층 선택 후 시설 이름, 시설 번호가 동적으로 추가되는 함수]
+			function onFacilityChange() {
+				var floorSelect = document.getElementById('floor-select');
+				var floorNameSelect = document.getElementById('floor-name-select');
+				var selectedfloorSelect = floorSelect.options[floorSelect.selectedIndex].text; 
 				
-				// 담당자 선택 초기화
-				managerSelect.innerHTML = '<option value="" selected>==담당자 선택==</option>';
+				// 시설 이름 선택 초기화
+				floorNameSelect.innerHTML = '<option value="" selected>==시설 선택==</option>';
 				
 				// 부서 이름이 선택되었으면 담당자 옵션을 동적으로 추가
-				if (selectedDeptName !== "==부서 선택==") { // 기본 선택이 아닌 경우
-					fetch('./getManagersByDeptName?managerDeptName=' + encodeURIComponent(selectedDeptName)) 
+				if (floorSelect !== "==시설 선택==") { // 기본 선택이 아닌 경우
+					fetch('./getfindByFacilityList?facilityFloor=' + encodeURIComponent(selectedfloorSelect))
 						.then(response => response.json())
-						.then(managers => {
-							managers.forEach(manager => {
-							var option = document.createElement('option');
-								option.value = manager.managerId;
-								option.text = manager.managerName;
-								managerSelect.appendChild(option);
-							});
-						})
+						.then(facilities => { // facilities라는 변수로 JSON 응답 받기
+                facilities.forEach(function(f) {
+                    var option = document.createElement('option');
+                    option.value = f.facilityNo;
+                    option.text = f.facilityName;
+                    floorNameSelect.appendChild(option); // 옵션 추가
+                });
+            })
 					.catch(error => {
 						console.error('error msg :', error);
-					});
+					})
 				}
+				
+				// 시설 선택 후 시설 번호 값 지정
+				document.getElementById('floor-name-select').addEventListener('change', function() {
+					var selectedOption = this.options[this.selectedIndex];
+					document.getElementById("facility-no").value = selectedOption.value; 
+					checkFields();
+				});
 			}
-			
-			// 담당 부서 선택 후 hidden 필드에 
-			document.getElementById('dept-select').addEventListener('change', function() {
-				var selectedOption = this.options[this.selectedIndex];
-				document.getElementById("lmd-dapt-part").value = selectedOption.text; 
-			});
-			
-			// 담당자 선택 후 hidden 필드에 lmdmManagerName 값 지정
-			document.getElementById('manager-select').addEventListener('change', function() {
-				var selectedOption = this.options[this.selectedIndex];
-				document.getElementById("lmd-manager-name").value = selectedOption.text; 
-			});
-			
+		
 			// 모든 필드 체크 함수
       function checkFields() {
-	      const majorCateName = document.querySelector('input[name="lmdMajorCateName"]').value;
-	      const minorCateName = document.querySelector('input[name="lmdMinorCateName"]').value;
-	      const devicesName = document.querySelector('input[name="lmdDevicesName"]').value;
-	      const lmdDate = document.querySelector('input[name="lmdDate"]').value;
-	      const majorCateCode = document.querySelector('input[name="lmdMajorCateCode"]').value;
-	      const licenseNumber = document.querySelector('input[name="lmdLicenseNumber"]').value;
-	      const deptSelect = document.getElementById('dept-select').value;
-	      const minorCateCode = document.querySelector('input[name="lmdMinorCateCode"]').value;
-	      const deviceCount = document.querySelector('input[name="lmdDeviceCnt"]').value;
-	      const managerSelect = document.getElementById('manager-select').value;
+	      const facilityFloor = document.getElementById('floor-select').value;
+	      const facilityName = document.getElementById('floor-name-select').value;
+	      const facilityNo = document.querySelector('input[name="facilityNo"]').value;
+	      
+	      const facilityManagerDeptName = document.querySelector('input[name="facilityManagerDeptName"]').value;
+	      const facilityManagerName = document.querySelector('input[name="facilityManagerName"]').value;
+	      const facilityReservationDate = document.querySelector('input[name="facilityReservationDate"]').value;
 	
 	      const submitButton = document.getElementById('submit-button');
 	
 	      // 모든 필드가 채워졌는지 확인
-	      if (majorCateName && minorCateName && devicesName && lmdDate && majorCateCode && licenseNumber && deptSelect && minorCateCode && deviceCount && managerSelect) {
-	          submitButton.disabled = false; // 버튼 활성화
+	      if (facilityFloor && facilityName && facilityNo && facilityManagerDeptName && facilityManagerName && facilityReservationDate) {
+          submitButton.disabled = false; // 버튼 활성화
 	      } else {
-	          submitButton.disabled = true;  // 버튼 비활성화
+        	submitButton.disabled = true;  // 버튼 비활성화
 	      }
       }
+			
+  	 // 페이지 로드 시 필드 체크
+      window.onload = function() {
+          checkFields(); // 초기 상태 체크
+      };
+
+      // 모든 입력 필드에 oninput 이벤트 추가
+      document.querySelectorAll('.data-input').forEach(function(input) {
+          input.addEventListener('input', checkFields);
+      });
 
 		</script>
 		

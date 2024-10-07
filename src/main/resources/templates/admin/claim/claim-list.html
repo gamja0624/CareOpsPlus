@@ -103,7 +103,15 @@
 									<button th:text="${claim.claimApprove ? '승인' : '미승인'}" th:class="${claim.claimApprove} ? 'complete-button' : 'status-button'" disabled></button>
 								</td>
 				        <td><button th:text="${claim.claimComplete ? '완료' : '대기'}" th:class="${claim.claimComplete} ? 'complete-button' : 'status-button'" disabled></button></td>
-					    </tr>
+					    	<tr th:each="claimReply : ${claimReply}" > 
+									<td th:text="${claimReply.admin_name}"></td> 
+									<td> 
+										<a  th:text="${claimReply.claimReTitle}" th:href="@{./claim-re-detail/{claimNo}(claimNo=${claimReply.claimNo})}"></a>
+									</td> 
+									<td th:text="${claimReply.claimReDate}"></td> 
+								</tr>
+							</tr>
+							<!-- 답변  -->
 						</tbody>
 					</table>
 					<div class="button-cover">

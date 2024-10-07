@@ -7,7 +7,6 @@ package himedia.project.careops.controller;
 
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +46,6 @@ public class DashBoardController {
     	// session 받아온 부서 번호, 이름
     	String departmentNo = (String) session.getAttribute("deptNo");
     	String departmentName = (String) session.getAttribute("departmentName");
-    	String userId = (String) session.getAttribute("userId");
     	String userName = (String) session.getAttribute("userName");
 
     	// [서비스 미리보기]
@@ -94,5 +92,4 @@ public class DashBoardController {
     	
     	return "admin/dash-board";
     }
-    
 }

@@ -100,6 +100,7 @@ public class ManagerService {
     }
     
     // 작성자 : 최은지
+    // 담당자 중복 확인
     public boolean checkMangerId(String managerId) {
     	Optional<Manager> checkId = managerRepository.findByManagerId(managerId);
     	log.info("입력받은 매니저 아이디: {}", managerId);
@@ -114,4 +115,22 @@ public class ManagerService {
     	return false;
     }
     
+    // 작성자 : 최은지
+    // 담당자 저장 
+    public void saveManager(ManagerDTO managerDTO,  ManagerDepartmentDTO departmentDTO ) {
+    	log.info("담당자 등록 서비스 실행");
+    	log.info("매니저 정보 :{}" , managerDTO);;
+    	log.info("부서 정보 :{}" , departmentDTO);
+    	Manager manager = new Manager();
+    	manager.setManagerDeptNo(departmentDTO.getManagerDeptNo());
+    	manager.setManagerDeptPart(departmentDTO.getManagerDeptPart());
+    	
+    	manager.setManagerDeptName(managerDTO.getManagerDeptName());   	
+    	manager.setManagerName(managerDTO.getManagerName());    	
+    	manager.setManagerPhoneNumber(managerDTO.getManagerPhoneNumber());   	
+    	manager.setManagerId(managerDTO.getManagerId());
+    	manager.setManagerPassword(managerDTO.getManagerPassword());    	
+    	managerRepository.save(manager);
+    	
+	}
 }

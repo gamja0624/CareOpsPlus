@@ -1,9 +1,8 @@
 package himedia.project.careops.service;
 
-
 /**
  * @author 최은지
- * @editDate 2024-09-27
+ * @editDate 2024-09-27 ~ 
  */
 
 import java.util.Calendar;
@@ -29,6 +28,7 @@ import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.ClaimCategory;
 import himedia.project.careops.entity.ClaimSubCategory;
 import himedia.project.careops.repository.ClaimCategoryRepository;
+import himedia.project.careops.repository.ClaimReplyRepository;
 import himedia.project.careops.repository.ClaimRepository;
 import himedia.project.careops.repository.ClaimSubCategoryRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -41,12 +41,15 @@ public class ClaimService {
 	private final ClaimRepository claimRepository;
 	private final ClaimCategoryRepository claimCategoryRepository;
 	private final ClaimSubCategoryRepository calimSubCategoryRepository;
+	private final ClaimReplyRepository claimReplyRepository;
 	private final ModelMapper modelMapper;
 	
-	public ClaimService(ClaimRepository claimRepository, ClaimCategoryRepository claimCategoryRepository ,ClaimSubCategoryRepository calimSubCategoryRepository, ModelMapper modelMapper) {
+	public ClaimService(ClaimRepository claimRepository, ClaimCategoryRepository claimCategoryRepository ,ClaimSubCategoryRepository calimSubCategoryRepository, 
+						ClaimReplyRepository claimReplyRepository, ModelMapper modelMapper) {
 		this.claimRepository = claimRepository;
 		this.claimCategoryRepository = claimCategoryRepository;
 		this.calimSubCategoryRepository = calimSubCategoryRepository;
+		this.claimReplyRepository = claimReplyRepository;
 		this.modelMapper = modelMapper;
 	}
 	

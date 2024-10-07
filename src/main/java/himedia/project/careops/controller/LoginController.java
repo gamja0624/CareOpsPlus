@@ -67,7 +67,7 @@ public class LoginController {
 	        String departmentName = (String) loginResult.get("departmentName");
 
 	        logger.info("{} 로그인 성공: {}", deptNo, userType);
-
+	        //로그인 성공
 	        session.setAttribute("userType", userType);
 	        session.setAttribute("deptNo", deptNo);
 	        session.setAttribute("department", departmentName);
@@ -75,6 +75,7 @@ public class LoginController {
 	        session.setAttribute("userName", userName);
 
 	        String redirectUrl = "/" + userType + "/dash-board";
+	        // 사용자 정보를 세션에 저장
 	        response.put("success", true);
 	        response.put("redirectUrl", redirectUrl);
 	        response.put("userType", userType);
@@ -84,9 +85,10 @@ public class LoginController {
 	        response.put("department", departmentName);
 
 	    } else {
+	    	//로그인 실패 
 	        logger.warn("로그인 실패: deptNo={}, userId={}", deptNo, userId);
 	        response.put("success", false);
-	        response.put("message", loginResult.get("message")); 
+	        response.put("message", loginResult.get("message") != null ? loginResult.get("message") : "로그인에 실패했습니다. 다시 시도하세요.");
 	    }
 		// JSON 형식으로 응답데이터를 변환하여 HTTP 200 OK 상태 코드와 함께 응답 반환
 		// JSON 데이터를 클라이언트에게 반환함 클라이언트는 서버로 JSON 형식의 응답을 받게된다.

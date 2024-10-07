@@ -15,16 +15,16 @@ public class ClaimReplyId implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Long claimNo;			 	// 민원 번호
-    private Long claimCategoryNo; 		// 민원 대분류 번호
-    private Long claimSubCategoryNo; 	// 민원 소분류 번호
+	private Integer claimNo;			 	// 민원 번호
+    private String claimCategoryNo; 		// 민원 대분류 번호
+    private int claimSubCategoryNo; 	// 민원 소분류 번호
     private String managerId; 			// 민원 담당자 아이디
-    private String managerDeptNo; 		// 민원 담당자 부서번호
+    private int managerDeptNo; 		// 민원 담당자 부서번호
 
     public ClaimReplyId() {}
 
-	public ClaimReplyId(Long claimNo, Long claimCategoryNo, Long claimSubCategoryNo, String managerId,
-			String managerDeptNo) {
+	public ClaimReplyId(Integer claimNo, String claimCategoryNo, int claimSubCategoryNo, String managerId,
+			int managerDeptNo) {
 		super();
 		this.claimNo = claimNo;
 		this.claimCategoryNo = claimCategoryNo;
@@ -33,27 +33,27 @@ public class ClaimReplyId implements Serializable {
 		this.managerDeptNo = managerDeptNo;
 	}
 
-	public Long getClaimNo() {
+	public Integer getClaimNo() {
 		return claimNo;
 	}
 
-	public void setClaimNo(Long claimNo) {
+	public void setClaimNo(Integer claimNo) {
 		this.claimNo = claimNo;
 	}
 
-	public Long getClaimCategoryNo() {
+	public String getClaimCategoryNo() {
 		return claimCategoryNo;
 	}
 
-	public void setClaimCategoryNo(Long claimCategoryNo) {
+	public void setClaimCategoryNo(String claimCategoryNo) {
 		this.claimCategoryNo = claimCategoryNo;
 	}
 
-	public Long getClaimSubCategoryNo() {
+	public int getClaimSubCategoryNo() {
 		return claimSubCategoryNo;
 	}
 
-	public void setClaimSubCategoryNo(Long claimSubCategoryNo) {
+	public void setClaimSubCategoryNo(int claimSubCategoryNo) {
 		this.claimSubCategoryNo = claimSubCategoryNo;
 	}
 
@@ -65,11 +65,11 @@ public class ClaimReplyId implements Serializable {
 		this.managerId = managerId;
 	}
 
-	public String getManagerDeptNo() {
+	public int getManagerDeptNo() {
 		return managerDeptNo;
 	}
 
-	public void setManagerDeptNo(String managerDeptNo) {
+	public void setManagerDeptNo(int managerDeptNo) {
 		this.managerDeptNo = managerDeptNo;
 	}
 
