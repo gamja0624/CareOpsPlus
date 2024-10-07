@@ -24,7 +24,7 @@ public class ClaimReplyDTO {
 	private int managerDeptNo;		// 민원 담당자 부서번호 ( 외래키 )
 	private String adminId;				// 관리자 아이디 ( 외래키 )
 	private String adminDeptNo;			// 관리자 부서번호 ( 외래키 )
-	private String admin_name;			// 관리자 이름
+	private String adminName;			// 관리자 이름
 	private String claimReTitle;		// 민원 답변 제목
 	private String claimReContent;		// 민원 답변 내용
 	private Date claimReDate;			// 민원 답변 일자
@@ -35,7 +35,7 @@ public class ClaimReplyDTO {
 	
 
 	public ClaimReplyDTO(Integer claimNo, String claimCategoryNo, int claimSubCategoryNo, String managerId,
-			int managerDeptNo, String adminId, String adminDeptNo, String admin_name, String claimReTitle,
+			int managerDeptNo, String adminId, String adminDeptNo, String adminName, String claimReTitle,
 			String claimReContent, Date claimReDate) {
 		this.claimNo = claimNo;
 		this.claimCategoryNo = claimCategoryNo;
@@ -44,7 +44,7 @@ public class ClaimReplyDTO {
 		this.managerDeptNo = managerDeptNo;
 		this.adminId = adminId;
 		this.adminDeptNo = adminDeptNo;
-		this.admin_name = admin_name;
+		this.adminName = adminName;
 		this.claimReTitle = claimReTitle;
 		this.claimReContent = claimReContent;
 		this.claimReDate = claimReDate;
@@ -107,12 +107,12 @@ public class ClaimReplyDTO {
 		this.adminDeptNo = adminDeptNo;
 	}
 
-	public String getAdmin_name() {
-		return admin_name;
+	public String getAdminName() {
+		return adminName;
 	}
 
-	public void setAdmin_name(String admin_name) {
-		this.admin_name = admin_name;
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
 	}
 
 	public String getClaimReTitle() {
@@ -143,7 +143,7 @@ public class ClaimReplyDTO {
 	public String toString() {
 		return "ClaimReplyDTO [claimNo=" + claimNo + ", claimCategoryNo=" + claimCategoryNo + ", claimSubCategoryNo="
 				+ claimSubCategoryNo + ", managerId=" + managerId + ", managerDeptNo=" + managerDeptNo + ", adminId="
-				+ adminId + ", adminDeptNo=" + adminDeptNo + ", admin_name=" + admin_name + ", claimReTitle="
+				+ adminId + ", adminDeptNo=" + adminDeptNo + ", adminName=" + adminName + ", claimReTitle="
 				+ claimReTitle + ", claimReContent=" + claimReContent + ", claimReDate=" + claimReDate + "]";
 	}
 	
