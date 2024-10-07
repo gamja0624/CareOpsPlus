@@ -11,7 +11,7 @@
 		<style type="text/css">
           /* 페이지 레이아웃 */
           .layout-table { height: 680px; text-align: center; }
-          .inner-layout-table { height: 600px; }
+          .inner-layout-table { padding-top: 20px; height: 600px; }
           /* 목록 테이블 */
           .table { margin: 0 auto; width: 800px;  text-align: center; vertical-align: inherit; }
           .table-head { font-weight: 600; font-size: 20px; }
@@ -27,12 +27,13 @@
           .pagination a:hover:not(.active) { background-color: #ddd; }
           
           /* 검색박스 라인 */
-          .down-side {display: flex; align-items: center;}
-          .down-left-side { margin-left: auto; text-align: right; }
-          .down-right-side { margin-right: auto;}
+          .page { width: 800px; margin: 10px auto; }
+          .down-side {display: flex; align-items: center; width: 800px; margin: 0 auto;}
+          .down-left-side {margin-right: auto;}
+          .category-search-box { margin: 20px auto; }
+          .manager-searchbox { margin-left: auto; }
           
           /* 버튼 라인 */
-          .btn-line { text-align: left; width: 300px; margin-left: 50px; }
           .btn { background-color: #13254C; color: white; }
           .btn:hover { border: 1px solid #13254C; }
 		</style>
@@ -120,7 +121,7 @@
                   </div>
                 </div>
                 <div class="down-side">
-                  <div class="down-left-side">
+                  <div class="down-left-side" th:classappend="${session.userType == 'manager' }? 'manager-searchbox' : ''" >
                     <div class="search-box">
                       <form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/daily-report-list/search' }" method="get">
                         <label class="report-category" for="column"></label> 
@@ -147,9 +148,6 @@
 			</div>
 		</div>
         <script type="text/javascript">
-        	
-        
-        
           function updateInputType() {
               const filter = document.getElementById('filter').value;
               const searchInput = document.getElementById('search');
