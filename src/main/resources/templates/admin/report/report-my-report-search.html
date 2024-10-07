@@ -10,7 +10,9 @@
 		
 		<style type="text/css">
           /* 페이지 레이아웃 */
-          .layout-table { height: 680px; text-align: center; }
+          .layout-table { margin-bottom: 10px; height: 800px; text-align: center; }
+          .inner-layout-table { padding-top: 20px; }
+          
           /* 목록 테이블 */
           .table { margin: 0 auto; width: 800px;  text-align: center; vertical-align: inherit; }
           .table-head { font-weight: 600; font-size: 20px; }
@@ -25,6 +27,9 @@
           .pagination a { color: black; float: left; padding: 8px 16px; text-decoration: none; }
           .pagination a.active { background-color: #4CAF50; color: white; }
           .pagination a:hover:not(.active) { background-color: #ddd; }
+          
+          /* 검색바 라인 */
+          .category-search-box { margin: 20px auto; }
           
           /* 버튼 라인 */
           .btn-line { text-align: center; }
@@ -113,17 +118,17 @@
                       </ul>
                     </nav>
                   </div>
-              </div>
-              <div class="search-box">
-                <form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/my-report/search' }" method="get">
-                  <label class="report-category" for="column"></label> 
-                  <select id="filter" name="filter" >
-                    <option value="dmrDate">작성일자</option>
-                  </select> 
-                  <label for="value"></label> 
-                  <input class="input" type="date" name="value" id="search"> 
-                  <input class="input" type="submit" id="search-submit" value="검색">
-                </form>
+                <div class="search-box">
+                  <form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/my-report/search' }" method="get">
+                    <label class="report-category" for="column"></label> 
+                    <select id="filter" name="filter" >
+                      <option value="dmrDate">작성일자</option>
+                    </select> 
+                    <label for="value"></label> 
+                    <input class="input" type="date" name="value" id="search"> 
+                    <input class="input" type="submit" id="search-submit" value="검색">
+                  </form>
+                </div>
               </div>
  			</div> 
 		</div>
