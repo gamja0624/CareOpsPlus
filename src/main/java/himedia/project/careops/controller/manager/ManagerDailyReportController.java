@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
@@ -49,11 +50,28 @@ public class ManagerDailyReportController {
 			return "admin/report/report-list";
 		}
 		
+		// 일일관리보고서 Search 페이지
+		@GetMapping("/daily-report-list/search")
+		public String reportSearch(@PageableDefault Pageable pageable, @RequestParam String filter, @RequestParam String value, Model model) {
+  
+		  Page<DailyManagementReportDTO> reportSearch = dailyReportService.reportSearch(filter, value, pageable); 
+		  PagingButtonInfo paging = Pagenation.getPagingButtonInfo(reportSearch); 
+		  int totalPages = reportSearch.getTotalPages();
+		  
+		  model.addAttribute("reportAllList", reportSearch);
+		  model.addAttribute("paging", paging);
+		  model.addAttribute("totalPages",totalPages);
+		  model.addAttribute("filter", filter);
+		  model.addAttribute("value", value);
+  
+		  return "/admin/report/report-search-list"; 
+  		}
+		
 		// 일일관리보고서 상세 페이지
-		@GetMapping("/daily-report-detail/{dmrNo}")
+		@GetMapping("daily-report-detail/{dmrNo}")
 		public String reportDtail(@PathVariable int dmrNo, Model model) {
 			
-			log.info("넘어온 dmrNo {}", dmrNo);
+			//log.info("넘어온 dmrNo {}", dmrNo);
 			DailyManagementReportDTO result = dailyReportService.findByReportNo(dmrNo);
 			
 			model.addAttribute("result", result);

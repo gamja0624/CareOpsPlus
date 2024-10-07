@@ -18,24 +18,24 @@
 			.s-m { margin-right: 20px; }
 		
 			/* 기본 세팅 */
-			.title { width: 700px; height: 40px; margin-bottom: 30px; }
+			.title { width: 700px; height: 47px; margin-bottom: 30px; }
 			.sub-title { font-size: 30px; }
 			.today { font-size: 20px; }
 			.status { text-align: right; margin: 10px 0 40px 0; }
-			.icon-next { width: 30px; margin-left: 10px; }
+			.icon-next { width: 30px; margin: auto 10px; }
 		
 			/* 서비스 미리보기 */
 			.service { margin-bottom: 35px; width: 700px; display: flex; justify-content: space-between; } 
+			.box-flex { display: flex; }
 			.box { 
 				padding: 10px;
 				width: 160px; /* 180 */
 				height: 100px; /* 120 */
 				background-color: #13254C; 
 				border-radius: 10px;
-				display: inline-block;
 		 	}
  		 	.box-text { font-size: 20px; color: white; }
-		 	.box-sub { display: flex; align-items: center; font-size: 35px; font-weight: 900;  }
+		 	.box-sub { font-size: 35px; font-weight: 900; }
 		 	
 		 	/* 민원 현황 */
 		 	.claim-table { padding: 20px; margin-top: 70px; width: 700px; height: 515px; border: 3px solid #13254C; border-radius: 10px; }
@@ -43,7 +43,7 @@
 		 	/* 캘린더 */
 		 	.calendar { 
 				display: flex;
-				margin: 70px 0 30px 0; 
+				margin: 77px 0 30px 0; 
 				width: 500px; 
 				height: 300px; 
 				border: 3px solid #13254C; 
@@ -54,6 +54,22 @@
 		 	/* 보고서 */
 		 	.dailyReport-add { display: flex; width: 500px; }
 		 	.dailyReport-add-next { margin-left: auto; margin-bottom: 5px; }
+		 	
+		 	.dailyReport-content-zero { 
+		 		display: grid;
+		 		padding: 20px; 
+		 		margin-bottom: 15px; 
+		 		width: 500px; 
+		 		height: 180px; 
+		 		background-color: #13254C;
+		 		border: 3px solid #13254C; 
+		 		border-radius: 10px; 
+		 		color: white;
+	 		}
+		 	.dailyReport-content-info-zero { display: contents; }
+		 	.icon-box { width: 80px; margin: auto; }
+	 		.dailyReport-content-title-zero { font-size: 25px; margin: auto; }
+		 	
 		 	.dailyReport-content { 
 		 		display: flex;
 		 		padding: 20px; 
@@ -66,17 +82,22 @@
 		 		color: white;
 	 		}
 	 		.dailyReport-content-info { padding: 5px auto; height: 60px; margin-right: 20px; }
+	 		.dailyReport-content-title-info { display: flex; align-items: center; }
 	 		.dailyReport-content-title { font-size: 25px; margin-bottom: 5px; }
 	 		.dailyReport-content-detail { font-size: 20px; }
 	 		.dailyReport-content-btn { 
 	 			margin-left: auto;
 	 			width: 100px;
-	 			color: white; 
 	 			border-radius: 40px; 
 	 			border: 2px solid white; 
 	 			font-size: 18px;
 	 			/* margin: 0 auto; */
+	 			font-weight: 600;
+	 			color: #13254C;
+	 			background-color: white;
+	 			pointer-events: none;
  			}
+ 			.dailyReport-btn-false { background-color: #13254C; color: white; }
 		</style>
 	</head>
 
@@ -93,31 +114,39 @@
 				<!-- 서비스 미리보기 -->
 				<div class="service">
 					<!-- 민원 접수 -->
-					<div class="box box-text">민원 접수 대기건
-						<a th:href="@{/mypage}" class="box-text box-sub">7건
+					<div class="box box-text">
+						<p>민원 접수 대기건</p>
+						<div class="box-flex">
+							<a th:href="@{/}" class="box-text box-sub" th:text="${ claimStatus.standby + '건' }"></a>
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-						</a>
+						</div>
 					</div>
 					
 					<!-- 민원 처리 -->
-					<div class="box box-text">민원 처리 진행건
-						<a href="" class="box-text box-sub">18건
+					<div class="box box-text">
+						<p>민원 처리 진행건</p>
+						<div class="box-flex">
+							<a href="" class="box-text box-sub" th:text="${ claimStatus.progress + '건' }"></a>
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-						</a>
+						</div>
 					</div>
 					
 					<!-- 의료기기 -->
-					<div class="box box-text">의료기기 대기건
-						<a href="" class="box-text box-sub">4건
+					<div class="box box-text">
+						<p>의료기기 대기건</p>
+						<div class="box-flex">
+							<a href="" class="box-text box-sub" th:text="${ claimStatus.medicalCnt + '건' }"></a>
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-						</a>
+						</div>
 					</div>
 					
 					<!-- 안전관리 -->
-					<div class="box box-text">안전관리 대기건
-						<a href="" class="box-text box-sub">3건
+					<div class="box box-text">
+						<p>안전관리 대기건</p>
+						<div class="box-flex">
+							<a href="" class="box-text box-sub" th:text="${ claimStatus.safetyCnt + '건' }"></a>
 							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-						</a>
+						</div>
 					</div>
 				</div>
 				
@@ -150,31 +179,43 @@
 				</div>
 				
 				<!-- 보고서 -->
-				<div class=dailyReport>
+				<div class="dailyReport">
+					<!-- 더보기 -->
 					<div class="dailyReport-add">
 						<a href="" class="dailyReport-add-next">더보기</a>
 					</div>
-		 			<div class="dailyReport-content">
-		 				<div class="dailyReport-content-info">
-			 				<p class="dailyReport-content-title">안전관리팀, 홍길동</p>
-			 				<p class="dailyReport-content-detail">간호부서 앞 소화전 8대 중 5대 점검 완료, 나머...</p>
-		 				</div>
-		 				<button class="btn dailyReport-content-btn">NEW</button>
-		 			</div>
-		 			<div class="dailyReport-content">
-		 				<div class="dailyReport-content-info">
-			 				<p class="dailyReport-content-title">안전관리팀, 홍길동</p>
-			 				<p class="dailyReport-content-detail">간호부서 앞 소화전 8대 중 5대 점검 완료, 나머...</p>
-		 				</div>
-		 				<button class="btn dailyReport-content-btn">보고 완료</button>
-		 			</div>
-		 			<div class="dailyReport-content">
-		 				<div class="dailyReport-content-info">
-			 				<p class="dailyReport-content-title">안전관리팀, 홍길동</p>
-			 				<p class="dailyReport-content-detail">간호부서 앞 소화전 8대 중 5대 점검 완료, 나머...</p>
-		 				</div>
-		 				<button class="btn dailyReport-content-btn">보고 완료</button>
-		 			</div>
+					
+					<!-- 3개 이상일 때 -->
+					<th:block th:if="${ dailyReportList.size() > 3 }">
+			 			<div class="dailyReport-content" th:each="dailyReport : ${ dailyReportList.subList(0, 3) }">
+			 				<div class="dailyReport-content-info">
+			 					<div class="dailyReport-content-title-info">
+					 				<p class="dailyReport-content-title" th:text="${ dailyReport.adminDeptName + ', ' }"></p>
+					 				<p class="dailyReport-content-title" th:text="${ dailyReport.adminName }"></p>
+			 					</div>
+				 				<p class="dailyReport-content-detail" 
+				 					th:text="${ #strings.length(dailyReport.dmrReportDetail) > 25 ? #strings.substring(dailyReport.dmrReportDetail, 0, 20) + ' ...' : dailyReport.dmrReportDetail }"></p>
+			 				</div>
+			 				<button class="btn dailyReport-content-btn dailyReport-btn-false" th:if="${ dailyReportList.get(0) == dailyReport }">NEW</button>
+			 				<button class="btn dailyReport-content-btn dailyReport-btn-true" th:unless="${ dailyReportList.get(0) == dailyReport}">보고 완료</button>
+			 			</div>
+					</th:block>
+					
+					<!-- 3개 이하일 때 -->
+					<th:block th:unless="${ dailyReportList.size() > 3 }">
+						<div class="dailyReport-content" th:each="dailyReport : ${ dailyReportList }">
+			 				<div class="dailyReport-content-info">
+			 					<div class="dailyReport-content-title-info">
+					 				<p class="dailyReport-content-title" th:text="${ dailyReport.adminDeptName + ', ' }"></p>
+					 				<p class="dailyReport-content-title" th:text="${ dailyReport.adminName }"></p>
+			 					</div>
+				 				<p class="dailyReport-content-detail" 
+				 					th:text="${ #strings.length(dailyReport.dmrReportDetail) > 25 ? #strings.substring(dailyReport.dmrReportDetail, 0, 20) + ' ...' : dailyReport.dmrReportDetail }"></p>
+			 				</div>
+			 				<button class="btn dailyReport-content-btn dailyReport-btn-false" th:if="${ dailyReportList.get(0) == dailyReport }">NEW</button>
+			 				<button class="btn dailyReport-content-btn dailyReport-btn-true" th:unless="${ dailyReportList.get(0) == dailyReport}">보고 완료</button>
+			 			</div>
+					</th:block>
 				</div>
 			</div>
 		</div>
@@ -186,47 +227,68 @@
   	
 	  <script type="text/javascript">
 			// className 이 today 인 p 태그 오늘 날짜로 기본값 설정
-			var pList = document.querySelectorAll('.today');
+			var today = document.querySelectorAll('.today');
 			
-			pList.forEach(function (item) {
-				item.innerText = new Date().toISOString().substring(0, 10);
+			today.forEach(function (item) {
+				item.innerText = new Date().toISOString().substring(0, 4) + "년 기준";
 			})
 			
 			// 세로 막대 그래프
 			var ctx = document.getElementById('claimChart');
+			
+			var claimData = [
+			  // 1 ~ 4월
+			  '[[${ClaimDateStatus.jan}]]', '[[${ClaimDateStatus.feb}]]', '[[${ClaimDateStatus.mar}]]', '[[${ClaimDateStatus.apr}]]', 
+			  // 5 ~ 8월
+			  '[[${ClaimDateStatus.may}]]', '[[${ClaimDateStatus.jun}]]', '[[${ClaimDateStatus.jul}]]', '[[${ClaimDateStatus.aug}]]', 
+			  // 9 ~ 12월
+			  '[[${ClaimDateStatus.sep}]]', '[[${ClaimDateStatus.oct}]]', '[[${ClaimDateStatus.nov}]]', '[[${ClaimDateStatus.dec}]]'
+			];
+			
+			// 건수에 따른 색상표
+			var thresholds = {
+			  green: 10,  // 0 ~ 10건 : 초록
+			  yellow: 20, // 11 ~ 20건: 노랑
+			  orange: 30, // 21 ~ 30건: 주황
+			  red: 31     // 31건 이상: 빨강
+			};
+			
+			var backgroundColors = claimData.map(function(value) {
+			  if (value <= thresholds.green) {
+			    return 'rgba(0, 204, 0, 0.5)';    // 초록
+			  } else if (value <= thresholds.yellow) {
+			    return 'rgba(255, 206, 86, 0.5)'; // 노랑
+			  } else if (value <= thresholds.orange) {
+			    return 'rgba(255, 159, 64, 0.5)'; // 주황
+			  } else {
+			    return 'rgba(255, 99, 132, 0.5)'; // 빨강
+			  }
+			});
+
+			var borderColors = backgroundColors.map(function(color) {
+			  return color.replace('0.5', '1'); // 투명도를 1로 변경하여 테두리 색상 설정
+			});
+			
+			// 세로 막대 그래프 구현
 	    var myChart = new Chart(ctx, {
 	      type: 'bar',
 	      data: {
 	        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
 	        datasets: [{
 	          label: '현황 ',
-	          data: [1, 2, 3, 4, 5],
-	          backgroundColor: [
-	            'rgba(0, 204, 0, 0.5)',    // 정상
-	            'rgba(255, 159, 64, 0.5)', // 점검
-	            'rgba(54, 162, 235, 0.5)', // 수리
-	            'rgba(255, 206, 86, 0.5)', // 노후
-	            'rgba(255, 99, 132, 0.5)'  // 만료
-	          ],
-	          borderColor: [
-	            'rgba(0, 204, 0, 1)',    // 정상
-	            'rgba(255, 159, 64, 1)', // 점검
-	            'rgba(54, 162, 235, 1)', // 수리
-	            'rgba(255, 206, 86, 1)', // 노후
-	            'rgba(255, 99, 132, 1)'  // 만료
-	          ],
+	          data: claimData, 
+	          backgroundColor: backgroundColors, 
+	          borderColor: borderColors,
 	          borderWidth: 1
 	        }]
 	      },
 	      options: {
-	    	  legend: {
-    	        display: false // label 숨기기
-    	    },
+	    	  legend: { display: false }, // label 숨기기
 	        scales: {
-	          yAxes: [{
-	            ticks: {
-	              beginAtZero: true
-	            }
+	          yAxes: [{ 
+	        	  ticks: { 
+	        		  beginAtZero: true
+        		  }
 	          }]
 	        },
 	      }

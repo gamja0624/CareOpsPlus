@@ -1,13 +1,12 @@
 package himedia.project.careops.controller.admin;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
-
 /**
  * @author 이홍준 
  * @editDate 2024-09-29 ~
  */
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.DailyManagementReportDTO;
-import himedia.project.careops.entity.DailyManagementReport;
 import himedia.project.careops.service.DailyReportService;
 import jakarta.servlet.http.HttpSession;
 
@@ -58,11 +55,29 @@ public class AdminDailyReportController {
 		return "admin/report/report-list";
 	}
 	
+	// 일일관리보고서 Search 페이지
+  @GetMapping("/daily-report-list/search")
+  public String searchReport(@PageableDefault Pageable pageable, @RequestParam String filter, @RequestParam String value, Model model) {
+  
+	  Page<DailyManagementReportDTO> reportSearch = dailyReportService.reportSearch(filter, value, pageable); 
+	  PagingButtonInfo paging = Pagenation.getPagingButtonInfo(reportSearch); 
+	  int totalPages = reportSearch.getTotalPages();
+	  
+	  model.addAttribute("reportAllList", reportSearch);
+	  model.addAttribute("paging", paging);
+	  model.addAttribute("totalPages",totalPages);
+	  model.addAttribute("filter", filter);
+	  model.addAttribute("value", value);
+  
+	  return "/admin/report/report-search-list"; 
+  }
+	 
+	
 	// 일일관리보고서 상세 페이지
 	@GetMapping("daily-report-detail/{dmrNo}")
 	public String reportDtail(@PathVariable int dmrNo, Model model) {
 		
-		log.info("넘어온 dmrNo {}", dmrNo);
+		//log.info("넘어온 dmrNo {}", dmrNo);
 		DailyManagementReportDTO result = dailyReportService.findByReportNo(dmrNo);
 		
 		model.addAttribute("result", result);
@@ -83,10 +98,14 @@ public class AdminDailyReportController {
 	
 	// 일일관리 보고서 수정 후 상세 페이지 이동
 	@PostMapping("daily-report-detail/{dmrNo}")
-	public String edit(@PathVariable int dmrNo, DailyManagementReportDTO editReport,  Model model) {
+	public String edit(@PathVariable int dmrNo, DailyManagementReportDTO editReport, HttpSession session,  Model model) {
 		
-		log.info("모델로 넘어온 모델 {}", editReport);
-		dailyReportService.editReportDetail(dmrNo, editReport);
+		//log.info("모델로 넘어온 모델 {}", editReport);
+		
+		String adminName = (String)session.getAttribute("userName");
+		String adminId = (String)session.getAttribute("userId");
+		
+		dailyReportService.editReportDetail(dmrNo, adminId, adminName, editReport);
 		
 		DailyManagementReportDTO result = dailyReportService.findByReportNo(dmrNo);
 		
@@ -99,7 +118,7 @@ public class AdminDailyReportController {
 	@GetMapping("/daily-report-regist")
 	public String reportRegist(Model model) {
 		LocalDate nowDate = LocalDate.now(ZoneId.of("Asia/Seoul"));
-		log.info("오늘날짜{}", nowDate);
+		//log.info("오늘날짜{}", nowDate);
 		model.addAttribute("nowDate", nowDate);
 		return "admin/report/report-regist";
 	}
@@ -111,19 +130,19 @@ public class AdminDailyReportController {
 		String adminid = (String)session.getAttribute("userId");
 		String adminName = (String)session.getAttribute("userName");
 		String adminDeptNo = (String)session.getAttribute("deptNo");
-		String adminDeptName = (String)session.getAttribute("departmentName");
+		String adminDeptName = (String)session.getAttribute("department");
 		
 		
-		log.info("제출된 리포트 =={}", newReport);
-		log.info("작성자(관리자이름) =={}", adminName);
-		log.info("작성자 부서(관리자 부서) =={}", adminDeptName);
+		//log.info("제출된 리포트 =={}", newReport);
+		//log.info("작성자(관리자이름) =={}", adminName);
+		//log.info("작성자 부서(관리자 부서) =={}", adminDeptName);
 		
 		dailyReportService.reportRegistation(adminid, adminName, adminDeptNo, adminDeptName, newReport);
 		
 		return "redirect:/admin/daily-report-list";
 	}
 	
-	// 내가 쓴 보고서 보기 페이지 이동
+	// 내 보고서 페이지 이동
 	@GetMapping("/my-report")
 	public String myReport(@PageableDefault Pageable pageable, HttpSession session, Model model) {
 		
@@ -139,5 +158,25 @@ public class AdminDailyReportController {
 		
 		return "admin/report/report-my-report";
 	}
+	
+	// 내가 보고서 페이지 검색페이지
+	@GetMapping("/my-report/search")
+	public String searchInMyReport(@PageableDefault Pageable pageable, @RequestParam String filter, @RequestParam String value,HttpSession session, Model model) {
+		
+		String adminName = (String)session.getAttribute("userName");
+		
+		Page<DailyManagementReportDTO> searchMyReport = dailyReportService.searchReporByDate(adminName, filter, value, pageable); 
+		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(searchMyReport); 
+		int totalPages = searchMyReport.getTotalPages();
+	  
+		model.addAttribute("searchMyReport", searchMyReport);
+		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("filter", filter);
+		model.addAttribute("value", value);
+		  
+		return "admin/report/report-my-report-search";
+	}
+	
 	
 }
