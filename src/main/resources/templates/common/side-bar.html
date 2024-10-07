@@ -26,7 +26,7 @@
 		    <div class="hr"></div>
 		    <ul class="nav nav-pills flex-column mb-auto">
 		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="nav-link active" aria-current="page">담당자 관리</a>
+		        <a th:href="@{'/' + ${session.userType} + '/account-list'}" class="nav-link active" aria-current="page">담당자 관리</a>
 		      </li>
 		      <li class="nav-item">
 		        <a th:href="@{'/' + ${session.userType} + '/medical-list'}" class="nav-link nav-color">의료기기 관리</a>
@@ -41,7 +41,7 @@
 		        <a th:href="@{'/' + ${session.userType} + '/daily-report-list'}" class="nav-link nav-color">일일 관리 보고서</a>
 		      </li>
 		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="nav-link nav-color">민원 관리</a>
+		        <a th:href="@{'/' + ${session.userType} + '/claim-list'}" class="nav-link nav-color">민원 관리</a>
 		      </li>
 		    </ul>
 		    <div class="hr"></div>

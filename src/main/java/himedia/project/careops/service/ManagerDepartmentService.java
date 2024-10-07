@@ -42,4 +42,15 @@ public class ManagerDepartmentService {
                          .collect(Collectors.toList());
     }
     
+    // 작성자 : 최은지
+    // 부서 이름으로 부서 정보 찾기
+    public ManagerDepartmentDTO findByDeptName (String managerDeptName) {
+    	
+    	return managerDepartmentRepository.findAll()
+    					.stream()
+    					.filter(deptName -> deptName.getManagerDeptName().equals(managerDeptName))
+    					.map(department -> modelMapper.map(department, ManagerDepartmentDTO.class))
+    					.findAny()  
+    			        .orElse(null);
+    }
 }

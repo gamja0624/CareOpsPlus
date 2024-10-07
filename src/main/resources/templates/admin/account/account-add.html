@@ -20,7 +20,7 @@
 		.account-button { padding: 10px 15px; color: #FFF; background-color: #13254C; cursor: pointer; }
 		.account-button:hover { border: 1px solid #13254C; color: #13254C; background-color: #FFF; }
 		.complete-button { width: 120px; }
-
+		#checkIdButton:disabled { padding: 10px 15px; color: #FFF; background-color: #13254C; }
 		/* 부서 검색 모달 스타일 */
 		.modal {
 			display: none;
@@ -30,54 +30,63 @@
 			top: 0;
 			width: 100%;
 			height: 100%;
-			overflow: auto;
 			background-color: rgba(0, 0, 0, 0.4);
 		}
-
 		.modal-content {
 			background-color: #fefefe;
 			margin: 15% auto;
-			padding: 20px;
-			border: 1px solid #888;
+			border: 1px solid #13254C;
+			border-radius: 10px;
 			width: 1200px;
+			height: 860px;
 		}
-
-		.close {
-			width: 1200px;
-			margin: 0 auto;
-			display: flex;
-		}
-
+		.modal-title {
+			background-color: #13254C;
+			height: 70px;
+		}	
 		.grid-cover {
-			padding: 20px;
-			width: 800px;
+			padding: 40px 0;
+			width: 840px;
 			margin: 0 auto;
+			text-align: center;
 		}
-
 		.grid-container {
 			display: grid;
-			grid-template-columns: repeat(2, 1fr);
+			grid-template-columns: repeat(3, 1fr);
 			gap: 10px;
+			width: 450px;
 		}
-
 		.dept-card {
 			background-color: white;
 			display: flex;
 		}
-
 		.card-header {
-			background-color: #13254D;
+			background-color: #13254C;
 			color: white;
 			padding: 10px;
-			width: 200px;
+			width: 130px;
 			text-align: center;
 		}
-
 		.card-body-name {
-			border: 1px solid #13254D;
+			border: 1px solid #13254C;
 			padding: 10px;
-			width: 250px;
+			width: 150px;
 			text-align: center;
+			cursor: pointer;
+		}
+		.card-body-name:hover {
+			border: 1px solid #13254C;
+			background-color:rgba(19, 37, 76, 0.1);
+			cursor: pointer;
+		}
+		.close {
+			text-align: center;
+			margin-top: 5px;
+		}
+		.close-button { 
+			width: 120px;
+			background-color: #13254C;
+			color: #FFF;
 		}
 	</style>
 </head>
@@ -93,11 +102,11 @@
 		<!-- section -->
 		<div class="section">
 			<!-- 제목 -->
-			<h1 class="title">담당자 등록</h1>
+			<h1 class="title">담당자 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 등록</h1>
 			<!-- layout-table -->
 			<div class="layout-table">
 				<div class="form-whole-cover">
-					<form id="registration-form" method="post">
+					<form id="registration-form" action="/admin/account-add-complete" method="post">
 						<div class="form-group">
 							<label class="label-style" for="managerDeptName">부 &nbsp;서&nbsp; 명</label>
 							<input class="input-style" type="text" id="managerDeptName" name="managerDeptName" th:value="${managerDeptName}" required>
@@ -113,15 +122,16 @@
 						</div>
 						<div class="form-group">
 							<label class="label-style" for="managerid">아 &nbsp;이&nbsp; 디</label>
-							<input class="input-style" type="text" id="managerid" th:value="${managerId}" required>
-							<button type="submit" class="btn account-button srh-button" onclick="checkManagerId(event)">중복 확인</button>
+							<input class="input-style" type="text" id="managerid" name="managerId" th:value="${managerId}" required>
+							<button type="submit" class="btn account-button srh-button" id="checkIdButton" onclick="checkManagerId(event)" disabled>중복 확인</button>
 							<div class="warning" id="usernameWarning" style="display:none;">아이디는 7자 이상이어야 합니다.</div>
+							<div class="warning" id="idRequriedWarning" style="display:none;">아이디는 7자 이상이어야 합니다.</div>
 							<div class="warning" th:if="${message}" th:text="${message}" style="color: red;"></div>
 						</div>
 						<div class="form-group">
 							<label class="label-style" for="password">비 밀 번 호</label>
-							<input class="input-style" type="password" id="managerPassword" oninput="checkManagerPassword()" required>
-							<div class="warning" id="passwordWarning" style="display:none;">비밀번호는 숫자와 소문자를 포함해야 합니다.</div>
+							<input class="input-style" type="password" id="managerPassword" name="managerPassword" oninput="checkManagerPassword()" th:value="${managerPassword}" required>
+							<div class="warning" id="passwordWarning" style="display:none;">비밀번호는 영소문자와 숫자를 포함해야 합니다.</div>
 						</div>
 						<div class="form-group">
 							<label class="label-style" for="confirmPassword">비밀번호 확인</label>
@@ -140,7 +150,7 @@
 	<!-- 부서 검색 모달창 -->
 	<div id="departmentModal" class="modal" style="display:none;">
 		<div class="modal-content">
-			<div></div>
+			<div class="modal-title">머리머리머리</div>
 			<div class="grid-cover">
 				<div class="grid-container" id="departmentTable">
 					<div class="dept-card" th:each="managerDepartment : ${managerDepartment}"
@@ -152,7 +162,7 @@
 				</div>
 			</div>
 			<div class="close">
-				<button type="button" onclick="closeModal()"> 닫 기 </button>
+				<button class="btn close-button" type="button" onclick="closeModal()"> 닫 기 </button>
 			</div>
 		</div>
 	</div>
@@ -179,27 +189,41 @@
 		// [ 아이디 길이 검사 ]----------------------------------------------------
 		const userIdInput = document.getElementById('managerid');
 		const usernameWarning = document.getElementById('usernameWarning');
-
-		userIdInput.addEventListener('input', function () {
+		const checkIdButton = document.getElementById('checkIdButton'); // 중복 확인 버튼
+		
+		userIdInput.addEventListener('input', function (event) {
 			const username = userIdInput.value;
 
-			if (username.length < 7) {
+			if (username.length < 7 ) {
 				usernameWarning.style.display = 'block';
-				usernameWarning.textContent = "아이디는 7자 이상이어야 합니다.";
+				usernameWarning.textContent = "아이디는 7자 이어야 합니다.";
+				checkIdButton.disabled = true;
+			} else if (username.length > 7) {
+				usernameWarning.style.display = 'block';
+				usernameWarning.textContent = "아이디는 7자 이어야 합니다.";
+				checkIdButton.disabled = true; // 버튼 비활성화
 			} else {
 				usernameWarning.style.display = 'none'; 
+				checkIdButton.disabled = false; 
 			}
 		});
 
 		// [ 아이디 중복 검사 ]----------------------------------------------------
 		function checkManagerId(event) {
-			event.preventDefault();
-
+			
 			const managerId = userIdInput.value;
-
+			const idRequried = document.getElementById('idRequriedWarning');
+			
+			if(managerId == "") {
+				event.preventDefault();
+				idRequried.style.display = 'block';
+				idRequried.textContent = "아이디를 입력해주세요.";
+				return;
+			} 
+			
 			const form = document.getElementById('registration-form');
-			form.method = 'get'; 
 			form.action = `/admin/managerId-check/${encodeURIComponent(managerId)}`; 
+			form.method = 'get'; 
 			form.submit(); 
 		}
 		
