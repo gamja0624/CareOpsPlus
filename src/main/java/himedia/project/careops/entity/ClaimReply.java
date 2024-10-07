@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 import lombok.ToString;
 
 @Entity
-@Table(name="claim_re")
+@Table(name="claim_reply")
 @ToString
 public class ClaimReply {
 	

@@ -6,6 +6,7 @@ package himedia.project.careops.service;
 */
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -97,4 +98,39 @@ public class ManagerService {
         managerRepository.save(manager); // 변경 사항 저장
 
     }
+    
+    // 작성자 : 최은지
+    // 담당자 중복 확인
+    public boolean checkMangerId(String managerId) {
+    	Optional<Manager> checkId = managerRepository.findByManagerId(managerId);
+    	log.info("입력받은 매니저 아이디: {}", managerId);
+    
+    	checkId.isEmpty();
+    	
+    	if(checkId.isPresent()) {
+    		log.info("데이터 존재 여부  : {}",checkId);
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+    // 작성자 : 최은지
+    // 담당자 저장 
+    public void saveManager(ManagerDTO managerDTO,  ManagerDepartmentDTO departmentDTO ) {
+    	log.info("담당자 등록 서비스 실행");
+    	log.info("매니저 정보 :{}" , managerDTO);;
+    	log.info("부서 정보 :{}" , departmentDTO);
+    	Manager manager = new Manager();
+    	manager.setManagerDeptNo(departmentDTO.getManagerDeptNo());
+    	manager.setManagerDeptPart(departmentDTO.getManagerDeptPart());
+    	
+    	manager.setManagerDeptName(managerDTO.getManagerDeptName());   	
+    	manager.setManagerName(managerDTO.getManagerName());    	
+    	manager.setManagerPhoneNumber(managerDTO.getManagerPhoneNumber());   	
+    	manager.setManagerId(managerDTO.getManagerId());
+    	manager.setManagerPassword(managerDTO.getManagerPassword());    	
+    	managerRepository.save(manager);
+    	
+	}
 }

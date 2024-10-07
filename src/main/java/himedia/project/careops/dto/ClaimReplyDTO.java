@@ -2,7 +2,7 @@ package himedia.project.careops.dto;
 
 /**
  * @author 최은지 
- * @editDate 2024-09-26
+ * @editDate 2024-09-26 / 2024-10-07 타입 수정
  */
 
 import java.sql.Date;
@@ -12,16 +12,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
+/*@Getter
 @Setter
-@ToString
+@ToString*/
 public class ClaimReplyDTO {
 	
-	private Claim claimNo;				// 민원 번호 ( 외래키 )
-	private Claim claimCategoryNo;		// 민원 대분류 번호 ( 외래키 )
-	private Claim claimSubCategoryNo;	// 민원 소분류 번호 ( 외래키 )
-	private Claim managerId;			// 민원 담당자 아이디 ( 외래키 ) 
-	private Claim managerDeptNo;		// 민원 담당자 부서번호 ( 외래키 )
+	private Integer claimNo;				// 민원 번호 ( 외래키 )
+	private String claimCategoryNo;		// 민원 대분류 번호 ( 외래키 )
+	private int claimSubCategoryNo;	// 민원 소분류 번호 ( 외래키 )
+	private String managerId;			// 민원 담당자 아이디 ( 외래키 ) 
+	private int managerDeptNo;		// 민원 담당자 부서번호 ( 외래키 )
 	private String adminId;				// 관리자 아이디 ( 외래키 )
 	private String adminDeptNo;			// 관리자 부서번호 ( 외래키 )
 	private String admin_name;			// 관리자 이름
@@ -29,12 +29,14 @@ public class ClaimReplyDTO {
 	private String claimReContent;		// 민원 답변 내용
 	private Date claimReDate;			// 민원 답변 일자
 	
-	public ClaimReplyDTO() {}
+	
 
-	public ClaimReplyDTO(Claim claimNo, Claim claimCategoryNo, Claim claimSubCategoryNo, Claim managerId,
-			Claim managerDeptNo, String adminId, String adminDeptNo, String admin_name, String claimReTitle,
+	public ClaimReplyDTO() {}
+	
+
+	public ClaimReplyDTO(Integer claimNo, String claimCategoryNo, int claimSubCategoryNo, String managerId,
+			int managerDeptNo, String adminId, String adminDeptNo, String admin_name, String claimReTitle,
 			String claimReContent, Date claimReDate) {
-		super();
 		this.claimNo = claimNo;
 		this.claimCategoryNo = claimCategoryNo;
 		this.claimSubCategoryNo = claimSubCategoryNo;
@@ -48,43 +50,44 @@ public class ClaimReplyDTO {
 		this.claimReDate = claimReDate;
 	}
 
-	public Claim getClaimNo() {
+
+	public Integer getClaimNo() {
 		return claimNo;
 	}
 
-	public void setClaimNo(Claim claimNo) {
+	public void setClaimNo(Integer claimNo) {
 		this.claimNo = claimNo;
 	}
 
-	public Claim getClaimCategoryNo() {
+	public String getClaimCategoryNo() {
 		return claimCategoryNo;
 	}
 
-	public void setClaimCategoryNo(Claim claimCategoryNo) {
+	public void setClaimCategoryNo(String claimCategoryNo) {
 		this.claimCategoryNo = claimCategoryNo;
 	}
 
-	public Claim getClaimSubCategoryNo() {
+	public int getClaimSubCategoryNo() {
 		return claimSubCategoryNo;
 	}
 
-	public void setClaimSubCategoryNo(Claim claimSubCategoryNo) {
+	public void setClaimSubCategoryNo(int claimSubCategoryNo) {
 		this.claimSubCategoryNo = claimSubCategoryNo;
 	}
 
-	public Claim getManagerId() {
+	public String getManagerId() {
 		return managerId;
 	}
 
-	public void setManagerId(Claim managerId) {
+	public void setManagerId(String managerId) {
 		this.managerId = managerId;
 	}
 
-	public Claim getManagerDeptNo() {
+	public int getManagerDeptNo() {
 		return managerDeptNo;
 	}
 
-	public void setManagerDeptNo(Claim managerDeptNo) {
+	public void setManagerDeptNo(int managerDeptNo) {
 		this.managerDeptNo = managerDeptNo;
 	}
 
@@ -119,7 +122,7 @@ public class ClaimReplyDTO {
 	public void setClaimReTitle(String claimReTitle) {
 		this.claimReTitle = claimReTitle;
 	}
-
+	
 	public String getClaimReContent() {
 		return claimReContent;
 	}

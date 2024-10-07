@@ -23,7 +23,7 @@ public class DailyManagementReport {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="dmr_no", nullable = false)
-	private int dmrNo;
+	private Integer dmrNo;
 	
 	@Column(name="admin_id", nullable = false)
 	private String adminId;
@@ -48,7 +48,7 @@ public class DailyManagementReport {
 	
 	public DailyManagementReport() {}
 	
-	public DailyManagementReport(int dmrNo, String adminId, String adminDeptNo, String adminName,
+	public DailyManagementReport(Integer dmrNo, String adminId, String adminDeptNo, String adminName,
 			String adminDeptName, String dmrReportDetail, String dmrIssue, Date dmrDate) {
 		this.dmrNo = dmrNo;
 		this.adminId = adminId;
@@ -60,11 +60,11 @@ public class DailyManagementReport {
 		this.dmrDate = dmrDate;
 	}
 
-	public int getDmrNo() {
+	public Integer getDmrNo() {
 		return dmrNo;
 	}
 
-	public void setDmrNo(int dmrNo) {
+	public void setDmrNo(Integer dmrNo) {
 		this.dmrNo = dmrNo;
 	}
 

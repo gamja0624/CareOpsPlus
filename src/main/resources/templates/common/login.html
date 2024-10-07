@@ -268,7 +268,7 @@
                      type: 'POST',
                      data: $(this).serialize(),
                      success: function(response) {
-                        console.log('Login response:', response);
+                        console.log('로그인 응답:', response);
                         if (response.success) {
                             sessionStorage.setItem('userType', response.userType);
                             sessionStorage.setItem('deptNo', response.deptNo);
@@ -276,7 +276,7 @@
                             sessionStorage.setItem('userName', response.userName);
                             sessionStorage.setItem('department', response.department);
                             
-                            console.log('Session storage after login:', {
+                            console.log('세션 스토리지 저장후 로그인:', {
                                 userType: sessionStorage.getItem('userType'),
                                 deptNo: sessionStorage.getItem('deptNo'),
                                 userId: sessionStorage.getItem('userId'),
@@ -284,7 +284,7 @@
                                 department: sessionStorage.getItem('department')
                             });
                             
-                            console.log('Redirecting to:', response.redirectUrl);
+                            console.log('redirecting Url:', response.redirectUrl);
                             window.location.href = response.redirectUrl;
                         } else {
                             console.log('Login failed:', response.message);

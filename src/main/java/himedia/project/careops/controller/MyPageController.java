@@ -36,8 +36,8 @@ public class MyPageController {
     // 사용자 타입에 따라 관리자 또는 매니저 정보를 가져와 MODEL에 추가
     @GetMapping("/mypage")
     public String getMyInfo(Model model, HttpSession session) {
-        String userType = (String) session.getAttribute("user_type");
-        String userId = (String) session.getAttribute("user_id");
+        String userType = (String) session.getAttribute("userType");
+        String userId = (String) session.getAttribute("userId");
 
         if ("admin".equals(userType)) {
             myPageService.getMyInfoByAdminId(userId).ifPresentOrElse(
@@ -74,8 +74,8 @@ public class MyPageController {
     // 사용자 타입에 따라 관리자 또는 매니저 정보를 가져와 모델에 추가
     @GetMapping("/mypage-edit")
     public String showEditForm(Model model, HttpSession session) {
-        String userType = (String) session.getAttribute("user_type");
-        String userId = (String) session.getAttribute("user_id");
+        String userType = (String) session.getAttribute("userType");
+        String userId = (String) session.getAttribute("userId");
 
         if ("admin".equals(userType)) {
             Optional<AdminDTO> admin = myPageService.getMyInfoByAdminId(userId);
@@ -179,8 +179,8 @@ public class MyPageController {
     // 사용자 타입에 따라 현재 비밀번호를 가져와 모델에 추가
     @GetMapping("/mypage-change-pw")
     public String showChangePasswordForm(Model model, HttpSession session) {
-        String userId = (String) session.getAttribute("user_id");
-        String userType = (String) session.getAttribute("user_type");
+        String userId = (String) session.getAttribute("userId");
+        String userType = (String) session.getAttribute("userType");
 
         if ("admin".equals(userType)) {
             // 관리자 비밀번호 가져오기
