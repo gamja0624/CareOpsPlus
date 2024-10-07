@@ -127,7 +127,7 @@
 					<div class="box box-text">
 						<p>부서 민원 보러가기</p>
 						<div class="box-flex">
-							<a th:href="@{/}" class="box-text box-sub" th:text="'총 ' + ${ claimCnt } + '건'">
+							<a th:href="@{/manager/claim-list}" class="box-text box-sub" th:text="'총 ' + ${ claimCnt } + '건'">
 								<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
 							</a>
 						</div>
@@ -148,7 +148,7 @@
 					<div class="box box-text">
 						<p>시설물 예약 관리</p>
 						<div class="box-flex">
-							<a th:href="@{/}" class="box-text box-sub">이동
+							<a th:href="@{./facility-dept-list}" class="box-text box-sub">이동
 								<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
 							</a>
 						</div>
@@ -186,7 +186,7 @@
 				
 				<!-- 민원 -->
 				<div class="claim">
-					<th:block th:if="${ claimList != null }">
+					<th:block th:if="${ claimList != null && !claimList.isEmpty() }">
 						<div class="claim-add">
 							<a href="" class="claim-add-next">더보기</a>
 						</div>
@@ -226,7 +226,7 @@
 						</th:block>
 					</th:block>
 					
-					<th:block th:unless="${ claimList != null }">
+					<th:block th:unless="${ claimList != null && !claimList.isEmpty() }">
 						<div class="claim-content-zero" >
 			 				<div class="claim-content-info-zero">
 				 				<img alt="상자" th:src="@{/img/box.png}" class="icon-box">

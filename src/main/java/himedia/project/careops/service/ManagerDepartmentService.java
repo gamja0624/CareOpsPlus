@@ -33,7 +33,7 @@ public class ManagerDepartmentService {
 	}
 	
 	// 작성자 : 진혜정
-    // 전체 부서 객체로 반환
+    // 전체 부서 객체로 리스트로 반환
     public List<ManagerDepartmentDTO> findAllDepartmentsList() {
     	
         List<ManagerDepartment> departments = managerDepartmentRepository.findAll();
