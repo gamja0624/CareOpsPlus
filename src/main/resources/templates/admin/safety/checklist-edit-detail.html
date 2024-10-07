@@ -2,133 +2,250 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-  	<meta charset="UTF-8">
-  	<!-- title 지정 -->
-  	<title>CareOps+ | 안전관리</title>
-  	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-  	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
-  	  
-  	<style type="text/css">
+    <meta charset="UTF-8">
+    <!-- title 지정 -->
+    <title>CareOps+ | 안전관리</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/web-settings.css}" rel="stylesheet">
+
+    <style type="text/css">
       /* 테이블 */
-      .layout-table { text-align: center; }
-      .table-size {line-height: 490px;}
-      .table { margin: 2% auto; display: inline-table; width: 650px; text-align: center; }
+      .layout-table { margin-bottom: 10px; height: 700px; text-align: center; }
+      .inner-layout-table { padding-top: 20px; height: 600px; }
+      .table { 
+        margin: 20px auto;
+      	display: inline-table;
+      	width: 650px;
+      	text-align: center;
+      }
       .table-head { font-weight: bold; font-size: 20px; }
       .table-row { line-height: 20px; border-bottom: 1px solid #d9d9d9; }
-      .table-row>th,td { padding: 4px; vertical-align: middle; }
+      .table-row>th, td { padding: 4px; vertical-align: middle; }
       
       /* 목록 */
-      .list-input { width: 100%; border: 1px solid #13254C; border-radius: 5px; padding-left: 5px; }
-      .list-td {  width: 400px; }
+      .list-input {
+      	width: 100%;
+      	border: 1px solid #13254C;
+      	border-radius: 5px;
+      	padding-left: 5px;
+      }
+      .list-td { width: 400px; }
       .table-row-last { text-align: center; }
+      
       /* 빼기 아이콘 */
-      .minus-icon { vertical-align: middle; width: 25px; line-height: 25px; }
+      .minus-icon {
+      	vertical-align: middle;
+      	width: 25px;
+      	line-height: 25px;
+      }
       .minus-icon-a { cursor: pointer; }
+      
       /* 더하기 아이콘 */
-      .plus-icon { vertical-align: middle; width: 25px; line-height: 25px; }
+      .plus-icon {
+      	vertical-align: middle;
+      	width: 25px;
+      	line-height: 25px;
+      }
       .plus-icon-a { cursor: pointer; }
+      
       /* 페이지네이션 */
-      .pagenation { margin-bottom: 20px; line-height: 30px; }
+      
       /* 버튼 */
-      .btn-line { display: flex; justify-content: center; margin-top: 20px;}
+      .btn-line {
+      	display: flex;
+      	justify-content: center;
+      	margin-top: 20px;
+      }
       .page-back { margin-right: 10px; }
       .btn-edit { margin-left: 10px; }
       .btn-edit-comple { margin-left: auto; }
       .btn { background-color: #13254C; color: white; }
       .btn:hover { border: 1px solid #13254C; }
-  	</style>
+    </style>
   </head>
-
-	<body>
-		<!-- 사이드바 -->
-		<th:block th:replace="~{/common/side-bar}"></th:block>
-		
-		<!-- 컨텐츠 영역 -->
-		<div class="content">
-			<!-- 안전관리 목록 -->
-			<div class="section">
-    			<h1 class="title">점검표 항목 수정 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 소화기</h1>
-				<!-- 제목 -->
-    			<div class="layout-table">
-                    <!-- safety_management_checklist 사용 (sml_list(소화기 등), smc_no, smc_list, smc_check) -->
-                    <div class="table-size" >
-                      <form action="" method="get">
-      				    <table class="table table-hover" id="checklist"> 
-                          <thead>
-                            <tr class="table-row table-head" >
-                              <th scope="col">No.</th>
-                              <th scope="col" class="column-checklist">점검 리스트</th>
-                              <th scope="col">상 태</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <th:block>
-                            <tr class="table-row" th:each="allChecklist : ${allChecklist}" >
-                              <td scope="row" th:text="${allChecklist.smcNo}" ></td>
-                              <td class="List-td" ><input class="list-input" type="text" th:value="${allChecklist.smcList}" >
-                              <td><a class="minus-icon-a" ><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon"></a></td>
-                            </tr>
-                            </th:block>
-                              <tr class="table-row" >
-                              <td class="table-row-last" >
-                                <a class="plus-icon-a" ><img alt="더하기 아이콘" th:src="@{/img/plus-icon.png}" class="plus-icon"></a>
-                              </td>
-                            </tr> 
-                          </tbody>
-      				    </table>
-                      </form>
-                    </div>
-                    
-                    <!-- 페이지 네이션 -->
-                  <div class="page" > 
-                    <nav aria-label="Page navigation">
-                      <ul class="pagination">
-                        <!-- 맨 앞으로 이동 -->
-                        <li class="page-item">
-                          <a class="page-link " th:href="@{./detail?page=1}" aria-label="Previous">
-                            <span aria-hidden="true">&#171;</span>
-                          </a>
-                        </li>
-                        
-                        <!-- 이전 페이지 이동 -->
-                        <li class="page-item">
-                         <a class="page-link"  th:href="@{./detail(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
-                        </li>
-                        
-                        <!-- 숫자 -->
-                        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}" >
-                          <li class="page-item">
-                            <a class="page-link" th:href="@{./detail?page=} + @{${page}}"
-                                th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''" ></a>
-                          </li>
-                        </th:block>
-                        
-                        <!-- 다음 페이지 이동 -->
-                        <li class="page-item" >
-                          <a class="page-link" th:href="@{./detail(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}" >&#62;</a>
-                        </li>
-                        
-                        <!-- 맨 끝으로 이동 -->
-                        <li class="page-item">
-                          <a class="page-link" th:href="@{./detail?page={totalPages}(totalPages = ${totalPages})}" aria-label="Next">
-                            <span aria-hidden="true">&#187;</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
-    			</div>
-                <div class="btn-line" >
-    				<div class="page-back">
-    					<button onclick="history.back()" class="btn" type="submit">뒤로 가기</button>
-    				</div>
-      				<div class="btn-edit">
-      					<button class="btn btn-edit-comple" type="button">수정 완료</button>
-      				</div>
+  <body>
+    <!-- 사이드바 -->
+    <th:block th:replace="~{/common/side-bar}"></th:block>
+  
+    <!-- 컨텐츠 영역 -->
+    <div class="content">
+      <!-- 안전관리 목록 -->
+      <div class="section">
+        <h1 class="title">
+          점검표 항목 수정 <img alt="이동" th:src="@{/img/icon-next-b.png}"
+            class="title-next"> [[${smlList}]]
+        </h1>
+        <!-- 제목 -->
+        <div class="layout-table">
+          <!-- safety_management_checklist 사용 (sml_list(소화기 등), smc_no, smc_list, smc_check) -->
+          <div class="table-size">
+            <form action="" method="get">
+              <div class="inner-layout-table" >
+                <table class="table table-hover" id="checklist">
+                  <thead>
+                    <tr class="table-row table-head">
+                      <th scope="col">No.</th>
+                      <th scope="col" class="column-checklist">점검 리스트</th>
+                      <th scope="col">삭 제</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <th:block th:each="allChecklist : ${allChecklist}">
+                      <tr class="table-row">
+                        <td scope="row" th:text="${allChecklist.smcNo}"></td>
+                        <td class="List-td"><input class="list-input" type="text" th:value="${allChecklist.smcList}">
+                        <td><a class="minus-icon-a"><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon" /></a></td>
+                      </tr>
+                    </th:block>
+                     <tr class="table-row" th:if="${paging.currentPage} == ${totalPages}" >
+                      <td class="table-row-last" colspan="3" ><a
+                        class="plus-icon-a"><img alt="더하기 아이콘"
+                          th:src="@{/img/plus-icon.png}" class="plus-icon"></a>
+                      </td>
+                    </tr> 
+                  </tbody>
+                </table>
+              </div>
+              <!-- 페이지 네이션 -->
+              <div class="page">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <!-- 맨 앞으로 이동 -->
+                    <li class="page-item"><a class="page-link " th:href="@{${smlList} + '?page=1'}" aria-label="Previous"> <span aria-hidden="true">&#171;</span></a></li>
+  
+                    <!-- 이전 페이지 이동 -->
+                    <li class="page-item"><a class="page-link" th:href="@{${smlList}(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a></li>
+  
+                    <!-- 숫자 -->
+                    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+                      <li class="page-item"><a class="page-link" th:href="@{${smlList}(page=${page})}" th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''"></a></li>
+                    </th:block>
+  
+                    <!-- 다음 페이지 이동 -->
+                    <li class="page-item"><a class="page-link" th:href="@{${smlList}(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}">&#62;</a></li>
+  
+                    <!-- 맨 끝으로 이동 -->
+                    <li class="page-item"><a class="page-link" th:href="@{${smlList}(page=${totalPages})}" aria-label="Next"> <span aria-hidden="true">&#187;</span></a></li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="btn-line">
+                <div class="page-back">
+                  <button onclick="history.back()" class="btn" type="submit">뒤로 가기</button>
                 </div>
-			</div>
-		</div>
-    	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
-	</body>
+                <div class="btn-edit">
+                  <button class="btn btn-edit-comple" type="button">수정 완료</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script th:inline="javascript">
+      var currentPage = [[${paging.currentPage}]];  // 서버에서 현재 페이지 번호 전달
+      var pageSize = 10;  // 페이지 크기
+	</script>
+    <script type="text/javascript">
+/*     	// 로우 추가
+    	const plus = document.getElementsByClassName("plus-icon")
+    	
+    	function addRow() {
+    		const newRow = document.createElement('tr');
+    		const numberCell = document.createElement("td");
+  			const inputCell = document.createElement("td");
+  		    const actionCell = document.createElement("td");
+  		    const inputBox = document.createElement("input")
+  		    const anchor = document.createElement("a");
+  		    const img = document.createElement("img");
+  		    
+  		    const lastRow = document.querySelectorAll("table-row");	
+  		    const newNumber =  (currentPage - 1) * pageSize + document.querySelectorAll(".table-row").length -2;
+  		    
+  		    console.log(newNumber);
+  		    
+  		    newRow.className = "table-row";
+  		    newRow.appendChild(numberCell, inputCell, actionCell);
+  		    
+  		    inputBox.type = "text";
+  		    inputBox.value = "";
+  		    inputBox.className = "list-input";
+  		    
+  		    anchor.className = "minus-icon-a";
+  		    img.className = "minus-icon";
+  		    img.alt = "빼기 아이콘";
+  		    img.src = "/img/munus-icon.png";
+  		    
+  		    inputCell.appendChild(inputBox);
+  		    actionCell.appendChild(anchor);
+  		    anchor.appendChild(img);
+  		    numberCell.value()
+    	}
+    	
+    	plus.document.addEventListener('click', addRow()); */
+    	
+    	// 로우 삭제
+    	document.addEventListener('click', function(e) {
+    		if (e.target && e.target.classList.contains('minus-icon')) {
+    			e.target.closest('tr').remove();
+    		}
+    	});
+    	
+    	document.addEventListener("DOMContentLoaded", function() {
+    	    const plusButton = document.querySelector('.plus-icon-a');
 
+    	    // 로우 추가 함수
+    	    function addRow() {
+    	        const tableBody = document.querySelector('#checklist tbody');
+    	        const lastRow = document.querySelector('.plus-icon-a').closest('tr'); // 플러스 버튼이 있는 마지막 행
+
+    	        // 새 행과 셀 생성
+    	        const newRow = document.createElement('tr');
+    	        newRow.className = 'table-row';
+
+    	        const numberCell = document.createElement('td');
+    	        const inputCell = document.createElement('td');
+    	        const actionCell = document.createElement('td');
+
+    	        const inputBox = document.createElement('input');
+    	        inputBox.type = 'text';
+    	        inputBox.className = 'list-input';
+
+    	        const anchor = document.createElement('a');
+    	        const img = document.createElement('img');
+    	        img.src = '/img/minus-icon.png';
+    	        img.alt = '빼기 아이콘';
+    	        img.className = 'minus-icon';
+
+    	        anchor.className = 'minus-icon-a';
+    	        anchor.appendChild(img);
+
+    	        // 현재 페이지의 첫 번째 번호 계산
+    	        const rowCount = tableBody.querySelectorAll('.table-row').length;
+    	        const newNumber = (currentPage - 1) * pageSize + rowCount;  // 각 페이지에서 시작 번호 설정
+
+    	        numberCell.textContent = newNumber;  // 새로운 번호 할당
+
+    	        // 셀에 요소 추가
+    	        inputCell.appendChild(inputBox);
+    	        actionCell.appendChild(anchor);
+
+    	        // 새 행에 셀 추가
+    	        newRow.appendChild(numberCell);
+    	        newRow.appendChild(inputCell);
+    	        newRow.appendChild(actionCell);
+
+    	        // 테이블에 새 행을 플러스 버튼 행 앞에 추가
+    	        tableBody.insertBefore(newRow, lastRow);
+    	    }
+
+    	    // 플러스 버튼 클릭 시 로우 추가 함수 호출
+    	    plusButton.addEventListener('click', function(e) {
+    	        e.preventDefault(); // 기본 동작 방지 (페이지 새로고침 방지)
+    	        addRow();
+    	    });
+    	});
+	</script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+  </body>
 </html>
