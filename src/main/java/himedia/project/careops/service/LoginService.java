@@ -61,7 +61,7 @@ public class LoginService {
 
     // 관리자 부서 번호 체크 로직
     private boolean isAdminDepartmentFormat(String deptNo) {
-        // 관리자의 부서 번호가 문자열 형식인 경우 체크하는 로직을 추가
+        // 관리자의 부서 번호가 문자열 형식인 경우 체크하는 로직
         return deptNo != null && !deptNo.matches("\\d+");  // 숫자가 아닌 경우 관리자로 처리
     }
 
@@ -69,7 +69,7 @@ public class LoginService {
     private boolean isManagerDepartmentFormat(String deptNo) {
         // 매니저의 부서 번호가 숫자인지 체크
         try {
-            Integer.parseInt(deptNo);  // 부서 번호가 숫자일 경우 매니저로 처리
+            Integer.parseInt(deptNo);  // 부서 번호가 숫자일 경우 매니저로 처리			
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -81,19 +81,14 @@ public class LoginService {
         
         if (!adminDeptOpt.isPresent()) {
             result.put("success", false);
-            result.put("message", "부서 번호가 일치하지 않습니다.");
+            result.put("message", "로그인 정보가 일치하지 않습니다."); // 부서 번호 오류 시 메시지
             return false;
         }
 
         Optional<Admin> adminOpt = adminRepository.findByAdminDeptNoAndAdminIdAndAdminPassword(deptNo, userId, userPassword);
         if (!adminOpt.isPresent()) {
-            if (adminRepository.findByAdminDeptNoAndAdminId(deptNo, userId).isEmpty()) {
-                result.put("success", false);
-                result.put("message", "아이디가 일치하지 않습니다.");
-            } else {
-                result.put("success", false);
-                result.put("message", "비밀번호가 일치하지 않습니다.");
-            }
+            result.put("success", false);
+            result.put("message", "아이디 또는 비밀번호가 일치하지 않습니다."); // 아이디 또는 비밀번호 오류 시 통일된 메시지
             return false;
         }
 
@@ -109,23 +104,19 @@ public class LoginService {
             
             if (!departmentOpt.isPresent()) {
                 result.put("success", false);
-                result.put("message", "부서 번호가 유효하지 않습니다.");
+                result.put("message", "로그인 정보가 일치하지 않습니다.");
                 return false;
             }
 
             Optional<Manager> managerOpt = managerRepository.findByManagerDeptNoAndManagerIdAndManagerPassword(managerDeptNo, userId, userPassword);
             if (!managerOpt.isPresent()) {
-                if (managerRepository.findByManagerDeptNoAndManagerId(managerDeptNo, userId).isEmpty()) {
-                    result.put("success", false);
-                    result.put("message", "아이디가 일치하지 않습니다.");
-                } else {
-                    result.put("success", false);
-                    result.put("message", "비밀번호가 일치하지 않습니다.");
-                }
+                result.put("success", false);
+                result.put("message", "아이디 또는 비밀번호가 일치하지 않습니다."); // 아이디 또는 비밀번호 오류 시 통일된 메시지
                 return false;
             }
 
             Manager manager = managerOpt.get();
+            
             setLoginResult(result, "manager", manager.getManagerName(), departmentOpt.get().getManagerDeptName(), deptNo);
             return true;
         } catch (NumberFormatException e) {

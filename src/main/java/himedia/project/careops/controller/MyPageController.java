@@ -151,8 +151,8 @@ public class MyPageController {
         System.out.println("newPassword: " + newPassword);
         System.out.println("confirmPassword: " + confirmPassword);
 
-        String userId = (String) session.getAttribute("user_id");
-        String userType = (String) session.getAttribute("user_type");
+        String userId = (String) session.getAttribute("userId");
+        String userType = (String) session.getAttribute("userType");
 
         if (userId == null || userType == null) {
             return ResponseEntity.badRequest().body(Map.of("success", false, "message", "세션 정보가 유효하지 않습니다."));
