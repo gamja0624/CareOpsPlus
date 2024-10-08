@@ -79,7 +79,7 @@
         <div class="layout-table">
           <!-- safety_management_checklist 사용 (sml_list(소화기 등), smc_no, smc_list, smc_check) -->
           <div class="table-size">
-            <form action="" method="get">
+            <form th:action="@{/admin/safety-checklist-edit/${smlList}}" method="post">
               <div class="inner-layout-table" >
                 <table class="table table-hover" id="checklist">
                   <thead>
@@ -92,8 +92,8 @@
                   <tbody>
                     <th:block th:each="allChecklist : ${allChecklist}">
                       <tr class="table-row">
-                        <td scope="row" th:text="${allChecklist.smcNo}"></td>
-                        <td class="List-td"><input class="list-input" type="text" th:value="${allChecklist.smcList}">
+                        <td scope="row" th:text="${allChecklist.smcNo}"> <label ></label> </td>
+                        <td class="List-td"><input required="required" class="list-input" type="text" name="smcList" th:value="${allChecklist.smcList}">
                         <td><a class="minus-icon-a"><img alt="빼기 아이콘" th:src="@{/img/minus-icon.png}" class="minus-icon" /></a></td>
                       </tr>
                     </th:block>
@@ -131,10 +131,10 @@
               </div>
               <div class="btn-line">
                 <div class="page-back">
-                  <button onclick="history.back()" class="btn" type="submit">뒤로 가기</button>
+                  <button onclick="history.back()" class="btn" type="button">뒤로 가기</button>
                 </div>
                 <div class="btn-edit">
-                  <button class="btn btn-edit-comple" type="button">수정 완료</button>
+                  <button class="btn btn-edit-comple" type="submit">수정 완료</button>
                 </div>
               </div>
             </form>
@@ -147,43 +147,6 @@
       var pageSize = 10;  // 페이지 크기
 	</script>
     <script type="text/javascript">
-/*     	// 로우 추가
-    	const plus = document.getElementsByClassName("plus-icon")
-    	
-    	function addRow() {
-    		const newRow = document.createElement('tr');
-    		const numberCell = document.createElement("td");
-  			const inputCell = document.createElement("td");
-  		    const actionCell = document.createElement("td");
-  		    const inputBox = document.createElement("input")
-  		    const anchor = document.createElement("a");
-  		    const img = document.createElement("img");
-  		    
-  		    const lastRow = document.querySelectorAll("table-row");	
-  		    const newNumber =  (currentPage - 1) * pageSize + document.querySelectorAll(".table-row").length -2;
-  		    
-  		    console.log(newNumber);
-  		    
-  		    newRow.className = "table-row";
-  		    newRow.appendChild(numberCell, inputCell, actionCell);
-  		    
-  		    inputBox.type = "text";
-  		    inputBox.value = "";
-  		    inputBox.className = "list-input";
-  		    
-  		    anchor.className = "minus-icon-a";
-  		    img.className = "minus-icon";
-  		    img.alt = "빼기 아이콘";
-  		    img.src = "/img/munus-icon.png";
-  		    
-  		    inputCell.appendChild(inputBox);
-  		    actionCell.appendChild(anchor);
-  		    anchor.appendChild(img);
-  		    numberCell.value()
-    	}
-    	
-    	plus.document.addEventListener('click', addRow()); */
-    	
     	// 로우 삭제
     	document.addEventListener('click', function(e) {
     		if (e.target && e.target.classList.contains('minus-icon')) {
@@ -210,7 +173,8 @@
     	        const inputBox = document.createElement('input');
     	        inputBox.type = 'text';
     	        inputBox.className = 'list-input';
-
+				inputBox.name = 'smcList';
+    	        
     	        const anchor = document.createElement('a');
     	        const img = document.createElement('img');
     	        img.src = '/img/minus-icon.png';
