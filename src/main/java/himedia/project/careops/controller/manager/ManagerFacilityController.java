@@ -51,7 +51,6 @@ public class ManagerFacilityController {
 		Page<FacilityDTO> facilityList = facilityService.findByFacilityList(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(facilityList);
 		
-		//페이지네이션 관련 토탈 페이지 수 BE -> FE
 		int totalPages = facilityList.getTotalPages();
 		
 		model.addAttribute("facilityList", facilityList);

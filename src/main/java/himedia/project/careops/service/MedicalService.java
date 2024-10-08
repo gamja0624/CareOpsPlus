@@ -58,17 +58,19 @@ public class MedicalService {
 		List<ListMedicalDevices> medicalDevicesList = medicalRepository.findAll();
 		return medicalDevicesList.stream()
 				.filter(m -> {
-							if (filter.equals("lmdMajorCateName")) { // 장비대분류명
-								return m.getLmdMajorCateName().contains(value);
-							} else if (filter.equals("lmdMinorCateName")) { // 장비세분류명
-								return m.getLmdMinorCateName().contains(value);
-							} else if (filter.equals("lmdDevicesName")) { // 모델명
-								return m.getLmdDevicesName().contains(value);
-							} else if (filter.equals("lmdManagerDeptPart")) { // 부서명
-								return m.getLmdManagerDeptPart().contains(value);
-							} 
-						return false;
-						}).collect(Collectors.toList());
+					if (value != "") {
+						if (filter.equals("lmdMajorCateName")) { // 장비대분류명
+							return m.getLmdMajorCateName().contains(value);
+						} else if (filter.equals("lmdMinorCateName")) { // 장비세분류명
+							return m.getLmdMinorCateName().contains(value);
+						} else if (filter.equals("lmdDevicesName")) { // 모델명
+							return m.getLmdDevicesName().contains(value);
+						} else if (filter.equals("lmdManagerDeptPart")) { // 부서명
+							return m.getLmdManagerDeptPart().contains(value);
+						} 
+					}
+					return false;
+				}).collect(Collectors.toList());
 	}
 	
 	// [의료기기 장비세분류코드 찾기]

@@ -166,7 +166,7 @@
 				</div>
 				
 				<div class="btn-table btn-status">
-					<button onclick="history.back()" class="btn btn-group" type="button">뒤로 가기</button>
+					<button th:onclick="|location.href='@{ '/' + ${ session.userType } + '/facility-list'}'|"  class="btn btn-group" type="button">뒤로 가기</button>
 				</div>
 			</div>
 		</div>

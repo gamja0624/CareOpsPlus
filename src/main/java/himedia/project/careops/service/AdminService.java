@@ -24,15 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminService {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
-	
-	private final AdminDepartmentRepository adminDepartmentRepository;
 	private final AdminRepository adminRepository;
 	private final ModelMapper modelMapper;
 	
-	public AdminService(
-			AdminDepartmentRepository adminDepartmentRepository, AdminRepository adminRepository, 
-			ModelMapper modelMapper) {
-		this.adminDepartmentRepository = adminDepartmentRepository;
+	public AdminService(AdminRepository adminRepository, ModelMapper modelMapper) {
 		this.adminRepository = adminRepository;
 		this.modelMapper = modelMapper;
 	}
@@ -50,7 +45,6 @@ public class AdminService {
 	// 관리자 아이디로 관리자 정보 반환
 	public AdminDTO findByAdminId(String adminId) {
 		
-		// log.info("[AdminService] 시작 !!!! - findByAdminNo 메서드 실행");
 		Admin findAdmin = adminRepository.findById(adminId).orElseThrow(IllegalArgumentException::new);
 		
 		return modelMapper.map(findAdmin, AdminDTO.class);
@@ -60,12 +54,9 @@ public class AdminService {
 	// 부서 이름으로 해당 작업자 리스트로 반환
 	public List<Admin> findByAdminList(String lmdManagerDeptPart) {
 		
-		// log.info("[MangerService] 시작 !!!! - findByManagerList 메서드 실행");
 		return adminRepository.findAll() 										// admin 에 저장된 모든 객체 가져오기
 				.stream() 
 				.filter(m -> m.getAdminDeptName().equals(lmdManagerDeptPart))	// 부서명이 같은 admin 객체 가져오기
 				.collect(Collectors.toList());                                  // list 형태로 반환
 	}
-	
-	
 }

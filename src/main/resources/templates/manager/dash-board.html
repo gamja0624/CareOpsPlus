@@ -51,6 +51,7 @@
 				border-radius: 10px; 
 				background-color: #13254C;
 			}
+			.calendar_content { pointer-events : none; }
 			
 		 	/* 내 민원 */
 		 	.claim-add { display: flex; width: 500px; }
@@ -188,7 +189,7 @@
 				<div class="claim">
 					<th:block th:if="${ claimList != null && !claimList.isEmpty() }">
 						<div class="claim-add">
-							<a href="" class="claim-add-next">더보기</a>
+							<a th:href="@{'/' + ${session.userType} + '/claim-list'}" class="claim-add-next">더보기</a>
 						</div>
 						<th:block th:if="${ claimList.size() > 3 }">
 				 			<div class="claim-content" th:each="claim : ${ claimList.subList(0, 3) }">

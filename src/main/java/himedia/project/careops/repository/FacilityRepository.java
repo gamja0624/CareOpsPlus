@@ -14,6 +14,7 @@ import himedia.project.careops.entity.Facility;
 @Repository
 public interface FacilityRepository extends JpaRepository<Facility, Integer> {
 	
+	// 예약 번호
 	@Query(value = "SELECT MAX(facility_reservation_no) FROM facility", nativeQuery = true)
     Integer findMaxReservationNo();
 }
