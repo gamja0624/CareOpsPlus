@@ -63,7 +63,6 @@
 				<!-- 제목 -->
 				<h1 class="title">의료관리 관리<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">수정</h1>
 				
-				<!-- <form th:attr="action=@{ ${ session.user_type } + '/medical-list/' + ${ medicalDevice.lmdMinorCateCode } + '/'}" method="post"> -->
 				<form th:attr="action=@{'/admin/medical-edit/' + ${ medicalDevice.lmdMinorCateCode }}" method="post">
 					<div class="layout-table">
 						<div class="btn-status">

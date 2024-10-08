@@ -78,13 +78,13 @@ public class SafetyService {
 	}
 
 	// SafetyManagementChecklist테이블 전체조회 메소드 + 페이지네이션
-	public Page<SafetyManagementChecklistDTO> findAllChecklist(Pageable pageable) {
+	public Page<SafetyManagementChecklistDTO> findAllChecklist(String smlList,  Pageable pageable) {
 		
 		pageable =PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() -1,
 				pageable.getPageSize(),
 				Sort.by("smcNo").ascending());
 		
-		Page<SafetyManagementChecklist> allList = safetyManagementChecklistRepository.findAll(pageable);
+		Page<SafetyManagementChecklist> allList = safetyManagementChecklistRepository.findBySmlList(smlList, pageable);
 		return allList.map(checklist -> modelMapper.map(checklist, SafetyManagementChecklistDTO.class));
 	}
 

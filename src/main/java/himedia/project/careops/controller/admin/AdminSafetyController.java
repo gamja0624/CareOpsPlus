@@ -75,14 +75,15 @@ public class AdminSafetyController {
 
 	// 점검표 항목 상세 수정 페이지
 //	@GetMapping("/checklist-edit/{sml_no}")
-	@GetMapping("/checklist-edit/detail")
+	@GetMapping("/safety-checklist-edit/{smlList}")
 	/* public String checklistEditDetail(@PathVariable int sml_no, Model model) { */
-	public String checklistEditDetail(@PageableDefault Pageable pageable, Model model) {
+	public String checklistEditDetail(@PathVariable String smlList, @PageableDefault Pageable pageable, Model model) {
 
-		Page<SafetyManagementChecklistDTO> allChecklist = safetyService.findAllChecklist(pageable);
+		Page<SafetyManagementChecklistDTO> allChecklist = safetyService.findAllChecklist(smlList, pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(allChecklist);
 		int totalPages = allChecklist.getTotalPages();
 		
+		model.addAttribute("smlList", smlList);
 		model.addAttribute("allChecklist", allChecklist);
 		model.addAttribute("paging", paging);
 		model.addAttribute("totalPages", totalPages);
@@ -100,8 +101,17 @@ public class AdminSafetyController {
 
 	// 데일리 점검 목록 상세 등록 페이지
 //	@GetMapping("/safety-daily-registration/{sml_no}")
-	@GetMapping("/safety-daily-registration/{sml_no}")
-	public String dailyResistraionDetail() {
+	@GetMapping("/safety-daily-registration/{smlList}")
+	public String dailyResistraionDetail(@PathVariable String smlList, @PageableDefault Pageable pageable, Model model) {
+		Page<SafetyManagementChecklistDTO> allChecklist = safetyService.findAllChecklist(smlList, pageable);
+		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(allChecklist);
+		int totalPages = allChecklist.getTotalPages();
+		
+		model.addAttribute("smlList", smlList);
+		model.addAttribute("allChecklist", allChecklist);
+		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages", totalPages);
+		
 		return "admin/safety/daily-registration-detail";
 	}
 }

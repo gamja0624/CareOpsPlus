@@ -1,9 +1,8 @@
 package himedia.project.careops.service;
 
-
 /**
  * @author 최은지
- * @editDate 2024-09-27
+ * @editDate 2024-09-27 ~ 
  */
 
 import java.util.Calendar;
@@ -29,6 +28,7 @@ import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.ClaimCategory;
 import himedia.project.careops.entity.ClaimSubCategory;
 import himedia.project.careops.repository.ClaimCategoryRepository;
+import himedia.project.careops.repository.ClaimReplyRepository;
 import himedia.project.careops.repository.ClaimRepository;
 import himedia.project.careops.repository.ClaimSubCategoryRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -41,12 +41,15 @@ public class ClaimService {
 	private final ClaimRepository claimRepository;
 	private final ClaimCategoryRepository claimCategoryRepository;
 	private final ClaimSubCategoryRepository calimSubCategoryRepository;
+	private final ClaimReplyRepository claimReplyRepository;
 	private final ModelMapper modelMapper;
 	
-	public ClaimService(ClaimRepository claimRepository, ClaimCategoryRepository claimCategoryRepository ,ClaimSubCategoryRepository calimSubCategoryRepository, ModelMapper modelMapper) {
+	public ClaimService(ClaimRepository claimRepository, ClaimCategoryRepository claimCategoryRepository ,ClaimSubCategoryRepository calimSubCategoryRepository, 
+						ClaimReplyRepository claimReplyRepository, ModelMapper modelMapper) {
 		this.claimRepository = claimRepository;
 		this.claimCategoryRepository = claimCategoryRepository;
 		this.calimSubCategoryRepository = calimSubCategoryRepository;
+		this.claimReplyRepository = claimReplyRepository;
 		this.modelMapper = modelMapper;
 	}
 	
@@ -86,12 +89,22 @@ public class ClaimService {
 	
 	// 작성자 : 최은지
 	// 민원 승인
-	public void ApprveClaim(ClaimDTO claimDTO) {
+	public void approveClaim(ClaimDTO claimDTO) {
 		log.info("민원승인 서비스 실행");
 		Claim claim =  claimRepository.findById(claimDTO.getClaimNo()).orElseThrow(IllegalArgumentException::new);
 		
 		claim.setClaimApprove(true);
 		claimRepository.save(claim);
+	}
+	// 작성자 : 최은지 
+	// 민원 처리
+	public void completeClaim(ClaimDTO claimDTO) {
+		log.info("민원처리 서비스 실행");
+		Claim claim =  claimRepository.findById(claimDTO.getClaimNo()).orElseThrow(IllegalArgumentException::new);
+		
+		claim.setClaimComplete(true);
+		claimRepository.save(claim);
+		
 	}
 	
 	// 작성자 : 진혜정

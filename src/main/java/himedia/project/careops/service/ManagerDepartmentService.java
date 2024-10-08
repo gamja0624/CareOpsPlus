@@ -33,7 +33,7 @@ public class ManagerDepartmentService {
 	}
 	
 	// 작성자 : 진혜정
-    // 전체 부서 객체로 반환
+    // 전체 부서 객체로 리스트로 반환
     public List<ManagerDepartmentDTO> findAllDepartmentsList() {
     	
         List<ManagerDepartment> departments = managerDepartmentRepository.findAll();
@@ -42,4 +42,15 @@ public class ManagerDepartmentService {
                          .collect(Collectors.toList());
     }
     
+    // 작성자 : 최은지
+    // 부서 이름으로 부서 정보 찾기
+    public ManagerDepartmentDTO findByDeptName (String managerDeptName) {
+    	
+    	return managerDepartmentRepository.findAll()
+    					.stream()
+    					.filter(deptName -> deptName.getManagerDeptName().equals(managerDeptName))
+    					.map(department -> modelMapper.map(department, ManagerDepartmentDTO.class))
+    					.findAny()  
+    			        .orElse(null);
+    }
 }

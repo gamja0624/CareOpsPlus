@@ -44,6 +44,8 @@ public class AdminDailyReportController {
 	@GetMapping("/daily-report-list")
 	public String reportList(@PageableDefault Pageable pageable, Model model) {
 		
+		log.info("보고서 목록페이지 실행  <adminDailyReportController>");
+		
 		Page<DailyManagementReportDTO> reportAllList = dailyReportService.reportAllList(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(reportAllList);
 		int totalPages = reportAllList.getTotalPages();
@@ -56,21 +58,21 @@ public class AdminDailyReportController {
 	}
 	
 	// 일일관리보고서 Search 페이지
-  @GetMapping("/daily-report-list/search")
-  public String searchReport(@PageableDefault Pageable pageable, @RequestParam String filter, @RequestParam String value, Model model) {
+	@GetMapping("/daily-report-list/search")
+	public String searchReport(@PageableDefault Pageable pageable, @RequestParam String filter, @RequestParam String value, Model model) {
   
-	  Page<DailyManagementReportDTO> reportSearch = dailyReportService.reportSearch(filter, value, pageable); 
-	  PagingButtonInfo paging = Pagenation.getPagingButtonInfo(reportSearch); 
-	  int totalPages = reportSearch.getTotalPages();
+		Page<DailyManagementReportDTO> reportSearch = dailyReportService.reportSearch(filter, value, pageable); 
+		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(reportSearch); 
+		int totalPages = reportSearch.getTotalPages();
 	  
-	  model.addAttribute("reportAllList", reportSearch);
-	  model.addAttribute("paging", paging);
-	  model.addAttribute("totalPages",totalPages);
-	  model.addAttribute("filter", filter);
-	  model.addAttribute("value", value);
+		model.addAttribute("reportAllList", reportSearch);
+		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages",totalPages);
+		model.addAttribute("filter", filter);
+		model.addAttribute("value", value);
   
-	  return "/admin/report/report-search-list"; 
-  }
+		return "/admin/report/report-search-list"; 
+	}
 	 
 	
 	// 일일관리보고서 상세 페이지
@@ -132,7 +134,6 @@ public class AdminDailyReportController {
 		String adminDeptNo = (String)session.getAttribute("deptNo");
 		String adminDeptName = (String)session.getAttribute("department");
 		
-		
 		//log.info("제출된 리포트 =={}", newReport);
 		//log.info("작성자(관리자이름) =={}", adminName);
 		//log.info("작성자 부서(관리자 부서) =={}", adminDeptName);
@@ -177,6 +178,4 @@ public class AdminDailyReportController {
 		  
 		return "admin/report/report-my-report-search";
 	}
-	
-	
 }

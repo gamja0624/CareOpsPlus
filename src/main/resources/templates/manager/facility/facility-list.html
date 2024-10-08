@@ -74,6 +74,10 @@
 			      		<button th:case="false" type="button" class="btn btn-css btn-success" disabled>미사용</button>
 			      	</td>
 				    </tr>
+				    
+				    <tr th:unless="${ ! facilityList.isEmpty() }">
+				    	<td class="empty-row" colspan="9">예약한 시설물이 없습니다</td>
+				    </tr>
 				  </tbody>
 				</table>
 				

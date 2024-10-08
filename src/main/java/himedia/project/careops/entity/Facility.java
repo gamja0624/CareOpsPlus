@@ -6,6 +6,7 @@ package himedia.project.careops.entity;
  */
 
 import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -53,10 +54,19 @@ public class Facility {
 	
 	public Facility() {}
 	
-	public Facility(int facilityFloor, String facilityName, boolean facilityReservationStatus) {
+	public Facility(int facilityFloor, String facilityName, 
+			boolean facilityReservationStatus, Date facilityReservationDate,
+			Integer facilityManagerDeptNo, String facilityManagerDeptName, String facilityManagerId, String facilityManagerName) {
 		this.facilityFloor = facilityFloor;
 		this.facilityName = facilityName;
+		
 		this.facilityReservationStatus = facilityReservationStatus;
+		this.facilityReservationDate = facilityReservationDate;
+		
+		this.facilityManagerDeptNo = facilityManagerDeptNo;
+		this.facilityManagerDeptName = facilityManagerDeptName;
+		this.facilityManagerId = facilityManagerId;
+		this.facilityManagerName = facilityManagerName;
 	}
 	
 	public Integer getFacilityNo() {
