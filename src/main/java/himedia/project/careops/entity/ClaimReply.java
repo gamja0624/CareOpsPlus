@@ -28,7 +28,7 @@ public class ClaimReply {
 	private String adminDeptNo;			// 관리자 부서번호 ( 외래키 )
 	
 	@Column(name="admin_name", nullable = false)
-	private String admin_name;			// 관리자 이름
+	private String adminName;			// 관리자 이름
 	
 	@Column(name="claim_re_title", nullable = false)
 	private String claimReTitle;		// 민원 답변 제목
@@ -41,13 +41,13 @@ public class ClaimReply {
 
 	public ClaimReply() {}
 	
-	public ClaimReply(ClaimReplyId claimReplyId, String adminId, String adminDeptNo, String admin_name,
+	public ClaimReply(ClaimReplyId claimReplyId, String adminId, String adminDeptNo, String adminName,
 			String claimReTitle, String claimReContent, Date claimReDate) {
 		super();
 		this.claimReplyId = claimReplyId;
 		this.adminId = adminId;
 		this.adminDeptNo = adminDeptNo;
-		this.admin_name = admin_name;
+		this.adminName = adminName;
 		this.claimReTitle = claimReTitle;
 		this.claimReContent = claimReContent;
 		this.claimReDate = claimReDate;
@@ -77,12 +77,12 @@ public class ClaimReply {
 		this.adminDeptNo = adminDeptNo;
 	}
 
-	public String getAdmin_name() {
-		return admin_name;
+	public String getAdminName() {
+		return adminName;
 	}
 
-	public void setAdmin_name(String admin_name) {
-		this.admin_name = admin_name;
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
 	}
 
 	public String getClaimReTitle() {
@@ -112,7 +112,7 @@ public class ClaimReply {
 	@Override
 	public String toString() {
 		return "ClaimReply [claimReplyId=" + claimReplyId + ", adminId=" + adminId + ", adminDeptNo=" + adminDeptNo
-				+ ", admin_name=" + admin_name + ", claimReTitle=" + claimReTitle + ", claimReContent=" + claimReContent
+				+ ", adminName=" + adminName + ", claimReTitle=" + claimReTitle + ", claimReContent=" + claimReContent
 				+ ", claimReDate=" + claimReDate + "]";
 	}
 	

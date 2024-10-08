@@ -55,7 +55,6 @@ public class AdminClaimController {
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(claim);
 		
 		List<ClaimReplyDTO> claimReply =  claimReplyService.claimReplyList(); 
-		log.info("claim: {}", claim.toString());
 		log.info("컨트롤러 - claimReply 답변 목록: {}", claimReply);
 		model.addAttribute("claim", claim);
 		model.addAttribute("paging", paging);
@@ -69,7 +68,6 @@ public class AdminClaimController {
 	@GetMapping("/claim-detail/{claimNo}") 
 	public String claimDetail(@PathVariable("claimNo") Integer claimNo, Model model) {
 		
-		log.info("민원 상세 controller 실행");
 		ClaimDTO claim = claimService.findByClaimNo(claimNo);		
 		ManagerDTO manager = managerService.findByManagerId(claim.getManagerId());
 		model.addAttribute("claim", claim);
@@ -81,14 +79,22 @@ public class AdminClaimController {
 	// 민원 승인
 	@PostMapping("/claim-approve")
 	public String claimApprove(@ModelAttribute ClaimDTO claimDTO) {
-		log.info("민원 승인 컨트롤러 실행");
-		claimService.ApprveClaim(claimDTO);
+		claimService.approveClaim(claimDTO);
 		return "redirect:./claim-list";
 	}
 	
-	// 민원 답변 작성 페이지
+	
+	
+	// 민원 처리  페이지
+	@PostMapping("/claim-complete")
+	public String claimComplete(@ModelAttribute ClaimDTO claimDTO) {
+		claimService.completeClaim(claimDTO);
+		return "redirect:./claim-re";
+	}
+	
 	@GetMapping("/claim-re")
-	public String claimRe() {
+	public String claimReplyForm() {
+		
 		return "/admin/claim/claim-re-form";
 	}
 	
@@ -98,10 +104,11 @@ public class AdminClaimController {
     	
     	ClaimDTO claim = claimService.findByClaimNo(claimNo);		
     	ManagerDTO manager = managerService.findByManagerId(claim.getManagerId());
+    	ClaimReplyDTO claimReply = claimReplyService.findClaimReply(claimNo);
     	
     	model.addAttribute("claim", claim);
     	model.addAttribute("manager", manager);
-    	
+    	model.addAttribute("claimReply", claimReply);
     	return "/admin/claim/claim-re-detail";
     }
 

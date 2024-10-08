@@ -89,12 +89,22 @@ public class ClaimService {
 	
 	// 작성자 : 최은지
 	// 민원 승인
-	public void ApprveClaim(ClaimDTO claimDTO) {
+	public void approveClaim(ClaimDTO claimDTO) {
 		log.info("민원승인 서비스 실행");
 		Claim claim =  claimRepository.findById(claimDTO.getClaimNo()).orElseThrow(IllegalArgumentException::new);
 		
 		claim.setClaimApprove(true);
 		claimRepository.save(claim);
+	}
+	// 작성자 : 최은지 
+	// 민원 처리
+	public void completeClaim(ClaimDTO claimDTO) {
+		log.info("민원처리 서비스 실행");
+		Claim claim =  claimRepository.findById(claimDTO.getClaimNo()).orElseThrow(IllegalArgumentException::new);
+		
+		claim.setClaimComplete(true);
+		claimRepository.save(claim);
+		
 	}
 	
 	// 작성자 : 진혜정

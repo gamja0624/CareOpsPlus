@@ -5,6 +5,7 @@ package himedia.project.careops.service;
  */
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -13,9 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ClaimReplyDTO;
+import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.ClaimReply;
 import himedia.project.careops.entity.ClaimReplyId;
 import himedia.project.careops.repository.ClaimReplyRepository;
+import himedia.project.careops.repository.ClaimRepository;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -24,10 +27,12 @@ import lombok.extern.slf4j.Slf4j;
 public class ClaimReplyService {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	private final ClaimRepository claimRepository;
 	private final ClaimReplyRepository claimReplyRepository;
 	private final ModelMapper modelMapper;
 	
-	public ClaimReplyService(ClaimReplyRepository claimReplyRepository, ModelMapper modelMapper) {
+	public ClaimReplyService(ClaimRepository claimRepository, ClaimReplyRepository claimReplyRepository, ModelMapper modelMapper) {
+		this.claimRepository = claimRepository;
 		this.claimReplyRepository = claimReplyRepository;
 		this.modelMapper = modelMapper;
 	}
@@ -47,16 +52,21 @@ public class ClaimReplyService {
 
 	// 답변 상세 조회
 	public ClaimReplyDTO findClaimReply(Integer claimNo) {
-		log.info("답변  상세 조회 서비스");	
-	    // ClaimReplyId 객체 생성 및 필드 설정
+		log.info("답변 상세 조회 서비스");
+		
+		Claim claim = claimRepository.findById(claimNo).get();
+		// 인덱스 설정
 	    ClaimReplyId claimReplyId = new ClaimReplyId();
-	    claimReplyId.setClaimNo(claimNo);
+	    claimReplyId.setClaimNo(claim.getClaimNo());
+	    claimReplyId.setClaimCategoryNo(claim.getClaimCategoryNo());
+	    claimReplyId.setClaimSubCategoryNo(claim.getClaimSubCategoryNO());
+	    claimReplyId.setManagerId(claim.getManagerId());
+	    claimReplyId.setManagerDeptNo(claim.getManagerDeptNo());	    
 	    
 	    // ClaimReply 조회
 	    ClaimReply claimReply = claimReplyRepository.findById(claimReplyId)
 	        .orElseThrow(() -> new IllegalArgumentException("해당 claimReply에 대한 답변이 존재하지 않습니다: " + claimNo));
 
-	    // ClaimReply 엔티티를 ClaimReplyDTO로 변환
 	    return modelMapper.map(claimReply, ClaimReplyDTO.class);
 	}
 

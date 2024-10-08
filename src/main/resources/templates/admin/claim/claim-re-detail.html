@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<!-- title 지정 -->
-	<title>CareOps+ | </title>
+	<title>CareOps+ | 답변 상세 </title>
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 
@@ -15,20 +15,22 @@
 			height: 100%;
 			border: 3px solid #13254C;
 			border-radius: 20px;
+			margin-bottom: 50px;
 		}
 
 		.container {
 			padding: 15px;
 			margin: 0 auto;
-			width: 1280px;
+			width: 1300px;
 		}
-		.claim-info {
-			font-size: 28px;
+
+		.table-info {
 			font-weight: 600;
+			font-size: 26px;
+			margin-bottom: 10px;
 		}
+
 		.claim-detail-table {
-			width: 100%;
-			height: 100%;
 			border-collapse: separate;
 			border-spacing: 0 5px;
 		}
@@ -38,14 +40,14 @@
 			border-top: 1px solid #13254C;
 			border-bottom: 1px solid #13254C;
 			text-align: center;
-			height: 25px;
-			line-height: 25px;
+			height: 30px;
+			line-height: 30px;
 		}
 
 		.claim-detail-table th {
 			background-color: #13254C;
 			color: #FFF;
-			width: 220px;
+			width: 200px;
 		}
 
 		.claim-content {
@@ -53,66 +55,54 @@
 			margin-top: 10px;
 		}
 
-		.claim-image {
-			text-align: center;
-			border: 1px solid #13254C;
-			border-radius: 5px;
-			width: 400px;
-			min-height: 400px;
-			margin-right: 20px;
-		}
-
 		.th-wide {
 			width: 420px;
 		}
 
 		.td-mid {
-			width: 200px;
+			width: 220px;
 		}
 
-		.claim-image img {
-			max-width: 100%;
+		.cl-title {
+			width: 1060px;
 		}
 
 		.message-title {
-			width: 222px;
+			width: 200px;
 			background-color: #13254C;
 			color: #FFF;
-			text-align: center;
-
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 
 		.message {
 			padding: 10px;
-			width: 1058px;
-			border: 1px solid #13254C;
+			width: 1060px;
+			border-top: 1px solid #13254C;
+			border-bottom: 1px solid #13254C;
 			min-height: 400px;
 		}
 
 		.button-cover {
-			width: 100%;
-			margin-top: 10px;
+			width: 1260px;
+			margin-top: 20px;
 			text-align: right;
 		}
 
-		.submit-button {
-			margin-left: 10px;
+		.list-button {
 			background-color: #13254C;
 			color: white;
 			cursor: pointer;
+			margin-left: 10px;
 			text-align: center;
 			font-size: 16px;
 		}
 
-		.submit-button:hover {
-			background-color: white;
+		.list-button:hover {
 			border: 1px solid #13254C;
+			background-color: white;
 			color: #13254C;
-		}
-
-		.submit-button:disabled {
-			background-color: #ccc;
-			cursor: not-allowed;
 		}
 	</style>
 </head>
@@ -130,71 +120,66 @@
 			<h1 class="title">민원관리 답변상세</h1>
 			<div class="layout-table">
 				<div class="container">
-					<h2 class="claim-info"> 민원 정보 </h2>
-					<table class="claim-detail-table">
-						<tr>
-							<th>민원 번호</th>
-							<td th:text="${claim.claimNo}" class="th-wide"></td>
-							<th>민원 일자</th>
-							<td th:text="${claim.claimDate}"></td>
-						</tr>
-						<tr>
-							<th>접수 승인</th>
-							<td th:text="${claim.claimApprove ? '승인' : '미승인'}"></td>
-							<th>처리 상태</th>
-							<td th:text="${claim.claimComplete ? '완료' : '대기'}"></td>
-						</tr>
-					</table>
+					<h2 class="table-info"> 민원 정보 </h2>
+
 					<table class="claim-detail-table">
 						<tr class="claim-th-small">
-							<th>부서 파트</th>
-							<td th:text="${manager.managerDeptPart}" class="td-mid"></td>
-							<th>부서명</th>
-							<td th:text="${manager.managerDeptName}" class="td-mid"></td>
+							<th>민원 번호</th>
+							<td th:text="${claim.claimNo}" class="td-mid"></td>
+							<th>접수 승인</th>
+							<td th:text="${claim.claimApprove ? '승인' : '미승인'}" class="td-mid"></td>
+							<th>처리 상태</th>
+							<td th:text="${claim.claimComplete ? '완료' : '대기'}" class="td-mid"></td>
+						</tr>
+						<tr class="claim-th-small">
+							<th>담당자 부서</th>
+							<td th:text="${manager.managerDeptPart + ' ' + manager.managerDeptName}" class="td-mid"></td>
 							<th>담당자</th>
-							<td th:text="${claim.claimManagerName}"></td>
+							<td th:text="${claim.claimManagerName}" class="td-mid"></td>
+							<th>신청일</th>
+							<td th:text="${claim.claimDate}" class="td-mid"></td>
 						</tr>
 						<tr class="claim-th-small">
 							<th>대분류</th>
-							<td th:text="${claim.claimCategoryName}"></td>
+							<td th:text="${claim.claimCategoryName}" class="td-mid"></td>
 							<th>소분류</th>
-							<td th:text="${claim.claimSubCategoryName}"></td>
+							<td th:text="${claim.claimSubCategoryName}" class="td-mid"></td>
 							<th>요청구분</th>
-							<td th:text="${claim.claimCategoryStatus}"></td>
+							<td th:text="${claim.claimCategoryStatus}" class="td-mid"></td>
 						</tr>
 					</table>
 					<table class="claim-detail-table">
 						<th>민원 제목</th>
-						<td th:text="${claim.claimTitle}"></td>
+						<td th:text="${claim.claimTitle}" class="cl-title"></td>
 					</table>
 					<div class="claim-content">
-							<div class="message-title">민원 내용</div>
-							<div class="message" th:text="${claim.claimContent}"></div>
-						</div>
-					<div class="container">
-						<h2 class="claim-info"> 답변 정보 </h2>
-						<table class="claim-detail-table">
-							<tr class="claim-th-small">
-								<th>부서명</th>
-								<td th:text="${manager.managerDeptPart}" class="td-mid"></td>
-								<th>관리자</th>
-								<td th:text="${manager.managerDeptName}" class="td-mid"></td>
-								<th>답변일자</th>
-								<td th:text="${claim.claimManagerName}"></td>
-							</tr>
-						</table>
-						<table class="claim-detail-table">
-							<th>답변 제목</th>
-							<td th:text="${claim.claimTitle}"></td>
-						</table>
-						<div class="claim-content">
-							<div class="message-title">답변 내용</div>
-							<div class="message" th:text="${claim.claimContent}"></div>
-						</div>
-						<div class="button-cover">
-							<button class="btn submit-button" onclick="openModal()" id="approveButton"
-								th:disabled="${claim.claimApprove}">민원 승인</button>
-						</div>
+						<div class="message-title">민원 내용</div>
+						<div class="message" th:text="${claim.claimContent}"></div>
+					</div>
+				</div>
+				<br class="line">
+				<div class="container">
+					<h2 class="table-info"> 답변 정보 </h2>
+					<table class="claim-detail-table">
+						<tr class="claim-th-small">
+							<th>부서명</th>
+							<td class="td-mid">민원 관리팀</td>
+							<th>관리자</th>
+							<td th:text="${claimReply.adminName}" class="td-mid"></td>
+							<th>답변일자</th>
+							<td th:text="${claimReply.claimReDate}" class="td-mid"></td>
+						</tr>
+					</table>
+					<table class="claim-detail-table">
+						<th>답변 제목</th>
+						<td th:text="${claimReply.claimReTitle}" class="cl-title"></td>
+					</table>
+					<div class="claim-content">
+						<div class="message-title">답변 내용</div>
+						<div class="message" th:text="${claimReply.claimReContent}"></div>
+					</div>
+					<div class="button-cover">
+						<button type="button" class="btn list-button" onclick="location.href='/admin/claim-list'">목록으로</button>
 					</div>
 				</div>
 			</div>

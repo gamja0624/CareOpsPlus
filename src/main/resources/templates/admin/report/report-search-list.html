@@ -10,7 +10,7 @@
 		
 		<style type="text/css">
           /* 페이지 레이아웃 */
-          .layout-table { height: 680px; text-align: center; }
+          .layout-table { margin-bottom: 10px; height: 800px; text-align: center; }
           .inner-layout-table { padding-top: 20px; height: 600px; }
           /* 목록 테이블 */
           .table { margin: 0 auto; width: 800px;  text-align: center; vertical-align: inherit; }
@@ -119,28 +119,28 @@
                       </ul>
                     </nav>
                   </div>
-                </div>
-                <div class="down-side">
-                  <div class="down-left-side" th:classappend="${session.userType == 'manager' }? 'manager-searchbox' : ''" >
-                    <div class="search-box">
-                      <form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/daily-report-list/search' }" method="get">
-                        <label class="report-category" for="column"></label> 
-                        <select id="filter" name="filter">
-                          <option value="dmrNo">보고서 번호</option>
-                          <option value="adminDeptName">부서</option>
-                          <option value="adminName">작성자</option>
-                          <option value="dmrDate">작성일자</option>
-                        </select> 
-                        <label for="value"></label> 
-                        <input class="input" type="search" name="value" id="search"> 
-                        <input class="input" type="submit" id="search-submit" value="검색">
-                      </form>
+                  <div class="down-side">
+                    <div class="down-left-side" th:classappend="${session.userType == 'manager' }? 'manager-searchbox' : ''" >
+                      <div class="search-box">
+                        <form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/daily-report-list/search' }" method="get">
+                          <label class="report-category" for="column"></label> 
+                          <select id="filter" name="filter">
+                            <option value="dmrNo">보고서 번호</option>
+                            <option value="adminDeptName">부서</option>
+                            <option value="adminName">작성자</option>
+                            <option value="dmrDate">작성일자</option>
+                          </select> 
+                          <label for="value"></label> 
+                          <input class="input" type="search" name="value" id="search"> 
+                          <input class="input" type="submit" id="search-submit" value="검색">
+                        </form>
+                      </div>
                     </div>
-                  </div>
-                  <div class="down-right-side">
-                    <div class="btn-line"  >
-                      <div class="btn-regist">
-                          <button class="btn btn-regist" th:if="${session.userType == 'admin'}"  th:onclick="|location.href='@{../daily-report-regist}'|"  type="submit" >보고서 등록</button>
+                    <div class="down-right-side">
+                      <div class="btn-line"  >
+                        <div class="btn-regist">
+                            <button class="btn btn-regist" th:if="${session.userType == 'admin'}"  th:onclick="|location.href='@{../daily-report-regist}'|"  type="submit" >보고서 등록</button>
+                        </div>
                       </div>
                     </div>
                   </div>
