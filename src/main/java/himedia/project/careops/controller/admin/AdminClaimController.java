@@ -28,6 +28,7 @@ import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.service.ClaimReplyService;
 import himedia.project.careops.service.ClaimService;
 import himedia.project.careops.service.ManagerService;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -76,6 +77,7 @@ public class AdminClaimController {
 		return "/admin/claim/claim-detail";
 	}
 	
+	// [ 민원 변경 ] ==========================================================================
 	// 민원 승인
 	@PostMapping("/claim-approve")
 	public String claimApprove(@ModelAttribute ClaimDTO claimDTO) {
@@ -83,19 +85,32 @@ public class AdminClaimController {
 		return "redirect:./claim-list";
 	}
 	
-	
-	
-	// 민원 처리  페이지
-	@PostMapping("/claim-complete")
-	public String claimComplete(@ModelAttribute ClaimDTO claimDTO) {
+	// 민원 처리
+	@PostMapping("/claim-complete/{claimNo}")
+	public String claimComplete(@PathVariable("claimNo") Integer claimNo, @ModelAttribute ClaimDTO claimDTO) {
 		claimService.completeClaim(claimDTO);
-		return "redirect:./claim-re";
+		return "redirect:/admin/claim-re/"+claimNo;
 	}
 	
-	@GetMapping("/claim-re")
-	public String claimReplyForm() {
+	// [ 답변 저장 및 조회 ] ==========================================================================
+	// 답변 작성
+	@GetMapping("/claim-re/{claimNo}")
+	public String claimReplyForm(@PathVariable("claimNo") Integer claimNo, Model model) {
+		log.info("답변 작성에 필요한 claimNo : {}", claimNo);		
+		ClaimDTO claim = claimService.findByClaimNo(claimNo);		
+		ManagerDTO manager = managerService.findByManagerId(claim.getManagerId());
 		
+		model.addAttribute("claim", claim);
+		model.addAttribute("manager", manager);
 		return "/admin/claim/claim-re-form";
+	}
+	
+	// 답변 저장
+	@PostMapping("/claim-reply-save/{claimNo}")
+	public String claimReplySave(@PathVariable("claimNo") Integer claimNo, @ModelAttribute ClaimReplyDTO claimReplyDTO, HttpSession session) {
+		log.info("claimReplyDTO 저장되는 답변 정보 : {}", claimReplyDTO);
+		claimReplyService.saveClaimReply(claimReplyDTO, claimNo, session);
+		return "redirect:/admin/claim-list";
 	}
 	
 	// 민원 답변 상세 페이지로 이동

@@ -92,7 +92,8 @@
 							<th>담당자</th>
 							<th>민원 일자</th>
 							<th>접수 승인</th>
-							<th>답변 처리</th>
+							<th>민원 처리</th>
+							<th>답변 작성</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -106,13 +107,17 @@
 								<td th:text="${claim.claimDate}"></td>
 								<td>
 									<button th:text="${claim.claimApprove ? '승인' : '미승인'}"
-										th:class="${claim.claimApprove} ? 'complete-button' : 'status-button'" disabled></button>
+										th:class="${claim.claimApprove} ? 'complete-button' : 'status-button'" disabled>
+									</button>
 								</td>
 								<td>
 									<button th:text="${claim.claimComplete ? '완료' : '대기'}"
-										th:class="${claim.claimComplete} ? 'complete-button' : 'status-button'" disabled></button>
+										th:class="${claim.claimComplete} ? 'complete-button' : 'status-button'" disabled>
+									</button>
 								</td>
+								<td> <a href="#"> 📝 </a>  </td>
 							</tr>
+							<!--답변-->
 							<th:block th:each="claimReply : ${claimReply}" th:if="${claimReply.claimNo == claim.claimNo}">
 								<tr class="td-style">
 									<td> [ 답변 완료 ]</td>
@@ -127,6 +132,8 @@
 						</th:block>
 					</tbody>
 				</table>
+				
+				<!-- 정렬 버튼 -->
 				<div class="button-cover">
 					<button class="btn" type="button" onclick="location.href='#'">미승인</button>
 					<button class="btn" type="button" onclick="location.href='#'">답변대기</button>

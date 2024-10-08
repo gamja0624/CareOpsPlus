@@ -270,7 +270,6 @@ public class ClaimService {
             .filter(claim -> claim.getManagerDeptNo() == (managerDeptNo))
             .collect(Collectors.toList());
 
-        // 필터링된 리스트로 새로운 Page 객체 생성
         return new PageImpl<>(filteredClaims.stream()
     							.map(claim -> modelMapper.map(claim, ClaimDTO.class))
     							.collect(Collectors.toList()), 

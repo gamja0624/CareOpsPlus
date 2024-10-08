@@ -108,10 +108,9 @@ public class ManagerService {
     	checkId.isEmpty();
     	
     	if(checkId.isPresent()) {
-    		log.info("데이터 존재 여부  : {}",checkId);
+    		log.info("데이터 존재 여부  : {}", checkId);
     		return true;
     	}
-    	
     	return false;
     }
     
@@ -121,7 +120,9 @@ public class ManagerService {
     	log.info("담당자 등록 서비스 실행");
     	log.info("매니저 정보 :{}" , managerDTO);;
     	log.info("부서 정보 :{}" , departmentDTO);
+    	
     	Manager manager = new Manager();
+    	
     	manager.setManagerDeptNo(departmentDTO.getManagerDeptNo());
     	manager.setManagerDeptPart(departmentDTO.getManagerDeptPart());
     	
@@ -130,7 +131,7 @@ public class ManagerService {
     	manager.setManagerPhoneNumber(managerDTO.getManagerPhoneNumber());   	
     	manager.setManagerId(managerDTO.getManagerId());
     	manager.setManagerPassword(managerDTO.getManagerPassword());    	
-    	managerRepository.save(manager);
     	
+    	managerRepository.save(manager);
 	}
 }

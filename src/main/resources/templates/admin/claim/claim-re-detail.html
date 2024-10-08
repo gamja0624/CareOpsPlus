@@ -65,6 +65,8 @@
 
 		.cl-title {
 			width: 1060px;
+			text-align: left !important;
+			padding-left: 20px;
 		}
 
 		.message-title {
@@ -117,7 +119,7 @@
 		<!-- section -->
 		<div class="section">
 			<!-- 제목 -->
-			<h1 class="title">민원관리 답변상세</h1>
+			<h1 class="title">민원<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 답변 상세</h1>
 			<div class="layout-table">
 				<div class="container">
 					<h2 class="table-info"> 민원 정보 </h2>
@@ -176,15 +178,24 @@
 					</table>
 					<div class="claim-content">
 						<div class="message-title">답변 내용</div>
-						<div class="message" th:text="${claimReply.claimReContent}"></div>
+						<div class="message" name="claimReContent" id="claimReContent" th:text="${claimReply.claimReContent}"></div>
 					</div>
 					<div class="button-cover">
 						<button type="button" class="btn list-button" onclick="location.href='/admin/claim-list'">목록으로</button>
 					</div>
 				</div>
 			</div>
+		</div>
 
-			<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		<script th:inline="javascript">
+			// 줄바꿈 설정
+			const claimReText = /*[[${claimReply.claimReContent}]]*/ '';;
+			const formmatContent = claimReText.replace(/(\r\n|\n|\r)/g, "<br/>");
+			document.getElementById("claimReContent").innerHTML = formattedContent;
+			
+			
+		</script>
 </body>
 
 </html>

@@ -25,9 +25,11 @@ import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.ClaimCategoryDTO;
 import himedia.project.careops.dto.ClaimDTO;
+import himedia.project.careops.dto.ClaimReplyDTO;
 import himedia.project.careops.dto.ClaimSubCategoryDTO;
 import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.entity.ClaimCategory;
+import himedia.project.careops.service.ClaimReplyService;
 import himedia.project.careops.service.ClaimService;
 import himedia.project.careops.service.ManagerService;
 import jakarta.servlet.http.HttpSession;
@@ -40,10 +42,12 @@ public class ManagerClaimController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final ClaimService claimService;
+	private final ClaimReplyService claimReplyService;
 	private final ManagerService managerService;
 	
-	public ManagerClaimController(ClaimService claimService, ManagerService managerService) {
+	public ManagerClaimController(ClaimService claimService, ClaimReplyService claimReplyService, ManagerService managerService) {
 		this.claimService = claimService;
+		this.claimReplyService = claimReplyService;
 		this.managerService = managerService;
 	}
 
@@ -59,15 +63,13 @@ public class ManagerClaimController {
 		log.info("우리 부서 이름 : {}" , managerDeptName);
 		log.info("우리 부서 번호 : {}", managerDeptNo);
 		
-		// List<Claim> claim =  claimService.findByManagerDeptClaim(managerDeptNo);
-		// log.info("우리 부서 민원 : {}", claim);
-		
 		Page<ClaimDTO> claim = claimService.ManagerDeptClaim(managerDeptNo, pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(claim);
-		log.info("우리 부서 민원 : {}", claim);
+		List<ClaimReplyDTO> claimReply =  claimReplyService.claimReplyList(); 
 		
 		model.addAttribute("claim", claim);
 		model.addAttribute("paging", paging);
+		model.addAttribute("claimReply", claimReply);
 		
 		return "/manager/claim/claim-list";
 	}
@@ -103,7 +105,6 @@ public class ManagerClaimController {
 		// 민원 정보
 		model.addAttribute("claim", claim);
 		model.addAttribute("manager", manager);
-
 		
 		// 민원 대분류
 		model.addAttribute("claimCategory", claimCategory);
@@ -143,5 +144,19 @@ public class ManagerClaimController {
 		
 		return "/manager/claim/claim-form";
 	}
+	
+	// [ 답변 조회 ] ===========================================================================
+    @GetMapping("/claim-re-detail/{claimNo}")
+    public String ManagerclaimReDetail(@PathVariable("claimNo") Integer claimNo, Model model) {
+    	
+    	ClaimDTO claim = claimService.findByClaimNo(claimNo);		
+    	ManagerDTO manager = managerService.findByManagerId(claim.getManagerId());
+    	ClaimReplyDTO claimReply = claimReplyService.findClaimReply(claimNo);
+    	
+    	model.addAttribute("claim", claim);
+    	model.addAttribute("manager", manager);
+    	model.addAttribute("claimReply", claimReply);
+    	return "/manager/claim/claim-re-detail";
+    }
 	
 }

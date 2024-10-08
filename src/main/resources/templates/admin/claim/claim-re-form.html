@@ -1,41 +1,202 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<!-- title 지정 -->
-		<title>CareOps+ | 답변 작성 </title>
-		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
-		
-		<style type="text/css">
-			.layout-table {
-				width: 1340px;
-				height: 100%;
-				border: 3px solid #13254C;
-				border-radius: 20px;
-				margin-bottom: 50px;
-			}
-		</style>
-	</head>
 
-	<body>
-		<!-- 사이드바 -->
-		<th:block th:replace="~{/common/side-bar}"></th:block>
-		
-		<!-- 컨텐츠 영역 -->
-		<div class="content">
-			
-			<!-- section -->
-			<div class="section">
-				<!-- 제목 -->
-				<h1 class="title"></h1>
-				<div class="layout-table">
-					
+<head>
+	<meta charset="UTF-8">
+	<!-- title 지정 -->
+	<title>CareOps+ | 답변 작성 </title>
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+
+	<style type="text/css">
+		.layout-table {
+			width: 1340px;
+			height: 100%;
+			border: 3px solid #13254C;
+			border-radius: 20px;
+			margin-bottom: 50px;
+		}
+		.btn-basic {
+		  border-radius: 10px;
+		  border: 1px solid #13254C;
+		  background-color: #13254C;
+		  color: #FFF;     
+		  font-size: 16px;
+		}
+		.container {
+			padding: 15px;
+			margin: 0 auto;
+			width: 1300px;
+		}
+
+		.table-info {
+			font-weight: 600;
+			font-size: 26px;
+			margin-bottom: 10px;
+		}
+
+		.claim-detail-table {
+			border-collapse: separate;
+			border-spacing: 0 5px;
+		}
+
+		.claim-detail-table th,
+		.claim-detail-table td {
+			border-top: 1px solid #13254C;
+			border-bottom: 1px solid #13254C;
+			text-align: center;
+			height: 30px;
+			line-height: 30px;
+		}
+
+		.claim-detail-table th {
+			background-color: #13254C;
+			color: #FFF;
+			width: 200px;
+		}
+
+		.claim-content {
+			display: flex;
+			margin-top: 10px;
+		}
+
+		.th-wide {
+			width: 420px;
+		}
+
+		.td-mid {
+			width: 220px;
+		}
+
+		.cl-title {
+			width: 1060px;
+			text-align: left !important;
+			padding-left: 20px;
+		}
+
+		.message-title {
+			width: 200px;
+			background-color: #13254C;
+			color: #FFF;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.message {
+			padding: 10px;
+			width: 1060px;
+			border-top: 1px solid #13254C;
+			border-bottom: 1px solid #13254C;
+			min-height: 400px;
+		}
+
+		.claim-re-form {
+			width: 1180px;
+			margin: 25px auto 0 auto;
+		}
+
+		.claim-re {
+			display: flex;
+			margin-bottom: 20px;
+		}
+
+		.claim-re-label {
+			font-size: 21px;
+			font-weight: 600;
+			width: 120px;
+			display: flex;
+		}
+
+		.claim-re-title {
+			border-radius: 5px;
+			width: 1200px;
+			height: 30px;
+		}
+
+		.claim-re-content {
+			border-radius: 5px;
+			width: 1200px;
+			min-height: 400px;
+		}
+		.button-cover {
+			width: 1200px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- 사이드바 -->
+	<th:block th:replace="~{/common/side-bar}"></th:block>
+
+	<!-- 컨텐츠 영역 -->
+	<div class="content">
+
+		<!-- section -->
+		<div class="section">
+			<!-- 제목 -->
+			<h1 class="title">민원<img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 답변 작성</h1>
+			<div class="layout-table">
+				<div class="container">
+					<h2 class="table-info"> 민원 정보 </h2>
+					<table class="claim-detail-table">
+						<tr class="claim-th-small">
+							<th>민원 번호</th>
+							<td th:text="${claim.claimNo}" class="td-mid"></td>
+							<th>접수 승인</th>
+							<td th:text="${claim.claimApprove ? '승인' : '미승인'}" class="td-mid"></td>
+							<th>처리 상태</th>
+							<td th:text="${claim.claimComplete ? '완료' : '대기'}" class="td-mid"></td>
+						</tr>
+						<tr class="claim-th-small">
+							<th>담당자 부서</th>
+							<td th:text="${manager.managerDeptPart + ' ' + manager.managerDeptName}" class="td-mid"></td>
+							<th>담당자</th>
+							<td th:text="${claim.claimManagerName}" class="td-mid"></td>
+							<th>신청일</th>
+							<td th:text="${claim.claimDate}" class="td-mid"></td>
+						</tr>
+						<tr class="claim-th-small">
+							<th>대분류</th>
+							<td th:text="${claim.claimCategoryName}" class="td-mid"></td>
+							<th>소분류</th>
+							<td th:text="${claim.claimSubCategoryName}" class="td-mid"></td>
+							<th>요청구분</th>
+							<td th:text="${claim.claimCategoryStatus}" class="td-mid"></td>
+						</tr>
+					</table>
+					<table class="claim-detail-table">
+						<th>민원 제목</th>
+						<td th:text="${claim.claimTitle}" class="cl-title"></td>
+					</table>
+					<div class="claim-content">
+						<div class="message-title">민원 내용</div>
+						<div class="message" th:text="${claim.claimContent}"></div>
+					</div>
+				</div>
+				<hr>
+				<!-- 답변 내용 -->
+				<div class="container">
+					<h2 class="table-info"> 답변 작성 </h2>
+					<form method="post" th:action="@{/admin/claim-reply-save/{claimNo}(claimNo=${claimNo})}" class="claim-re-form">
+						<div class="claim-re">
+							<label class="claim-re-label" name="claimReTitle">답변 제목</label>
+							<input class="claim-re-title" name="claimReTitle"></input>
+						</div>
+						<div class="claim-re">
+							<label class="claim-re-label" name="claimReContent">답변 내용</label>
+							<textarea class="claim-re-content" name="claimReContent"></textarea>
+						</div>
+						<div class="button-cover">
+							<button type="submit" class="btn btn-basic">답변 완료</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
-		
-		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	</body>
 </html>
