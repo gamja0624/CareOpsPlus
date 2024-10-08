@@ -169,13 +169,13 @@ public class AdminDailyReportController {
 		Page<DailyManagementReportDTO> searchMyReport = dailyReportService.searchReporByDate(adminName, filter, value, pageable); 
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(searchMyReport); 
 		int totalPages = searchMyReport.getTotalPages();
-	  
+
 		model.addAttribute("searchMyReport", searchMyReport);
 		model.addAttribute("paging", paging);
 		model.addAttribute("totalPages",totalPages);
 		model.addAttribute("filter", filter);
 		model.addAttribute("value", value);
-		  
+
 		return "admin/report/report-my-report-search";
 	}
 }

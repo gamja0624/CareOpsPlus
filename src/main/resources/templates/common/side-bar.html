@@ -26,7 +26,7 @@
 		    <div class="hr"></div>
 		    <ul class="nav nav-pills flex-column mb-auto">
 		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/account-list'}" class="nav-link active" aria-current="page">담당자 관리</a>
+		        <a th:href="@{'/' + ${session.userType} + '/account-list'}" class="nav-link nav-color" aria-current="page">담당자 관리</a>
 		      </li>
 		      <li class="nav-item">
 		        <a th:href="@{'/' + ${session.userType} + '/medical-list'}" class="nav-link nav-color">의료기기 관리</a>
@@ -62,5 +62,25 @@
 		    </div>
 		  </div>
 		</div>
+		
+		<script type="text/javascript">
+	    document.addEventListener("DOMContentLoaded", function() { // DOM 로드된 이후 이벤트 실행
+        const currentPath = window.location.pathname; // 현재 URL
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+	        const linkPath = new URL(link.href).pathname;
+	
+	        // 현재 경로와 링크 경로를 비교
+	        if (currentPath === linkPath) {
+	            link.classList.add('active');
+	        } else {
+	            link.classList.remove('active');
+	        }
+        });
+	    });
+		</script>
+
+		
 	</body>
 </html>

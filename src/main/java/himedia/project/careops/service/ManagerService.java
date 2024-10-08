@@ -56,7 +56,6 @@ public class ManagerService {
 	// 매니저 아이디로 매니저 정보 객체로 반환
 	public ManagerDTO findByManagerId(String managerId) {
 		
-		//log.info("[MangerService] 시작 !!!! - findByAdminNo 메서드 실행");
 		Manager findManager = managerRepository.findById(managerId).orElseThrow(IllegalArgumentException::new);
 
 		return modelMapper.map(findManager, ManagerDTO.class);
@@ -66,7 +65,6 @@ public class ManagerService {
 	// 부서 이름으로 해당 매니저 리스트로 반환
 	public List<Manager> findByManagerList(String lmdManagerDeptPart) {
 		
-		// log.info("[MangerService] 시작 !!!! - findByManagerList 메서드 실행");
 		return managerRepository.findAll() 										// Manager 에 저장된 모든 객체 가져오기
 				.stream() 
 				.filter(m -> m.getManagerDeptName().equals(lmdManagerDeptPart))	// 부서명이 같은 manager 객체 가져오기

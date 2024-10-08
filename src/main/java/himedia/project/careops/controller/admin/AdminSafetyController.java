@@ -15,7 +15,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import himedia.project.careops.common.Pagenation;
@@ -93,6 +96,18 @@ public class AdminSafetyController {
 		return "admin/safety/checklist-edit-detail";
 	}
 
+	// 점검표 항목 상세 수정 후 페이지
+	@PostMapping("/safety-checklist-edit/{smlList}")
+	public String checkListEdit(@PathVariable String smlList, @ModelAttribute SafetyManagementChecklistDTO checkList) {
+		log.info("수정된 체크리스트 페이지?? {}", checkList);
+		
+		return "redirect:/admin/safety-checklist-edit";
+	}
+	
+	
+	
+	
+	
 	// 데일리 점검목록 페이지
 	@GetMapping("/safety-daily-registration")
 	public String dailyResistraion() {
