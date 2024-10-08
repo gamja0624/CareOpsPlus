@@ -15,7 +15,7 @@
 			tr { height: 50px;  border-bottom: 1px solid #d9d9d9; }
 			
 			/* 상세보기 */
-			.data-add { height: 50px; vertical-align: middle; }
+			.data-add { height: 40px; vertical-align: middle; }
 			
 			/* 버튼 */
 			.btn-status { display: flex; }
@@ -151,7 +151,7 @@
 							<option value="lmdManagerDeptPart">부서</option>
 						</select> 
 						<label for="value"></label> 
-						<input class="input" type="search" name="value" id="search"> 
+						<input class="input" type="search" name="value" id="search" minlength="2"> 
 						<input class="input" type="submit" id="search-submit" value="검색">
 					</form>
 				</div>
@@ -159,5 +159,8 @@
 		</div>
 		
 		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		<script type="text/javascript">
+			
+		</script>
 	</body>
 </html>

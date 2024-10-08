@@ -50,6 +50,7 @@
 				border-radius: 10px; 
 				background-color: #13254C;
 			}
+			.calendar_content { pointer-events : none; }
 			
 		 	/* 보고서 */
 		 	.dailyReport-add { display: flex; width: 500px; }
@@ -182,7 +183,7 @@
 				<div class="dailyReport">
 					<!-- 더보기 -->
 					<div class="dailyReport-add">
-						<a href="" class="dailyReport-add-next">더보기</a>
+						<a th:href="@{'/' + ${session.userType} + '/daily-report-list'}" class="dailyReport-add-next">더보기</a>
 					</div>
 					
 					<!-- 3개 이상일 때 -->

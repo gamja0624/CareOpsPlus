@@ -64,7 +64,6 @@ public class AdminMedicalController {
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(medicalDevicesList);
 		
 		//페이지네이션 관련 토탈 페이지 수 BE -> FE
-		// log.info("페이지네이션{}", medicalDevicesList.getTotalPages());	// 총 페이지 수 확인
 		int totalPages = medicalDevicesList.getTotalPages();			    // 총 페이지 수 계산
 		
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
@@ -146,17 +145,6 @@ public class AdminMedicalController {
 			@RequestParam String lmdManagerName, @RequestParam String lmdManagerId,
 			@RequestParam String lmdAdminDeptNo, @RequestParam String lmdAdminId, @RequestParam String lmdAdminName, 
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date lmdLastCheckDate) {
-		
-//		log.info("lmdStatus : " + lmdStatus);
-//		log.info("lmdDeviceCnt : " + lmdDeviceCnt);
-//		log.info("lmdManagerDeptNo : " + lmdManagerDeptNo);
-//		log.info("lmdManagerDeptNo : " + lmdManagerDeptPart);
-//		log.info("lmdManagerName : " + lmdManagerName);
-//		log.info("lmdManagerId : " + lmdManagerId);
-//		log.info("lmdAdminDeptNo : " + lmdAdminDeptNo);
-//		log.info("lmdAdminId : " + lmdAdminId);
-//		log.info("lmdAdminName : " + lmdAdminName);
-//		log.info("lmdLastCheckDate : " + lmdLastCheckDate);
 		
 		// 해당 의료기기 정보 수정
 		medicalService.editMedicalDevice(editMedical, lmdStatus, lmdDeviceCnt,  

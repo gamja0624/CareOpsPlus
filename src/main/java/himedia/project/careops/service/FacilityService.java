@@ -94,6 +94,7 @@ public class FacilityService {
 		List<Facility> facilityList = facilityRepository.findAll();
 		return facilityList.stream()
 				.filter(m -> {
+					if (value != "") {
 						if (filter.equals("facilityFloor")) { // 층별
 							int floor = Integer.parseInt(value); // String -> int 변환
 							return m.getFacilityFloor() == floor;
@@ -104,6 +105,7 @@ public class FacilityService {
 								return m.getFacilityManagerDeptName().contains(value);
 							}
 						} 
+					}
 					return false;
 					}).collect(Collectors.toList());
 	}

@@ -61,8 +61,6 @@ public class ManagerMedicalController {
 		Page<ListMedicalDevicesDTO> medicalDevicesList = medicalService.findByMedicalDevices(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(medicalDevicesList);
 		
-		//페이지네이션 관련 토탈 페이지 수 BE -> FE
-		// log.info("페이지네이션{}", medicalDevicesList.getTotalPages());	// 총 페이지 수 확인
 		int totalPages = medicalDevicesList.getTotalPages();			    // 총 페이지 수 계산
 		
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
