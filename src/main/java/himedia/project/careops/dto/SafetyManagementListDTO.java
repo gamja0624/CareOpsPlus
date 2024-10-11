@@ -1,5 +1,7 @@
 package himedia.project.careops.dto;
 
+import java.sql.Date;
+
 import himedia.project.careops.entity.SafetyManagement;
 
 /**
@@ -20,14 +22,17 @@ public class SafetyManagementListDTO {
 	private Integer smNo;
 	private String smlList;
 	private Boolean smlCheck;
+	private Date smlCheckDate;
 	
 	public SafetyManagementListDTO() {}
 
-	public SafetyManagementListDTO(Integer smlNo, Integer smNo, String smlList, Boolean smlCheck) {
+	public SafetyManagementListDTO(Integer smlNo, Integer smNo, String smlList, Boolean smlCheck, Date smlCheckDate) {
+		super();
 		this.smlNo = smlNo;
 		this.smNo = smNo;
 		this.smlList = smlList;
 		this.smlCheck = smlCheck;
+		this.smlCheckDate = smlCheckDate;
 	}
 
 	public Integer getSmlNo() {
@@ -51,7 +56,7 @@ public class SafetyManagementListDTO {
 	}
 
 	public void setSmlList(String smlList) {
-		this.smlList = smlList;		
+		this.smlList = smlList;
 	}
 
 	public Boolean getSmlCheck() {
@@ -61,10 +66,18 @@ public class SafetyManagementListDTO {
 	public void setSmlCheck(Boolean smlCheck) {
 		this.smlCheck = smlCheck;
 	}
-	
+
+	public Date getSmlCheckDate() {
+		return smlCheckDate;
+	}
+
+	public void setSmlCheckDate(Date smlCheckDate) {
+		this.smlCheckDate = smlCheckDate;
+	}
+
 	@Override
 	public String toString() {
 		return "SafetyManagementListDTO [ smlNo=" + smlNo + "smNo=" + smNo 
-				+ "smList=" + smlList + "smlCheck=" + smlCheck + "]";
+				+ "smList=" + smlList + "smlCheck=" + smlCheck + "smlCheckDate = " + smlCheckDate +"]";
 	}
 }

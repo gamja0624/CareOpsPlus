@@ -1,5 +1,7 @@
 package himedia.project.careops.entity;
 
+import java.sql.Date;
+
 /**
  * @author 이홍준 
  * @editDate 2024-09-24
@@ -36,13 +38,17 @@ public class SafetyManagementList {
 	@ColumnDefault("0")
 	private Boolean smlCheck;		// 세부항목 체크
 	
+	@Column(name="sml_check_date", nullable = false)
+	private Date smlCheckDate;
+	
 	public SafetyManagementList() {}
 
-	public SafetyManagementList(Integer smlNo, Integer smNo, String smlList, Boolean smlCheck) {
+	public SafetyManagementList(Integer smlNo, Integer smNo, String smlList, Boolean smlCheck, Date smlCheckDate) {
 		this.smlNo = smlNo;
 		this.smNo = smNo;
 		this.smlList = smlList;
 		this.smlCheck = smlCheck;
+		this.smlCheckDate = smlCheckDate;
 	}
 
 	public Integer getSmlNo() {
@@ -76,10 +82,18 @@ public class SafetyManagementList {
 	public void setSmlCheck(Boolean smlCheck) {
 		this.smlCheck = smlCheck;
 	}
-	
+
+	public Date getSmlCheckDate() {
+		return smlCheckDate;
+	}
+
+	public void setSmlCheckDate(Date smlCheckDate) {
+		this.smlCheckDate = smlCheckDate;
+	}
+
 	@Override
 	public String toString() {
 		return "SafetyManagementList [ smlNo=" + smlNo + "smNo=" + smNo 
-				+ "smList=" + smlList + "smlCheck=" + smlCheck + "]";
+				+ "smList=" + smlList + "smlCheck=" + smlCheck + "smlCheckDate = " + smlCheckDate + "]";
 	}
 }
