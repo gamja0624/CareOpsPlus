@@ -113,7 +113,7 @@ public class AdminClaimController {
 		return "redirect:/admin/claim-list";
 	}
 	
-	// 민원 답변 상세 페이지로 이동
+	// 답변 상세 페이지로 이동
     @GetMapping("/claim-re-detail/{claimNo}")
     public String claimReDetail(@PathVariable("claimNo") Integer claimNo, Model model) {
     	

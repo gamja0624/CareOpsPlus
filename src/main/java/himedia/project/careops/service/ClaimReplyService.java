@@ -49,7 +49,7 @@ public class ClaimReplyService {
 		
 		claimReplyId.setClaimNo(claim.getClaimNo());
 		claimReplyId.setClaimCategoryNo(claim.getClaimCategoryNo());
-		claimReplyId.setClaimSubCategoryNo(claim.getClaimSubCategoryNO());
+		claimReplyId.setClaimSubCategoryNo(claim.getClaimSubCategoryNo());
 		claimReplyId.setManagerId(claim.getManagerId());
 		claimReplyId.setManagerDeptNo(claim.getManagerDeptNo());
 		
@@ -63,7 +63,6 @@ public class ClaimReplyService {
 		
 		log.info("답변 조회 목록 서비스");	
 		List<ClaimReply> claimReplyList = claimReplyRepository.findAll();
-		log.info("답변 목록 : {}" , claimReplyList);
 		return claimReplyList.stream()
 					.map(claimReply -> modelMapper.map(claimReply, ClaimReplyDTO.class))
 					.collect(Collectors.toList());		

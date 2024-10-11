@@ -59,7 +59,7 @@
                     <th scope="col">작성자</th>
                     <th scope="col">작성일자</th>
                     <th scope="col">상세</th>
-                    <th scope="col"  th:if="${session.userType == 'admin' and (session.department == '안전 관리팀' or session.department == '의료기기 관리팀')}">상태</th>
+                    <th scope="col"  th:if="${session.userType == 'admin'}">상태</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -46,15 +46,15 @@
                       <div class="regist-report">
                           <div class="intitle" >일일 관리 보고서</div>
                           <div>
-                            <label class="detail detail-block admin-dept-name" for="adminDeptName" >부서:</label>
+                            <label class="detail detail-block admin-dept-name" for="adminDeptName" >부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;서 :</label>
                             <input class="detail" th:value="${session.department}" name="adminDeptName" disabled="disabled" ></input>
                           </div>
                           <div>
-                            <label class="detail detail-block admin-name" for="adminName" >작성자 :</label>
+                            <label class="detail detail-block admin-name" for="adminName" >작&nbsp;&nbsp;&nbsp;&nbsp;성&nbsp;&nbsp;&nbsp;&nbsp;자 :</label>
                             <input class="detail" th:value="${session.userName}" name="adminName" disabled="disabled"  ></input>
                           </div>
                           <div>
-                            <label class="detail detail-block report-date" for="dmrDate">작성일자 :</label>
+                            <label class="detail detail-block report-date" for="dmrDate">작&nbsp;성&nbsp;&nbsp;일&nbsp;자 :</label>
                             <input class="detail" name="dmrDate" th:value="${nowDate}" type="date"   ></input>
                           </div>
                           <div>
@@ -69,7 +69,7 @@
                     </div> 
                     <div class="btn-line" >
                       <div class="page-back">
-                        <button onclick="history.back()" class="btn" type="reset">뒤로 가기</button>
+                        <button th:onclick="|location.href='@{../daily-report-list}'|"  class="btn" type="reset">뒤로 가기</button>
                       </div>
                       <div class="btn-regist">
                           <button class="btn btn-regist-comple" type="submit" >등록 완료</button>

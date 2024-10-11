@@ -11,6 +11,7 @@ spring:
 #  autoconfigure:
 #    exclude:
 #      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  
 
   # spring data jpa 설정
   jpa:
@@ -32,6 +33,11 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+    throw-exception-if-no-handler-found: true
+
+  web:
+    resources:
+      add-mappings: false
 
   # log 사용시 필요
   logging:

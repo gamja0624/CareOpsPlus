@@ -37,7 +37,10 @@ public class SafetyManagementChecklist {
 	@Column(name="sml_list", nullable = false)
 	private String smlList;
 	
-	@Column(name="smc_list", nullable = false)
+	@Column(name="smc_floor", nullable = false)
+	private int smcFloor;
+	
+	@Column(name="smc_list", nullable = true)
 	private String smcList;
 	
 	@Column(name="smc_check", nullable = false)
@@ -49,12 +52,13 @@ public class SafetyManagementChecklist {
 
 	public SafetyManagementChecklist() {}
 	
-	public SafetyManagementChecklist(Integer smcNo, int smlNo, String smlList, String smcList,
+	public SafetyManagementChecklist(Integer smcNo, int smlNo, String smlList, int smcFloor, String smcList,
 			Boolean smcCheck, String smcIssue) {
 		super();
 		this.smcNo = smcNo;
 		this.smlNo = smlNo;
 		this.smlList = smlList;
+		this.smcFloor = smcFloor;
 		this.smcList = smcList;
 		this.smcCheck = smcCheck;
 		this.smcIssue = smcIssue;
@@ -84,6 +88,14 @@ public class SafetyManagementChecklist {
 		this.smlList = smlList;
 	}
 
+	public int getSmcFloor() {
+		return smcFloor;
+	}
+
+	public void setSmcFloor(int smcFloor) {
+		this.smcFloor = smcFloor;
+	}
+
 	public String getSmcList() {
 		return smcList;
 	}
@@ -107,10 +119,10 @@ public class SafetyManagementChecklist {
 	public void setSmcIssue(String smcIssue) {
 		this.smcIssue = smcIssue;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "SafetyManagementChecklist [ smcNo=" + smcNo + "smlNo=" + smlNo + "smlList=" + smlList 
+		return "SafetyManagementChecklist [ smcNo=" + smcNo + "smlNo=" + smlNo + "smlList=" + smlList  + "smcFloor = " + smcFloor
 				+ "smcList=" + smcList + "smcCheck=" + smcCheck + "smcIssue=" + smcIssue + "]";
 	}
 }

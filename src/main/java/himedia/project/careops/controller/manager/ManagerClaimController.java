@@ -66,10 +66,13 @@ public class ManagerClaimController {
 		Page<ClaimDTO> claim = claimService.ManagerDeptClaim(managerDeptNo, pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(claim);
 		List<ClaimReplyDTO> claimReply =  claimReplyService.claimReplyList(); 
+		int totalPages = claim.getTotalPages();			    // 총 페이지 수 계산
+		
 		
 		model.addAttribute("claim", claim);
 		model.addAttribute("paging", paging);
 		model.addAttribute("claimReply", claimReply);
+		model.addAttribute("totalPages", totalPages);	
 		
 		return "/manager/claim/claim-list";
 	}
@@ -126,7 +129,7 @@ public class ManagerClaimController {
 	// [ 민원 신청 ] ==========================================================================
 	// 민원 신청 폼 이동 ( 대분류, 소분류 카테고리 보내기 )
 	@GetMapping("/claim-add")
-	public String managerClaimAdd(@PageableDefault Pageable pageable, Model model) {
+	public String managerClaimForm(@PageableDefault Pageable pageable, Model model) {
 		
 		// 민원 대분류
 		List<ClaimCategoryDTO> claimCategory = claimService.findAllCategory();
@@ -134,15 +137,24 @@ public class ManagerClaimController {
 		// 민원 소분류
 		Page<ClaimSubCategoryDTO> claimSubCategory = claimService.findAllSubCategory(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(claimSubCategory);
-		
-		log.info("민원 소분류 카테고리: {}", claimSubCategory);
-		log.info("민원 대분류 카테고리: {}", claimCategory);
+		int totalPages = claimSubCategory.getTotalPages();			    // 총 페이지 수 계산
 		
 		model.addAttribute("claimCategory", claimCategory);
 		model.addAttribute("claimSubCategory", claimSubCategory);
 		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages", totalPages);	
 		
 		return "/manager/claim/claim-form";
+	}
+	
+	// 민원 저장 
+	@PostMapping("/claim-submit")
+	public String managerClaimSubmit(@ModelAttribute ClaimDTO claimDTO, HttpSession session) {
+		log.info("민원 신청");
+		
+		claimService.saveClaim(claimDTO, session);
+		
+		return "redirect:./claim-list";
 	}
 	
 	// [ 답변 조회 ] ===========================================================================

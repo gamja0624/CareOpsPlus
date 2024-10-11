@@ -44,7 +44,7 @@ public class SafetyService {
 		this.safetyManagementChecklistRepository = safetyManagementChecklistRepository;
 		this.modelMapper = modelMapper;
 	}
-	
+
 	// smlRepository 사용 메소드(전체조회 네이티브쿼리)
 	public List<SafetyManagementListDTO> findAllList() {
 		List<SafetyManagementList> allList = safetyManagementListRepository.findAllList(); // 타입을 Object로 변경했지만 안 됨
@@ -52,8 +52,8 @@ public class SafetyService {
 				.map(SafetyManagementList -> modelMapper.map(SafetyManagementList, SafetyManagementListDTO.class))
 				.collect(Collectors.toList());
 	}
-	
-	// SafetyManagement 테이블 전체조회 
+
+	// SafetyManagement 테이블 전체조회
 	public List<SafetyManagementDTO> safetyResultList() {
 		log.info("safetyResultList 실행");
 		List<SafetyManagement> safetyResultList = safetyManagementRepository.findAll();
@@ -61,13 +61,12 @@ public class SafetyService {
 				.map(safetyManagement -> modelMapper.map(safetyManagement, SafetyManagementDTO.class))
 				.collect(Collectors.toList());
 	}
-	
+
 	// SafetyManagementChecklist테이블 전체조회 메소드
 	public List<SafetyManagementListDTO> safetyListAll() {
-		
-		  List<SafetyManagementList> safetyListAll =
-		  safetyManagementListRepository.findAll();
-		 
+
+		List<SafetyManagementList> safetyListAll = safetyManagementListRepository.findAll();
+
 		/*
 		 * List<SafetyManagementList> safetyListAll =
 		 * safetyManagementListRepository.findAllList();
@@ -78,14 +77,21 @@ public class SafetyService {
 	}
 
 	// SafetyManagementChecklist테이블 전체조회 메소드 + 페이지네이션
-	public Page<SafetyManagementChecklistDTO> findAllChecklist(String smlList,  Pageable pageable) {
-		
-		pageable =PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() -1,
-				pageable.getPageSize(),
-				Sort.by("smcNo").ascending());
-		
-		Page<SafetyManagementChecklist> allList = safetyManagementChecklistRepository.findBySmlList(smlList, pageable);
-		return allList.map(checklist -> modelMapper.map(checklist, SafetyManagementChecklistDTO.class));
+	public List<SafetyManagementChecklistDTO> findAllChecklist(String smlList) {
+
+		List<SafetyManagementChecklist> allList = safetyManagementChecklistRepository.findBySmlList(smlList);
+		return allList.stream().distinct()
+				.map(checklist -> modelMapper.map(checklist, SafetyManagementChecklistDTO.class))
+				.collect(Collectors.toList());
+	}
+
+	// 층별 체크리스트 조회
+	public List<SafetyManagementChecklistDTO> findCheckList(String smlList, int smcFloor) {
+
+		List<SafetyManagementChecklist> bySmcFloor = safetyManagementChecklistRepository.findBySmcFloor(smcFloor);
+
+		return bySmcFloor.stream().distinct().filter(list -> list.getSmlList().equals(smlList))
+				.map(list -> modelMapper.map(list, SafetyManagementChecklistDTO.class)).collect(Collectors.toList());
 	}
 
 	// 등록 수정 삭제 시 @Transactional 설정 필요

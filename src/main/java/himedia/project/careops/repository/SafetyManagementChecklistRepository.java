@@ -1,5 +1,7 @@
 package himedia.project.careops.repository;
 
+import java.util.List;
+
 /**
  * @author 이홍준
  * @editDate 2024-09-25 ~ 
@@ -16,7 +18,9 @@ import himedia.project.careops.entity.SafetyManagementChecklist;
 public interface SafetyManagementChecklistRepository extends JpaRepository<SafetyManagementChecklist, Integer> {
 	
 	// 점검항목별 조회
-	Page<SafetyManagementChecklist> findBySmlList(String smlList, Pageable pageable);
+	List<SafetyManagementChecklist> findBySmlList(String smlList);
+
+	List<SafetyManagementChecklist> findBySmcFloor(int smcFloor);
 
 	
 }
