@@ -35,7 +35,7 @@ public class Claim {
 	private String claimCategoryNo;				// 민원 대분류 번호 ( 외래키 )
 	
 	@Column(name="claim_sub_category_no", nullable = false)
-	private int claimSubCategoryNO;     		// 민원 소뷴류 번호 ( 외래키 )	
+	private int claimSubCategoryNo;     		// 민원 소뷴류 번호 ( 외래키 )	
 	
 	@Column(name="claim_category_name", nullable = false)
 	private String claimCategoryName;			// 민원 대분류 이름 
@@ -70,7 +70,7 @@ public class Claim {
 	public Claim() {}
 
 	public Claim(Integer claimNo, String managerId, int managerDeptNo, String claimCategoryNo,
-			int claimSubCategoryNO, String claimCategoryName, String claimSubCategoryName,
+			int claimSubCategoryNo, String claimCategoryName, String claimSubCategoryName,
 			String claimCategoryStatus, String claimManagerName, Date claimDate, String claimTitle, String claimContent,
 			Boolean claimApprove, Boolean claimComplete, String claimAttachment) {
 		super();
@@ -78,7 +78,7 @@ public class Claim {
 		this.managerId = managerId;
 		this.managerDeptNo = managerDeptNo;
 		this.claimCategoryNo = claimCategoryNo;
-		this.claimSubCategoryNO = claimSubCategoryNO;
+		this.claimSubCategoryNo = claimSubCategoryNo;
 		this.claimCategoryName = claimCategoryName;
 		this.claimSubCategoryName = claimSubCategoryName;
 		this.claimCategoryStatus = claimCategoryStatus;
@@ -123,12 +123,12 @@ public class Claim {
 		this.claimCategoryNo = claimCategoryNo;
 	}
 
-	public int getClaimSubCategoryNO() {
-		return claimSubCategoryNO;
+	public int getClaimSubCategoryNo() {
+		return claimSubCategoryNo;
 	}
 
-	public void setClaimSubCategoryNO(int claimSubCategoryNO) {
-		this.claimSubCategoryNO = claimSubCategoryNO;
+	public void setClaimSubCategoryNo(int claimSubCategoryNo) {
+		this.claimSubCategoryNo = claimSubCategoryNo;
 	}
 
 	public String getClaimCategoryName() {
@@ -214,7 +214,7 @@ public class Claim {
 	@Override
 	public String toString() {
 		return "Claim [claimNo=" + claimNo + ", managerId=" + managerId + ", managerDeptNo=" + managerDeptNo
-				+ ", claimCategoryNo=" + claimCategoryNo + ", claimSubCategoryNO=" + claimSubCategoryNO
+				+ ", claimCategoryNo=" + claimCategoryNo + ", claimSubCategoryNo=" + claimSubCategoryNo
 				+ ", claimCategoryName=" + claimCategoryName + ", claimSubCategoryName=" + claimSubCategoryName
 				+ ", claimCategoryStatus=" + claimCategoryStatus + ", claimManagerName=" + claimManagerName
 				+ ", claimDate=" + claimDate + ", claimTitle=" + claimTitle + ", claimContent=" + claimContent

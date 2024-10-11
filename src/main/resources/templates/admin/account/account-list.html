@@ -9,47 +9,44 @@
 		
 		<style type="text/css">
 			.layout-table {
-				width: 1340px; 
-				height: 600px; 
-				border: 3px solid #13254C; 
-				border-radius: 20px; 
+				height: 100%; 
+				padding-bottom: 50px;
+				margin-bottom: 50px;
+			}
+			.table-cover {
+				height: 620px;
 			}
 			.table-basic-style {
 				width: 1200px;
 				margin: 40px auto 20px auto;
+				font-size: 18px;
 			}
 
 			.tr-style th {
-				border-bottom: 2px solid #000;
+				border-bottom: 2px solid #4F5259;
 				text-align: center;
-				height: 30px;
 				font-weight: 600;
 			}
 			.tr-style tr, td {
-				border-bottom: 1px solid #000;
+				border-bottom: 1px solid #d9d9d9;
 				text-align: center;
-				height: 30px;
 			}
 			.manager-edit{
-				border: 1px solid #13254C;
-				border-radius: 20px;
-				color: #13254C;
-				background-color: #fff;
-				padding: 3px 8px;
-				line-height:36px;
+				background-color: #13254C;
+				color: #fff;
 			}
 			.manager-edit:hover {
-				color: #fff;
-				background-color: #13254C;
+				border: 1px solid #13254C ;
+				background-color: #fff;
+				color: #13254C;
 			}
 			.button-cover {
-				width: 1260px;
+				width: 1270px;
 				text-align: right;
 			}
 			.add-button {
 				text-align: center;
 				margin-left: 15px;
-				border-radius: 10px;
 				border: 1px solid #14254C;
 				background-color: #14254c;
 				color: #FFF;
@@ -72,36 +69,38 @@
 			<!-- section -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title">담당자 목록</h1>
+				<h1 class="title">담당자 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 목록</h1>
 				<div class="layout-table">
-					<table class ="table-basic-style">
-						<thead>
-							<tr class="tr-style">
-								<th>부서 번호</th>
-								<th>부서 파트</th>
-								<th>부서 이름</th>
-								<th>아이디</th>
-								<th>이름</th>
-								<th>연락처</th>
-								<th>담당자 변경</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="manager : ${manager}"  class="tr-style">
-					      <td th:text="${manager.managerDeptNo}"></td> 
-								<td th:text="${manager.managerDeptPart}"></td>
-								<td th:text="${manager.managerDeptName}"></td>
-								<td th:text="${manager.managerId}"></td>
-								<td th:text="${manager.managerName}"></td>
-								<td th:text="${manager.managerPhoneNumber}"></td>
-								<td>
-							  	<a class="manager-edit" th:href="@{./account-edit/{managerId}(managerId=${manager.managerId})}">담당자 변경</a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="table-cover">
+						<table class ="table table-hover table-basic-style">
+							<thead>
+								<tr class="tr-style">
+									<th>부서 번호</th>
+									<th>부서 파트</th>
+									<th>부서 이름</th>
+									<th>아이디</th>
+									<th>이름</th>
+									<th>연락처</th>
+									<th>담당자 변경</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="manager : ${manager}"  class="tr-style">
+						      <td th:text="${manager.managerDeptNo}"></td> 
+									<td th:text="${manager.managerDeptPart}"></td>
+									<td th:text="${manager.managerDeptName}"></td>
+									<td th:text="${manager.managerId}"></td>
+									<td th:text="${manager.managerName}"></td>
+									<td th:text="${manager.managerPhoneNumber}"></td>
+									<td>
+								  	<a class="btn manager-edit" th:href="@{./account-edit/{managerId}(managerId=${manager.managerId})}">담당자 변경</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 					<div class="button-cover">
-						<button class="btn add-button" type="button" onclick="location.href='account-department'">부서 목록</button>
+						<button class="btn add-button" type="button" onclick="location.href='account-department'">부서별 담당자</button>
 						<button class="btn add-button" type="button" onclick="location.href='account-add'">담당자 등록</button>
 					</div>
 					<!-- 페이지네이션 -->

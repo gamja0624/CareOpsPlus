@@ -1,11 +1,14 @@
 package himedia.project.careops.service;
 
+import java.sql.Date;
+
 /**
  * @author 최은지
  * @editDate 2024-09-27 ~ 
  */
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +34,7 @@ import himedia.project.careops.repository.ClaimCategoryRepository;
 import himedia.project.careops.repository.ClaimReplyRepository;
 import himedia.project.careops.repository.ClaimRepository;
 import himedia.project.careops.repository.ClaimSubCategoryRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -224,10 +228,34 @@ public class ClaimService {
 		
 		log.info("민원 서비스 카테고리 찾기: {} ", claimCategory);
 		
-		   return claimCategory.stream()
-                   .map(category -> modelMapper.map(category, ClaimCategoryDTO.class))
-                   .collect(Collectors.toList());
+	   return claimCategory.stream()
+			   		.map(category -> modelMapper.map(category, ClaimCategoryDTO.class))
+			   		.collect(Collectors.toList());
 	}
+	
+	// 작성자 : 최은지
+	// 민원 대분류 정보 찾기
+	public ClaimCategory findBycategoryName(String categoryName) {
+	    
+		return claimCategoryRepository.findAll()
+	            .stream()
+	            .filter(category -> category.getClaimCategoryName().equals(categoryName))
+	            .findFirst() 
+	            .orElse(null);				
+	}
+	// 작성자 : 최은지
+	// 민원 소분류 정보 찾기
+	public ClaimSubCategory findBySubcategoryName(String subCategoryName) {
+	    return calimSubCategoryRepository.findAll()
+	            .stream()
+	            .filter(category -> 
+	                category.getLmdMinorCateName() != null && category.getLmdMinorCateName().equals(subCategoryName) || 
+	                category.getSmlList() != null && category.getSmlList().equals(subCategoryName)
+	            )
+	            .findFirst() 
+	            .orElse(null); // 일치하는 객체가 없을 경우 null 반환
+	}
+	
 	// 작성자 : 최은지
 	// 민원 소분류 전체 조회 
 	public Page<ClaimSubCategoryDTO> findAllSubCategory(Pageable page) {
@@ -245,7 +273,6 @@ public class ClaimService {
 	// 작성자 : 최은지
 	// 부서별 민원 조회 ( 삭제 할 수도 있음 )
 	public List<Claim> findByManagerDeptClaim(Integer managerDeptNo) {
-		log.info("managerDeptNo : {}", managerDeptNo);
 		// 전체 목록 조회 -> 담당자 부서 번호와 일치하는 데이터 추출 -> 리스트로 
 		return claimRepository.findAll()
 				.stream()
@@ -256,26 +283,65 @@ public class ClaimService {
 	// 작성자 : 최은지
 	// 부서 내 민원 목록 조회 ( 페이지 반환 )
 	public Page<ClaimDTO> ManagerDeptClaim(Integer managerDeptNo, Pageable pageable) {
-		log.info("managerDeptNo : {}", managerDeptNo);
-	        
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
-                                   pageable.getPageSize(),
-                                   Sort.by("claimNo").ascending());
+	    log.info("managerDeptNo : {}", managerDeptNo);
 
-        // 모든 목록을 페이지로 저장
-        Page<Claim> allClaimList = claimRepository.findAll(pageable);
+	    pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+	                               pageable.getPageSize(),
+	                               Sort.by("claimNo").ascending());
 
-        // 부서 번호로 필터링 
-        List<Claim> filteredClaims = allClaimList.getContent().stream()
-            .filter(claim -> claim.getManagerDeptNo() == (managerDeptNo))
-            .collect(Collectors.toList());
+	    // 모든 목록을 페이지로 저장
+	    Page<Claim> allClaimList = claimRepository.findAll(pageable);
 
-        return new PageImpl<>(filteredClaims.stream()
-    							.map(claim -> modelMapper.map(claim, ClaimDTO.class))
-    							.collect(Collectors.toList()), 
-    							pageable, 
-    							allClaimList.getTotalElements());
-    }
+	    // 부서 번호로 필터링
+	    List<Claim> filteredClaims = allClaimList.getContent().stream()
+	        .filter(claim -> claim.getManagerDeptNo() == (managerDeptNo))
+	        .collect(Collectors.toList());
+
+	    return new PageImpl<>(filteredClaims.stream()
+	        .map(claim -> modelMapper.map(claim, ClaimDTO.class))
+	        .collect(Collectors.toList()),
+	        pageable, allClaimList.getTotalElements());
+	}
+	// 작성자 : 최은지
+	// 민원 저장
+	public void saveClaim(ClaimDTO claimDTO, HttpSession session) {
+		log.info("민원 저장 서비스 실행");
+		
+		Claim claim = new Claim();
+		Date currentDate = new Date(System.currentTimeMillis()); // 현재 날짜 가져오기 ( 임시.. )
+		
+		// 세션으로 저장할 정보 : 매니저 아이디 매니저 부서 번호 매니저 이름
+		String managerId = (String) session.getAttribute("userId");
+	    String managerName = (String) session.getAttribute("userName");
+	    String deptNo = (String) session.getAttribute("deptNo");
+	    int managerDeptNo = Integer.parseInt(deptNo); // String을 int로 변환
+	   
+	    claim.setManagerId(managerId);
+	    claim.setManagerDeptNo(managerDeptNo);
+	    claim.setClaimManagerName(managerName);
+	    log.info("claim : {}", claim);	
+	    
+	    ClaimCategory category = findBycategoryName(claimDTO.getClaimCategoryName());
+	    ClaimSubCategory subCategory = findBySubcategoryName(claimDTO.getClaimSubCategoryName());
+	    log.info("category : {}", category);	
+	    log.info("subCategory : {}", subCategory);	
+		
+	    // 입력 받을 정보 : (1) 제목 , (2) 대분류, (3) 소분류, (4) 요청 구분, (5) 첨부파일, (6) 내용
+		claim.setClaimTitle(claimDTO.getClaimTitle());                     // 제목
+		claim.setClaimCategoryNo(category.getClaimCategoryNo());           // 대분류 번호   
+		claim.setClaimCategoryName(claimDTO.getClaimCategoryName());       // 대분류 이름
+		claim.setClaimSubCategoryNo(subCategory.getClaimSubCategoryNo());     // 소분류 번호
+		claim.setClaimSubCategoryName(claimDTO.getClaimSubCategoryName()); // 소분류 이름
+		claim.setClaimCategoryStatus(claimDTO.getClaimCategoryStatus());   // 요청 구분
+		// claim.setClaimAttachment(claimDTO.getClaimAttachment());        // 첨부 파일 ( 이미지 등록 구현 후 수정 )
+		claim.setClaimContent(claimDTO.getClaimContent());  
+	
+		claim.setClaimDate(currentDate);
+		claim.setClaimApprove(false);
+		claim.setClaimComplete(false);
+		log.info("claim : {}", claim);	
+		claimRepository.save(claim);	
+	}
 	
 	// 작성자 : 최은지 
 	// 민원 수정
@@ -287,7 +353,7 @@ public class ClaimService {
 		claim.setClaimTitle(claimDTO.getClaimTitle());                     // 제목
 		claim.setClaimCategoryNo(claimDTO.getClaimCategoryNo());           // 대분류 번호   
 		claim.setClaimCategoryName(claimDTO.getClaimCategoryName());       // 대분류 이름
-		claim.setClaimSubCategoryNO(claimDTO.getClaimSubCategoryNO());     // 소분류 번호
+		claim.setClaimSubCategoryNo(claimDTO.getClaimSubCategoryNo());     // 소분류 번호
 		claim.setClaimSubCategoryName(claimDTO.getClaimSubCategoryName()); // 소분류 이름
 		claim.setClaimCategoryStatus(claimDTO.getClaimCategoryStatus());   // 요청 구분
 		// claim.setClaimAttachment(claimDTO.getClaimAttachment());        // 첨부 파일 ( 이미지 등록 구현 후 수정 )
