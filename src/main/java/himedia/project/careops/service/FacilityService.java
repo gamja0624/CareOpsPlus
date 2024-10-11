@@ -96,8 +96,12 @@ public class FacilityService {
 				.filter(m -> {
 					if (value != "") {
 						if (filter.equals("facilityFloor")) { // 층별
-							int floor = Integer.parseInt(value); // String -> int 변환
-							return m.getFacilityFloor() == floor;
+							try {
+								int floor = Integer.parseInt(value); // String -> int 변환
+								return m.getFacilityFloor() == floor;
+							} catch (Exception e) {
+								return false;
+							}
 						} else if (filter.equals("facilityName")) { // 시설물 이름
 							return m.getFacilityName().contains(value);
 						} else if (filter.equals("facilityManagerDeptName")) { // 예약 부서

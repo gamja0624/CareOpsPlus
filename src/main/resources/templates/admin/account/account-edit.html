@@ -50,7 +50,6 @@
 	   	.account-button {
 	      color: white;
 		    background-color: #13254C;
-	      border-radius: 10px;
 	      cursor: pointer;
 				width: 120px;
 				height: 40px;
@@ -83,28 +82,28 @@
 							<div class="form-whole-cover">
 								<form id="registration-form" class="registration-form" action="/admin/account-edit-complete" method="post">
 					        <div class="form-group">
-				            <label class="label-style" for="department">부 서 명</label>
+				            <label class="label-style" for="department">부 &nbsp;서&nbsp; 명</label>
 				            <input class="input-style" type="text" id="managerDeptName" name="managerDeptName"  th:value="${manager.managerDeptName}" readonly>
 					        </div>
 					        <div class="form-group">
-				            <label class="label-style" for="name">이 름</label>
+				            <label class="label-style" for="name">이 &nbsp; &nbsp; &nbsp; 름</label>
 				            <input class="edit-style" type="text" id="managerName" name="managerName" th:value="${manager.managerName}" required >
 					        </div>
 					        <div class="form-group">
-				            <label class="label-style" for="contact">연 락 처</label>
-				            <input class="edit-style" type="text" id="managerPhoneNumber" name="managerPhoneNumber" th:value="${manager.managerPhoneNumber}" required>
+				            <label class="label-style" for="managerPhoneNumber">연 &nbsp;락&nbsp; 처</label>
+				            <input class="edit-style" type="text" id="managerPhoneNumber" name="managerPhoneNumber" th:value="${manager.managerPhoneNumber}" oninput="formatPhoneNumber(this)" required>
 					        </div>
 					        <div class="form-group">
-				            <label class="label-style" for="userId">아 이 디</label>
+				            <label class="label-style" for="userId">아 &nbsp;이&nbsp; 디</label>
 				            <input class="input-style" type="text" id="managerId" name="managerId"  th:value="${manager.managerId}" readonly>
 					        </div>
 					        <div class="form-group">
-				            <label class="label-style" for="password">비밀번호</label>
+				            <label class="label-style" for="password">비 밀 번 호</label>
 				            <input class="input-style" type="password" id="managerPassword" name="managerPassword" th:value="${manager.managerPassword}" readonly>
 					        </div>
 									<div class="button-cover">
-						      	<button class="account-button" type="button" >목록으로</button>
-						      	<button class="account-button" type="submit" >변경 완료</button>
+						      	<button class="btn account-button" type="button" onclick="location.href='/admin/account-list'">목록으로</button>
+						      	<button class="btn account-button" type="submit" >변경 완료</button>
 									</div>
 					   		</form>
 							</div>
@@ -116,5 +115,21 @@
 			</div>
 		
 		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+		<script>
+			
+			// [ 연락처 형식 포맷 ]----------------------------------------------------
+			function formatPhoneNumber(input) {
+			 
+				let value = input.value.replace(/\D/g, '');
+
+			  if (value.length === 11) {
+			      input.value = value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+			  } else if (value.length >= 7 || value.length <11 ) {
+			      input.value = value.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+			  } else {
+			      input.value = value;
+			  }
+			}
+		</script>
 	</body>
 </html>

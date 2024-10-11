@@ -115,12 +115,14 @@
 								<div class="data">
 								 	<p class="data-title">점검자</p>
 								 	<select id="admin-select" name="lmdAdminDeptNo" class="data-input-b" aria-label="Default select" onchange="onAdminChange()" oninput="checkFields()">
-						       	<option th:each="admin : ${ adminList }" th:if="${ medicalDevice.lmdAdminName == admin.adminName }" 
-											      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
-											      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" selected></option>
-						       	<option th:each="admin : ${ adminList }" th:unless="${ medicalDevice.lmdAdminName == admin.adminName }" 
-											      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
-											      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" selected></option>
+						       	<th:block th:each="admin : ${ adminList }" th:if="${ admin.adminDeptName.equals('의료기기 관리팀') }">
+							       	<option th:if="${ medicalDevice.lmdAdminName == admin.adminName }" 
+												      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
+												      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" selected></option>
+							       	<option th:unless="${ medicalDevice.lmdAdminName == admin.adminName }" 
+												      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
+												      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" ></option>
+						       	</th:block>
 							    </select>
 								</div>
 							</div>
@@ -150,8 +152,8 @@
 							<!-- hidden -->
 							<input type="hidden" id="lmd-dapt-part" name="lmdManagerDeptPart">
 		        	<input type="hidden" id="lmd-manager-name" name="lmdManagerName">
-		        	<input type="hidden" id="lmd-admin-name" name="lmdAdminName">
 		        	<input type="hidden" id="lmd-admin-id" name="lmdAdminId">
+		        	<input type="hidden" id="lmd-admin-name" name="lmdAdminName">
 						</div>
 					</div>
 					

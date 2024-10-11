@@ -29,7 +29,7 @@ public class ClaimSubCategory {
 	@Column(name="lmd_minor_cate_name")
 	private String lmdMinorCateName;                // 장비 세분류명 ( 의료기기 관리 )
 	
-	@Column(name="sml_no", nullable = true)
+	@Column(name="sml_no")
 	private Integer smlNo;                              // 세부항목 번호 ( 안전관리 )
 	
 	@Column(name="sml_list")
