@@ -158,23 +158,54 @@ public class MyPageService {
             .orElseThrow(() -> new EntityNotFoundException("매니저를 찾을 수 없습니다: " + managerId));
     }
     
+    // 비밀번호 검증 메서드
+    public boolean isValidPassword(String password) {
+        // 비밀번호는 최소 10자, 최대 16자, 소문자와 대문자 또는 숫자 포함해야 함
+        return password.length() >= 10 && password.length() <= 16 &&
+               password.matches(".*[a-z].*") &&  // 소문자 포함
+               (password.matches(".*[A-Z].*") || password.matches(".*\\d.*")); // 대문자 또는 숫자 포함
+    }
+    
+    public boolean isCurrentPasswordCorrect(String userId, String currentPassword, String userType) {
+        if ("admin".equals(userType)) {
+            Admin admin = adminRepository.findByAdminId(userId)
+                    .orElseThrow(() -> new EntityNotFoundException("관리자를 찾을 수 없습니다: " + userId));
+            return admin.getAdminPassword().equals(currentPassword);
+        } else if ("manager".equals(userType)) {
+            Manager manager = managerRepository.findByManagerId(userId)
+                    .orElseThrow(() -> new EntityNotFoundException("매니저를 찾을 수 없습니다: " + userId));
+            return manager.getManagerPassword().equals(currentPassword);
+        }
+        return false;
+    }
+    
     // 사용자의 비밀번호를 변경하는 메서드
     // userType에 따라 Admin 또는 Manager의 비밀번호를 변경
     // 변경 성공 시 true, 실패 시 false 반환
     @Transactional
-    public boolean changePassword(String userId, String newPassword, String userType) {
+    public boolean changePassword(String userId, String currentPassword, String newPassword, String userType) {
         if ("admin".equals(userType)) {
-            return adminRepository.findByAdminId(userId).map(admin -> {
-                admin.setAdminPassword(newPassword);
-                adminRepository.save(admin);
-                return true;
-            }).orElse(false);
+            Admin admin = adminRepository.findByAdminId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("관리자를 찾을 수 없습니다: " + userId));
+            
+            if (!admin.getAdminPassword().equals(currentPassword)) {
+                return false;
+            }
+            
+            admin.setAdminPassword(newPassword);
+            adminRepository.save(admin);
+            return true;
         } else if ("manager".equals(userType)) {
-            return managerRepository.findByManagerId(userId).map(manager -> {
-                manager.setManagerPassword(newPassword);
-                managerRepository.save(manager);
-                return true;
-            }).orElse(false);
+            Manager manager = managerRepository.findByManagerId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("매니저를 찾을 수 없습니다: " + userId));
+            
+            if (!manager.getManagerPassword().equals(currentPassword)) {
+                return false;
+            }
+            
+            manager.setManagerPassword(newPassword);
+            managerRepository.save(manager);
+            return true;
         }
         return false;
     }

@@ -53,12 +53,12 @@
 		background-color: #13254C;
 		color: white;
 		font-size: 18px;
-		border: none;
+		border: 2px solid #13254C; /* 테두리 추가 호버하면 안흔들리게 */
 		border-radius: 10px;
 		cursor: pointer;
 	}
 	
-	.btn:hover { border: 1px solid #13254C; background-color: white; color: #13254C }
+	.btn:hover { border: 2px solid #13254C; background-color: white; color: #13254C }
 	
 	hr {
 		width: 60%;
@@ -108,10 +108,24 @@
 					</div>
 				</div>
 				<hr>
-				<button class="btn" onclick="window.location.href='/mypage-edit'">회원정보 수정</button>
+				<!-- 회원정보 수정 버튼 -->
+				<button class="btn" onclick="goToEditPage()">회원정보 수정</button>
 			</div>
 		</div>
 	</div>
+
+	<script th:inline="javascript">
+		function goToEditPage() {
+			/* userType에 따라 다른 URL로 이동 */
+			let userType = /*[[${userType}]]*/ 'admin'; // 이 값은 Thymeleaf에서 동적으로 주입됩니다.
+			if (userType === 'admin') {
+				window.location.href = '/admin/mypage-edit';
+			} else if (userType === 'manager') {
+				window.location.href = '/manager/mypage-edit';
+			}
+		}
+	</script>
+
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

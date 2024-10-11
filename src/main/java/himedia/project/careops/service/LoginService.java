@@ -81,7 +81,7 @@ public class LoginService {
         
         if (!adminDeptOpt.isPresent()) {
             result.put("success", false);
-            result.put("message", "로그인 정보가 일치하지 않습니다."); // 부서 번호 오류 시 메시지
+            result.put("message", "아이디 또는 비밀번호가 일치하지 않습니다."); // 부서 번호 오류 시 메시지
             return false;
         }
 
@@ -104,7 +104,7 @@ public class LoginService {
             
             if (!departmentOpt.isPresent()) {
                 result.put("success", false);
-                result.put("message", "로그인 정보가 일치하지 않습니다.");
+                result.put("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
                 return false;
             }
 

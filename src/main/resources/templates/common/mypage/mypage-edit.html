@@ -1,133 +1,192 @@
 <!DOCTYPE html>
-<!-- /*@author 노태윤
-@editDate 2024-09-23~2024-09-24*/ -->
-<html xmlns:th="http://www.thymleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>CareOps+ | 회원 정보 수정</title>
-		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
-		
-		<style type="text/css">
-		.layout-table {
-			padding: 40px;
-			background-color: #fff;
-			border-radius: 10px;
-			overflow: auto;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
-		
-		.info-container {
-			text-align: center;
-			display: flex;
-			flex-direction: column;
-			gap: 30px;
-			width: 60%;
-		}
-		
-		.info-row {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-		}
-		
-		label {	
-			font-weight: 500;
-			color: #666;
-			font-size: 23px;
-			width: 150px;
-			text-align: left;
-			white-space: nowrap;
-		}
-		
-		.info-field {
-			flex: 1;
-			padding: 10px;
-			margin-bottom: 15px;
-			border-radius: 5px;
-			border: 1px solid #13254C;
-			background-color: #13254C;
-			color: #fff;
-			font-size: 20px;
-			box-sizing: border-box;
-		}
-		
-		.btn {
-			padding: 12px;
-			color: white;
-			font-size: 18px;
-			border: none;
-			background-color: #13254C;
-			border-radius: 10px;
-			cursor: pointer;
-			width: 48%;
-		}
-		
-		hr {
-			width: 60%;
-			margin: 2rem 0;
-			background-color: #000;
-			height: 1px;
-			border: 0;
-		}
-		
-		.btn:hover { border: 1px solid #13254C; }
-		
-		.btn-container {
-			width: 60%;
-			display: flex;
-			justify-content: space-between;
-			margin-top: 30px;
-		}
-		
-	  .dropdown-divider { width: auto; }
-	  
-		</style>
-	</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CareOps+ | 회원 정보 수정</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/web-settings.css}" rel="stylesheet">
+    
+    <style type="text/css">
+        .layout-table {
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* 필드 사이 간격 설정 */
+        }
+        
+        .info-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 60%;
+        }
+        
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between; /* 필드 사이 균일 간격 */
+        }
+        
+        label {
+            font-weight: 500;
+            color: #666;
+            font-size: 23px;
+            width: 100px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        
+        .info-field {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #13254C;
+            background-color: #13254C;
+            color: #fff;
+            font-size: 20px;
+            box-sizing: border-box;
+        }
+        
+        .btn {
+            padding: 12px;
+            color: white;
+            font-size: 18px;
+            border: 2px solid transparent; 
+            transition: border-color 0.3s ease, background-color 0.3s ease; /* 부드러운 전환 */
+            background-color: #13254C;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 48%;
+        }
+        
+        hr {
+            width: 60%;
+            margin: 2rem 0;
+            background-color: #000;
+            height: 1px;
+            border: 0;
+        }
+        
+        .btn:hover { border: 1px solid #13254C; }
+        .btn-container {
+            width: 60%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .dropdown-divider { width: auto; }
+        
+    </style>
+</head>
 
-	<body>
-		<!-- 사이드바 -->
-		<th:block th:replace="~{/common/side-bar}"></th:block>
-		
+<body>
+    <!-- 사이드바 -->
+    <th:block th:replace="~{/common/side-bar}"></th:block>
+    
     <!-- 컨텐츠 영역 -->
     <div class="content">
         <div class="section">
             <h1 class="title">내 정보 수정</h1>
-            <form th:action="@{/update-info}" method="post" th:object="${user}">
-    					<input type="hidden" name="id" th:value="${user != null ? (userType == 'admin' ? user.adminId : user.managerId) : ''}"/>
-    						<input type="hidden" name="userType" th:value="${userType}"/>
-    						
-    <div class="layout-table">
-        <hr>
-        <div class="info-container">
-            <div class="info-row">
-                <label for="department">부서명</label>
-                <input type="text" id="department" class="info-field" 
-                       th:value="${user != null ? (userType == 'admin' ? user.adminDeptName : user.managerDeptName) : ''}" 
-                       readonly>
-            </div>
-            <div class="info-row">
-                <label for="name">이름</label>
-                <input type="text" id="name" name="name" class="info-field" required
-                       th:value="${user != null ? (userType == 'admin' ? user.adminName : user.managerName) : ''}">
-            </div>
-            <div class="info-row">
-                <label for="phone">연락처</label>
-                <input type="text" id="phone" name="phoneNumber" class="info-field" required
-                       th:value="${user != null ? (userType == 'admin' ? user.adminPhoneNumber : user.managerPhoneNumber) : ''}">
-            </div>
-        </div>
-        <hr>
-        <div class="btn-container">
-            <button type="button" class="btn" onclick="window.location.href='/mypage'">뒤로가기</button>
-            <button type="submit" class="btn">변경 사항 저장</button>
+            <form id="updateForm" th:action="@{/update-info}" method="post" th:object="${user}">
+                <input type="hidden" name="id" th:value="${user != null ? (userType == 'admin' ? user.adminId : user.managerId) : ''}"/>
+                <input type="hidden" name="userType" th:value="${userType}"/>
+                
+                <div class="layout-table">
+                    <hr>
+                    <div class="info-container">
+                        <div class="info-row">
+                            <label for="department">부서명</label>
+                            <input type="text" id="department" class="info-field" 
+                                th:value="${user != null ? (userType == 'admin' ? user.adminDeptName : user.managerDeptName) : ''}" 
+                                readonly>
+                        </div>
+                        <div class="info-row">
+                            <label for="name">이름</label>
+                            <input type="text" id="name" name="name" class="info-field" 
+                                th:value="${user != null ? (userType == 'admin' ? user.adminName : user.managerName) : ''}" readonly>
+                        </div>
+                        <div class="info-row">
+                              <label for="phone">연락처</label>
+                              <input type="text" id="phone" name="phoneNumber" class="info-field" required
+                                     th:value="${user != null ? (userType == 'admin' ? user.adminPhoneNumber : user.managerPhoneNumber) : ''}"
+                                     maxlength="13" pattern="\d{3}-\d{4}-\d{4}" placeholder="000-0000-0000">
+                        </div>
+                    </div>
+                    
+                    <!-- 메시지 표시용 영역 -->
+                    <hr>
+                    
+                    <div id="updateMessage" style="display: none; color: green; font-size: 18px; text-align: center;">
+                        연락처가 성공적으로 수정되었습니다.
+                    </div>
+                    
+                    <div class="btn-container">
+                        <button type="button" class="btn" onclick="goToMyPage()">뒤로가기</button>
+						<!--<button type="button" class="btn" onclick="window.location.href='/mypage'">뒤로가기</button>-->
+
+                        <button type="submit" class="btn">변경 사항 저장</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- JavaScript로 전화번호 입력 제어 -->
+			<script th:inline="javascript">
+				
+				/*<![CDATA[*/
+				var userType = /*[[${userType}]]*/ 'defaultUserType';
+				/*]]>*/
+				
+                document.getElementById('phone').addEventListener('input', function (e) {
+                    let input = e.target.value.replace(/\D/g, '');  // 숫자 이외의 값 제거
+                    if (input.length > 3 && input.length <= 7) {
+                        input = input.slice(0, 3) + '-' + input.slice(3); // 000-0000 형식
+                    } else if (input.length > 7) {
+                        input = input.slice(0, 3) + '-' + input.slice(3, 7) + '-' + input.slice(7); // 000-0000-0000 형식
+                    }
+                    e.target.value = input;
+                });
+                
+                // 뒤로가기 버튼 클릭 시 적절한 페이지로 이동
+				function goToMyPage() {
+				    window.location.href = '/' + userType + '/mypage';
+				}
+
+                // 폼 제출 시 AJAX로 처리
+                document.getElementById('updateForm').addEventListener('submit', function(event) {
+                    event.preventDefault();  // 기본 제출 동작 방지
+
+                    let formData = new FormData(this);  // 폼 데이터 가져오기
+
+                    // AJAX 요청 보내기
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())  // 응답을 텍스트로 받기
+                    .then(data => {
+                        // 연락처가 성공적으로 수정되었을 경우 메시지 표시
+                        document.getElementById('updateMessage').style.display = 'block';
+
+                        // 메시지를 3초 후에 숨기기
+                        setTimeout(() => {
+                            document.getElementById('updateMessage').style.display = 'none';
+                        }, 2000);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            </script>
+
+            <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
         </div>
     </div>
-</form>
-        </div>
-    </div>
-    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

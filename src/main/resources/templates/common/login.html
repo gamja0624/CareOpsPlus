@@ -5,6 +5,8 @@
     <title>CareOps+ | 케어옵스</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+	
     <style>
         body {
             margin: 0;
@@ -29,6 +31,7 @@
             width: 500px;
             height: auto;
             margin-bottom: 100px;
+			margin-top: 30px;
         }
         
         .login-box {
@@ -38,7 +41,7 @@
             border-radius: 5px;
             color: white;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            margin-top: 30px;
+            margin-top: 15px;
             margin-bottom: 40px;
         }
         
@@ -91,99 +94,60 @@
             50% { opacity: 1; }
         }
         
-        @media (max-width: 768px) {
-            .container {
-                width: 100%;
-            }
-            
-            .site_logo {
-                width: 300px;
-                margin-top: 15px;
-            }
-            
-            .login-box {
-                width: 90%;
-                padding: 20px;
-                margin-bottom: 30px;
-            }
-            
-            .form-control, .btn-login {
-                width: 100%;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .site_logo {
-                width: 250px;
-                margin-top: 15px;
-            }
-            
-            .login-box {
-                width: 95%;
-                padding: 15px;
-                margin-bottom: 20px;
-            }
-            
-            .form-label {
-                font-size: 1rem;
-            }
-            
-            .form-control {
-                font-size: 0.9rem;
-            }
-            
-            .btn-login {
-                font-size: 1rem;
-                padding: 10px;
-            }
-        }
-        
-        /* 모달 스타일 */
-        .modal-content {
-			transform: translate(-0%, -170%) !important;
-            background-color: white;
-            color: #ff0000;
-            border-radius: 10px;
-            padding: 20px;
-            border: none;
-            margin: 0 auto;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
 
-        .modal-dialog {
-            position: fixed;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%) !important;
-            width: 90%;
-            max-width: 550px;
-            margin: 0;
-        }
+		/* 모달 스타일 */
+		.modal-content {
+		transform: translate(-0%, -200%) !important;
+		    background-color: white;
+		    border-radius: 10px;
+		    border: none;
+		    margin: 0 auto;
+			max-height: 80vh !important; /* 모달의 최대 높이 설정 (80% viewport height) */
+			height: auto !important; /* 높이를 자동으로 설정 */
+		    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+		}
 
-        .modal-header { border-bottom: none; padding: 0 0 15px 0; }
-        .modal-title { font-size: 18px; }
-        .modal-body { padding: 15px 0; font-size: 20px; text-align: center; }
-        .modal-footer { border-top: none; padding: 15px 0 0 0; justify-content: center; }
-        
-        .btn-close {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            font-size: 24px;
-            font-weight: 700;
-            opacity: 0.5;
-        }
-        .btn-close:hover { opacity: 1; }
-        
-        /* 모달 배경 스타일 */
-        .modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
-        
-        /* 모달이 화면 맨 위로 오도록 z-index 조정 */
-        .modal { z-index: 1050; }
-        .modal-backdrop { z-index: 1040; }
-        
-        /* 모달 내 버튼 스타일 */
-        .modal-footer .btn { font-size: 16px; }
+		.modal-dialog {
+		    position: fixed;
+		    top: 2%;
+		    left: 50%;
+		    transform: translateX(-50%) !important;
+		    width: 90%;
+		    max-width: 550px;
+			min-height: 120; /* 모달의 최대 높이 증가 */
+		    margin: 0;
+		}
+
+		.modal-header { 
+			border-bottom: none; 
+			background-color: #13254C; 
+			color:white; 
+		}
+		
+		.modal-title { font-size: 18px; }
+		.modal-body { padding: 15px 0; font-size: 20px; text-align: center; color: black;}
+		.modal-footer { border-top: none; padding: 15px 0 0 0; justify-content: center; background-color: #f1f1f1; }
+
+		.btn-close {
+		    position: absolute;
+		    right: 20px;
+		    top: 20px;
+		    font-size: 24px;
+		    font-weight: 700;
+		    opacity: 0.5;
+		}
+		.btn-close:hover { opacity: 1; }
+
+		/* 모달 배경 스타일 */
+		.modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
+
+		/* 모달이 화면 맨 위로 오도록 z-index 조정 */
+		.modal { z-index: 1050; }
+		.modal-backdrop { z-index: 1040; }
+
+		/* 모달 내 버튼 스타일 */
+		.modal-footer .btn { font-size: 16px; background-color: #13254C; border-color: #fff; }
+		
     </style>
 </head>
 <body>
@@ -217,7 +181,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="loginErrorModalLabel">로그인 오류</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
                     <p id="loginErrorMessage">부서번호, 아이디 또는 비밀번호를 다시 입력해주세요</p>
