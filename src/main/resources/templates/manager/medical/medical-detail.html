@@ -106,8 +106,12 @@
 							</div>
 							<div class="data">
 							 	<p class="data-title">점검자</p>
-								<input type="text" th:each="admin : ${ adminList }" th:if="${ medicalDevice.lmdAdminName == admin.adminName }"
-											th:value="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" class="data-input" disabled>
+								 	<th:block th:each="admin : ${ adminList }" th:if="${ medicalDevice.lmdAdminName == admin.adminName }">
+										<input type="text" th:value="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" class="data-input" disabled>
+								 	</th:block>
+								 	<th:block th:if="${ medicalDevice.lmdAdminName == null }">
+										<input type="text" th:value="${ medicalDevice.lmdAdminName }" class="data-input" disabled>
+								 	</th:block>
 							</div>
 						</div>
 						

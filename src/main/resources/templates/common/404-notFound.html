@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+		<title>404 처리</title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		
+		<style type="text/css">
+			body { background-color: #13254D; color: white; font-family: 'Freesentation-9Black'; }
+			
+			/* 별 */
+			.container {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         width: 1200px;
+         padding: 0px;
+         margin-top: 0;
+       }
+       
+       #background {
+	       position: fixed;
+	       top: 0;
+	       left: 0;
+	       width: 100%;
+	       height: 100%;
+	       z-index: -1;
+	       overflow: hidden;
+        }
+			
+			.star {
+	      position: absolute;
+	      background-color: white;
+	      width: 2px;
+	      height: 2px;
+	      border-radius: 50%;
+	      opacity: 0;
+	      animation: twinkle 5s infinite;
+      }
+      
+      @keyframes fall {
+	      from { transform: translateY(-5vh); }
+	      to { transform: translateY(105vh); }
+      }
+
+      @keyframes twinkle {
+	      0%, 100% { opacity: 0; }
+	      50% { opacity: 1; }
+      }
+       
+       /* 404 */
+       .fw-bold { font-size: 200px; }
+       .not-text { margin-bottom: 50px; font-size: 50px; font-weight: 600; }
+       .display-4:before { width: 100%; }
+       .btn-css { 
+					width: 150px; 
+					height: 65px;
+					border-radius: 50px; 
+					background-color: white; 
+					font-size: 25px;
+					font-weight: 600;
+     	 }
+     	 .btn-css:hover { border: 3px solid white; }
+		</style>
+		
+	</head>
+	
+	<body>
+		<div id="background"></div>
+	
+		<section class="py-3 py-md-5 min-vh-100 d-flex justify-content-center align-items-center">
+		  <div class="container">
+		    <div class="row">
+		      <div class="col-12">
+		        <div class="text-center">
+		          <h1 class="d-flex justify-content-center align-items-center gap-2 mb-4">
+		            <span class="display-1 fw-bold">4</span>
+		            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+								  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+								</svg>
+		            <span class="display-1 fw-bold bsb-flip-h">4</span>
+		          </h1>
+		          <h2 class="not-text">Not Found</h2>
+		          <button th:onclick="|location.href= '@{ '/' + ${session.userType} + '/dash-board' }' |" class="btn btn-css" type="button">B A C K</button>
+	          </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
+		
+		<!-- Bootstrap JS 및 jQuery 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 별 생성 및 애니메이션
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.top = `${Math.random() * 100}vh`;
+            
+            const size = Math.random() * 3 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            const duration = Math.random() * 100 + 50;
+            star.style.animation = `fall ${duration}s linear infinite, twinkle 5s infinite`;
+            
+            document.getElementById('background').appendChild(star);
+        }
+
+        // 초기 별 생성
+        for (let i = 0; i < 100; i++) {
+            createStar();
+        }
+
+        // 지속적인 별 생성
+        setInterval(createStar, 500);
+    </script>
+		
+	</body>
+</html>
