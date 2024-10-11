@@ -154,6 +154,17 @@ public class MedicalService {
 		ListMedicalDevices findMedical = medicalRepository.findById(editMedical.getLmdMinorCateCode())
 				.orElseThrow(IllegalArgumentException::new);
 		
+//		log.info("lmdMinorCateCode   : {}", lmdStatus);
+//		log.info("lmdDeviceCnt 		 : {}", lmdDeviceCnt);
+//		log.info("lmdManagerDeptNo 	 : {}", lmdManagerDeptNo);
+//		log.info("lmdManagerDeptPart : {}", lmdManagerDeptPart);
+//		log.info("lmdManagerName     : {}", lmdManagerName);
+//		log.info("lmdManagerId       : {}", lmdManagerId);
+//		log.info("lmdAdminDeptNo     : {}", lmdAdminDeptNo);
+//		log.info("lmdAdminId 		 : {}", lmdAdminId);
+//		log.info("lmdAdminName 		 : {}", lmdAdminName);
+//		log.info("lmdLastCheckDate   : {}", lmdLastCheckDate);
+		
 		// 상태, 장비수
 		findMedical.setLmdStatus(lmdStatus);
 		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));
@@ -170,5 +181,7 @@ public class MedicalService {
 		findMedical.setLmdAdminName(lmdAdminName);
 		
 		findMedical.setLmdLastCheckDate(new java.sql.Date(lmdLastCheckDate.getTime()));
+		
+		log.info("{}", findMedical);
 	}
 }
