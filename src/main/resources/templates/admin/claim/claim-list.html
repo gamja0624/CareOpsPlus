@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -11,11 +11,12 @@
 
 	<style type="text/css">
 		/** 민원 목록 **/
-		.table-cover { height: 800px; margin: 0 auto; }
+		.table-cover { min-height: 600px; margin: 0 auto; }
 		.claim-list { width: 1340px; margin: 40px auto 0 auto; text-align: center; font-size: 18px; }
 		.claim-list .th-style { border-bottom: 2px solid #4F5259; font-weight: 600; }
 		.claim-list .td-style { border-bottom: 1px solid #d9d9d9; }
 		.claim-list .td-title { text-align: left; padding-left: 20px; }
+		.claim-list img { width: 30px; line-height: 30px; vertical-align: middle; }
 		.claim-reply td { border-bottom: 1px solid #d9d9d9; background-color: #E9ECF1; }
 		/** 상태 버튼 **/
 		.status-button { background-color: #8992A5; border-radius: 50px; border: #FFF; color: #FFF; width: 80px; height: 40px; line-height: 1; }
@@ -39,7 +40,7 @@
 			<!-- 제목 -->
 			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">목록</h1>
 			<div class="table-cover">
-				<table class="table table-hover claim-list">
+				<table id="claimTable" class="table table-hover claim-list">
 					<thead>
 						<tr class="th-style">
 							<th>민원 번호</th>
@@ -71,7 +72,17 @@
 										th:class="${claim.claimComplete} ? 'complete-button' : 'status-button'" disabled>
 									</button>
 								</td>
-								<td>이미지</td>
+								<td>
+									<th:block th:if="${claim.claimApprove} == true and ${claim.claimComplete} == false">
+						        <a href="#" 
+						           th:onclick="'handleClick(event, ' + ${claim.claimApprove} + ', ' + ${claim.claimComplete} + ', \'' + ${claim.claimNo} + '\')'">
+						            <img alt="답변작성" th:src="@{/img/test.png}"> 
+						        </a>
+								    </th:block>
+								    <th:block th:if="${claim.claimComplete} == true">
+								        <span>완료</span>
+								    </th:block>
+								</td>
 							</tr>
 							<!--답변-->
 							<th:block th:each="claimReply : ${claimReply}" th:if="${claimReply.claimNo == claim.claimNo}">
@@ -95,8 +106,8 @@
 			<!--버튼-->
 			<div class="button-cover">
 				<button type="button" class="btn" onclick="location.href='claim-application'">미승인</button>
-				<button type="button" class="btn" onclick="location.href='claim-application'">처리대기</button>
-				<button type="button" class="btn" onclick="location.href='claim-application'">처리완료</button>
+				<button type="button" class="btn" onclick="sortClaims('claimApprove')" >처리대기</button>
+				<button type="button" class="btn" onclick="sortClaims('claimComplete')" >처리완료</button>
 			</div>
 			<!-- 페이지네이션 -->
 			<div id="paging">
@@ -139,26 +150,48 @@
 					</ul>
 				</nav>
 			</div>
-
-			<div class="search-box">
-				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/medical-list/search' }"
+			<div class="search-box" >
+				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/claim-list/search' }"
 					method="get">
 					<label class="" for="column"></label>
-					<select id="filter" name="filter">
-						<option value=""></option>
-						<option value=""></option>
-						<option value=""></option>
-						<option value=""></option>
+					<select id="filter" name="filter" onchange="updatePlaceholder()">
+						<option value="claimTitle">민원 제목</option>
+						<option value="claimManagerName">담당자</option>
+						<option value="claimApprove">승인</option>
+						<option value="claimComplete">답변</option>
 					</select>
 					<label for="value"></label>
-					<input class="input" type="search" name="value" id="search" minlength="2">
+					<input class="input" type="search" name="value" id="search" placeholder="">
 					<input class="input" type="submit" id="search-submit" value="검색">
 				</form>
 			</div>
 		</div>
 	</div>
-
+	
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+	<script> 
+		// 답변 제한 
+		function handleClick(event, claimApprove, claimComplete, claimNo) {
+			console.log('claimApprove:', claimApprove, 'claimComplete:', claimComplete, 'claimNo :', claimNo); 
+		    if (claimApprove && !claimComplete) {
+		        window.location.href = './claim-re/' + claimNo;
+				} else {
+		        event.preventDefault(); // 이동 방지
+		    }
+		}
+		
+		// 승인, 답변 placeholder 처리 
+		function updatePlaceholder() {
+		    const filter = document.getElementById("filter");
+		    const searchInput = document.getElementById("search");
+
+		    if (filter.value === "claimApprove") {
+		        searchInput.placeholder = "승인 또는 미승인 입력하세요.";
+		    } else if (filter.value === "claimComplete") {
+		        searchInput.placeholder = "대기 또는 완료를 입력하세요"; 
+		    }
+			}
+	</script>
 </body>
 
 </html>
