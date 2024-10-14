@@ -12,7 +12,7 @@
       /* 층버튼 */
       .btn-floor-line {display: flex; flex-flow: wrap; margin: 20px auto; width: 500px; }
       .btn-floor { margin: 10px 10px; width: 80px;}
-    
+      .btn-floor.active { color: white; background-color: #769FFA; }
     
       /* 테이블 */
       .layout-table { margin-bottom: 10px; height: 700px; text-align: center; }
@@ -54,8 +54,6 @@
       	line-height: 25px;
       }
       .plus-icon-a { cursor: pointer; }
-      
-      /* 페이지네이션 */
       
       /* 버튼 */
       .btn-line {
@@ -108,8 +106,9 @@
                   </tr>
                 </thead>
                 <tbody id="checklistBody">
-                  <tr class="table-row data-row" th:each="checklist, iter : ${allChecklist}">
+                  <tr class="table-row data-row" th:each="checklist, stat : ${allChecklist}">
                     <td hidden="hidden"><input name="smcFloor" th:value="${checklist.smcFloor}" ></td>
+                    <td hidden="hidden"><input name="smlNo" th:value="${checklist.smlNo}" ></td>
                     <td><input class="smcNo" name="smcNo" type="text" th:value="${checklist.smcNo}" readonly="readonly"></td>
                     <td><input class="smcList" name="smcList" type="text" th:value="${checklist.smcList}"></td>
                   </tr>
@@ -129,6 +128,7 @@
 	  </div>
     </div>
     <script type="text/javascript">
+      // 층 버튼 클릭 시 해당 층의 데이터만 가져오는 함수
       function fetchChecklist(smlList, num) {
     	  console.log( smlList, num);
           // URL 형식: admin/safety-checklist-edit/{smlList}/{num}
@@ -153,6 +153,7 @@
                       // 새로운 행을 만들어 데이터 추가
                       row.innerHTML = `
                           <td hidden="hidden"><input name="smcFloor" value="${checklist.smcFloor}"></td>
+                          <td hidden="hidden"><input name="smlNo" value="${checklist.smlNo}" ></td>
                           <td><input class="smcNo" name="smcNo" type="text" value="${checklist.smcNo}" readonly="readonly"></td>
                           <td><input class="smcList" name="smcList" type="text" value="${checklist.smcList}"></td>
                       `;
@@ -161,6 +162,17 @@
                   });
               })
               .catch(error => console.error('Error fetching checklist:', error));
+          
+     	  // 다른 버튼들의 active 클래스 제거
+          document.querySelectorAll('.btn-floor').forEach(btn => {
+              btn.classList.remove('active');  
+            });
+          
+      	 // 클릭된 버튼에 active 클래스 추가
+          const clickedButton = document.querySelector(`[data-num="${num}"]`);
+          if (clickedButton) {
+            clickedButton.classList.add('active');  
+          }
       }
 	</script>
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>

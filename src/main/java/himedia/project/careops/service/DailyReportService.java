@@ -1,13 +1,11 @@
 package himedia.project.careops.service;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-
 /**
  * @author 이홍준
  * @editDate 2024-09-26 ~ 
  */
 
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +17,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.DailyManagementReportDTO;
@@ -103,76 +100,71 @@ public class DailyReportService {
 		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
 				pageable.getPageSize(), Sort.by("dmrNo").descending());
 		Page<DailyManagementReport> allList = dailyManagementReportRepository.findAll(pageable);
-		
-		log.info("검색된 카테고리>>> {} , 검색어 {}" , filter, value);
-		
-		if(value == "") {
+
+		//log.info("검색된 카테고리>>> {} , 검색어 {}", filter, value);
+
+		if (value == "") {
 			return allList.map(reportList -> modelMapper.map(reportList, DailyManagementReportDTO.class));
 		}
-		
-		return serchValue(filter, value, allList);
+
+		return searchValue(filter, value, allList);
 	}
 
 	// 카테고리별 검색 메소드 (dmrNo, adminDeptName, adminName, dmrDate)
-	private Page<DailyManagementReportDTO> serchValue(String filter, String value, Page<DailyManagementReport> allList) {
+	private Page<DailyManagementReportDTO> searchValue(String filter, String value,
+			Page<DailyManagementReport> allList) {
 
-		if(filter.equals("dmrNo") ) {
-			
+		if (filter.equals("dmrNo")) {
+
 			List<DailyManagementReportDTO> collect = allList.stream()
 					.filter(list -> String.valueOf(list.getDmrNo()).contains(value))
-					.map(list -> modelMapper.map(list, DailyManagementReportDTO.class))
-					.collect(Collectors.toList());
-			
+					.map(list -> modelMapper.map(list, DailyManagementReportDTO.class)).collect(Collectors.toList());
+
 			return new PageImpl<>(collect);
-			
+
 		} else if (filter.equals("adminDeptName")) {
-			
+
 			List<DailyManagementReportDTO> collect = allList.stream()
 					.filter(list -> String.valueOf(list.getAdminDeptName()).contains(value))
-					.map(list -> modelMapper.map(list, DailyManagementReportDTO.class))
-					.collect(Collectors.toList());
-			
+					.map(list -> modelMapper.map(list, DailyManagementReportDTO.class)).collect(Collectors.toList());
+
 			return new PageImpl<>(collect);
-			
+
 		} else if (filter.equals("adminName")) {
-			
+
 			List<DailyManagementReportDTO> collect = allList.stream()
 					.filter(list -> String.valueOf(list.getAdminName()).contains(value))
-					.map(list -> modelMapper.map(list, DailyManagementReportDTO.class))
-					.collect(Collectors.toList());
-			
+					.map(list -> modelMapper.map(list, DailyManagementReportDTO.class)).collect(Collectors.toList());
+
 			return new PageImpl<>(collect);
-			
+
 		} else if (filter.equals("dmrDate")) {
-			
+
 			Date date = Date.valueOf(value);
-			
-			List<DailyManagementReportDTO> collect = allList.stream()
-					.filter(list -> list.getDmrDate().equals(date))
-					.map(list -> modelMapper.map(list, DailyManagementReportDTO.class))
-					.collect(Collectors.toList());
-			
+
+			List<DailyManagementReportDTO> collect = allList.stream().filter(list -> list.getDmrDate().equals(date))
+					.map(list -> modelMapper.map(list, DailyManagementReportDTO.class)).collect(Collectors.toList());
+
 			return new PageImpl<>(collect);
-			
-		} else { 
+
+		} else {
 			return Page.empty();
 		}
 	}
-	
+
 	// 접속한 adminName을 통해 특정 날짜 데이터 검색하는 메소드
 	public Page<DailyManagementReportDTO> searchReporByDate(String adminName, String filter, String value,
 			Pageable pageable) {
 
 		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
 				pageable.getPageSize(), Sort.by("dmrNo").descending());
-		
+
 		Page<DailyManagementReport> allList = dailyManagementReportRepository.findByAdminName(adminName, pageable);
-		
-		if(value =="") {
+
+		if (value == "") {
 			return allList.map(list -> modelMapper.map(list, DailyManagementReportDTO.class));
 		}
-		
-		return serchValue(filter, value, allList);
+		return searchValue(filter, value, allList);
 	}
 
 	// 작성자 : 진혜정
