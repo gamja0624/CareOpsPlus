@@ -1,5 +1,7 @@
 package himedia.project.careops.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 
 /**
@@ -8,7 +10,7 @@ import java.sql.Date;
  */
 
 import java.util.Calendar;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import himedia.project.careops.dto.ClaimCategoryDTO;
 import himedia.project.careops.dto.ClaimDTO;
@@ -46,6 +49,7 @@ public class ClaimService {
 	private final ClaimCategoryRepository claimCategoryRepository;
 	private final ClaimSubCategoryRepository calimSubCategoryRepository;
 	private final ClaimReplyRepository claimReplyRepository;
+	private final String uploadDir = "uploads/";
 	private final ModelMapper modelMapper;
 	
 	public ClaimService(ClaimRepository claimRepository, ClaimCategoryRepository claimCategoryRepository ,ClaimSubCategoryRepository calimSubCategoryRepository, 
@@ -66,6 +70,61 @@ public class ClaimService {
 				.stream()
 				.filter(m -> m.getManagerDeptNo() == deptNo)
 				.collect(Collectors.toList());     
+	}
+	
+	// 작성자 : 최은지 
+	// 민원 검색 ( 혜정님 버전 ) 
+	public List<Claim> searchClaimByFilter(String filter, String value) {
+		List<Claim> claimSearchList = claimRepository.findAll();
+		boolean finalValueApprove = "승인".equals(value);
+		boolean finalValueComplete = "완료".equals(value);
+
+		return claimSearchList.stream()
+							.filter(srh -> {
+								if (filter.equals("claimTitle")) {
+									return srh.getClaimTitle().contains(value);
+								} else if (filter.equals("claimManagerName")) {
+									return srh.getClaimManagerName().contains(value);
+								} else if (filter.equals("claimApprove")) {
+									return srh.getClaimApprove() == finalValueApprove;
+								} else if (filter.equals("claimComplete")) {
+									return srh.getClaimComplete() == finalValueComplete;
+								}
+								return List.of().isEmpty();
+							}).collect(Collectors.toList());	
+	}
+
+	// 민원 검색 ( 홍준님 버전 )
+	public Page<ClaimDTO> resutlClaim(String filter, String value, Pageable pageable) {
+		log.info("민원 검색 서비스");
+		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() -1,
+				pageable.getPageSize(),
+				  Sort.by("claimNo").ascending());
+		Page<Claim> claimList = claimRepository.findAll(pageable);	
+		
+		if(value.equals("")) {
+			return claimList.map(clmList -> modelMapper.map(clmList, ClaimDTO.class));	
+		}
+		return searchClaim(filter, value, claimList);
+	}
+
+	public Page<ClaimDTO> searchClaim(String filter, String value, Page<Claim> claimList) {
+		
+		log.info("검색 결과 filter : {}", filter);			
+		log.info("검색 결과 value : {}", value);			
+		
+		if(filter.equals("claimTitle")) {
+			
+			List<ClaimDTO> claimResult = claimList.stream()
+				    .filter(srh -> srh.getClaimTitle().contains(value)) // String.valueOf 제거
+				    .map(list -> modelMapper.map(list, ClaimDTO.class)) // map 메서드 호출 위치 수정
+				    .collect(Collectors.toList());
+			
+			log.info("검색 결과 claimResult : {}", claimResult);			
+			return new PageImpl<>(claimResult);
+		}
+		
+		return Page.empty();
 	}
 	
 	// [ 작업 관리자 ] =========================================================================
@@ -287,28 +346,32 @@ public class ClaimService {
 
 	    pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
 	                               pageable.getPageSize(),
-	                               Sort.by("claimNo").ascending());
+	                               Sort.by("claimNo").descending());
 
 	    // 모든 목록을 페이지로 저장
-	    Page<Claim> allClaimList = claimRepository.findAll(pageable);
+	    Page<Claim> allClaimList = claimRepository.findByManagerDeptNo(managerDeptNo, pageable);
 
-	    // 부서 번호로 필터링
-	    List<Claim> filteredClaims = allClaimList.getContent().stream()
-	        .filter(claim -> claim.getManagerDeptNo() == (managerDeptNo))
-	        .collect(Collectors.toList());
-
-	    return new PageImpl<>(filteredClaims.stream()
-	        .map(claim -> modelMapper.map(claim, ClaimDTO.class))
-	        .collect(Collectors.toList()),
-	        pageable, allClaimList.getTotalElements());
+	    return allClaimList.map(cl -> modelMapper.map(cl, ClaimDTO.class));	
+    }
+	// 이미지 저장  
+	public void saveImage (MultipartFile file) {
+		
 	}
+	
 	// 작성자 : 최은지
 	// 민원 저장
-	public void saveClaim(ClaimDTO claimDTO, HttpSession session) {
+	public void saveClaim(ClaimDTO claimDTO,  MultipartFile file, HttpSession session) throws  IOException {
+		
 		log.info("민원 저장 서비스 실행");
+		
+		String filePath = uploadDir + file.getOriginalFilename();
 		
 		Claim claim = new Claim();
 		Date currentDate = new Date(System.currentTimeMillis()); // 현재 날짜 가져오기 ( 임시.. )
+		
+		// 이미지 저장
+		file.transferTo(new File(filePath));
+		
 		
 		// 세션으로 저장할 정보 : 매니저 아이디 매니저 부서 번호 매니저 이름
 		String managerId = (String) session.getAttribute("userId");
@@ -372,5 +435,6 @@ public class ClaimService {
 				.filter(m -> m.getClaimManagerName().equals(managerName))
 				.collect(Collectors.toList());     
 	}
+
 }
 

@@ -61,7 +61,6 @@ public class ClaimReplyService {
 	// 답변 목록 전체 조회
 	public List<ClaimReplyDTO> claimReplyList() {
 		
-		log.info("답변 조회 목록 서비스");	
 		List<ClaimReply> claimReplyList = claimReplyRepository.findAll();
 		return claimReplyList.stream()
 					.map(claimReply -> modelMapper.map(claimReply, ClaimReplyDTO.class))
@@ -70,7 +69,6 @@ public class ClaimReplyService {
 
 	// 답변 상세 조회
 	public ClaimReplyDTO findClaimReply(Integer claimNo) {
-		log.info("답변 상세 조회 서비스");
 		
 		// 인덱스 정보 
 		Claim claim = claimRepository.findById(claimNo).get();
@@ -97,7 +95,7 @@ public class ClaimReplyService {
 		ClaimReplyId claimReplyId = saveClaimReplyId(claim);
 		claimReply.setClaimReplyId(claimReplyId);
 		
-		log.info("[답변 저장 서비스] claimReplyId : {}", claimReplyId);
+		// log.info("[답변 저장 서비스] claimReplyId : {}", claimReplyId);
 		// 세션 정보 가져온 후 , 저장
 		// 저장해야 할 정보 2) 관리자 아이디, 관리자 부서번호, 관리자 이름  ( 세션 )
 		String adminId = (String) session.getAttribute("userId");
@@ -113,7 +111,6 @@ public class ClaimReplyService {
 		claimReply.setClaimReTitle(claimReplyDTO.getClaimReTitle());
 		claimReply.setClaimReContent(claimReplyDTO.getClaimReContent());	
 		claimReply.setClaimReDate(currentDate);
-		log.info("[답변 저장 서비스 완료 ] claimReply : {}", claimReply);
 		
 		// 최종 저장
 		claimReplyRepository.save(claimReply);
