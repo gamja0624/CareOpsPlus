@@ -45,7 +45,7 @@ public class DashBoardController {
     	
     	// session 받아온 부서 번호, 이름
     	String departmentNo = (String) session.getAttribute("deptNo");
-    	String departmentName = (String) session.getAttribute("departmentName");
+    	String department = (String) session.getAttribute("department");
     	String userName = (String) session.getAttribute("userName");
 
     	// [서비스 미리보기]
@@ -55,7 +55,7 @@ public class DashBoardController {
     	model.addAttribute("claimCnt", claimCnt.size());
     	
     	// 담당 부서 의료기기 개수 반환
-    	List<ListMedicalDevices> medicalList = medicalService.findByMedicalDeptName(departmentName);
+    	List<ListMedicalDevices> medicalList = medicalService.findByMedicalDeptName(department);
     	model.addAttribute("medicalCnt", medicalList.size());
     	
     	// [의료기기 상태 현황]

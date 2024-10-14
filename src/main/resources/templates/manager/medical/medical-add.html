@@ -88,7 +88,7 @@
 							</div>
 							<div class="data">
 							 	<p class="data-title">모델명</p>
-								<input type="text" name="lmdDevicesName" class="data-input-a" oninput="checkFields()">
+								<input type="text" name="lmdDevicesName" class="data-input-a">
 							</div>
 							<div class="data">
 							 	<p class="data-title">등록일</p>
@@ -109,10 +109,12 @@
 								</div>
 								<div class="data">
 								 	<p class="data-title">담당 부서</p>
-							    <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()" oninput="checkFields()">
-							        <option value="" selected>==부서 선택==</option>
-							        <option th:each="dept : ${ departments }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }"></option> 
-							    </select>
+							    <!-- <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()" oninput="checkFields()">
+						        <option th:each="dept : ${ departments }" th:if="${ medicalDevice.lmdManagerDeptPart == dept.managerDeptName }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }" selected></option> 
+						        <option th:each="dept : ${ departments }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }"></option> 
+							    </select> -->
+							    <input type="hidden" th:value="${ session.deptNo }" name="lmdManagerDeptNo">
+							    <input type="text" th:value="${ session.department }" name="lmdManagerDeptPart" class="data-input-b" readonly="readonly" >
 								</div>
 							</div>
 							
@@ -128,16 +130,19 @@
 								</div>
 								<div class="data">
 									<p class="data-title">담당자</p>
-							    <select id="manager-select" name="lmdManagerId" class="data-input-b" aria-label="Default select" oninput="checkFields()">
+							    <!-- <select id="manager-select" name="lmdManagerId" class="data-input-b" aria-label="Default select" oninput="checkFields()">
+							    	<option th:each="manager : ${ managerList }" th:if="${ medicalDevice.lmdManagerName == manager.managerName }" th:value="${ manager.managerId }" th:text="${ manager.managerName }" selected></option>
 						        <option value="" selected>==담당자 선택==</option>
-							    </select>
+							    </select> -->
+							    <input type="hidden" th:value="${ session.userId }" name="lmdManagerId">
+								 	<input type="text" th:value="${ session.userName }" name="lmdManagerName" class="data-input-b" readonly="readonly">
 								</div>
 							</div>
 						</div>
 
 						<!-- hidden -->
-		        <input type="hidden" id="lmd-dapt-part" name="lmdManagerDeptPart">
-		        <input type="hidden" id="lmd-manager-name" name="lmdManagerName">
+		        <!-- <input type="hidden" id="lmd-dapt-part" name="lmdManagerDeptPart">
+		        <input type="hidden" id="lmd-manager-name" name="lmdManagerName"> -->
 					</div>
 					
 					<div class="btn-table btn-status">
@@ -155,7 +160,7 @@
 			document.getElementById('current-date').value = new Date().toISOString().substring(0, 10);
 		
 			// 담당 부서 선택 후 담당자 옵션이 동적으로 추가되는 함수
-			function onDepartmentChange() {
+			/* function onDepartmentChange() {
 				var deptSelect = document.getElementById('dept-select');
 				var managerSelect = document.getElementById('manager-select');
 				var selectedDeptName = deptSelect.options[deptSelect.selectedIndex].text; 
@@ -191,25 +196,24 @@
 			document.getElementById('manager-select').addEventListener('change', function() {
 				var selectedOption = this.options[this.selectedIndex];
 				document.getElementById("lmd-manager-name").value = selectedOption.text; 
-			});
+			}); */
 			
 			// 모든 필드 체크 함수
       function checkFields() {
 	      const majorCateName = document.querySelector('input[name="lmdMajorCateName"]').value;
 	      const minorCateName = document.querySelector('input[name="lmdMinorCateName"]').value;
-	      const devicesName = document.querySelector('input[name="lmdDevicesName"]').value;
 	      const lmdDate = document.querySelector('input[name="lmdDate"]').value;
+	      
 	      const majorCateCode = document.querySelector('input[name="lmdMajorCateCode"]').value;
 	      const licenseNumber = document.querySelector('input[name="lmdLicenseNumber"]').value;
-	      const deptSelect = document.getElementById('dept-select').value;
+	      
 	      const minorCateCode = document.querySelector('input[name="lmdMinorCateCode"]').value;
 	      const deviceCount = document.querySelector('input[name="lmdDeviceCnt"]').value;
-	      const managerSelect = document.getElementById('manager-select').value;
 	
 	      const submitButton = document.getElementById('submit-button');
 	
 	      // 모든 필드가 채워졌는지 확인
-	      if (majorCateName && minorCateName && devicesName && lmdDate && majorCateCode && licenseNumber && deptSelect && minorCateCode && deviceCount && managerSelect) {
+	      if (majorCateName && minorCateName && lmdDate && majorCateCode && licenseNumber && minorCateCode && deviceCount) {
 	          submitButton.disabled = false; // 버튼 활성화
 	      } else {
 	          submitButton.disabled = true;  // 버튼 비활성화

@@ -107,7 +107,7 @@
 								</div>
 								<div class="data">
 								 	<p class="data-title">담당 부서</p>
-							    <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()" oninput="checkFields()">
+							    <select id="dept-select" name="lmdManagerDeptNo" class="data-input-b" aria-label="Default select" onchange="onDepartmentChange()">
 						        <option th:each="dept : ${ departments }" th:if="${ medicalDevice.lmdManagerDeptPart == dept.managerDeptName }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }" selected></option> 
 						        <option th:each="dept : ${ departments }" th:unless="${ medicalDevice.lmdManagerDeptPart == dept.managerDeptName }" th:value="${ dept.managerDeptNo }" th:text="${ dept.managerDeptName }"></option> 
 							    </select>
@@ -139,7 +139,8 @@
 						    <div class="data">
 									<p class="data-title">담당자</p>
 							    <select id="manager-select" name="lmdManagerId" class="data-input-b" aria-label="Default select" oninput="checkFields()">
-						        <option value="" selected>==담당자 선택==</option>
+							    	<option th:each="manager : ${ managerList }" th:if="${ medicalDevice.lmdManagerName == manager.managerName }" th:value="${ manager.managerId }" th:text="${ manager.managerName }" selected></option>
+							    	<option th:each="manager : ${ managerList }" th:unless="${ medicalDevice.lmdManagerName == manager.managerName }" th:value="${ manager.managerId }" th:text="${ manager.managerName }"></option>
 							    </select>
 								</div>
 
@@ -168,9 +169,20 @@
 		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 		
 		<script type="text/javascript">
+			// 페이지가 로드될 때 기본 선택된 담당자의 값을 hidden 필드에 설정
+			window.onload = function() {
+			    var deptSelect = document.getElementById('dept-select');
+			    var selectedDeptOption = deptSelect.options[deptSelect.selectedIndex];
+			    document.getElementById("lmd-dapt-part").value = selectedDeptOption.text; 
+
+			    var managerSelect = document.getElementById('manager-select');
+			    var selectedManagerOption = managerSelect.options[managerSelect.selectedIndex];
+			    document.getElementById("lmd-manager-name").value = selectedManagerOption.text; 
+			};
+		
 			// 오늘 날짜로 기본값 설정
 			document.getElementById('lmdLastCheckDate').value = new Date().toISOString().substring(0, 10);
-		
+			
 			// 담당 부서 선택 후 담당자 옵션이 동적으로 추가되는 함수
 			function onDepartmentChange() {
 				var deptSelect = document.getElementById('dept-select');
@@ -187,9 +199,9 @@
 						.then(managers => {
 							managers.forEach(manager => {
 							var option = document.createElement('option');
-								option.value = manager.managerId;
-								option.text = manager.managerName;
-								managerSelect.appendChild(option);
+							option.value = manager.managerId;
+							option.text = manager.managerName;
+							managerSelect.appendChild(option);
 							});
 						})
 					.catch(error => {
@@ -208,27 +220,30 @@
 
 	        document.getElementById('lmd-admin-id').value = adminId; 
 	        document.getElementById('lmd-admin-name').value = adminName;
-	        
-	        console.log("adminId", adminId);
-	        console.log("adminName", adminName);
 	    }
 			
 			// 담당 부서 선택 후 hidden 필드에 lmdManagerDeptPart 값 저장
 			document.getElementById('dept-select').addEventListener('change', function() {
 				var selectedOption = this.options[this.selectedIndex];
+				
+				console.log(selectedOption)
+				
 				document.getElementById("lmd-dapt-part").value = selectedOption.text; 
 			});
 			
 			// 담당자 선택 후 hidden 필드에 lmdmManagerName 값 저장
 			document.getElementById('manager-select').addEventListener('change', function() {
 				var selectedOption = this.options[this.selectedIndex];
+				
+				console.log("tq ", selectedOption)
+				
 				document.getElementById("lmd-manager-name").value = selectedOption.text; 
 			});
 			
 			// 모든 필드 체크 함수
       function checkFields() {
-	      const deptSelect = document.getElementById('dept-select').value;
 	      const deviceCount = document.querySelector('input[name="lmdDeviceCnt"]').value;
+	      const deptSelect = document.getElementById('dept-select').value;
 	      const managerSelect = document.getElementById('manager-select').value;
 	      const adminSelect = document.getElementById('admin-select').value;
 	      const lmdLastCheckDate = document.querySelector('input[name="lmdLastCheckDate"]').value;

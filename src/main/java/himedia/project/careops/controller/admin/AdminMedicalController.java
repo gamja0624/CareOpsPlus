@@ -121,7 +121,7 @@ public class AdminMedicalController {
 		model.addAttribute("departments", departments);
 		
 		// 담당자 반환
-		List<Manager> managerList = managerService.findByManagerList(medicalDevice.getLmdAdminDeptNo());
+		List<Manager> managerList = managerService.findByManagerList(medicalDevice.getLmdManagerDeptPart());
 		model.addAttribute("managerList", managerList);
 		
 		// 작업자 목록 토글로 반환

@@ -94,7 +94,7 @@ public class SafetyManagementChecklistDTO {
 
 	@Override
 	public String toString() {
-		return "SafetyManagementChecklistDTO [ smcNo=" + smcNo + "smlNo=" + smlNo + "smlList=" + smlList + "smcFloor = " + smcFloor 
-				+ "smcList=" + smcList + "smcCheck=" + smcCheck + "smcIssue=" + smcIssue + "]";
+		return "SafetyManagementChecklistDTO [ smcNo=" + smcNo + ", smlNo=" + smlNo + ", smlList=" + smlList + ", smcFloor = " + smcFloor 
+				+ "\nsmcList=" + smcList + ", smcCheck=" + smcCheck + ", smcIssue=" + smcIssue + " ]";
 	}
 }
