@@ -44,7 +44,7 @@ public class AdminDailyReportController {
 	@GetMapping("/daily-report-list")
 	public String reportList(@PageableDefault Pageable pageable, Model model) {
 		
-		log.info("보고서 목록페이지 실행  <adminDailyReportController>");
+		//log.info("보고서 목록페이지 실행  <adminDailyReportController>");
 		
 		Page<DailyManagementReportDTO> reportAllList = dailyReportService.reportAllList(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(reportAllList);

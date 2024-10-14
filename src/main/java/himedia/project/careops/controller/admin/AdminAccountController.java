@@ -51,7 +51,6 @@ public class AdminAccountController {
 	public String accountDepartment(Model model) {
 	    
 		List<ManagerDepartmentDTO> managerDepartment= managerDepartmentService.findAllDepartmentsList();
-	    log.info("Manager Departments: {}", managerDepartment);
 	   
 	    model.addAttribute("managerDepartment", managerDepartment);
 	    return "admin/account/account-department";
@@ -63,7 +62,6 @@ public class AdminAccountController {
 		Page<ManagerDTO> manager = managerService.allManager(page);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(manager);
 		
-		log.info("Manager: {}", manager);
 		
 		model.addAttribute("manager", manager);
 		model.addAttribute("paging", paging);
@@ -87,7 +85,6 @@ public class AdminAccountController {
             @RequestParam("managerName") String managerName,
             @RequestParam("managerPhoneNumber") String managerPhoneNumber,
             RedirectAttributes redirectAttributes) {
-		log.info("컨트롤러 아이디 중복 검사 실행");
 		
 		boolean check = managerService.checkMangerId(managerId);
 		
@@ -97,7 +94,7 @@ public class AdminAccountController {
 	        redirectAttributes.addFlashAttribute("message", "사용 가능한 아이디입니다.");
 	    }
 		
-		log.info("컨트롤러 조회 결과 : {}",check);	
+		// log.info("컨트롤러 조회 결과 : {}",check);	
 		
 		// 입력값 저장 (폼 데이터 초기화 방지)
 		redirectAttributes.addFlashAttribute("managerId", managerId);
@@ -114,7 +111,6 @@ public class AdminAccountController {
 	public String accountSave(@ModelAttribute ManagerDTO managerDTO) {
 		log.info("담당자 등록");
 		ManagerDepartmentDTO department = managerDepartmentService.findByDeptName(managerDTO.getManagerDeptName());
-		// log.info("부서이름으로 검색 : {}", department);
 		managerService.saveManager(managerDTO, department);
 		
 		return "redirect:./account-list";
@@ -124,7 +120,6 @@ public class AdminAccountController {
 	@GetMapping("/account-edit/{managerId}")
 	public String accountEdit(@PathVariable("managerId") String managerId, Model model) {
 		ManagerDTO manager = managerService.findByManagerId(managerId);
-		// log.info("수정된 담당자 managerDTO: {}", manager);
 		model.addAttribute("manager", manager);
 		return "admin/account/account-edit";
 	}
@@ -132,7 +127,6 @@ public class AdminAccountController {
 	@PostMapping("/account-edit-complete")
     public String accuntEditComplete(@ModelAttribute ManagerDTO managerDTO) {
         // 이름과 연락처 업데이트
-		// log.info("담당자 변경 컨트롤러 실행");
 		managerService.updateManager(managerDTO);
         return "redirect:./account-list"; 
     }

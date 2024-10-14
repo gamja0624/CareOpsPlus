@@ -5,7 +5,9 @@ package himedia.project.careops.controller.admin;
  * @editDate 2024-09-20 ~ 
  */
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import himedia.project.careops.dto.SafetyManagementChecklistDTO;
 import himedia.project.careops.service.SafetyService;
@@ -78,7 +81,7 @@ public class AdminSafetyController {
 		model.addAttribute("smlList", smlList);
 		model.addAttribute("allChecklist", allChecklist);
 		
-		log.info("allChecklist >>>>>> {}", allChecklist);
+		//log.info("allChecklist >>>>>> {}", allChecklist);
 		
 		return "admin/safety/checklist-edit-detail";
 	}
@@ -92,24 +95,35 @@ public class AdminSafetyController {
 		model.addAttribute("smlList", smlList);
 		model.addAttribute("allChecklist", allChecklist);
 		
-		log.info("층별 데이터>>>{}{}", smlList,allChecklist);
+		//log.info("층별 데이터>>>{}{}", smlList,allChecklist);
 		
 		return ResponseEntity.ok(allChecklist);
 	}
 
-	// 점검표 항목 상세 수정 후 페이지
-	//@PostMapping("/safety-checklist-edit/{smlList}")
-	//public String checklistEdit(@PathVariable String smlList, @RequestBody SafetyManagementChecklistDTO checklists) {
-		//log.info("점검항목은? >> {} ", smlList);
-		//log.info("리스트화 된 점검리스트? {}", checklists.toString());
-	// public String checkListEdit(@PathVariable String smlList, @RequestParam List<SafetyManagementChecklistDTO> checklists) {
-	/*
-	 * log.info("수정된 체크리스트 페이지?? {} {}", checklists); for
-	 * (SafetyManagementChecklistDTO checklist : checklists) {
-	 * System.out.println(checklist); }
-	 */
-		//return "redirect:/admin/safety-checklist-edit";
-	//}
+	@PostMapping("/safety-checklist-edit/{smlList}")
+    public String checklistEdit(@PathVariable String smlList, @RequestParam String smcFloor, 
+            @RequestParam String smcNo, @RequestParam String smcList) {
+
+        // log.info("대상 : {} ", smlList);
+        // log.info("층 : {} ", smcFloor.charAt(0));
+
+        String[] smcNos = smcNo.split(",");
+        String[] smcLists = smcList.split(",");
+
+        int numberOfEntries = Math.min(smcNos.length, smcLists.length);
+
+        Map<String, String> checklistMap = new HashMap<>();
+
+        for (int i = 0; i < numberOfEntries; i++) {
+            String currentList = smcLists[i].trim(); // 공백 제거
+            String currentNo = (i < smcNos.length) ? smcNos[i].trim() : ""; // 빈 문자열 처리
+            checklistMap.put(currentNo, currentList);
+        }
+
+        safetyService.updateList(smlList, smcFloor.charAt(0), checklistMap);
+
+        return "redirect:/admin/safety-checklist-edit";
+    }
 	
 	// 데일리 점검목록 페이지
 	@GetMapping("/safety-daily-registration")
@@ -118,7 +132,6 @@ public class AdminSafetyController {
 	}
 
 	// 데일리 점검 목록 상세 등록 페이지
-//	@GetMapping("/safety-daily-registration/{sml_no}")
 	@GetMapping("/safety-daily-registration/{smlList}")
 	public String dailyResistraionDetail(@PathVariable String smlList, Model model) {
 		

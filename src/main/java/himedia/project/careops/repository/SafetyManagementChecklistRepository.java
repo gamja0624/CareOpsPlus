@@ -1,17 +1,19 @@
 package himedia.project.careops.repository;
 
-import java.util.List;
-
 /**
  * @author 이홍준
- * @editDate 2024-09-25 ~ 
+ * @editDate 2024-10-10 ~ 
  */
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import himedia.project.careops.dto.SafetyManagementChecklistDTO;
 import himedia.project.careops.entity.SafetyManagementChecklist;
 
 @Repository
@@ -21,6 +23,16 @@ public interface SafetyManagementChecklistRepository extends JpaRepository<Safet
 	List<SafetyManagementChecklist> findBySmlList(String smlList);
 
 	List<SafetyManagementChecklist> findBySmcFloor(int smcFloor);
+
+	void save(SafetyManagementChecklistDTO checklist);
+
+	@Modifying
+	@Query("UPDATE SafetyManagementChecklist s SET s.smcList = :smcList " +
+	           "WHERE s.smcNo = :smcNo AND s.smlNo = :smlNo AND s.smcFloor = :smcFloor")
+	void updateSmcList(@Param("smcNo") int smcNo, @Param("smlNo") int smlNo, @Param("smcFloor") int smcFloor, @Param("smcList") String smcList);
+
+
+	//List<SafetyManagementChecklist> findBySmlListandSmcFloor(String smlList, int smcFloor);
 
 	
 }

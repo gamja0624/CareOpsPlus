@@ -22,6 +22,7 @@ public class SafetyManagementChecklistDTO {
 	private Boolean smcCheck;
 	private String smcIssue;
 	
+	
 	public SafetyManagementChecklistDTO() {}
 
 	public SafetyManagementChecklistDTO(Integer smcNo, int smlNo, String smlList, int smcFloor, String smcList,
@@ -34,6 +35,14 @@ public class SafetyManagementChecklistDTO {
 		this.smcList = smcList;
 		this.smcCheck = smcCheck;
 		this.smcIssue = smcIssue;
+	}
+
+	public SafetyManagementChecklistDTO(Integer smcNo, int smlNo, int smcFloor, String smcList) {
+		super();
+		this.smcNo = smcNo;
+		this.smlNo = smlNo;
+		this.smcFloor = smcFloor;
+		this.smcList = smcList;
 	}
 
 	public Integer getSmcNo() {
