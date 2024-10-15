@@ -138,7 +138,7 @@
 				
 				<div class="btn-table btn-status">
 					<button th:onclick="|location.href='@{ '/' + ${ session.userType } + '/medical-list'}'|" class="btn btn-group" type="button">뒤로 가기</button>
-					<th:block th:if="${ session.userType == 'admin' }">
+					<th:block th:if="${ session.userType == 'admin' && session.department.contains('의료기기') }">
  						<button th:onclick="|location.href='@{'/admin/medical-edit/' + ${ medicalDevice.lmdMinorCateCode }}'|" class="btn btn-group" type="button">수정</button>
 					</th:block>
 				</div>
