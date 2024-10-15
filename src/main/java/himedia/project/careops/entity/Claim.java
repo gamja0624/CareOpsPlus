@@ -6,12 +6,14 @@ package himedia.project.careops.entity;
  */
 
 import java.sql.Date;
+import java.util.Arrays;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.ToString;
 
@@ -66,13 +68,17 @@ public class Claim {
 	
 	@Column(name="claim_attachment")
 	private String claimAttachment;				// 민원 첨부파일
+   
+	@Lob                                        // LONGBLOB을 나타내는 어노테이션
+    @Column(name = "claim_image_data")          // 이진 데이터 컬럼 이름
+    private byte[] claimImageData;              // 민원 이진 데이터 (LONGBLOB 추가)
 
 	public Claim() {}
 
 	public Claim(Integer claimNo, String managerId, int managerDeptNo, String claimCategoryNo,
 			int claimSubCategoryNo, String claimCategoryName, String claimSubCategoryName,
 			String claimCategoryStatus, String claimManagerName, Date claimDate, String claimTitle, String claimContent,
-			Boolean claimApprove, Boolean claimComplete, String claimAttachment) {
+			Boolean claimApprove, Boolean claimComplete, String claimAttachment,  byte[] claimImageData) {
 		super();
 		this.claimNo = claimNo;
 		this.managerId = managerId;
@@ -89,6 +95,7 @@ public class Claim {
 		this.claimApprove = claimApprove;
 		this.claimComplete = claimComplete;
 		this.claimAttachment = claimAttachment;
+		this.claimImageData = claimImageData;
 	}
 
 	public Integer getClaimNo() {
@@ -211,6 +218,14 @@ public class Claim {
 		this.claimAttachment = claimAttachment;
 	}
 
+	public byte[] getClaimImageData() {
+		return claimImageData;
+	}
+
+	public void setClaimImageData(byte[] claimImageData) {
+		this.claimImageData = claimImageData;
+	}
+
 	@Override
 	public String toString() {
 		return "Claim [claimNo=" + claimNo + ", managerId=" + managerId + ", managerDeptNo=" + managerDeptNo
@@ -219,7 +234,7 @@ public class Claim {
 				+ ", claimCategoryStatus=" + claimCategoryStatus + ", claimManagerName=" + claimManagerName
 				+ ", claimDate=" + claimDate + ", claimTitle=" + claimTitle + ", claimContent=" + claimContent
 				+ ", claimApprove=" + claimApprove + ", claimComplete=" + claimComplete + ", claimAttachment="
-				+ claimAttachment + "]";
+				+ claimAttachment + ", claimImageData=" + Arrays.toString(claimImageData) + "]";
 	}
-	
+
 }

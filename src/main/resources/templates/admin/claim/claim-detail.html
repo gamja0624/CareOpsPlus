@@ -106,7 +106,7 @@
 						<button class="btn submit-button" onclick="openApproveModal()" id="approveButton"
 							th:disabled="${claim.claimApprove}">민원 승인</button>
 						<button class="btn submit-button" onclick="openCompleteModal()" id="approveButton"
-							>민원 처리</button>
+							th:disabled="${claim.claimComplete}">민원 처리</button>
 							<!-- th:disabled="${claim.claimComplete}" -->
 					</div>
 

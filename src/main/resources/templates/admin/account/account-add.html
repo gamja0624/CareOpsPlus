@@ -39,6 +39,7 @@
 			border-radius: 10px;
 			width: 1000px;
 			height: 700px;
+			padding: 0;
 		}
 		.modal-title {
 			border-top-left-radius: 10px;
@@ -75,9 +76,10 @@
 		.card-header {
 			background-color: #13254C;
 			color: white;
-			padding: 10px;
 			width: 125px;
-			text-align: center;
+			display: flex;
+	    align-items: center;
+			justify-content: center;
 		}
 		.card-body-name {
 			border: 1px solid #13254C;
@@ -123,10 +125,10 @@
 			<!-- layout-table -->
 			<div class="layout-table">
 				<div class="form-whole-cover">
-					<form id="registration-form" action="/admin/account-add-complete" method="post">
+					<form id="registration-form" action="/admin/account-add-complete" method="post" onsubmit="return validateForm()">
 						<div class="form-group">
 							<label class="label-style" for="managerDeptName">부 &nbsp;서&nbsp; 명</label>
-							<input class="input-style" type="text" id="managerDeptName" name="managerDeptName" th:value="${managerDeptName}" required>
+							<input class="input-style" type="text" id="managerDeptName" name="managerDeptName" onclick="openModal()" th:value="${managerDeptName}" required>
 							<button type="button" class="btn account-button srh-button" onclick="openModal()">부서 찾기</button>
 						</div>
 						<div class="form-group">
@@ -136,13 +138,13 @@
 						<div class="form-group">
 							<label class="label-style" for="managerPhoneNumber">연 &nbsp;락&nbsp; 처</label>
 							<input class="input-style" type="text" id="managerPhoneNumber" name="managerPhoneNumber" th:value="${managerPhoneNumber}" oninput="formatPhoneNumber(this)" required>
+							<div class="warning" id="phoneWarning" style="display:none;">전화번호는 15자리를 초과할 수 없습니다.</div>
 						</div>
 						<div class="form-group">
 							<label class="label-style" for="managerid">아 &nbsp;이&nbsp; 디</label>
 							<input class="input-style" type="text" id="managerid" name="managerId" th:value="${managerId}" required>
 							<button type="submit" class="btn account-button srh-button" id="checkIdButton" onclick="checkManagerId(event)" disabled>중복 확인</button>
 							<div class="warning" id="usernameWarning" style="display:none;">아이디는 7자 이상이어야 합니다.</div>
-							<!--<div class="warning" id="idRequriedWarning" style="display:none;">사용가능 한 아이디 입니다.</div>-->
 							<div class="warning" th:if="${message}" th:text="${message}"  id="idRequriedWarning" style="display:block;"></div>
 						</div>
 						<div class="form-group">
@@ -242,15 +244,7 @@
 				usernameWarning.style.display = 'none'; 
 				checkIdButton.disabled = false; 
 			}
-		});
-		userIdInput.addEventListener('focus', () => {
-		    if (userIdInput.value.length !== 7) {
-		        usernameWarning.style.display = 'block'; 
-		    }
-		});
-
-		userIdInput.addEventListener('blur', () => {
-		    usernameWarning.style.display = 'none'; 
+			validateForm();
 		});
 		
 
@@ -276,10 +270,6 @@
 			form.submit(); 
 		} 
 
-		userIdInputCheck.addEventListener('blur', () => {
-		    usernameWarning.style.display = 'none'; // 경고 메시지 숨기기
-		});
-		
 		// [ 연락처 형식 포맷 ]----------------------------------------------------
 		function formatPhoneNumber(input) {
 	   
@@ -287,11 +277,14 @@
 	
 	    if (value.length === 11) {
 	        input.value = value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-	    } else if (value.length >= 7 || value.length <11 ) {
+	    } else if (value.length >= 7 && value.length <11 ) {
 	        input.value = value.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+					phoneWarning.style.display = 'none';
+	    } else if (value.length > 15) {
+					phoneWarning.style.display = 'block';
 	    } else {
 	        input.value = value;
-	    }
+			}
 		}
 
 		// [ 비밀번호 조건 확인 ]----------------------------------------------------
@@ -304,27 +297,47 @@
 		    const hasNumber = /\d/.test(password); 
 
 		    // 영소문자와 숫자가 모두 포함되어 있는지 검사
-		    if (hasLowerCase && hasNumber || passwordInput.length < 5 || passwordInput.length > 16) {
+		    if (hasLowerCase && hasNumber && password.length >= 5 && password.length <= 16 ) {
 		        passwordWarning.style.display = 'none'; 
 		    } else {
 		        passwordWarning.style.display = 'block'; 
 		    }
-				
+				validateForm();
 		}
 		
-		// [ 비밀번호 일치 확인 ]----------------------------------------------------
+		// [ 비밀번호 일치 확인 ] =========================================================
 		document.getElementById('confirmPassword').addEventListener('input', function () {
-			const password = document.getElementById('managerPassword').value;
-			const confirmPassword = document.getElementById('confirmPassword').value;
-			const confirmPasswordWarning = document.getElementById('confirmPasswordWarning');	
+		    const password = document.getElementById('managerPassword').value;
+		    const confirmPassword = this.value;
+		    const confirmPasswordWarning = document.getElementById('confirmPasswordWarning');	
 
-			if (password !== confirmPassword) {
-				confirmPasswordWarning.style.display = 'block';
-			} else {
-				confirmPasswordWarning.style.display = 'none'; 
-			}
+		    if (password !== confirmPassword) {
+		        confirmPasswordWarning.style.display = 'block';
+		    } else {
+		        confirmPasswordWarning.style.display = 'none'; 
+		    }
+		    validateForm(); // 비밀번호 확인 후 유효성 검사
 		});
-		
+		// [ 폼 제출 방지 ] =========================================================
+		function validateForm() {
+		    const passwordInput = document.getElementById('managerPassword');
+		    const confirmPasswordInput = document.getElementById('confirmPassword');
+
+		    const isIdValid = userIdInput.value.length >= 7;
+		    const isPasswordValid = passwordInput.value.length >= 5 && passwordInput.value.length <= 16 &&
+		                            /[a-z]/.test(passwordInput.value) && /\d/.test(passwordInput.value);
+		    const isConfirmPasswordValid = passwordInput.value === confirmPasswordInput.value;
+
+		    // 모든 조건이 충족될 때만 true 반환
+		    return isIdValid && isPasswordValid && isConfirmPasswordValid;
+		}
+
+		// 폼 제출 시 validateForm 호출
+		document.getElementById('registration-form').addEventListener('submit', function(event) {
+		    if (!validateForm()) {
+		        event.preventDefault(); // 제출 방지
+		    }
+		});
 	</script>
 </body>
 
