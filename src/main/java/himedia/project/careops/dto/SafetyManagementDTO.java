@@ -17,18 +17,32 @@ import lombok.ToString;
 public class SafetyManagementDTO {
 	
 	private Integer smNo;
-	private String adminId;
-	private String adminName;
-	private Boolean smCheck;
+	private int smFacilityNo;
+	private String smAdminId;
+	private String smAdminDeptNo;
+	private String smAdminDeptName;
+	private String smAdminName;
+	private String smList;
+	private int smFacilityFloor;
+	private String smFacilityName;
+	private boolean smStatus;
 	private Date smDate;
 	
 	public SafetyManagementDTO() {}
 	
-	public SafetyManagementDTO(Integer smNo, String adminId, String adminName, Boolean smCheck, Date smDate) {
+	public SafetyManagementDTO(Integer smNo, int smFacilityNo, String smAdminId, String smAdminDeptNo,
+			String smAdminDeptName, String smAdminName, String smList, int smFacilityFloor, String smFacilityName,
+			boolean smStatus, Date smDate) {
 		this.smNo = smNo;
-		this.adminId = adminId;
-		this.adminName = adminName;
-		this.smCheck = smCheck;
+		this.smFacilityNo = smFacilityNo;
+		this.smAdminId = smAdminId;
+		this.smAdminDeptNo = smAdminDeptNo;
+		this.smAdminDeptName = smAdminDeptName;
+		this.smAdminName = smAdminName;
+		this.smList = smList;
+		this.smFacilityFloor = smFacilityFloor;
+		this.smFacilityName = smFacilityName;
+		this.smStatus = smStatus;
 		this.smDate = smDate;
 	}
 
@@ -40,28 +54,76 @@ public class SafetyManagementDTO {
 		this.smNo = smNo;
 	}
 
-	public String getAdminId() {
-		return adminId;
+	public int getSmFacilityNo() {
+		return smFacilityNo;
 	}
 
-	public void setAdminId(String adminId) {
-		this.adminId = adminId;
+	public void setSmFacilityNo(int smFacilityNo) {
+		this.smFacilityNo = smFacilityNo;
 	}
 
-	public String getAdminName() {
-		return adminName;
+	public String getSmAdminId() {
+		return smAdminId;
 	}
 
-	public void setAdminName(String adminName) {
-		this.adminName = adminName;
+	public void setSmAdminId(String smAdminId) {
+		this.smAdminId = smAdminId;
 	}
 
-	public Boolean getSmCheck() {
-		return smCheck;
+	public String getSmAdminDeptNo() {
+		return smAdminDeptNo;
 	}
 
-	public void setSmCheck(Boolean smCheck) {
-		this.smCheck = smCheck;
+	public void setSmAdminDeptNo(String smAdminDeptNo) {
+		this.smAdminDeptNo = smAdminDeptNo;
+	}
+
+	public String getSmAdminDeptName() {
+		return smAdminDeptName;
+	}
+
+	public void setSmAdminDeptName(String smAdminDeptName) {
+		this.smAdminDeptName = smAdminDeptName;
+	}
+
+	public String getSmAdminName() {
+		return smAdminName;
+	}
+
+	public void setSmAdminName(String smAdminName) {
+		this.smAdminName = smAdminName;
+	}
+
+	public String getSmList() {
+		return smList;
+	}
+
+	public void setSmList(String smList) {
+		this.smList = smList;
+	}
+
+	public int getSmFacilityFloor() {
+		return smFacilityFloor;
+	}
+
+	public void setSmFacilityFloor(int smFacilityFloor) {
+		this.smFacilityFloor = smFacilityFloor;
+	}
+
+	public String getSmFacilityName() {
+		return smFacilityName;
+	}
+
+	public void setSmFacilityName(String smFacilityName) {
+		this.smFacilityName = smFacilityName;
+	}
+
+	public boolean isSmStatus() {
+		return smStatus;
+	}
+
+	public void setSmStatus(boolean smStatus) {
+		this.smStatus = smStatus;
 	}
 
 	public Date getSmDate() {
@@ -74,7 +136,9 @@ public class SafetyManagementDTO {
 
 	@Override
 	public String toString() {
-		return "SafetyManagementDTO [ smNo=" + smNo + ", adminId=" + adminId 
-				+ ", adminName=" + adminName + ", smCheck=" + smCheck + ", smDate=" + smDate + "]";
+		return "SafetyManagementDTO [ smNo= " + smNo + ", smFacilityNo= " + smFacilityNo 
+				+ ", smAdminId= " + smAdminId + ", smAdminName=" + smAdminName + ", smAdminDeptNo=" 
+				+ smAdminDeptNo + ", smAdminDeptName=" + smAdminDeptName + ", smList=" + smList + ", smFacilityFloor=" 
+				+ smFacilityFloor + ", smFacilityName=" + smFacilityName + ", smStatus=" + smStatus + ", smDate=" + smDate + "]";
 	}
 }

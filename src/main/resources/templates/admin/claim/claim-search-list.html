@@ -38,7 +38,7 @@
 		<!-- section -->
 		<div class="section">
 			<!-- 제목 -->
-			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 검색 결과 수 : 총</h1>
+			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 검색 결과 </h1>
 			<div class="table-cover">
 				<table class="table table-hover claim-list">
 					<thead>
@@ -90,7 +90,7 @@
 									<td></td>
 									<td class="td-title">
 										<a th:text="${'└[ 답변 완료 ] ' + claimReply.claimReTitle}"
-											th:href="@{./claim-re-detail/{claimNo}(claimNo=${claimReply.claimNo})}"></a>
+											th:href="@{/admin/claim-re-detail/{claimNo}(claimNo=${claimReply.claimNo})}"></a>
 									</td>
 									<td th:text="${claimReply.adminName}"></td>
 									<td th:text="${claimReply.claimReDate}"></td>
@@ -128,7 +128,7 @@
 		function handleClick(event, claimApprove, claimComplete, claimNo) {
 			console.log('claimApprove:', claimApprove, 'claimComplete:', claimComplete, 'claimNo :', claimNo); 
 		    if (claimApprove && !claimComplete) {
-		        window.location.href = './claim-re/' + claimNo;
+		        window.location.href = '/admin/claim-re/' + claimNo;
 				} else {
 		        event.preventDefault(); // 이동 방지
 		    }

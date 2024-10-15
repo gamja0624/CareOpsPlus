@@ -154,7 +154,8 @@
 					</table>
 					<div class="claim-content">
 						<div class="claim-image">
-							<img src="" alt="이미지">
+							<!--<img th:src="@{/manager/claim-image/${claim.claimNo}}" alt="이미지" />-->
+							<img th:src="@{/manager/claim-image/{claimNo}(claimNo=${claim.claimNo})}" alt="이미지" />
 						</div>
 						<div class="message" th:text="${claim.claimContent}"></div>
 					</div>
