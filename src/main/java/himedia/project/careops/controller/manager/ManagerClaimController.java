@@ -10,12 +10,14 @@ import java.io.IOException;
 
 import java.util.List;
 
+import org.hibernate.annotations.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,9 +63,8 @@ public class ManagerClaimController {
 	// [ 민원 조회 ] ==========================================================================
 	// (부서 내) 민원 목록
 	@GetMapping("/claim-list")
-	public String managerClaimList( @PageableDefault Pageable pageable, Model model, HttpSession session ) {
-		
-		String managerDeptName = (String) session.getAttribute("department");
+	public String managerClaimList(@PageableDefault Pageable pageable, Model model, HttpSession session) {
+
 		String deptNoStr = (String) session.getAttribute("deptNo");
 		Integer managerDeptNo = Integer.valueOf(deptNoStr);
 		
@@ -75,18 +76,55 @@ public class ManagerClaimController {
 		model.addAttribute("paging", paging);
 		model.addAttribute("claimReply", claimReply);
 		model.addAttribute("totalPages", totalPages);	
+		
 		return "/manager/claim/claim-list";
+	}
+	// (내 민원) 민원 목록
+	@GetMapping("/claim-my-list")
+	public String myClaimList(@PageableDefault Pageable pageable, Model model, HttpSession session) {
+		String managerId = (String) session.getAttribute("userId");
+		Page<ClaimDTO> myClaim = claimService.managerClaim(managerId, pageable);
+		List<ClaimReplyDTO> claimReply =  claimReplyService.claimReplyList(); 
+		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(myClaim);
+		int totalPages = myClaim.getTotalPages();
+		
+		model.addAttribute("myClaim", myClaim);
+		model.addAttribute("claimReply", claimReply);
+		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages", totalPages);	
+		return "/manager/claim/claim-my-list";
 	}
 	
 	// 민원 검색 결과 조회 페이지
 	@GetMapping("/claim-list/search")
-	public String claimSearchFitler(@RequestParam String filter, @RequestParam String value, Model model) {
-		List<Claim> claimSearch = claimService.searchClaimByFilter(filter, value);
+	public String claimSearchFitler(@RequestParam String filter, @RequestParam String value, HttpSession session, Model model) {
+		
+		
+		String deptNoStr = (String) session.getAttribute("deptNo");
+		Integer managerDeptNo = Integer.valueOf(deptNoStr);
+		
+		List<Claim> claimSearch = claimService.managerSearchClaimByFilter(filter, value, managerDeptNo);
 		List<ClaimReplyDTO> claimReply =  claimReplyService.claimReplyList();
+		
 		model.addAttribute("claimSearch", claimSearch);
 		model.addAttribute("claimReply", claimReply);
 		
 		return "/manager/claim/claim-search-list";
+	}
+	
+	// 민원 이미지 조회
+	@GetMapping("/claim-image/{claimNo}")
+	public ResponseEntity<byte[]> getClaimImage(@PathVariable ("claimNo") Integer claimNo) {
+	    byte[] imageData = claimService.claimImageData(claimNo);
+	    
+	    if (imageData != null) {
+	        return ResponseEntity.ok()
+	                .contentType(MediaType.IMAGE_JPEG) // 필요에 따라 MIME 타입 변경
+	                .body(imageData);
+	    } else {
+	    	log.warn("해당 민원에는 이미지가 존재하지 않습니다: {}", claimNo);
+	    	return ResponseEntity.noContent().build(); // 204 No Content 반환 (아무것도 없음)
+	    }
 	}
 	
 	// 민원 상세 
@@ -101,6 +139,7 @@ public class ManagerClaimController {
 		return "/manager/claim/claim-detail";
 	}
 	
+
 	// [ 민원 수정 ] =========================================================================
 	@GetMapping("/claim-edit/{claimNo}")
 	public String managerClaimEdit(@PathVariable("claimNo") Integer claimNo, Model model, @PageableDefault Pageable pageable) {
@@ -130,11 +169,16 @@ public class ManagerClaimController {
 		return "/manager/claim/claim-edit";
 	}
 	
-	@PostMapping("/claim-edit-complete")
-	public String managerClaimEditSave(@ModelAttribute ClaimDTO claimDTO) {
-		// log.info("민원 수정 컨트롤러 실행");
-		claimService.updateClaim(claimDTO);
-		return "redirect:./claim-list";
+	@PostMapping("/claim-edit-complete/{claimNo}")
+	public String managerClaimEditSave(@PathVariable("claimNo") Integer claimNo,  @ModelAttribute ClaimDTO claimDTO,  @RequestParam("file") MultipartFile file) {
+		log.info("민원 수정 컨트롤러 실행");
+		try {
+			// claimService.saveClaim(claimDTO, file, session);
+			claimService.updateClaim(claimNo, claimDTO, file);
+			return "redirect:/manager/claim-list";
+		} catch (IOException e) {
+			return "이미지 저장에 실패했습니다.";
+		}
 	}
 	
 	// [ 민원 신청 ] ==========================================================================
@@ -160,7 +204,7 @@ public class ManagerClaimController {
 	
 	// 민원 저장 
 	@PostMapping("/claim-submit")
-	public String managerClaimSubmit(@ModelAttribute ClaimDTO claimDTO, MultipartFile file, HttpSession session) {
+	public String managerClaimSubmit(@ModelAttribute ClaimDTO claimDTO, @RequestParam("file") MultipartFile file, HttpSession session) {
 		log.info("민원 신청");
 		
 		try {

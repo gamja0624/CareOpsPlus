@@ -64,6 +64,7 @@
 		      </div>
 		      <ul class="dropdown-menu text-small shadow">
 		        <li th:if="${session.userType} == 'admin'"  ><a class="dropdown-item" th:href="@{/admin/my-report}" >내 보고서</a></li> 
+		        <li th:if="${session.userType} == 'manager'" ><a class="dropdown-item" th:href="@{ '/' + ${ session.userType } + '/claim-my-list'}">내 민원 목록</a></li>
 		        <li th:if="${session.userType} == 'manager'" ><a class="dropdown-item" th:href="@{ '/' + ${ session.userType } + '/facility-dept-list'}">예약 목록</a></li>
 		        <li><hr class="dropdown-divider"></li>
 						<li><a class="dropdown-item" th:href="@{'/' + ${session.userType} + '/mypage'}">내 정보</a></li>
