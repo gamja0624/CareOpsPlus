@@ -69,7 +69,7 @@
 			<!-- section -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title">안전관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 목록</h1>
+				<h1 class="title">안전관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">현황 수정</h1>
 				
 				<!-- 안전관리 목록 -->
 				<div class="layout-table">
@@ -114,23 +114,29 @@
 					    	<td class="smFacilityName" th:text="${list.smFacilityName}" ></td>
 					      <!-- 상태 -->
     				      	<td>
-    				      		<button name="smStatus" type="button" th:if="${list.smStatus}" class="btn btn-css btn-success"  disabled>양호</button>
-    				      		<button name="smStatus" type="button" th:unless="${list.smStatus}" class="btn btn-css btn-danger"  disabled>점검 요망</button> 
-    				      	</td>
+                              <div>
+                                  <label id="statusTrue" th:text="${list.smStatus}" ></label>
+                                  <input name="statusTrue" type="checkbox" th:checked="${list.smStatus ? 'checked' : null }" >
+                              </div>
+                              <div>
+                                  <label id="statusFalse" th:text="${!list.smStatus}" ></label>
+                                  <input name="statusFalse" type="checkbox" th:checked="${!list.smStatus ? 'checked' : null }" >
+                              </div>
+                            </td>
 					    </tr>
 					  </tbody>
 					</table>
 					
 					<!-- 버튼 -->
 					<th:block th:if="${ session.userType == 'admin' && session.department.contains('안전') }">
-    				    <div class="btn-status">
-    			           <button th:onclick="'location.href=\'./safety-list-status\''" class="btn btn-add" type="button">안전관리 현황수정</button>
-    				    </div>
+				    <div class="btn-status">
+			           <button th:onclick="'location.href=\'./safety-list\''" class="btn btn-add" type="button">안전 관리 현황</button>
+				    </div>
 					</th:block>
 				</div>
 			</div>
 		</div>
-  	<script type="text/javascript"    >
+  	<script type="text/javascript">
       // 층 버튼 클릭 시 해당 층의 데이터만 가져오는 함수
       // 페이지가 로드될 때 기본적으로 1층의 데이터 가져오기
       const smListElement = document.getElementById("smList");
@@ -178,9 +184,14 @@
                           <td>${list.smFacilityNo}</td>
                           <td class="smFacilityName" >${list.smFacilityName}</td>
                           <td>
-                              <button name="smStatus" type="button" class="btn btn-css ${list.smStatus ? 'btn-success' : 'btn-danger'}" disabled>
-                                  ${list.smStatus ? '양호' : '점검 요망'}
-                              </button>
+                            <div>
+                              <label id="statusTrue" >${list.smStatus}</label>
+                              <input name="statusTrue" type="checkbox" checked="${list.smStatus ?'checked'  : null }" >
+                            </div>
+                            <div>
+                              <label id="statusFalse" >${!list.smStatus}</label>
+                              <input name="statusFalse" type="checkbox" checked="${!list.smStatus ? 'checked' : null }" >
+                            </div>
                           </td>
                       `;
                       statusBody.appendChild(row);
