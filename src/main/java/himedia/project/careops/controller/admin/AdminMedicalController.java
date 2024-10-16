@@ -8,6 +8,9 @@ package himedia.project.careops.controller.admin;
 import java.util.Date;
 import java.util.List;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -47,9 +50,8 @@ public class AdminMedicalController {
 	private final ManagerDepartmentService managerDepartmentService;
 	private final AdminService adminService;
 	
-	public AdminMedicalController(MedicalService medicalService, 
-			ManagerService managerService, ManagerDepartmentService managerDepartmentService,
-			AdminService adminService) {
+	public AdminMedicalController(MedicalService medicalService, AdminService adminService,
+			ManagerService managerService, ManagerDepartmentService managerDepartmentService) {
 		this.medicalService = medicalService;
 		this.managerService = managerService;
 		this.managerDepartmentService = managerDepartmentService;
@@ -146,23 +148,12 @@ public class AdminMedicalController {
 			@RequestParam String lmdAdminDeptNo, @RequestParam String lmdAdminId, @RequestParam String lmdAdminName, 
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date lmdLastCheckDate) {
 		
-//		log.info("lmdMinorCateCode   : {}", lmdStatus);
-//		log.info("lmdDeviceCnt       : {}", lmdDeviceCnt);
-//		log.info("lmdManagerDeptNo   : {}", lmdManagerDeptNo);
-//		log.info("lmdManagerDeptPart : {}", lmdManagerDeptPart);
-//		log.info("lmdManagerName     : {}", lmdManagerName);
-//		log.info("lmdManagerId       : {}", lmdManagerId);
-//		log.info("lmdAdminDeptNo     : {}", lmdAdminDeptNo);
-//		log.info("lmdAdminId         : {}", lmdAdminId);
-//		log.info("lmdAdminName       : {}", lmdAdminName);
-//		log.info("lmdLastCheckDate   : {}", lmdLastCheckDate);
-		
 		// 해당 의료기기 정보 수정
 		medicalService.editMedicalDevice(editMedical, lmdStatus, lmdDeviceCnt,  
 				lmdManagerDeptNo, lmdManagerDeptPart, lmdManagerId, lmdManagerName, 
 				lmdAdminDeptNo, lmdAdminId, lmdAdminName, lmdLastCheckDate);
 		
-		return "redirect:/admin/medical-detail/" + lmdMinorCateCode;
+		return "redirect:/admin/medical-detail/" + URLEncoder.encode(lmdMinorCateCode, StandardCharsets.UTF_8);
 	}
 
 }

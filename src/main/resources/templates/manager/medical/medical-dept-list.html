@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<!-- title 지정 -->
+		<title>CareOps+ | 의료기기 부서 목록</title>
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
+		
+		<style type="text/css">
+			/* 테이블 */
+			.table { text-align: center; vertical-align: inherit; }
+			.table-row { line-height: 40px; }
+			.table-head { font-size: 20px; font-weight: 600; }
+			tr { height: 50px;  border-bottom: 1px solid #d9d9d9; }
+			
+			/* 상세보기 */
+			.data-add { line-height: 40px; vertical-align: middle; }
+			.empty-row { font-size: 25px; font-weight: 600; }
+			
+			/* 버튼 */
+			.btn-status { display: flex; }
+			.btn-css { width: 80px; border-radius: 50px; }
+			.btn-add { margin-left: auto; background-color: #13254C; color: white; }
+			.btn-add:hover { border: 1px solid #13254C; }
+			
+		</style>
+	</head>
+
+	<body>
+		<!-- 사이드바 -->
+		<th:block th:replace="~{/common/side-bar}"></th:block>
+		
+		<!-- 컨텐츠 영역 -->
+		<div class="content">
+			<!-- 서비스 미리보기 -->
+			<div class="section">
+				<!-- 제목 -->
+				<h1 class="title">의료관리 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">
+					<th:block th:text="${ session.department + ' : 총 ' + medicalDevicesList.size() } + '개' "></th:block>
+				</h1>
+				
+				<table class="table table-hover">
+				  <thead class="table-group">
+				    <tr class="table-row table-head">
+				      <th scope="col">장비세분류코드</th>
+				      <th scope="col">장비세분류명</th>
+				      <th scope="col">모델명</th>
+				      <th scope="col">장비수</th>
+				      <th scope="col">부서</th>
+				      <th scope="col">등록일</th>
+				      <th scope="col">점검자</th>
+				      <th scope="col">점검일</th>
+				      <th scope="col">상태</th>
+				      <th scope="col">상세보기</th>
+				    </tr>
+				  </thead>
+				  
+			  	<tbody class="table-group-se">
+				  	<tr th:each="medical : ${ medicalDevicesList }" th:if="${ ! medicalDevicesList.isEmpty() }" class="table-row">
+				    	<!-- 장비세분류코드 -->
+				    	<td th:text="${ medical.lmdMinorCateCode }"></td>
+				      
+				      <!-- 장비세분류명 -->
+				      <td th:text="${ #strings.length(medical.lmdMinorCateName) > 20 ? #strings.substring(medical.lmdMinorCateName, 0, 10) + '...' : medical.lmdMinorCateName }"></td>
+				      
+				      <!-- 모델명 -->
+				      <td th:text="${ #strings.length(medical.lmdDevicesName) > 20 ? #strings.substring(medical.lmdDevicesName, 0, 10) + '...' : medical.lmdDevicesName }"></td>
+				      
+				      <!-- 장비수 -->
+				      <td th:text="${ medical.lmdDeviceCnt }"></td>
+				      
+				      <!-- 담당부서 -->
+				      <td th:text="${ medical.lmdManagerDeptPart }"></td>
+				      
+				      <!-- 등록일 -->
+				      <td th:text="${ medical.lmdDate }"></td>
+				      
+				      <!-- 점검자 -->
+				      <td th:text="${ medical.lmdAdminName != null && !#strings.isEmpty(medical.lmdAdminName) ? medical.lmdAdminName : ' ' }"></td>
+				      
+				      <!-- 점검일 -->
+				      <td th:text="${ medical.lmdLastCheckDate }"></td>
+				      
+				      <!-- 버튼 -->
+			      	<td th:switch="${ medical.lmdStatus }">
+			      		<button th:case="정상" type="button" class="btn btn-css btn-success" disabled>정상</button>
+			      		<button th:case="수리필요" type="button" class="btn btn-css btn-primary" disabled>수리필요</button>
+			      		<button th:case="점검요망" type="button" class="btn btn-css btn-secondary" disabled>점검요망</button>
+			      		<button th:case="노후" type="button" class="btn btn-css btn-warning" disabled>노후</button>
+			      		<button th:case="만료" type="button" class="btn btn-css btn-danger" disabled>만료</button>
+			      	</td>
+				      
+				      <!-- 상세 보기 -->
+				      <td>
+				      	<a th:href="@{'../medical-detail/' + ${ medical.lmdMinorCateCode } }">
+				      		<img alt="이동" th:src="@{/img/icon-next-b.png}" class="data-add">
+			      		</a>
+		      		</td>
+				    </tr>
+				    <tr th:unless="${ ! medicalDevicesList.isEmpty() }">
+				    	<td class="empty-row" colspan="10">검색 결과 없음 </td>
+				    </tr>
+			  	</tbody>
+				</table>
+				
+				<th:block th:if="${ session.user_type == 'manager' }">
+			    <div class="btn-status">
+		        <button th:onclick="'location.href=\'./medical-list/add\''" class="btn btn-add" type="button">신규 등록</button>
+			    </div>
+				</th:block>
+			</div>
+		</div>
+		
+		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+		
+	</body>
+</html>
