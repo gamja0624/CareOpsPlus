@@ -41,7 +41,7 @@
 			<div class="section">
 				<!-- 제목 -->
 				<h1 class="title">일일 관리 보고서 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">등록</h1>
-                <form th:action="@{/admin/daily-report-list}" method="post">
+                <form th:action="@{/admin/daily-report-list}" method="post" onsubmit="return noSpaceForm(document.getElementById('textarea'))" >
     				<div class="layout-table">
                       <div class="regist-report">
                           <div class="intitle" >일일 관리 보고서</div>
@@ -59,7 +59,7 @@
                           </div>
                           <div>
                             <label class="detail report-detail" for="dmrReportDetail" >내용</label>
-                            <textarea class="report-detail-detail" name="dmrReportDetail"  ></textarea> 
+                            <textarea id="textarea" class="report-detail-detail" name="dmrReportDetail" required="required" ></textarea> 
                           </div>
                           <div>
                             <label class="detail report-issue"  for="dmrIssue" >특이사항</label>
@@ -78,7 +78,17 @@
                 </form>
 			</div>
 		</div>
-		
+		<script>
+          function noSpaceForm(obj) {
+              if (obj.value.trim() === "") {
+            	  obj.value = ""; // 입력 내용을 비움
+                  obj.focus(); // 입력창으로 다시 포커스 이동
+                  obj.reportValidity(); // 유효성 검사 다시 실행
+                  return false; // 제출 방지
+              }
+              return true; // 정상 입력일 때만 제출
+          }
+		</script>
 		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 	</body>
 </html>
