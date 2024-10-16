@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<!-- title 지정 -->
-	<title>CareOps+ | 민원 목록 </title>
+	<title>CareOps+ | 민원 검색 결과 </title>
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 
@@ -21,7 +21,7 @@
 		/** 상태 버튼 **/
 		.status-button { background-color: #8992A5; border-radius: 50px; border: #FFF; color: #FFF; width: 80px; height: 40px; line-height: 1; }
 		.complete-button { background-color: #14254c; color: #FFF; border-radius: 50px; width: 80px; height: 40px; line-height: 1; }
-		/** 정렬 버튼 **/
+		/** 신청 버튼 **/
 		.button-cover { width: 1340px; text-align: right; margin: 20px 0; }
 		.button-cover button { text-align: center; margin-left: 15px; background-color: #14254c; color: #FFF; }
 		.button-cover button:hover { border: 1px solid #14254c; background-color: #FFF; color: #14254c; }
@@ -38,9 +38,9 @@
 		<!-- section -->
 		<div class="section">
 			<!-- 제목 -->
-			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">목록</h1>
+			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 검색 결과 </h1>
 			<div class="table-cover">
-				<table id="claimTable" class="table table-hover claim-list">
+				<table class="table table-hover claim-list">
 					<thead>
 						<tr class="th-style">
 							<th>민원 번호</th>
@@ -53,44 +53,44 @@
 						</tr>
 					</thead>
 					<tbody>
-						<th:block th:each="claim : ${claim}">
+						<th:block th:each="claimSearch : ${claimSearch}">
 							<tr class="td-style">
-								<td th:text="${claim.claimNo}"></td>
+								<td th:text="${claimSearch.claimNo}"></td>
 								<td class="td-title">
-									<a th:text="${claim.claimTitle}"
-										th:href="@{./claim-detail/{claimNo}(claimNo=${claim.claimNo})}"></a>
+									<a th:text="${claimSearch.claimTitle}"
+										th:href="@{/admin/claim-detail/{claimNo}(claimNo=${claimSearch.claimNo})}"></a>
 								</td>
-								<td th:text="${claim.claimManagerName}"></td>
-								<td th:text="${claim.claimDate}"></td>
+								<td th:text="${claimSearch.claimManagerName}"></td>
+								<td th:text="${claimSearch.claimDate}"></td>
 								<td>
-									<button th:text="${claim.claimApprove ? '승 인' : '미 승 인'}"
-										th:class="${claim.claimApprove} ? 'complete-button' : 'status-button'" disabled>
+									<button th:text="${claimSearch.claimApprove ? '승 인' : '미 승 인'}"
+										th:class="${claimSearch.claimApprove} ? 'complete-button' : 'status-button'" disabled>
 									</button>
 								</td>
 								<td>
-									<button th:text="${claim.claimComplete ? '완 료' : '대 기'}"
-										th:class="${claim.claimComplete} ? 'complete-button' : 'status-button'" disabled>
+									<button th:text="${claimSearch.claimComplete ? '완 료' : '대 기'}"
+										th:class="${claimSearch.claimComplete} ? 'complete-button' : 'status-button'" disabled>
 									</button>
 								</td>
 								<td>
-									<th:block th:if="${claim.claimApprove} == true and ${claim.claimComplete} == false">
+									<th:block th:if="${claimSearch.claimApprove} == true and ${claimSearch.claimComplete} == false">
 						        <a href="#" 
-						           th:onclick="'handleClick(event, ' + ${claim.claimApprove} + ', ' + ${claim.claimComplete} + ', \'' + ${claim.claimNo} + '\')'">
+						           th:onclick="'handleClick(event, ' + ${claimSearch.claimApprove} + ', ' + ${claimSearch.claimComplete} + ', \'' + ${claimSearch.claimNo} + '\')'">
 						            <img alt="답변작성" th:src="@{/img/test.png}"> 
 						        </a>
 								    </th:block>
-								    <th:block th:if="${claim.claimComplete} == true">
+								    <th:block th:if="${claimSearch.claimComplete} == true">
 								        <span>완료</span>
 								    </th:block>
 								</td>
 							</tr>
 							<!--답변-->
-							<th:block th:each="claimReply : ${claimReply}" th:if="${claimReply.claimNo == claim.claimNo}">
+							<th:block th:each="claimReply : ${claimReply}" th:if="${claimReply.claimNo == claimSearch.claimNo}">
 								<tr class="claim-reply">
 									<td></td>
 									<td class="td-title">
 										<a th:text="${'└[ 답변 완료 ] ' + claimReply.claimReTitle}"
-											th:href="@{./claim-re-detail/{claimNo}(claimNo=${claimReply.claimNo})}"></a>
+											th:href="@{/admin/claim-re-detail/{claimNo}(claimNo=${claimReply.claimNo})}"></a>
 									</td>
 									<td th:text="${claimReply.adminName}"></td>
 									<td th:text="${claimReply.claimReDate}"></td>
@@ -104,56 +104,9 @@
 				</table>
 			</div>
 			<!--버튼-->
-			<div class="button-cover">
-			    <button type="button" class="btn" onclick="location.href='claim-list/sort?sort=claimNotApprove&value=미승인'">미승인</button>
-			    <button type="button" class="btn" onclick="location.href='claim-list/sort?sort=claimApprove&value=승인'">처리대기</button>
-			    <button type="button" class="btn" onclick="location.href='claim-list/sort?sort=claimComplete&value=완료'">처리완료</button>
-			</div>
 
-			<!-- 페이지네이션 -->
-			<div id="paging">
-				<nav aria-label="Page navigation">
-					<ul class="pagination">
-						<!-- 맨 앞으로 이동 -->
-						<li class="page-item">
-							<a class="page-link" th:href="@{./claim-list?page=1}" aria-label="Previous">
-								<span aria-hidden="true">&#171;</span>
-							</a>
-						</li>
-
-						<!-- 이전 페이지 이동 -->
-						<li class="page-item">
-							<a class="page-link"
-								th:href="@{./claim-list(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
-						</li>
-
-						<!-- 숫자 -->
-						<th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
-							<li class="page-item">
-								<a class="page-link" th:href="@{./claim-list?page=} + @{${page}}" th:text="${ page }"
-									th:classappend="${paging.currentPage eq page} ? 'disabled' : ''"></a>
-							</li>
-						</th:block>
-
-						<!-- 다음 페이지 이동 -->
-						<li class="page-item">
-							<a class="page-link"
-								th:href="@{./claim-list(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}">&#62;</a>
-						</li>
-
-						<!-- 맨 끝으로 이동 -->
-						<li class="page-item">
-							<a class="page-link" th:href="@{./claim-list?page={totalPages}(totalPages = ${totalPages})}"
-								aria-label="Next">
-								<span aria-hidden="true">&#187;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
-			</div>
 			<div class="search-box" >
-				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/claim-list/search' }"
-					method="get">
+				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/claim-list/search' }" method="get">
 					<label class="" for="column"></label>
 					<select id="filter" name="filter" onchange="updatePlaceholder()">
 						<option value="claimTitle">민원 제목</option>
@@ -168,14 +121,14 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script> 
 		// 답변 제한 
 		function handleClick(event, claimApprove, claimComplete, claimNo) {
 			console.log('claimApprove:', claimApprove, 'claimComplete:', claimComplete, 'claimNo :', claimNo); 
 		    if (claimApprove && !claimComplete) {
-		        window.location.href = './claim-re/' + claimNo;
+		        window.location.href = '/admin/claim-re/' + claimNo;
 				} else {
 		        event.preventDefault(); // 이동 방지
 		    }

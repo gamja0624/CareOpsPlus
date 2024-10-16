@@ -10,253 +10,44 @@
 
 	<style type="text/css">
 		/*  공 통  */
-		.layout-table {
-			width: 1340px;
-			height: 100%;
-			border: 3px solid #13254C;
-			border-radius: 20px;
-		}
-
-		.btn-basic {
-			border-radius: 10px;
-			border: 1px solid #14254C;
-			background-color: #14254C;
-			color: #FFF;
-			font-size: 16px;
-		}
-
-		.claim-form {
-			width: 1180px;
-			margin: 25px auto 0 auto;
-		}
-
-		.claim-box {
-			display: flex;
-			width: 1200px;
-			gap: 20px;
-			margin-bottom: 10px;
-		}
-
-		.claim-title {
-			font-size: 21px;
-			font-weight: 600;
-			width: 120px;
-		}
-
-		/*  민원 제목  */
-		.claim-input-wide {
-			width: 1040px;
-			height: 35px;
-			line-height: 1;
-			border: 1px solid #14254C;
-			border-radius: 5px;
-			padding: 10px;
-		}
-
-		/*  카테고리  */
-		.category-label {
-			width: 120px;
-			height: 35px;
-			text-align: center;
-			line-height: 35px;
-		}
-
-		.category-input {
-			border: 1px solid #14254C;
-			border-radius: 5px;
-			width: 240px;
-			height: 35px;
-			padding: 8px;
-		}
-
-		/*   첨 부 파 일  */
-		.filebox {
-			display: flex;
-			gap: 20px;
-			margin-bottom: 10px;
-		}
-
-		.filebox input {
-			border: 1px solid #14254C;
-			border-radius: 5px;
-		}
-
-		.filebox .upload-name {
-			width: 900px;
-			height: 35px;
-			padding: 4.5px 15px;
-			pointer-events: none;
-		}
-
-		.filebox .file {
-			position: absolute;
-			width: 1px;
-			height: 1px;
-			margin: -1px;
-			padding: 0;
-			overflow: hidden;
-			border: 0;
-			white-space: nowrap;
-			clip: rect(0, 0, 0, 0);
-		}
-
-		.filebox .upload-button {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			padding: 4.5px 15px;
-			border-radius: 10px;
-			border: 1px solid #14254C;
-			background-color: #14254C;
-			color: #fff;
-			cursor: pointer;
-			line-height: 1;
-			width: 120px;
-		}
-
-		.filebox .upload-button:hover,
-		.filebox .upload-button:focus {
-			background-color: #fff;
-			color: #14254C;
-		}
-
+		.layout-table { width: 1340px; height: 100%; border: 3px solid #13254C; border-radius: 20px; }
+		.btn-basic { border-radius: 10px; border: 1px solid #13254C; background-color: #13254C; color: #FFF; font-size: 16px; }
+		.claim-form { width: 1180px; margin: 25px auto 0 auto; }
+		.claim-box { display: flex; width: 1200px; gap: 20px; margin-bottom: 10px; }
+		.claim-title { font-size: 22px; font-weight: 600; width: 120px; }
+		/*  민 원 제 목  */
+		.claim-input-wide { width: 1040px; height: 35px; line-height: 1; border: 1px solid #13254C; border-radius: 5px; padding: 10px; }
+		/*  카 테 고 리  */
+		.category-label { width: 120px; height: 35px; text-align: center; line-height: 35px; }
+		.category-input { border: 1px solid #13254C; border-radius: 5px; width: 240px; height: 35px; padding: 8px; }
+		/*  첨 부 파 일  */
+		.filebox { display: flex; gap: 20px; margin-bottom: 10px; }
+		.filebox input { border: 1px solid #13254C; border-radius: 5px; }
+		.filebox .upload-name { width: 900px; height: 35px; padding: 4.5px 15px; pointer-events: none; }
+		.filebox .file { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; border: 0; white-space: nowrap; clip: rect(0, 0, 0, 0); }
+		.filebox .upload-button { display: inline-flex; align-items: center; justify-content: center; padding: 4.5px 15px; border-radius: 10px; border: 1px solid #13254C;
+			background-color: #13254C; color: #fff; cursor: pointer; line-height: 1; width: 120px; }
+		.filebox .upload-button:hover, .filebox .upload-button:focus { background-color: #fff; color: #13254C; }
 		/*  내 용  */
-		.claim-content {
-			width: 1200px;
-			margin: 0 auto;
-		}
-
-		.claim-content-box {
-			width: 1180px;
-			height: 400px;
-			border: 1px solid #14254C;
-			border-radius: 5px;
-			padding: 15px;
-			text-align: justify;
-			line-height: 25px;
-		}
-
+		.claim-content { width: 1200px; margin: 0 auto; }
+		.claim-content-box { width: 1180px; height: 400px; border: 1px solid #13254C; border-radius: 5px; padding: 15px; text-align: justify; line-height: 25px; }
 		/*  민원 신청 버튼   */
-		.clm-sb-btn-cover {
-			width: 1300px;
-			margin: 20px auto;
-			text-align: center;
-		}
-
-		.claim-submit-button {
-			width: 140px;
-			height: 40px;
-		}
-
-		.claim-submit-button:hover {
-			border: 1px solid #14254C;
-			background-color: #FFF;
-			color: #14254C;
-		}
-
-		/* 모달창 */
-		.btn-open-modal {
-			width: 120px;
-			height: 35px;
-		}
-
-		.modal {
-			position: absolute;
-			display: none;
-			justify-content: center;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.4);
-		}
-
-		.modal-body {
-			position: absolute;
-			top: 50%;
-			width: 800px;
-			height: 600px;
-			padding: 40px;
-			text-align: center;
-			border: 1px solid #14254c;
-			background-color: rgb(255, 255, 255);
-			border-radius: 10px;
-			box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-			transform: translateY(-50%);
-		}
-
-		.h2-style {
-			width: 600px;
-			text-align: left;
-			margin: 0 auto;
-		}
-
-		.search-bar {
-			margin-bottom: 20px;
-		}
-
-		.input-stlye {
-			border-radius: 5px;
-			border: 1px solid #999999;
-			height: 20px;
-			width: 500px;
-			padding: 4px;
-		}
-
-		.search-button {
-			border-radius: 8px;
-			border: 1px solid #999999;
-			height: 30px;
-			margin-left: 5px;
-			width: 80px;
-		}
-
-		.select-button {
-			font-size: 16px;
-			background-color: #14254c;
-			color: #FFF;
-			border: 1px solid #14254c;
-			border-radius: 8px;
-			width: 50px;
-		}
-
-		.sub-category-table {
-			border-top: 2px solid #000;
-			border-bottom: 2px solid #000;
-			text-align: center;
-			width: 600px;
-			margin: 0 auto;
-			border-collapse: collapse
-		}
-
-		.sub-category-table tr {
-			border-bottom: 1px solid #000;
-		}
-
-		.sub-category-table td,
-		th {
-			height: 26px;
-		}
-
-		.sub-category-table th {
-			font-weight: 600;
-		}
-
-		.close-button {
-			background-color: #14254C;
-			color: white;
-			border-radius: 10px;
-			font-size: 16px;
-			margin-top: 20px;
-			width: 80px;
-			height: 30;
-		}
-
-		.close-button:hover {
-			border: 1px solid #14254C;
-			color: #13254C;
-			background-color: #fff;
-		}
+		.clm-sb-btn-cover { margin: 20px auto; text-align: center; }
+		.claim-submit-button { width: 120px; }
+		.claim-submit-button:hover { border: 1px solid #13254C; background-color: #FFF; color: #13254C; }
+		/* 모 달 창 */
+		.btn-open-modal { width: 120px; height: 35px; }
+		.modal { display: none; position: fixed; justify-content: center; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
+		.modal-body { position: absolute; margin: 2% auto; width: 800px; min-height: 800px; border: 1px solid #13254C; background-color: rgb(255, 255, 255); border-radius: 10px; padding: 0; }
+		.modal-title { border-top-left-radius: 10px; border-top-right-radius: 10px; background-color: #13254C; color: #FFF; height: 60px; font-size: 26px; display: flex; padding-left: 20px; align-items: center; }	
+		.category-search-box { width: 600px; line-height: 60px; border-radius: 10px; margin: 20px auto; }
+		.select-button { background-color: #13254C; color: #FFF; border: 1px solid #13254C; width: 60px; height: 30px; line-height: 1; margin: 2px; }
+		.sub-category-table { border-top: 2px solid #4F5259; border-bottom: 2px solid #4F5259; text-align: center; width: 600px; margin: 10px auto 20px auto; border-collapse: collapse }
+		.sub-category-table tr { border-bottom: 1px solid #d9d9d9; }
+		.sub-category-table th { font-weight: 600; height: 40px; line-height: 1.5; }
+		.close { text-align: center; height: 60px; background-color: #f1f1f1; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 10px 0; margin-top: 20px; }
+		.close-button { width: 120px; background-color: #13254C; color: #FFF; }
+		.close-button:hover { border: 1px solid #14254C; color: #13254C; background-color: #fff; }
 	</style>
 </head>
 
@@ -266,133 +57,142 @@
 
 	<!-- 컨텐츠 영역 -->
 	<div class="content">
-
 		<!-- section -->
 		<div class="section">
 			<!-- 제목 -->
-			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">민원 수정</h1>
+			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 민원 수정 </h1>
 			<div class="layout-table">
-				<!-- 민원 수정 폼 -->
-				<form action="" class="claim-form">
-					<!--민원 제목-->
+				
+				<form class="claim-form"  th:action="@{/manager/claim-edit-complete/{claimNo}(claimNo=${claim.claimNo})}" method="post"  enctype="multipart/form-data">
 					<div class="claim-box">
-						<label for="claim-title" class="claim-title">민&nbsp;&nbsp; 원&nbsp;&nbsp;&nbsp; 제&nbsp;&nbsp; 목</label>
-						<input type="text" class="claim-input-wide" th:value="${claim.claimTitle}">
+						<label for="claimTitle" class="claim-title">민&nbsp;&nbsp; 원&nbsp;&nbsp;&nbsp; 제&nbsp;&nbsp; 목</label>
+						<input type="text" class="claim-input-wide" name="claimTitle" th:value="${claim.claimTitle}" required>
 					</div>
-
-					<!-- 민원 카테고리 -->
 					<div class="claim-box">
-						<label for="claim-categories" class="btn-basic category-label ">대 분 류</label>
-						<select name="" id="" class="category-input">
-							<option th:text="${claim.claimCategoryName}" disabled selected></option>
-							<option th:each="claimCategory : ${claimCategory}" th:value="${claimCategory.claimCategoryName}"
-								th:text="${claimCategory.claimCategoryName}"></option>
+						
+						<label for="claimCategory" class="btn-basic category-label ">대 분 류</label>
+						<select name="claimCategoryName" id="claimCategoryName" class="category-input" required>
+							<option th:each="claimCategory : ${claimCategory}" 
+							        th:value="${claimCategory.claimCategoryName}"
+							        th:text="${claimCategory.claimCategoryName}" 
+							        th:selected="${claimCategory.claimCategoryName == claim.claimCategoryName}"></option>
 						</select>
+						
 						<button class="btn-open-modal btn-basic">소 분 류</button>
-						<input class="category-input" th:value="${claim.claimSubCategoryName}">
-						<label class="btn-basic category-label mr-st">요 청 구 분</label>
-						<select name="" id="" class="category-input">
-							<option th:text="${claim.claimCategoryStatus}" disabled selected></option>
-							<option value="">정상</option>
-							<option value="">점검</option>
-							<option value="">수리</option>
-							<option value="">노후</option>
-							<option value="">만료</option>
-							<option value="">없음</option>
-						</select>
-					</div>
+						<input class="category-input" type="text" id="claimSubCategoryName" name="claimSubCategoryName"  th:value="${claim.claimSubCategoryName}" required>
+						
+						<label for="claimCategoryStatus" class="btn-basic category-label mr-st">요 청 구 분</label>
+						<select name="claimCategoryStatus" id="claimCategoryStatus" class="category-input" required>
+							<option th:value="${claim.claimCategoryStatus}" th:text="${claim.claimCategoryStatus}" selected></option>
+							<option value="일반">일반</option>
+							<option value="긴급">긴급</option>
+							<option value="정상">정상</option>
+							<option value="점검요망">점검요망</option>
+							<option value="수리필요">수리필요</option>
+							<option value="노후">노후</option>
+							<option value="만료">만료</option>
+						</select> 
 
-					<!-- 첨부 파일 -->
+					</div>
 					<div class="filebox">
 						<label class="claim-title">첨&nbsp;&nbsp; 부&nbsp;&nbsp;&nbsp; 파&nbsp;&nbsp; 일</label>
-						<input class="upload-name" type="text" readonly>
-						<input type="file" id="file_01" class="file" title="파일 업로드">
+						<input class="upload-name" type="text"  th:value="${claim.claimAttachment}"  readonly>
+						<input type="file" id="file_01" class="file" name="file"  title="파일 업로드">
 						<label for="file_01" class="btn-basic upload-button">파 일 선 택</label>
 					</div>
-
-					<!-- 민원 내용 -->
 					<div class="claim-content">
-						<textarea class="claim-content-box" name="" id="" th:text="${claim.claimContent}"></textarea>
+						<textarea class="claim-content-box" name="claimContent" id="claimContent" th:text="${claim.claimContent}" required></textarea>
 					</div>
 					<div class="clm-sb-btn-cover">
-						<button class="claim-submit-button btn-basic" type="submit"> 민원 수정 </button>
+						<button class="btn claim-submit-button btn-basic" type="submit"> 민원 수정 </button>
 					</div>
 				</form>
-
 			</div>
 		</div>
-		<div class="modal">
-			<div class="modal-body">
-				<div class="h2-style">
-					<h2>민원 소분류 검색</h2>
-				</div>
-				<div class="search-bar">
-					<input type="text" placeholder="" class="input-stlye">
-					<button class="search-button"> 검 색</button>
-				</div>
+	</div>
+	<!--  모달 -->
+	<div class="modal">
+		<div class="modal-body">
+			<div class="modal-title">
+				<h2>민원 소분류 검색</h2>
+			</div>
+			<div class="search-box">
+				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/claim-sub-list/search' }"
+					method="get">
+					<label class="" for="column"></label>
+					<select id="filter" name="filter">
+						<option value="lmdMinorCateName">의료기기</option>
+						<option value="smlList">안전관리</option>
+					</select>
+					<label for="value"></label>
+					<input class="input" type="search" name="value" id="search" minlength="2">
+					<input class="input" type="submit" id="search-submit" value="검색">
+				</form>
+			</div>
 
-				<table class="sub-category-table">
-					<thead>
-						<tr class="tr-style">
-							<th>소분류 번호</th>
-							<th>소분류명</th>
-							<th>선 택</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="claimSubCategory : ${claimSubCategory}">
-							<td th:text="${claimSubCategory.claimSubCategoryNo}"></td>
-							<!--<td th:text="${claimSubCategory.lmdMinorCateName}"></td>-->
-							<td
-								th:text="${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.smlList}">
-							</td>
-							<td>
-								<button class="select-button">선 택</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<div id="paging">
-					<nav aria-label="Page navigation">
-						<ul class="pagination">
-							<!-- 맨 앞으로 이동 -->
+			<table class="table table-hover sub-category-table">
+				<thead>
+					<tr class="tr-style">
+						<th>소분류 번호</th>
+						<th>소분류명</th>
+						<th>선 택</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="claimSubCategory : ${claimSubCategory}">
+						<td th:text="${claimSubCategory.claimSubCategoryNo}"></td>
+						<td name="claimSubCategory"
+							th:text="${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.smlList}">
+						</td>
+						<td>
+							<button class="btn select-button" 
+							th:attr="onclick='selectSubCategory(\'' + ${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.smlList}+ '\')'">선 택</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="paging">
+				<nav aria-label="Page navigation">
+					<ul class="pagination">
+						<!-- 맨 앞으로 이동 -->
+						<li class="page-item">
+							<a class="page-link" th:href="@{./claim-add?page=1}" aria-label="Previous">
+								<span aria-hidden="true">&#171;</span>
+							</a>
+						</li>
+
+						<!-- 이전 페이지 이동 -->
+						<li class="page-item">
+							<a class="page-link"
+								th:href="@{./claim-add(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
+						</li>
+
+						<!-- 숫자 -->
+						<th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
 							<li class="page-item">
-								<a class="page-link" th:href="@{./claim-add?page=1}" aria-label="Previous">
-									<span aria-hidden="true">&#171;</span>
-								</a>
+								<a class="page-link" th:href="@{./claim-add?page=} + @{${page}}" th:text="${ page }"
+									th:classappend="${paging.currentPage eq page} ? 'disabled' : ''"></a>
 							</li>
+						</th:block>
 
-							<!-- 이전 페이지 이동 -->
-							<li class="page-item">
-								<a class="page-link"
-									th:href="@{./claim-add(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
-							</li>
+						<!-- 다음 페이지 이동 -->
+						<li class="page-item">
+							<a class="page-link"
+								th:href="@{./claim-add(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}">&#62;</a>
+						</li>
 
-							<!-- 숫자 -->
-							<th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
-								<li class="page-item">
-									<a class="page-link" th:href="@{./claim-add?page=} + @{${page}}" th:text="${ page }"
-										th:classappend="${paging.currentPage eq page} ? 'disabled' : ''"></a>
-								</li>
-							</th:block>
-
-							<!-- 다음 페이지 이동 -->
-							<li class="page-item">
-								<a class="page-link"
-									th:href="@{./claim-add(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}">&#62;</a>
-							</li>
-
-							<!-- 맨 끝으로 이동 -->
-							<li class="page-item">
-								<a class="page-link" th:href="@{./claim-add?page={totalPages}(totalPages = ${totalPages})}"
-									aria-label="Next">
-									<span aria-hidden="true">&#187;</span>
-								</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-
+						<!-- 맨 끝으로 이동 -->
+						<li class="page-item">
+							<a class="page-link" th:href="@{./claim-add?page={totalPages}(totalPages = ${totalPages})}"
+								aria-label="Next">
+								<span aria-hidden="true">&#187;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="close">
+				<button class="btn close-button">닫 기</button>
 			</div>
 		</div>
 	</div>
@@ -401,32 +201,31 @@
 		// 모달 ================================================================ 
 		const modal = document.querySelector('.modal');
 		const btnOpenModal = document.querySelector('.btn-open-modal');
-		const closeModalButton = document.querySelector('.close-button');
-
+		const closeModalButton =document.querySelector('.close-button');
+		
 		btnOpenModal.addEventListener("click", (event) => {
-			event.preventDefault();
+			event.preventDefault(); 																		
 			modal.style.display = "flex";
-			localStorage.setItem('modalOpen', 'true');
+		 	localStorage.setItem('modalOpen', 'true'); 																
 		});
 
 		closeModalButton.addEventListener("click", () => {
 			modal.style.display = "none";
-			localStorage.setItem('modalOpen', 'false');
+			localStorage.setItem('modalOpen', 'false');  															
 		});
-
+		
 		window.addEventListener('load', () => {
 			if (localStorage.getItem('modalOpen') === 'true') {
-				modal.style.display = 'flex';
-			}
+		  	modal.style.display = 'flex'; 
+		  }
 		});
 
 		// 소분류 선택
-		function selectSubCategory(subCategoryName) {
+		function selectSubCategory(subCategoryName ) {
 			document.getElementById("claimSubCategoryName").value = subCategoryName; // 선택한 소분류 이름을 입력 필드에 설정
-
+			
 			modal.style.display = "none"; // 모달 닫기
 		}
-
 		// 파일박스 ================================================================ 
 		const fileInput = document.querySelector('.filebox .file');
 		const nameInput = document.querySelector('.filebox .upload-name');

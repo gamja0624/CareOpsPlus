@@ -2,7 +2,7 @@ package himedia.project.careops.controller.admin;
 
 /**
  * @author 이홍준
- * @editDate 2024-09-20 ~ 
+ * @editDate 2024-10-15 
  */
 
 import java.util.List;
@@ -14,11 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import himedia.project.careops.dto.SafetyManagementChecklistDTO;
+import himedia.project.careops.dto.SafetyManagementDTO;
 import himedia.project.careops.service.SafetyService;
 
 @Controller
@@ -35,93 +33,50 @@ public class AdminSafetyController {
 		this.safetyService = safetyService;
 	}
 
-	// 목록 페이지
+	// 안전관리 목록 페이지
 	@GetMapping("/safety-list")
-	public String smList(Model model) {
+	public String safetyList(Model model) {
 
-		log.info("목록 페이지 실행");
+		List<SafetyManagementDTO> safetyListAll = safetyService.safetyListAll();
+		List<String> smList = safetyService.findSmList();
 
-		/*
-		 * List<SafetyManagementListDTO> safetyAllList = safetyService.findAllList();
-		 * model.addAttribute("safetyAllList", safetyAllList);
-		 * 
-		 * log.info("네이티브쿼리 >>>> {}", safetyAllList);
-		 */
+		log.info("smList값=>> {}", smList);
 
-		// sm table 호출
-		/*
-		 * List<SafetyManagementDTO> safetyResultList =
-		 * safetyService.safetyResultList(); log.info("목록 페이지 safetyResultList 실행");
-		 * log.info("safetyResultList >>>{}", safetyResultList); // sml table 호출
-		 * List<SafetyManagementListDTO> safetyListAll = safetyService.safetyListAll();
-		 * log.info("목록 페이지 safetyListAll 실행"); log.info("safetyListAll>>>{}",
-		 * safetyListAll);
-		 * 
-		 * model.addAttribute("safetyResultList", safetyResultList);
-		 * model.addAttribute("safetyListAll", safetyListAll);
-		 */
+		model.addAttribute("smList", smList);
+		// model.addAttribute("safetyListFirstPage", safetyListFirstPage);
+		model.addAttribute("safetyListAll", safetyListAll);
+
 		return "admin/safety/safety-list";
 	}
 
-	// 점검표 항목 수정 페이지
-	@GetMapping("/safety-checklist-edit")
-	public String checklistDetailEdit() {
-		return "admin/safety/checklist-edit";
-	}
-
-	// 점검표 항목 상세 수정 페이지
-	@GetMapping("/safety-checklist-edit/{smlList}")
-	public String checklistEditDetail(@PathVariable String smlList, Model model) {
-
-		List<SafetyManagementChecklistDTO> allChecklist = safetyService.findAllChecklist(smlList);
-		
-		model.addAttribute("smlList", smlList);
-		model.addAttribute("allChecklist", allChecklist);
-		
-		log.info("allChecklist >>>>>> {}", allChecklist);
-		
-		return "admin/safety/checklist-edit-detail";
-	}
-	
 	// 버튼클릭시 요청 메소드
-	@GetMapping("/safety-checklist-edit/{smlList}/{smcFloor}")
-	public ResponseEntity<List<SafetyManagementChecklistDTO>> checklistEditFloor(@PathVariable String smlList, @PathVariable int smcFloor, Model model) {
+	@GetMapping("/safety-list/{smList}/{smFacilityFloor}")
+	public ResponseEntity<List<SafetyManagementDTO>> loadDataForFloor(@PathVariable String smList,
+			@PathVariable int smFacilityFloor, Model model) {
+		//log.info("뷰에서 넘어온 값 항목: {}, 층 수: {}", smList, smFacilityFloor );
+		List<SafetyManagementDTO> statusList = safetyService.findStatusList(smList, smFacilityFloor);
+		//log.info("검색 된 값 : {}", statusList);
 		
-		List<SafetyManagementChecklistDTO> allChecklist = safetyService.findCheckList(smlList, smcFloor);
-		
-		model.addAttribute("smlList", smlList);
-		model.addAttribute("allChecklist", allChecklist);
-		
-		log.info("층별 데이터>>>{}{}", smlList,allChecklist);
-		
-		return ResponseEntity.ok(allChecklist);
-	}
+		model.addAttribute("smlList", smList);
+		model.addAttribute("safetyListAll", statusList);
 
-	// 점검표 항목 상세 수정 후 페이지
-	//@PostMapping("/safety-checklist-edit/{smlList}")
-	//public String checklistEdit(@PathVariable String smlList, @RequestBody SafetyManagementChecklistDTO checklists) {
-		//log.info("점검항목은? >> {} ", smlList);
-		//log.info("리스트화 된 점검리스트? {}", checklists.toString());
-	// public String checkListEdit(@PathVariable String smlList, @RequestParam List<SafetyManagementChecklistDTO> checklists) {
-	/*
-	 * log.info("수정된 체크리스트 페이지?? {} {}", checklists); for
-	 * (SafetyManagementChecklistDTO checklist : checklists) {
-	 * System.out.println(checklist); }
-	 */
-		//return "redirect:/admin/safety-checklist-edit";
-	//}
+		// log.info("층별 데이터>>>{}{}", smlList,allChecklist);
+
+		return ResponseEntity.ok(statusList);
+	}
 	
-	// 데일리 점검목록 페이지
-	@GetMapping("/safety-daily-registration")
-	public String dailyResistraion() {
-		return "admin/safety/daily-registration";
-	}
-
-	// 데일리 점검 목록 상세 등록 페이지
-//	@GetMapping("/safety-daily-registration/{sml_no}")
-	@GetMapping("/safety-daily-registration/{smlList}")
-	public String dailyResistraionDetail(@PathVariable String smlList, Model model) {
+	// 안전관리 현황 수정 페이지
+	@GetMapping("/safety-list-status")
+	public String modifySafetyStatus(Model model) {
 		
-		return "admin/safety/daily-registration-detail";
+		List<SafetyManagementDTO> safetyListAll = safetyService.safetyListAll();
+		List<String> smList = safetyService.findSmList();
+
+		log.info("smList값=>> {}", smList);
+
+		model.addAttribute("smList", smList);
+		// model.addAttribute("safetyListFirstPage", safetyListFirstPage);
+		model.addAttribute("safetyListAll", safetyListAll);
+		return "admin/safety/safety-list-status";
 	}
 }

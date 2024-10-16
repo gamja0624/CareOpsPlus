@@ -6,14 +6,15 @@ package himedia.project.careops.dto;
  */
 
 import java.sql.Date;
+import java.util.Arrays;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-//@Getter
-//@Setter
-//@ToString
+@Getter
+@Setter
+@ToString
 public class ClaimDTO {
 
 	private Integer claimNo;						// 민원 번호 ( 고유키 )
@@ -31,13 +32,14 @@ public class ClaimDTO {
 	private Boolean claimApprove;				// 민원 승인 여부
 	private Boolean claimComplete;				// 민원 처리 여부
 	private String claimAttachment;				// 민원 첨부파일
+	private byte[] claimImageData;                  // 민원 이진 데이터 (LONGBLOB 추가)
 	
 	public ClaimDTO() {}
 
 	public ClaimDTO(Integer claimNo, String managerId, int managerDeptNo, String claimCategoryNo,
 			int claimSubCategoryNo, String claimCategoryName, String claimSubCategoryName, String claimCategoryStatus,
 			String claimManagerName, Date claimDate, String claimTitle, String claimContent, Boolean claimApprove,
-			Boolean claimComplete, String claimAttachment) {
+			Boolean claimComplete, String claimAttachment, byte[] claimImageData) {
 		super();
 		this.claimNo = claimNo;
 		this.managerId = managerId;
@@ -54,8 +56,9 @@ public class ClaimDTO {
 		this.claimApprove = claimApprove;
 		this.claimComplete = claimComplete;
 		this.claimAttachment = claimAttachment;
+		this.claimImageData = claimImageData;
 	}
-	
+
 	public Integer getClaimNo() {
 		return claimNo;
 	}
@@ -176,6 +179,14 @@ public class ClaimDTO {
 		this.claimAttachment = claimAttachment;
 	}
 
+	public byte[] getClaimImageData() {
+		return claimImageData;
+	}
+
+	public void setClaimImageData(byte[] claimImageData) {
+		this.claimImageData = claimImageData;
+	}
+
 	@Override
 	public String toString() {
 		return "ClaimDTO [claimNo=" + claimNo + ", managerId=" + managerId + ", managerDeptNo=" + managerDeptNo
@@ -184,7 +195,8 @@ public class ClaimDTO {
 				+ ", claimCategoryStatus=" + claimCategoryStatus + ", claimManagerName=" + claimManagerName
 				+ ", claimDate=" + claimDate + ", claimTitle=" + claimTitle + ", claimContent=" + claimContent
 				+ ", claimApprove=" + claimApprove + ", claimComplete=" + claimComplete + ", claimAttachment="
-				+ claimAttachment + "]";
+				+ claimAttachment + ", claimImageData=" + Arrays.toString(claimImageData) + "]";
 	}
-
+	
+	
 }

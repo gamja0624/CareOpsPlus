@@ -34,7 +34,7 @@
 			}
 			.modal-body {
 		    padding: 20px;
-				height: 160px;
+				height: 100px;
 		    text-align: center;
 				font-size: 24px;
 			}
@@ -98,7 +98,9 @@
 					      <th scope="col">예약 번호</th>
 					      <th scope="col">예약 날짜</th>
 					      <th scope="col">예약 상태</th>
-					      <th scope="col">예약 취소</th>
+					      <th:block th:each="facility : ${ facilityList }" th:if="${ session.userName == facility.facilityManagerName }">
+						      <th scope="col">예약 취소</th>
+					      </th:block>
 					    </tr>
 					  </thead>
 					  <tbody class="table-group-se">
@@ -131,31 +133,31 @@
 				      	</td>
 				      	
 				      	<!-- 예약 취소 -->
-				      	<td>
-				      		<button type="button" class="btn btn-css" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-									  취소
-									</button>
-									
-									<!-- Modal -->
-									<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-									  <div class="modal-dialog">
-									    <div class="modal-content">
-									      <div class="modal-header">
-									        <h1 class="modal-title fs-5" id="staticBackdropLabel">예약 취소</h1>
-									        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									      </div>
-									      <div class="modal-body">예약을 취소 하시겠습니까 ?</div>
-									      <div class="modal-footer">
-									      	<form th:attr="action=@{'/manager/facility-dept-list'}" method="post">
-									      		<input type="hidden" id="facility-no" name="facilityNo" th:value="${ facility.facilityNo }">
-										        <button type="submit" class="btn confirm-button" data-bs-dismiss="modal">예</button>
-									        </form>
-									        <button type="button" class="btn cancel-button">아니오</button>
-									      </div>
-									    </div>
-									  </div>
-									</div>
-				      	</td>
+				      	<th:block th:if="${ session.userName == facility.facilityManagerName }">
+					      	<td>
+					      		<button type="button" class="btn btn-css" data-bs-toggle="modal" data-bs-target="#staticBackdrop">취소</button>
+										  
+										<!-- Modal -->
+										<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <h1 class="modal-title fs-5" id="staticBackdropLabel">예약 취소</h1>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div>
+										      <div class="modal-body">예약을 취소 하시겠습니까 ?</div>
+										      <div class="modal-footer">
+										      	<form th:attr="action=@{'/manager/facility-dept-list'}" method="post">
+										      		<input type="hidden" id="facility-no" name="facilityNo" th:value="${ facility.facilityNo }">
+											        <button type="submit" class="btn confirm-button" data-bs-dismiss="modal">예</button>
+										        </form>
+										        <button type="button" class="btn cancel-button" data-bs-dismiss="modal">아니오</button>
+										      </div>
+										    </div>
+										  </div>
+										</div>
+					      	</td>
+				      	</th:block>
 					    </tr>
 					    
 					    <tr th:unless="${ ! facilityList.isEmpty() }">

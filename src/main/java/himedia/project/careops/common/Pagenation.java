@@ -28,6 +28,4 @@ public class Pagenation {
 		
 		return new PagingButtonInfo(currentPage, startPage, endPage);
 	}
-
 }
-

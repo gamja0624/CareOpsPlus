@@ -47,36 +47,46 @@ public class MedicalService {
                 pageable.getPageSize(),
                 Sort.by("lmdMinorCateCode").ascending());
 		
-		Page<ListMedicalDevices> medicalDevicesList = medicalRepository.findAll(pageable);
-		
-		return medicalDevicesList.map(medical -> modelMapper.map(medical, ListMedicalDevicesDTO.class));
+		return medicalRepository.findAll(pageable)
+				.map(medical -> modelMapper.map(medical, ListMedicalDevicesDTO.class));
 	}
 	
 	// [검색 필터]
 	public List<ListMedicalDevices> findFilterMedicalDevices(String filter, String value) {
+        if (value == null || value.isEmpty()) {
+        	return List.of();
+        } 
 
-		List<ListMedicalDevices> medicalDevicesList = medicalRepository.findAll();
-		return medicalDevicesList.stream()
-				.filter(m -> {
-					if (value != "") {
-						if (filter.equals("lmdMajorCateName")) { // 장비대분류명
-							return m.getLmdMajorCateName().contains(value);
-						} else if (filter.equals("lmdMinorCateName")) { // 장비세분류명
-							return m.getLmdMinorCateName().contains(value);
-						} else if (filter.equals("lmdDevicesName")) { // 모델명
-							return m.getLmdDevicesName().contains(value);
-						} else if (filter.equals("lmdManagerDeptPart")) { // 부서명
-							return m.getLmdManagerDeptPart().contains(value);
-						} 
-					}
-					return false;
-				}).collect(Collectors.toList());
-	}
+        return medicalRepository.findAll()
+				        		.stream()
+				                .filter(m -> filterMatches(m, filter, value))
+				                .collect(Collectors.toList());
+    }
+
+    private boolean filterMatches(ListMedicalDevices m, String filter, String value) {
+        switch (filter) {
+        	// 장비대분류명
+            case "lmdMajorCateName":
+                return m.getLmdMajorCateName().contains(value);
+            // 장비세분류명
+            case "lmdMinorCateName": 
+                return m.getLmdMinorCateName().contains(value);
+            // 모델명
+            case "lmdDevicesName":  
+                return m.getLmdDevicesName().contains(value);
+            // 부서명
+            case "lmdManagerDeptPart": 
+                return m.getLmdManagerDeptPart().contains(value);
+            default:
+                return false;
+        }
+    }
 	
 	// [의료기기 장비세분류코드 찾기]
 	public ListMedicalDevicesDTO findByMedicalLmdMinorCateCode(String lmdMinorCateCode) {
 		
-		ListMedicalDevices medicalDevice = medicalRepository.findById(lmdMinorCateCode).orElseThrow(IllegalArgumentException::new);
+		ListMedicalDevices medicalDevice = medicalRepository.findById(lmdMinorCateCode)
+				.orElseThrow(IllegalArgumentException::new);
 		
 		return modelMapper.map(medicalDevice, ListMedicalDevicesDTO.class);
 	}
@@ -84,9 +94,9 @@ public class MedicalService {
 	// [담당 부서 이름으로 의료기기 리스트 반환]
 	public List<ListMedicalDevices> findByMedicalDeptName(String department) {
 		return medicalRepository.findAll()
-				.stream() 
-				.filter(m -> m.getLmdManagerDeptPart().equals(department))
-				.collect(Collectors.toList());     
+								.stream() 
+								.filter(m -> m.getLmdManagerDeptPart().equals(department))
+								.collect(Collectors.toList());     
 	}
 	
 	// [의료기기 상태에 따라 리스트 반환]
@@ -128,7 +138,6 @@ public class MedicalService {
 		return medicalStatusList;
 	}
 	
-
 	// [등록]
 	@Transactional
 	public void addMedicalDevice(ListMedicalDevicesDTO newMedicalDevice) {
@@ -154,17 +163,6 @@ public class MedicalService {
 		ListMedicalDevices findMedical = medicalRepository.findById(editMedical.getLmdMinorCateCode())
 				.orElseThrow(IllegalArgumentException::new);
 		
-//		log.info("lmdMinorCateCode   : {}", lmdStatus);
-//		log.info("lmdDeviceCnt 		 : {}", lmdDeviceCnt);
-//		log.info("lmdManagerDeptNo 	 : {}", lmdManagerDeptNo);
-//		log.info("lmdManagerDeptPart : {}", lmdManagerDeptPart);
-//		log.info("lmdManagerName     : {}", lmdManagerName);
-//		log.info("lmdManagerId       : {}", lmdManagerId);
-//		log.info("lmdAdminDeptNo     : {}", lmdAdminDeptNo);
-//		log.info("lmdAdminId 		 : {}", lmdAdminId);
-//		log.info("lmdAdminName 		 : {}", lmdAdminName);
-//		log.info("lmdLastCheckDate   : {}", lmdLastCheckDate);
-		
 		// 상태, 장비수
 		findMedical.setLmdStatus(lmdStatus);
 		findMedical.setLmdDeviceCnt(Integer.parseInt(lmdDeviceCnt));
@@ -179,9 +177,6 @@ public class MedicalService {
 		findMedical.setLmdAdminDeptNo(lmdAdminDeptNo);
 		findMedical.setLmdAdminId(lmdAdminId);
 		findMedical.setLmdAdminName(lmdAdminName);
-		
 		findMedical.setLmdLastCheckDate(new java.sql.Date(lmdLastCheckDate.getTime()));
-		
-		log.info("{}", findMedical);
 	}
 }

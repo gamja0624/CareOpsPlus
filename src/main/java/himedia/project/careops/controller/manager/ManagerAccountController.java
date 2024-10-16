@@ -39,9 +39,6 @@ public class ManagerAccountController {
 		String managerDeptName = (String) session.getAttribute("department");
         List<Manager> manager = managerService.findByManagerList(managerDeptName);
         
-        log.info("우리 부서 이름 :{} ", managerDeptName);
-        log.info("반환 manager :{} ", manager);
-        
         model.addAttribute("manager", manager);
 		
 		return "manager/account/department-account-list";
