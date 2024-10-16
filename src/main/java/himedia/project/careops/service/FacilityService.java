@@ -43,34 +43,26 @@ public class FacilityService {
                 pageable.getPageSize(),
                 Sort.by("facilityNo").ascending());
 		
-		Page<Facility> facilityList = facilityRepository.findAll(pageable);
-		
-		return facilityList.map(facility -> modelMapper.map(facility, FacilityDTO.class));
+		return facilityRepository.findAll(pageable)
+				.map(facility -> modelMapper.map(facility, FacilityDTO.class));
 	}
 	
 	// [부서 이름으로 예약된 시설 리스트 반환]
-	public List<FacilityDTO> findByDeptNoFacilityList(String department) {
-
-	    // 모든 시설 리스트를 가져옴
-	    List<Facility> facilityList = facilityRepository.findAll();
-
-	    // 필터링하여 DTO로 변환
-	    List<FacilityDTO> filteredDtoList = facilityList
-	    		.stream()
-	            .filter(f -> department.equals(f.getFacilityManagerDeptName()))
-	            .map(facility -> modelMapper.map(facility, FacilityDTO.class))
-	            .collect(Collectors.toList());
-
-	    return filteredDtoList;
-	}
+    public List<FacilityDTO> findByDeptNoFacilityList(String department) {
+        return facilityRepository.findAll()
+        		.stream()
+                .filter(f -> department.equals(f.getFacilityManagerDeptName()))
+                .map(facility -> modelMapper.map(facility, FacilityDTO.class))
+                .collect(Collectors.toList());
+    }
 	
 	// [전체 시설 객체로 리스트로 반환]
 	public List<FacilityDTO> findAllDepartmentsList() {
     	
-        List<Facility> facilitys = facilityRepository.findAll();
-        return facilitys.stream()
-                         .map(f -> modelMapper.map(f, FacilityDTO.class))
-                         .collect(Collectors.toList());
+        return facilityRepository.findAll()
+        		.stream()
+        		.map(facility  -> modelMapper.map(facility, FacilityDTO.class))
+        		.collect(Collectors.toList());
     }
 	
 	// [층수로 시설 이름, 시설 번호 리스트로 반환]
@@ -90,29 +82,32 @@ public class FacilityService {
 
 	// [검색 필터]
 	public List<Facility> findFilterfacilityList(String filter, String value) {
+        if (value.isEmpty()) {
+            return List.of();
+        }
 
-		List<Facility> facilityList = facilityRepository.findAll();
-		return facilityList.stream()
-				.filter(m -> {
-					if (value != "") {
-						if (filter.equals("facilityFloor")) { // 층별
-							try {
-								int floor = Integer.parseInt(value); // String -> int 변환
-								return m.getFacilityFloor() == floor;
-							} catch (Exception e) {
-								return false;
-							}
-						} else if (filter.equals("facilityName")) { // 시설물 이름
-							return m.getFacilityName().contains(value);
-						} else if (filter.equals("facilityManagerDeptName")) { // 예약 부서
-							if (m.getFacilityManagerDeptName() != null) {
-								return m.getFacilityManagerDeptName().contains(value);
-							}
-						} 
-					}
-					return false;
-					}).collect(Collectors.toList());
-	}
+        return facilityRepository.findAll().stream()
+                .filter(m -> filterCriteria(m, filter, value))
+                .collect(Collectors.toList());
+    }
+
+    private boolean filterCriteria(Facility facility, String filter, String value) {
+        switch (filter) {
+            case "facilityFloor": // 층별
+                try {
+                    return facility.getFacilityFloor() == Integer.parseInt(value);
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            case "facilityName": // 시설물 이름
+                return facility.getFacilityName().contains(value);
+            case "facilityManagerDeptName": // 예약 부서
+                return facility.getFacilityManagerDeptName() != null && facility.getFacilityManagerDeptName().contains(value);
+            default:
+                return false;
+        }
+    }
+	
 	
 	// [시설 번호로 객체 찾기]
 	public Facility findByFacilityNo(String facilityNo) {

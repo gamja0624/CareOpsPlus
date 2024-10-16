@@ -3,7 +3,6 @@ package himedia.project.careops.entity;
 /**
  * @author 진혜정 
  * @editDate 2024-09-23
- * 민원 엔티티 생성 후 수정 예정
  */
 
 import java.sql.Date;
