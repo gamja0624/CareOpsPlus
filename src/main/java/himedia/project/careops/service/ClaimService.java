@@ -204,10 +204,10 @@ public class ClaimService {
 		Map<String, Integer> ClaimStatusList = new HashMap<>();
 		
 		// 변수 
-		ClaimStatusList.put("standby", 0);
-		ClaimStatusList.put("progress", 0);
-		ClaimStatusList.put("medicalCnt", 0);
-		ClaimStatusList.put("safetyCnt", 0);
+		ClaimStatusList.put("standby", 0);     // 접수     대기
+		ClaimStatusList.put("progress", 0);    // 민원     처리
+		ClaimStatusList.put("medicalCnt", 0);  // 의료기기 대기
+		ClaimStatusList.put("safetyCnt", 0);   // 안전관리 대기
 		
 		List<Claim> claimList = claimRepository.findAll();
 		
@@ -220,7 +220,7 @@ public class ClaimService {
 			
 			if (c.getClaimCategoryName().equals("의료기기") && ! c.getClaimApprove()) {
 				ClaimStatusList.put("medicalCnt", ClaimStatusList.get("medicalCnt") + 1);
-			} else if (c.getClaimCategoryName().equals("안전") && ! c.getClaimApprove())	{
+			} else if (c.getClaimCategoryName().equals("안전관리") && ! c.getClaimApprove())	{
 				ClaimStatusList.put("safetyCnt", ClaimStatusList.get("safetyCnt") + 1);
 			}		
 		}

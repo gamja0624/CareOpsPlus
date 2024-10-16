@@ -178,5 +178,6 @@ public class MedicalService {
 		findMedical.setLmdAdminId(lmdAdminId);
 		findMedical.setLmdAdminName(lmdAdminName);
 		findMedical.setLmdLastCheckDate(new java.sql.Date(lmdLastCheckDate.getTime()));
+		
 	}
 }
