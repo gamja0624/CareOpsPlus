@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.dto.ManagerDepartmentDTO;
+import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.Manager;
 import himedia.project.careops.entity.ManagerDepartment;
 import himedia.project.careops.repository.ManagerDepartmentRepository;
@@ -84,6 +85,21 @@ public class ManagerService {
     	return managerList.map(manager -> modelMapper.map(manager, ManagerDTO.class));
     }
     
+    // 담당자 검색
+	public List<Manager> searchManagerByFilter(String filter, String value) {
+		List<Manager> ManagerSearchList = managerRepository.findAll();
+		return ManagerSearchList.stream()
+							.filter(srh -> {
+								if (filter.equals("MangerDeptName")) {
+									return srh.getManagerDeptName().contains(value);
+								} else if (filter.equals("ManagerName")) {
+									return srh.getManagerName().contains(value);
+								} 
+								return List.of().isEmpty();
+							}).collect(Collectors.toList());	
+	}
+    
+    
     // 작성자 : 최은지
     // 담당자 변경 ( 이름 , 전화번호 변경 )
     public void updateManager(ManagerDTO managerDTO) {
@@ -101,12 +117,10 @@ public class ManagerService {
     // 담당자 중복 확인
     public boolean checkMangerId(String managerId) {
     	Optional<Manager> checkId = managerRepository.findByManagerId(managerId);
-    	log.info("입력받은 매니저 아이디: {}", managerId);
     
     	checkId.isEmpty();
     	
     	if(checkId.isPresent()) {
-    		log.info("데이터 존재 여부  : {}", checkId);
     		return true;
     	}
     	return false;
@@ -115,9 +129,6 @@ public class ManagerService {
     // 작성자 : 최은지
     // 담당자 저장 
     public void saveManager(ManagerDTO managerDTO,  ManagerDepartmentDTO departmentDTO ) {
-    	log.info("담당자 등록 서비스 실행");
-    	log.info("매니저 정보 :{}" , managerDTO);;
-    	log.info("부서 정보 :{}" , departmentDTO);
     	
     	Manager manager = new Manager();
     	

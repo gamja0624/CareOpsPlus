@@ -103,11 +103,20 @@
 					</div>
 					<!-- 버튼 -->
 					<div class="button-cover">
+						<th:block th:if="${ session.userType == 'admin' && session.department.contains('민원') }">
 						<button class="btn submit-button" onclick="openApproveModal()" id="approveButton"
 							th:disabled="${claim.claimApprove}">민원 승인</button>
 						<button class="btn submit-button" onclick="openCompleteModal()" id="approveButton"
 							th:disabled="${claim.claimComplete}">민원 처리</button>
 							<!-- th:disabled="${claim.claimComplete}" -->
+						</th:block>
+						<th:block th:unless="${ session.userType == 'admin' && session.department.contains('민원') }">
+						<button class="btn submit-button" onclick="openApproveModal()" id="approveButton"
+							disabled>민원 승인</button>
+						<button class="btn submit-button" onclick="openCompleteModal()" id="approveButton"
+							disabled>민원 처리</button>
+							<!-- th:disabled="${claim.claimComplete}" -->
+						</th:block>
 					</div>
 
 

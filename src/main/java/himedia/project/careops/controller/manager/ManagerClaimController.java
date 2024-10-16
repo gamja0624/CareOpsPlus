@@ -173,7 +173,6 @@ public class ManagerClaimController {
 	public String managerClaimEditSave(@PathVariable("claimNo") Integer claimNo,  @ModelAttribute ClaimDTO claimDTO,  @RequestParam("file") MultipartFile file) {
 		log.info("민원 수정 컨트롤러 실행");
 		try {
-			// claimService.saveClaim(claimDTO, file, session);
 			claimService.updateClaim(claimNo, claimDTO, file);
 			return "redirect:/manager/claim-list";
 		} catch (IOException e) {
@@ -215,6 +214,16 @@ public class ManagerClaimController {
 		}
 	}
 	
+	
+	@GetMapping("/claim-sub-list/search")
+    public ResponseEntity<List<ClaimSubCategoryDTO>> searchClaimSubCategories(
+            @RequestParam String filter,
+            @RequestParam String value) {
+        log.info("검색시자악~ 컨트롤러");
+        List<ClaimSubCategoryDTO> results = claimService.searchSubCategories(filter, value);
+        return ResponseEntity.ok(results);
+    }
+
 	// [ 답변 조회 ] ===========================================================================
     @GetMapping("/claim-re-detail/{claimNo}")
     public String ManagerclaimReDetail(@PathVariable("claimNo") Integer claimNo, Model model) {

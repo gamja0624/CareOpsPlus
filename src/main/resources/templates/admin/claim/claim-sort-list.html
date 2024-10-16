@@ -49,7 +49,7 @@
 							<th>민원 일자</th>
 							<th>접수승인</th>
 							<th>민원 처리</th>
-							<th>답변 처리</th>
+							<th>답변 작성</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -73,15 +73,17 @@
 									</button>
 								</td>
 								<td>
-									<th:block th:if="${claimSort.claimApprove} == true and ${claimSort.claimComplete} == false">
-						        <a href="#" 
-						           th:onclick="'handleClick(event, ' + ${claimSort.claimApprove} + ', ' + ${claimSort.claimComplete} + ', \'' + ${claimSort.claimNo} + '\')'">
-						            <img alt="답변작성" th:src="@{/img/test.png}"> 
-						        </a>
+									<th:block th:if="${ session.userType == 'admin' && session.department.contains('민원') }">
+										<th:block th:if="${claimSort.claimApprove} == true and ${claimSort.claimComplete} == false">
+							        <a href="#" 
+							           th:onclick="'handleClick(event, ' + ${claimSort.claimApprove} + ', ' + ${claimSort.claimComplete} + ', \'' + ${claimSort.claimNo} + '\')'">
+							            <img alt="답변작성" th:src="@{/img/test.png}"> 
+							        </a>
 								    </th:block>
 								    <th:block th:if="${claimSort.claimComplete} == true">
 								        <span>완료</span>
 								    </th:block>
+									</th:block>
 								</td>
 							</tr>
 							<!--답변-->

@@ -142,11 +142,11 @@
 					<tr th:each="claimSubCategory : ${claimSubCategory}">
 						<td th:text="${claimSubCategory.claimSubCategoryNo}"></td>
 						<td name="claimSubCategory"
-							th:text="${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.smlList}">
+							th:text="${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.subCategoryName}">
 						</td>
 						<td>
 							<button class="btn select-button" 
-							th:attr="onclick='selectSubCategory(\'' + ${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.smlList}+ '\')'">선 택</button>
+							th:attr="onclick='selectSubCategory(\'' + ${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.subCategoryName}+ '\')'">선 택</button>
 						</td>
 					</tr>
 				</tbody>
