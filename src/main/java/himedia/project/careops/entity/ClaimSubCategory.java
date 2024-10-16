@@ -29,11 +29,11 @@ public class ClaimSubCategory {
 	@Column(name="lmd_minor_cate_name")
 	private String lmdMinorCateName;                // 장비 세분류명 ( 의료기기 관리 )
 	
-	@Column(name="sml_no")
-	private Integer smlNo;                              // 세부항목 번호 ( 안전관리 )
+	@Column(name="sub_category_sort")
+	private Integer subCategorySort;                              // 세부항목 번호 ( 안전관리 )
 	
-	@Column(name="sml_list")
-	private String smlList;                         // 세부항목 ( 안전관리 )
+	@Column(name="sub_category_name")
+	private String subCategoryName;                         // 세부항목 ( 안전관리 )
 
 	public ClaimSubCategory() {}
 
@@ -61,26 +61,28 @@ public class ClaimSubCategory {
 		this.lmdMinorCateName = lmdMinorCateName;
 	}
 
-	public Integer getSmlNo() {
-		return smlNo;
+	public Integer getSubCategorySort() {
+		return subCategorySort;
 	}
 
-	public void setSmlNo(Integer smlNo) {
-		this.smlNo = smlNo;
+	public void setSubCategorySort(Integer subCategorySort) {
+		this.subCategorySort = subCategorySort;
 	}
 
-	public String getSmlList() {
-		return smlList;
+	public String getSubCategoryName() {
+		return subCategoryName;
 	}
 
-	public void setSmlList(String smlList) {
-		this.smlList = smlList;
+	public void setSubCategoryName(String subCategoryName) {
+		this.subCategoryName = subCategoryName;
 	}
 
 	@Override
 	public String toString() {
 		return "ClaimSubCategory [claimSubCategoryNo=" + claimSubCategoryNo + ", lmdMinorCateCode=" + lmdMinorCateCode
-				+ ", lmdMinorCateName=" + lmdMinorCateName + ", smlNo=" + smlNo + ", smlList=" + smlList + "]";
+				+ ", lmdMinorCateName=" + lmdMinorCateName + ", subCategorySort=" + subCategorySort
+				+ ", subCategoryName=" + subCategoryName + "]";
 	}
+
 	
 }

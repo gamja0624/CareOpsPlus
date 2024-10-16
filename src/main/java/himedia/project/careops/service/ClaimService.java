@@ -3,6 +3,7 @@ package himedia.project.careops.service;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * @author 최은지
@@ -74,39 +75,6 @@ public class ClaimService {
 	}
 
 
-	// 민원 검색 ( 홍준님 버전 )
-	public Page<ClaimDTO> resutlClaim(String filter, String value, Pageable pageable) {
-		log.info("민원 검색 서비스");
-		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() -1,
-				pageable.getPageSize(),
-				  Sort.by("claimNo").ascending());
-		Page<Claim> claimList = claimRepository.findAll(pageable);	
-		
-		if(value.equals("")) {
-			return claimList.map(clmList -> modelMapper.map(clmList, ClaimDTO.class));	
-		}
-		return searchClaim(filter, value, claimList);
-	}
-
-	public Page<ClaimDTO> searchClaim(String filter, String value, Page<Claim> claimList) {
-		
-		log.info("검색 결과 filter : {}", filter);			
-		log.info("검색 결과 value : {}", value);			
-		
-		if(filter.equals("claimTitle")) {
-			
-			List<ClaimDTO> claimResult = claimList.stream()
-				    .filter(srh -> srh.getClaimTitle().contains(value)) // String.valueOf 제거
-				    .map(list -> modelMapper.map(list, ClaimDTO.class)) // map 메서드 호출 위치 수정
-				    .collect(Collectors.toList());
-			
-			log.info("검색 결과 claimResult : {}", claimResult);			
-			return new PageImpl<>(claimResult);
-		}
-		
-		return Page.empty();
-	}
-	
 	// [ 작업 관리자 ] =========================================================================
 	// 작성자 : 최은지
 	// 민원 전체 조회 
@@ -203,7 +171,6 @@ public class ClaimService {
 	// 작성자 : 최은지 
 	// 민원 처리
 	public void completeClaim(ClaimDTO claimDTO) {
-		log.info("민원처리 서비스 실행");
 		Claim claim =  claimRepository.findById(claimDTO.getClaimNo()).orElseThrow(IllegalArgumentException::new);
 		Date currentDate = new Date(System.currentTimeMillis()); // 현재 날짜 가져오기 ( 임시.. )
 		
@@ -334,8 +301,6 @@ public class ClaimService {
 		
 		List<ClaimCategory> claimCategory = claimCategoryRepository.findAll();
 		
-		log.info("민원 서비스 카테고리 찾기: {} ", claimCategory);
-		
 	   return claimCategory.stream()
 			   		.map(category -> modelMapper.map(category, ClaimCategoryDTO.class))
 			   		.collect(Collectors.toList());
@@ -358,7 +323,7 @@ public class ClaimService {
 	            .stream()
 	            .filter(category -> 
 	                category.getLmdMinorCateName() != null && category.getLmdMinorCateName().equals(subCategoryName) || 
-	                category.getSmlList() != null && category.getSmlList().equals(subCategoryName)
+	                category.getSubCategoryName() != null && category.getSubCategoryName().equals(subCategoryName)
 	            )
 	            .findFirst() 
 	            .orElse(null); // 일치하는 객체가 없을 경우 null 반환
@@ -378,6 +343,27 @@ public class ClaimService {
 		return claimsubCategory.map(subCategory -> modelMapper.map(subCategory, ClaimSubCategoryDTO.class));
 	}
 	
+	// 작성자 : 최은지
+	// 민원 소분류 검색
+	public List<ClaimSubCategoryDTO> searchSubCategories(String filter, String value) {
+        List<ClaimSubCategory> claimSubCategories;
+        
+        switch (filter) {
+            case "lmdMinorCateName":
+                claimSubCategories = claimSubCategoryRepository.findByLmdMinorCateNameContaining(value);
+                log.info("claimSubCategories : {}", claimSubCategories);
+                break;
+            case "subCategoryName":
+                claimSubCategories = claimSubCategoryRepository.findBySubCategoryNameContaining(value);
+                break;
+            default:
+                claimSubCategories = List.of(); // 빈 리스트 반환
+        }
+        // 1) 현재 리턴 값(DTO list)저장후 , return new PageImpl<>(collect); 페이지로 반환해보기 
+        return claimSubCategories.stream()
+                .map(subCategory -> modelMapper.map(subCategory, ClaimSubCategoryDTO.class))
+                .collect(Collectors.toList());
+    }
 	
 	// 작성자 : 최은지
 	// 부서 내 민원 목록 조회 ( 페이지 반환 )
@@ -410,8 +396,6 @@ public class ClaimService {
 	// 민원 저장
 	public void saveClaim(ClaimDTO claimDTO,  MultipartFile file, HttpSession session) throws IOException {
 		
-		log.info("민원 저장 서비스 실행");
-		
 		Claim claim = new Claim();
 		Date currentDate = new Date(System.currentTimeMillis()); // 현재 날짜 가져오기 ( 임시.. )
 		
@@ -436,8 +420,6 @@ public class ClaimService {
 	    
 	    ClaimCategory category = findBycategoryName(claimDTO.getClaimCategoryName());
 	    ClaimSubCategory subCategory = findBySubcategoryName(claimDTO.getClaimSubCategoryName());
-	    log.info("category : {}", category);	
-	    log.info("subCategory : {}", subCategory);	
 		
 	    // 입력 받을 정보 : (1) 제목 , (2) 대분류, (3) 소분류, (4) 요청 구분, (5) 첨부파일, (6) 내용
 		claim.setClaimTitle(claimDTO.getClaimTitle());                     // 제목
@@ -460,7 +442,6 @@ public class ClaimService {
 	public void updateClaim(Integer claimNo, ClaimDTO claimDTO,  MultipartFile file) throws IOException {
 		
 		Claim claim = claimRepository.findById(claimNo).get();
-		log.info("수정할 민원 : {}", claim);		
 		if (file != null && !file.isEmpty()) {
 			claim.setClaimImageData(file.getBytes());
 	        claim.setClaimAttachment(file.getOriginalFilename());	
@@ -495,7 +476,7 @@ public class ClaimService {
 	}
 	
 	// 작성자 : 최은지 
-	// 민원 검색 ( 혜정님 버전 ) 
+	// 민원 검색  
 	public List<Claim> managerSearchClaimByFilter(String filter, String value, Integer managerDeptNo) {
 		List<Claim> claimSearchList = findByManagerDeptClaim(managerDeptNo);
 		boolean finalValueApprove = "승인".equals(value);

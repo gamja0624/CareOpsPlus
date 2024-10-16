@@ -1,5 +1,6 @@
 package himedia.project.careops.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,4 +18,6 @@ public interface ClaimSubCategoryRepository extends JpaRepository<ClaimSubCatego
 	
 	// 소분류 - 의료기기 아이디 찾기
 	Optional<ClaimSubCategory> findByClaimSubCategoryNo(Integer claimSubCategoryNo);
+	List<ClaimSubCategory> findByLmdMinorCateNameContaining(String name);
+    List<ClaimSubCategory> findBySubCategoryNameContaining(String name);
 }
