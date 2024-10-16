@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
-		<title>CareOps+ | 시설 예약 시스템</title>
+		<title>CareOps+ | 시설 예약 목록</title>
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
@@ -70,6 +70,8 @@
 			.btn-status { margin: 30px auto; text-align: center; }
 			.btn-group { display: inline-block; width: 80px; margin-right: 15px; background-color: #13254C; color: white; }
 			.btn-group:hover { border: 1px solid #13254C; }
+			
+			.cancel { width: 80px; }
 		</style>
 	</head>
 
@@ -98,9 +100,6 @@
 					      <th scope="col">예약 번호</th>
 					      <th scope="col">예약 날짜</th>
 					      <th scope="col">예약 상태</th>
-					      <th:block th:each="facility : ${ facilityList }" th:if="${ session.userName == facility.facilityManagerName }">
-						      <th scope="col">예약 취소</th>
-					      </th:block>
 					    </tr>
 					  </thead>
 					  <tbody class="table-group-se">
@@ -132,10 +131,10 @@
 				      		<button th:case="false" type="button" class="btn btn-css btn-success" disabled>미사용</button>
 				      	</td>
 				      	
-				      	<!-- 예약 취소 -->
+				      	
 				      	<th:block th:if="${ session.userName == facility.facilityManagerName }">
-					      	<td>
-					      		<button type="button" class="btn btn-css" data-bs-toggle="modal" data-bs-target="#staticBackdrop">취소</button>
+					      	<td class="cancel">
+					      		<button type="button" class="btn btn-css" data-bs-toggle="modal" data-bs-target="#staticBackdrop">예약 취소</button>
 										  
 										<!-- Modal -->
 										<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
