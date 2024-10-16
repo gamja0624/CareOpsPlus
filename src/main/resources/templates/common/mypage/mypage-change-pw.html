@@ -33,6 +33,7 @@
 		align-items: center;
 		gap: 10px;
 		width: 100%;
+		align-items: baseline;
 	}
 	
 	label {
@@ -107,27 +108,29 @@
 	
 	/* 모달 스타일 추가 */
 	.modal.fade .modal-dialog { transform: translate(-50%, -89%) !important; }
+	.modal-header .btn-close:hover { color: white; /* 텍스트 색상을 흰색으로 */ }
+	
 	.modal-content {
 		background-color: white;
 		border-radius: 10px;
-			border: none;
+		border: none;
 		margin: 0 auto;
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 	}
 	
 	.modal-dialog {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: 90%;
-		max-width: 550px;
-		margin: 0;
+	    position: fixed;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    width: 90%;
+	    max-width: 600px;
+	    margin: 0;
 	}
 	
-	.modal-header { border-bottom: none; background-color: #13254C; color:white; }
+	.modal-header { border-bottom: none; background-color: #13254C; color:white; padding: 20px; }
 	.modal-title { font-size: 18px;}	
-	.modal-body { padding: 15px 0; font-size: 20px; text-align: center; color: black; }
+	.modal-body { padding: 30px 0; font-size: 20px; text-align: center; color: black; }
 	.modal-footer { border-top: none; padding: 15px 0 0 0; justify-content: center; background-color: #f1f1f1;}
 	
 	/* 모달 배경 스타일 */
@@ -138,7 +141,12 @@
 	.modal-backdrop { z-index: 1040; }
 	
 	/* 모달 내 버튼 스타일 */
-	.modal-footer .btn { font-size: 16px; background-color: #13254C; border-color: #fff; }
+	.modal-footer .btn { 
+		padding: 15px 20px; 
+		font-size: 16px; 
+		background-color: #13254C; 
+		border-color: #fff; 
+	}
 	
 </style>
 </head>
@@ -156,32 +164,32 @@
 					<hr>
 					<div class="info-container">
 						<div class="info-row">
-							<label for="current_password">기존 비밀번호</label>
-							<div class="password-container">
-								<input type="password" id="current_password"
-									name="currentPassword" class="info-field"
-									th:value="${currentPassword}" readonly>
-								<button type="button" class="toggle-password"
-									onclick="togglePassword('current_password')">🔐</button>
-							</div>
+						    <label for="current_password" class="info-label">기존 비밀번호</label>
+						    <div class="password-container">
+						        <input type="password" id="current_password"
+						               name="currentPassword" class="info-field"
+						               th:value="${currentPassword}" readonly>
+						        <button type="button" class="toggle-password"
+						                onclick="togglePassword('current_password')">🔐</button>
+						    </div>
 						</div>
 						<div class="info-row">
-							<label for="new_password">새로운 비밀번호</label>
-							<div class="password-container">
-								<input type="password" id="new_password" name="newPassword"
-									class="info-field" required>
-								<button type="button" class="toggle-password"
-									onclick="togglePassword('new_password')">🔐</button>
-							</div>
+						    <label for="new_password" class="info-label">새로운 비밀번호</label>
+						    <div class="password-container">
+						        <input type="password" id="new_password" name="newPassword"
+						               class="info-field" required>
+						        <button type="button" class="toggle-password"
+						                onclick="togglePassword('new_password')">🔐</button>
+						    </div>
 						</div>
 						<div class="info-row">
-							<label for="confirm_password">비밀번호 재입력</label>
-							<div class="password-container">
-								<input type="password" id="confirm_password"
-									name="confirmPassword" class="info-field" required>
-								<button type="button" class="toggle-password"
-									onclick="togglePassword('confirm_password')">🔐</button>
-							</div>
+						    <label for="confirm_password" class="info-label">비밀번호 재입력</label>
+						    <div class="password-container">
+						        <input type="password" id="confirm_password"
+						               name="confirmPassword" class="info-field" required>
+						        <button type="button" class="toggle-password"
+						                onclick="togglePassword('confirm_password')">🔐</button>
+						    </div>
 						</div>
 					</div>
 					<hr>
@@ -260,6 +268,7 @@
 
 		// 비밀번호 변경 함수
 		let isSubmitting = false;
+		
 
 		function changePassword() {
 		    const currentPassword = $('#current_password').val();
@@ -309,6 +318,7 @@
 					}
 			    });
 			}
+			
 
 		// 오류 메시지를 표시하는 함수
 		function showPasswordChangeError(message) {

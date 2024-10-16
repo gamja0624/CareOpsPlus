@@ -56,8 +56,6 @@ public class LoginController {
 	        @RequestParam("userId") String userId, @RequestParam("userPassword") String userPassword,
 	        HttpSession session) {
 
-	    logger.info("로그인 시도: deptNo={}, userId={}", deptNo, userId);
-
 	    Map<String, Object> loginResult = loginService.login(deptNo, userId, userPassword);
 	    Map<String, Object> response = new HashMap<>();
 
@@ -66,7 +64,6 @@ public class LoginController {
 	        String userName = (String) loginResult.get("userName");
 	        String departmentName = (String) loginResult.get("departmentName");
 
-	        logger.info("{} 로그인 성공: {}", deptNo, userType);
 	        //로그인 성공
 	        session.setAttribute("userType", userType);
 	        session.setAttribute("deptNo", deptNo);
@@ -86,7 +83,6 @@ public class LoginController {
 
 	    } else {
 	    	//로그인 실패 
-	        logger.warn("로그인 실패: deptNo={}, userId={}", deptNo, userId);
 	        response.put("success", false);
 	        response.put("message", loginResult.get("message") != null ? loginResult.get("message") : "로그인에 실패했습니다. 다시 시도하세요.");
 	    }
