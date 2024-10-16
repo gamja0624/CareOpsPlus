@@ -2,7 +2,7 @@ package himedia.project.careops.controller.manager;
 
 /**
  * @author 진혜정
- * @editDate 2024-10-03
+ * @editDate 2024-10-03 ~ 2024-10-15
  */
 
 import java.util.List;
@@ -101,7 +101,7 @@ public class ManagerFacilityController {
 	
 	// [수정(예약 취소)] ==========================================================================================
 	@GetMapping("/facility-dept-list")
-	public String DeptByfacilityPage(HttpSession session, @PageableDefault Pageable pageable, Model model) {
+	public String DeptByfacilityPage(HttpSession session, Model model) {
 		
 		String department = (String) session.getAttribute("department");
 		

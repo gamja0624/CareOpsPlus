@@ -2,9 +2,8 @@ package himedia.project.careops.config;
 
 /**
  * @author 진혜정
- * @editDate 2024-10-10
+ * @editDate 2024-10-10 ~ 2024-10-16
  */
-
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;

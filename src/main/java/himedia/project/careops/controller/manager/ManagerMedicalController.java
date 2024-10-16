@@ -2,7 +2,7 @@ package himedia.project.careops.controller.manager;
 
 /**
  * @author 진혜정
- * @editDate 2024-09-19 ~ 
+ * @editDate 2024-09-19 ~ 2024-10-14
  */
 
 import java.util.List;
@@ -61,11 +61,12 @@ public class ManagerMedicalController {
 		Page<ListMedicalDevicesDTO> medicalDevicesList = medicalService.findByMedicalDevices(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(medicalDevicesList);
 		
-		int totalPages = medicalDevicesList.getTotalPages();			    // 총 페이지 수 계산
+		// 총 페이지 수 계산
+		int totalPages = medicalDevicesList.getTotalPages();			    
 		
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
 		model.addAttribute("paging", paging);
-		model.addAttribute("totalPages", totalPages);					// 총 페이지 수 View로 전달
+		model.addAttribute("totalPages", totalPages);					
 		
 		return "manager/medical/medical-list";
 	}
@@ -99,19 +100,8 @@ public class ManagerMedicalController {
 	}
 	
 	// [등록] ==========================================================================================
-	@GetMapping("/getManagersByDeptName")
-	@ResponseBody
-	// 담당 부서 이름에 해당하는 담당자 목록을 가져오는 메서드
-	public List<Manager> getManagersByDeptName(@RequestParam String managerDeptName) {
-	    return managerService.findByManagerList(managerDeptName);
-	}
-	
 	@GetMapping("/medical-add")
 	public String medicalAddPage(Model model) {
-		
-		// 담당 부서 목록 반환
-		List<ManagerDepartmentDTO> departments = managerDepartmentService.findAllDepartmentsList();
-		model.addAttribute("departments", departments);
 		
 		return "manager/medical/medical-add";
 	}
@@ -123,5 +113,4 @@ public class ManagerMedicalController {
 		
 		return "redirect:/manager/medical-list";
 	}
-	
 }

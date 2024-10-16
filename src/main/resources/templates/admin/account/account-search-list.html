@@ -9,12 +9,12 @@
 		
 		<style type="text/css">
 			.layout-table {
-				min-height: 850px; 
+				height: 100%; 
 				padding-bottom: 50px;
 				margin-bottom: 50px;
 			}
 			.table-cover {
-				height: 610px;
+				height: 620px;
 			}
 			.table-basic-style {
 				width: 1200px;
@@ -69,7 +69,7 @@
 			<!-- section -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title">담당자 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 목록</h1>
+				<h1 class="title">담당자 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 검색 결과</h1>
 				<div class="layout-table">
 					<div class="table-cover">
 						<table class ="table table-hover table-basic-style">
@@ -85,19 +85,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="manager : ${manager}"  class="tr-style">
-						      <td th:text="${manager.managerDeptNo}"></td> 
-									<td th:text="${manager.managerDeptPart}"></td>
-									<td th:text="${manager.managerDeptName}"></td>
-									<td th:text="${manager.managerId}"></td>
-									<td th:text="${manager.managerName}"></td>
-									<td th:text="${manager.managerPhoneNumber}"></td>
+								<tr th:each="managerSearch : ${managerSearch}"  class="tr-style">
+						      <td th:text="${managerSearch.managerDeptNo}"></td> 
+									<td th:text="${managerSearch.managerDeptPart}"></td>
+									<td th:text="${managerSearch.managerDeptName}"></td>
+									<td th:text="${managerSearch.managerId}"></td>
+									<td th:text="${managerSearch.managerName}"></td>
+									<td th:text="${managerSearch.managerPhoneNumber}"></td>
 									<td>
 										<th:block th:if="${ session.userType == 'admin' && session.department.contains('담당자') }">
-											<a class="btn manager-edit" th:href="@{./account-edit/{managerId}(managerId=${manager.managerId})}">담당자 변경</a>
+								  		<a class="btn manager-edit" th:href="@{./account-edit/{managerId}(managerId=${managerSearch.managerId})}">담당자 변경</a>
 										</th:block>
-										<th:block th:unless="${ session.userType == 'admin' && session.department.contains('담당자') }">
-											<a class="btn manager-edit" style="background-color: #fff; border: 1px solid #13254C; color: #13254C;">담당자 변경</a>
+										<th:block th:if="${ session.userType == 'admin' && (session.department.contains('민원') || session.department.contains('안전') || session.department.contains('의료') || session.department.contains('시설물'))} ">
+											<a class="btn manager-edit">담당자 변경</a>
 										</th:block>
 									</td>
 								</tr>
@@ -108,48 +108,13 @@
 						<th:block th:if="${ session.userType == 'admin' && session.department.contains('담당자') }">
 							<button class="btn add-button" type="button" onclick="location.href='account-add'">담당자 등록</button>
 						</th:block>
-						<th:block th:unless="${ session.userType == 'admin' && session.department.contains('담당자') }">
-							<button class="btn add-button" type="button" onclick="location.href='account-add'" disabled>담당자 등록</button>
-						</th:block>
 					</div>
-					<!-- 페이지네이션 -->
-					<div id="paging">
-						<nav aria-label="Page navigation">
-						  <ul class="pagination">
-						    <li class="page-item">
-						      <a class="page-link" th:href="@{./account-list?page=1}" aria-label="Previous">
-						        <span aria-hidden="true">&#171;</span>
-						      </a>
-						    </li>
-						    
-						    <li class="page-item">
-						    	<a class="page-link" th:href="@{./account-list?page=} + @{${paging.currentPage - 1}}">&#60;</a>
-					    	</li>
-						    
-						    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
-							    <li class="page-item">
-							    	<a class="page-link" th:href="@{./account-list?page=} + @{${page}}"
-							    			th:text="${page}" th:disabled="${ paging.currentPage eq page }"></a>
-						    	</li>
-						    </th:block>
-						    
-						    <li class="page-item">
-						    	<a class="page-link" th:href="@{./account-list?page=} + @{${paging.currentPage + 1}}">&#62;</a>
-					    	</li>
-						    
-						    <li class="page-item">
-						      <a class="page-link" th:href="@{./account-list?page=} + @{${paging.endPage}}" aria-label="Next">
-						        <span aria-hidden="true">&#187;</span>
-						      </a>
-						    </li>
-						  </ul>
-						</nav>
-					</div>
+	
 					<div class="search-box" >
 						<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/account-list/search' }"
 							method="get">
 							<label class="" for="column"></label>
-							<select id="filter" name="filter">
+							<select id="filter" name="filter" onchange="updatePlaceholder()">
 								<option value="MangerDeptName">부서명</option>
 								<option value="ManagerName">담당자</option>
 							</select>

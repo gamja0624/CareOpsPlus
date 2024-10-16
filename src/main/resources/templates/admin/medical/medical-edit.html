@@ -66,7 +66,7 @@
 				<form th:attr="action=@{'/admin/medical-edit/' + ${ medicalDevice.lmdMinorCateCode }}" method="post">
 					<div class="layout-table">
 						<div class="btn-status">
-							<select name="lmdStatus" class="form-select" aria-label="Default select">
+							<select id="btnStatus" name="lmdStatus" class="form-select" aria-label="Default select" oninput="checkFields()">
 						    <option value="" th:text="${medicalDevice.lmdStatus}" th:if="${medicalDevice.lmdStatus == null}" selected></option>
 						    <option value="정상" th:selected="${medicalDevice.lmdStatus == '정상'}">정상</option>
 						    <option value="점검요망" th:selected="${medicalDevice.lmdStatus == '점검요망'}">점검요망</option>
@@ -114,16 +114,14 @@
 								</div>
 								<div class="data">
 								 	<p class="data-title">점검자</p>
-								 	<select id="admin-select" name="lmdAdminDeptNo" class="data-input-b" aria-label="Default select" onchange="onAdminChange()" oninput="checkFields()">
-						       	<th:block th:each="admin : ${ adminList }" th:if="${ admin.adminDeptName.equals('의료기기 관리팀') }">
-							       	<option th:if="${ medicalDevice.lmdAdminName == admin.adminName }" 
-												      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
-												      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" selected></option>
-							       	<option th:unless="${ medicalDevice.lmdAdminName == admin.adminName }" 
-												      th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
-												      th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" ></option>
-						       	</th:block>
-							    </select>
+								 	<select id="admin-select" name="lmdAdminDeptNo" class="data-input-b" aria-label="Default select" oninput="checkFields()">
+								    <th:block th:each="admin : ${ adminList }" th:if="${ admin.adminDeptName.equals('의료기기 관리팀') }">
+								        <option th:value="${ admin.adminDeptNo }" th:data-admin-id="${ admin.adminId }"
+								                th:text="${ admin.adminDeptName } + ' (' + ${ admin.adminName } + ')'" 
+								                th:selected="${ medicalDevice.lmdAdminName == admin.adminName }"></option>
+								    </th:block>
+									</select>
+
 								</div>
 							</div>
 							
@@ -169,6 +167,9 @@
 		<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 		
 		<script type="text/javascript">
+			// 오늘 날짜로 기본값 설정
+			document.getElementById('lmdLastCheckDate').value = new Date().toISOString().substring(0, 10);
+		
 			// 페이지가 로드될 때 기본 선택된 담당자의 값을 hidden 필드에 설정
 			window.onload = function() {
 			    var deptSelect = document.getElementById('dept-select');
@@ -178,10 +179,13 @@
 			    var managerSelect = document.getElementById('manager-select');
 			    var selectedManagerOption = managerSelect.options[managerSelect.selectedIndex];
 			    document.getElementById("lmd-manager-name").value = selectedManagerOption.text; 
+			    
+			    var adminSelect = document.getElementById('admin-select');
+	        var selectedOption = adminSelect.options[adminSelect.selectedIndex];
+	        
+	        document.getElementById("lmd-admin-id").value = selectedOption.getAttribute('data-admin-id');
+	        document.getElementById("lmd-admin-name").value = selectedOption.text.split('(')[1].split(')')[0];
 			};
-		
-			// 오늘 날짜로 기본값 설정
-			document.getElementById('lmdLastCheckDate').value = new Date().toISOString().substring(0, 10);
 			
 			// 담당 부서 선택 후 담당자 옵션이 동적으로 추가되는 함수
 			function onDepartmentChange() {
@@ -210,38 +214,21 @@
 				}
 			}
 			
-			// 점검자 이름 추출하는 함수
-			function onAdminChange() {
-	        var adminSelect = document.getElementById('admin-select');
-	        var selectedOption = adminSelect.options[adminSelect.selectedIndex];
-	        
-	        var adminName = selectedOption.text.split('(')[1].split(')')[0];  // 괄호 안의 점검자 이름 추출
-	        var adminId = selectedOption.getAttribute('data-admin-id'); 			// adminId 추출
-
-	        document.getElementById('lmd-admin-id').value = adminId; 
-	        document.getElementById('lmd-admin-name').value = adminName;
-	    }
-			
 			// 담당 부서 선택 후 hidden 필드에 lmdManagerDeptPart 값 저장
 			document.getElementById('dept-select').addEventListener('change', function() {
 				var selectedOption = this.options[this.selectedIndex];
-				
-				console.log(selectedOption)
-				
 				document.getElementById("lmd-dapt-part").value = selectedOption.text; 
 			});
 			
 			// 담당자 선택 후 hidden 필드에 lmdmManagerName 값 저장
 			document.getElementById('manager-select').addEventListener('change', function() {
 				var selectedOption = this.options[this.selectedIndex];
-				
-				console.log("tq ", selectedOption)
-				
 				document.getElementById("lmd-manager-name").value = selectedOption.text; 
 			});
 			
 			// 모든 필드 체크 함수
       function checkFields() {
+	      const lmdStatus = document.getElementById('btnStatus').value;
 	      const deviceCount = document.querySelector('input[name="lmdDeviceCnt"]').value;
 	      const deptSelect = document.getElementById('dept-select').value;
 	      const managerSelect = document.getElementById('manager-select').value;
@@ -251,7 +238,7 @@
 	      const submitButton = document.getElementById('submit-button');
 	
 	      // 모든 필드가 채워졌는지 확인
-	      if (deptSelect && deviceCount && managerSelect && adminSelect && lmdLastCheckDate) {
+	      if (lmdStatus && deptSelect && deviceCount && managerSelect && adminSelect && lmdLastCheckDate) {
 	          submitButton.disabled = false; // 버튼 활성화
 	      } else {
 	          submitButton.disabled = true;  // 버튼 비활성화

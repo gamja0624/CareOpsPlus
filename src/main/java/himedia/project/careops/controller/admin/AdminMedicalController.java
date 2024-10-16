@@ -2,7 +2,7 @@ package himedia.project.careops.controller.admin;
 
 /**
  * @author 진혜정
- * @editDate 2024-09-29
+ * @editDate 2024-09-29 ~ 2024-10-14
  */
 
 import java.util.Date;
@@ -147,16 +147,15 @@ public class AdminMedicalController {
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date lmdLastCheckDate) {
 		
 //		log.info("lmdMinorCateCode   : {}", lmdStatus);
-//		log.info("lmdDeviceCnt 		 : {}", lmdDeviceCnt);
-//		log.info("lmdManagerDeptNo 	 : {}", lmdManagerDeptNo);
+//		log.info("lmdDeviceCnt       : {}", lmdDeviceCnt);
+//		log.info("lmdManagerDeptNo   : {}", lmdManagerDeptNo);
 //		log.info("lmdManagerDeptPart : {}", lmdManagerDeptPart);
 //		log.info("lmdManagerName     : {}", lmdManagerName);
 //		log.info("lmdManagerId       : {}", lmdManagerId);
 //		log.info("lmdAdminDeptNo     : {}", lmdAdminDeptNo);
-//		log.info("lmdAdminId 		 : {}", lmdAdminId);
-//		log.info("lmdAdminName 		 : {}", lmdAdminName);
+//		log.info("lmdAdminId         : {}", lmdAdminId);
+//		log.info("lmdAdminName       : {}", lmdAdminName);
 //		log.info("lmdLastCheckDate   : {}", lmdLastCheckDate);
-		
 		
 		// 해당 의료기기 정보 수정
 		medicalService.editMedicalDevice(editMedical, lmdStatus, lmdDeviceCnt,  

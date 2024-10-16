@@ -2,7 +2,7 @@ package himedia.project.careops.common;
 
 /**
  * @author 진혜정 
- * @editDate 2024-09-23
+ * @editDate 2024-09-23 ~ 2024-09-14
  */
 
 import org.springframework.data.domain.Page;
@@ -28,6 +28,4 @@ public class Pagenation {
 		
 		return new PagingButtonInfo(currentPage, startPage, endPage);
 	}
-
 }
-

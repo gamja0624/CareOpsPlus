@@ -150,7 +150,7 @@
 						<div class="form-group">
 							<label class="label-style" for="password">비 밀 번 호</label>
 							<input class="input-style" type="password" id="managerPassword" name="managerPassword" oninput="checkManagerPassword()" th:value="${managerPassword}" required>
-							<div class="warning" id="passwordWarning" style="display:none;">비밀번호는 영소문자와 숫자를 포함 5에서 16자 사이로 입력해주세요.</div>
+							<div class="warning" id="passwordWarning" style="display:none;">비밀번호는 영소문자와 숫자를 포함 10에서 16자 사이로 입력해주세요.</div>
 						</div>
 						<div class="form-group">
 							<label class="label-style" for="confirmPassword">비밀번호 확인</label>
@@ -207,7 +207,6 @@
 
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script>
-		//   << 코드 정리 나중에 함 >> ============================================
 		
 		// [ 부서 검색 ] --------------------------------------------------------
 		function openModal() {
@@ -297,7 +296,7 @@
 		    const hasNumber = /\d/.test(password); 
 
 		    // 영소문자와 숫자가 모두 포함되어 있는지 검사
-		    if (hasLowerCase && hasNumber && password.length >= 5 && password.length <= 16 ) {
+		    if (hasLowerCase && hasNumber && password.length >= 10 && password.length <= 16 ) {
 		        passwordWarning.style.display = 'none'; 
 		    } else {
 		        passwordWarning.style.display = 'block'; 

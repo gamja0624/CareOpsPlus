@@ -122,7 +122,6 @@ public class AdminClaimController {
 	// 답변 작성
 	@GetMapping("/claim-re/{claimNo}")
 	public String claimReplyForm(@PathVariable Integer claimNo, Model model) {
-		// log.info("답변 작성에 필요한 claimNo : {}", claimNo);		
 		ClaimDTO claim = claimService.findByClaimNo(claimNo);		
 		ManagerDTO manager = managerService.findByManagerId(claim.getManagerId());
 		model.addAttribute("claim", claim);	
@@ -134,7 +133,6 @@ public class AdminClaimController {
 	// 답변 저장
 	@PostMapping("/claim-reply-save/{claimNo}")
 	public String claimReplySave(@PathVariable("claimNo") Integer claimNo, @ModelAttribute ClaimReplyDTO claimReplyDTO, HttpSession session) {
-		// log.info("claimReplyDTO 저장되는 답변 정보 : {}", claimReplyDTO);
 		claimReplyService.saveClaimReply(claimReplyDTO, claimNo, session);
 		return "redirect:/admin/claim-list";
 	}

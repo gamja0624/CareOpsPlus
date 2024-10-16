@@ -40,11 +40,13 @@
 		.modal { display: none; position: fixed; justify-content: center; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
 		.modal-body { position: absolute; margin: 2% auto; width: 800px; min-height: 800px; border: 1px solid #13254C; background-color: rgb(255, 255, 255); border-radius: 10px; padding: 0; }
 		.modal-title { border-top-left-radius: 10px; border-top-right-radius: 10px; background-color: #13254C; color: #FFF; height: 60px; font-size: 26px; display: flex; padding-left: 20px; align-items: center; }	
+		.subcate-table-cover { min-height: 600px;}
 		.category-search-box { width: 600px; line-height: 60px; border-radius: 10px; margin: 20px auto; }
 		.select-button { background-color: #13254C; color: #FFF; border: 1px solid #13254C; width: 60px; height: 30px; line-height: 1; margin: 2px; }
 		.sub-category-table { border-top: 2px solid #4F5259; border-bottom: 2px solid #4F5259; text-align: center; width: 600px; margin: 10px auto 20px auto; border-collapse: collapse }
 		.sub-category-table tr { border-bottom: 1px solid #d9d9d9; }
 		.sub-category-table th { font-weight: 600; height: 40px; line-height: 1.5; }
+		.sub-category-table .sbt-title { width: 220px;}
 		.close { text-align: center; height: 60px; background-color: #f1f1f1; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 10px 0; margin-top: 20px; }
 		.close-button { width: 120px; background-color: #13254C; color: #FFF; }
 		.close-button:hover { border: 1px solid #14254C; color: #13254C; background-color: #fff; }
@@ -113,41 +115,44 @@
 			<div class="modal-title">
 				<h2>민원 소분류 검색</h2>
 			</div>
+				<!-- th:attr="action=@{ '/' + ${session.userType} + '/claim-sub-list/search' }"-->
 			<div class="search-box">
-				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/claim-sub-list/search' }"
-					method="get">
-					<label class="" for="column"></label>
-					<select id="filter" name="filter">
-						<option value="lmdMinorCateName">의료기기</option>
-						<option value="smlList">안전관리</option>
-					</select>
-					<label for="value"></label>
-					<input class="input" type="search" name="value" id="search" minlength="2">
-					<input class="input" type="submit" id="search-submit" value="검색">
-				</form>
+			    <form class="category-search-box" id="searchForm">
+			        <label for="filter"></label>
+			        <select id="filter" name="filter">
+			            <option value="lmdMinorCateName">의료기기</option>
+			            <option value="subCategoryName">안전관리</option>
+			            <option value="subCategoryName">일반/시설물</option>
+			        </select>
+			        <label for="value"></label>
+			        <input class="input" type="search" name="value" id="search" minlength="2" required>
+			        <input class="input" type="submit" id="search-submit" value="검색">
+			    </form>
 			</div>
 
-			<table class="table table-hover sub-category-table">
-				<thead>
-					<tr class="tr-style">
-						<th>소분류 번호</th>
-						<th>소분류명</th>
-						<th>선 택</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="claimSubCategory : ${claimSubCategory}">
-						<td th:text="${claimSubCategory.claimSubCategoryNo}"></td>
-						<td name="claimSubCategory"
-							th:text="${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.smlList}">
-						</td>
-						<td>
-							<button class="btn select-button" 
-							th:attr="onclick='selectSubCategory(\'' + ${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.smlList}+ '\')'">선 택</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="subcate-table-cover">
+				<table class="table table-hover sub-category-table">
+					<thead>
+						<tr class="tr-style">
+							<th>소분류 번호</th>
+							<th class="sbt-title">소분류명</th>
+							<th>선 택</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="claimSubCategory : ${claimSubCategory}">
+							<td th:text="${claimSubCategory.claimSubCategoryNo}"></td>
+							<td name="claimSubCategory"
+								th:text="${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.subCategoryName}">
+							</td>
+							<td>
+								<button class="btn select-button" 
+								th:attr="onclick='selectSubCategory(\'' + ${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.subCategoryName}+ '\')'">선 택</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			<div id="paging">
 				<nav aria-label="Page navigation">
 					<ul class="pagination">
@@ -194,6 +199,7 @@
 		</div>
 	</div>
 
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script>
 		// 모달 ================================================================ 
 		const modal = document.querySelector('.modal');
@@ -237,9 +243,51 @@
 			nameInput.value = fileName;
 
 		});
+		
+		// 소분류 검색 ================================================================ 
+		document.getElementById('searchForm').addEventListener('submit', function(event) {
+		    event.preventDefault(); // 기본 폼 제출 방지
+
+		    const filter = document.getElementById('filter').value;
+		    const value = document.getElementById('search').value;
+
+		    // Fetch 요청
+		    fetch(`/manager/claim-sub-list/search?filter=${filter}&value=${value}`)
+		        .then(response => {
+		            if (!response.ok) {
+		                throw new Error('Network response was not ok');
+		            }
+		            return response.json();
+		        })
+		        .then(data => {
+		            updateSubCategoryTable(data); // 결과로 받은 데이터를 테이블에 업데이트
+		        })
+		        .catch(error => console.error('Error:', error));
+		});
+		
+		function updateSubCategoryTable(data) {
+		    const tbody = document.querySelector('.sub-category-table tbody');
+		    const ul = document.querySelector('.pagination');
+		    tbody.innerHTML = ''; // 기존 내용을 지우기
+				ul.innerHTML = '';
+		    data.forEach(item => {
+		        const row = document.createElement('tr');
+		        row.innerHTML = `
+		            <td>${item.claimSubCategoryNo}</td>
+		            <td>${item.lmdMinorCateName || item.subCategoryName}</td>
+		            <td>
+		                <button class="btn select-button" 
+		                onclick="selectSubCategory('${item.lmdMinorCateName || item.subCategoryName}')">선 택</button>
+		            </td>
+		        `;
+		        tbody.appendChild(row);
+		    });
+		}
+
+		
+	
 	</script>
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 
 </html>
