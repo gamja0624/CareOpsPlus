@@ -19,7 +19,7 @@
       	text-align: center;
      	}
       .table { 
-        margin: 0 auto 0 auto;
+        margin: 0 auto 20px auto;
       	display: inline-table;
       	width: 650px;
       	text-align: center;
@@ -51,7 +51,7 @@
 			
       /* 안전관리현황 */
       .btn-status {
-       	margin: 50px auto; 
+       	margin: 0 auto 50px auto; 
       	width: 650px; 	
        	display: flex; 
       }
@@ -113,9 +113,9 @@
 					      <!-- 시설 이름 -->
 					    	<td class="smFacilityName" th:text="${list.smFacilityName}" ></td>
 					      <!-- 상태 -->
-    				      	<td>
-    				      		<button name="smStatus" type="button" th:if="${list.smStatus}" class="btn btn-css btn-success"  disabled>양호</button>
-    				      		<button name="smStatus" type="button" th:unless="${list.smStatus}" class="btn btn-css btn-danger"  disabled>점검 요망</button> 
+    				      	<td >
+    				      		<button  name="smStatus" type="button" th:if="${list.smStatus}" class="btn btn-css btn-success"  disabled>양호</button>
+    				      		<button  name="smStatus" type="button" th:unless="${list.smStatus}" class="btn btn-css btn-danger"  disabled>점검 요망</button> 
     				      	</td>
 					    </tr>
 					  </tbody>
@@ -124,7 +124,7 @@
 					<!-- 버튼 -->
 					<th:block th:if="${ session.userType == 'admin' && session.department.contains('안전') }">
     				    <div class="btn-status">
-    			           <button th:onclick="'location.href=\'./safety-list-status\''" class="btn btn-add" type="button">안전관리 현황수정</button>
+    			           <button th:onclick="'location.href=\'./safety-list-status\''" class="btn btn-add" type="button">현황 수정</button>
     				    </div>
 					</th:block>
 				</div>
@@ -151,11 +151,18 @@
       
       // 층 버튼 클릭 시 해당 층의 데이터만 가져오는 함수
       function fetchChecklist(smList, num) {
-          console.log('smList:', smList, 'num:', num);	// 확인용 로그
+          //console.log('smList:', smList, 'num:', num);	// 확인용 로그
       
           // URL 형식: admin/safety-list/{smList}/{num}
-          const url = `/admin/safety-list/${smList}/${num}`;
-          console.log('Fetching URL:', url); 			// URL 확인
+          const userType = window.location.pathname.split('/')[1];
+          let url = '';
+          if(userType === 'admin'){
+            url = `/admin/safety-list/${smList}/${num}`;
+          } else {
+           	url= `/manager/safety-list/${smList}/${num}`;
+          }
+          
+          //console.log('Fetching URL:', url); 			// URL 확인
       
           fetch(url)
               .then(response => {

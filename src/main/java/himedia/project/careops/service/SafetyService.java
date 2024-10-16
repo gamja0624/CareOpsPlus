@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import himedia.project.careops.dto.SafetyManagementDTO;
 import himedia.project.careops.entity.SafetyManagement;
 import himedia.project.careops.repository.SafetyManagementRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class SafetyService {
@@ -31,7 +32,7 @@ public class SafetyService {
 
 	// SafetyManagement 테이블 전체조회
 	public List<SafetyManagementDTO> safetyResultList() {
-		log.info("safetyResultList 실행");
+		//log.info("safetyResultList 실행");
 		List<SafetyManagement> safetyResultList = safetyManagementRepository.findAll();
 		return safetyResultList.stream()
 				.map(safetyManagement -> modelMapper.map(safetyManagement, SafetyManagementDTO.class))
@@ -71,67 +72,26 @@ public class SafetyService {
 		return findbySmListandSmFacilityFloor.stream().map(list -> modelMapper.map(list, SafetyManagementDTO.class))
 				.collect(Collectors.toList());
 	}
+	
+	@Transactional
+	public void updateStatus(SafetyManagementDTO dto) {
+	    // SafetyManagement 엔티티 조회
+	    SafetyManagement entity = safetyManagementRepository.findBySmListAndSmFacilityNoAndSmFacilityFloor(
+	        dto.getSmList(), dto.getSmFacilityNo(), dto.getSmFacilityFloor());
 
-	/*
-	 * // SafetyManagementChecklist테이블 전체조회 메소드 + 페이지네이션 public
-	 * List<SafetyManagementDTO> findAllChecklist(String smlList) {
-	 * 
-	 * List<SafetyManagement> allList =
-	 * safetyManagementRepository.findBySmlList(smlList); return
-	 * allList.stream().distinct() .map(checklist -> modelMapper.map(checklist,
-	 * SafetyManagementChecklistDTO.class)) .collect(Collectors.toList()); }
-	 * 
-	 * // 층별 체크리스트 조회 public List<SafetyManagementDTO> findCheckList(String smlList,
-	 * int smcFloor) {
-	 * 
-	 * List<SafetyManagement> bySmcFloor =
-	 * SafetyManagementRepository.findBySmcFloor(smcFloor);
-	 * 
-	 * return bySmcFloor.stream().distinct().filter(list ->
-	 * list.getSmlList().equals(smlList)) .map(list -> modelMapper.map(list,
-	 * SafetyManagementDTO.class)).collect(Collectors.toList()); }
-	 */
+	    if (entity != null) {
+	        // 엔티티에서 DTO로 변환
+	        entity.setSmStatus(dto.isSmStatus());
+	        entity.setSmAdminId(dto.getSmAdminId());
+	        entity.setSmAdminDeptNo(dto.getSmAdminDeptNo());
+	        entity.setSmAdminDeptName(dto.getSmAdminDeptName());
+	        entity.setSmAdminName(dto.getSmAdminName());
+	        entity.setSmDate(dto.getSmDate());
 
-	// 점검표 세부 항목(smcList) 수정
-	/*
-	 * @Transactional public void updateList(String smlList, char smcFloor,
-	 * Map<String, String> checklistMap) { //log.info("안전관리 서비스 실행");
-	 * //log.info("대상 : {}", smlList); //log.info("층 : {}", smcFloor);
-	 * 
-	 * // char를 int로 변환 (예: '1' -> 1) int floorAsInt =
-	 * Character.getNumericValue(smcFloor);
-	 * 
-	 * // 층별 데이터 List<SafetyManagement> bySmcFloor =
-	 * safetyManagementRepository.findBySmcFloor(floorAsInt);
-	 * 
-	 * //log.info("서비스단 : 층별 데이터 {} ", bySmcFloor.toString());
-	 * 
-	 * List<SafetyManagementDTO> filteredChecklists = bySmcFloor.stream().distinct()
-	 * .filter(list -> list.getSmlList().equals(smlList)) .map(list ->
-	 * modelMapper.map(list,
-	 * SafetyManagementDTO.class)).collect(Collectors.toList());
-	 * 
-	 * //log.info("서비스단 : 점검사항별 층별 데이터 {}", filteredChecklists);
-	 * 
-	 * // checklistMap의 key와 value를 리스트화 List<String> keyList = new
-	 * ArrayList<>(checklistMap.keySet()); List<String> valueList = new
-	 * ArrayList<String>(checklistMap.values());
-	 * 
-	 * for (int i = 0; i < keyList.size(); i++) { String key = keyList.get(i);
-	 * String value = valueList.get(i);
-	 * 
-	 * // 해당 smcNo의 엔티티를 찾아서 업데이트 filteredChecklists.stream().filter(checklist ->
-	 * Integer.toString(checklist.getSmcNo()).equals(key)) .forEach(checklist -> {
-	 * checklist.setSmcList(value); //log.info("서비스 단 : 수정된 checklist {} ",
-	 * checklist); });
-	 * 
-	 * } //log.info("서비스 단 : 수정된 filteredChecklists {} ", filteredChecklists);
-	 * 
-	 * for (SafetyManagementDTO checklistDTO : filteredChecklists) {
-	 * safetyManagementRepository .updateSmcList(checklistDTO.getSmcNo(),
-	 * checklistDTO.getSmlNo(), checklistDTO.getSmcFloor(),
-	 * checklistDTO.getSmcList() ); } }
-	 */
-
-// 등록 수정 삭제 시 @Transactional 설정 필요
+	        // 엔티티 저장
+	        safetyManagementRepository.save(entity);
+	    } else {
+	        throw new IllegalArgumentException("해당 시설을 찾을 수 없습니다.");
+	    }
+	}
 }

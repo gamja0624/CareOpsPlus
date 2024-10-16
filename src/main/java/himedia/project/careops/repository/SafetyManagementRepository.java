@@ -4,6 +4,7 @@ package himedia.project.careops.repository;
  * @author 이홍준
  * @editDate 2024-10-15 
  */
+
 import java.util.List;
 
 /**
@@ -21,5 +22,10 @@ import himedia.project.careops.entity.SafetyManagement;
 public interface SafetyManagementRepository extends JpaRepository<SafetyManagement, Integer> {
 
 	List<SafetyManagement> findBySmListAndSmFacilityFloor(String smList, int smFacilityFloor);
+
+	SafetyManagement findBySmListAndSmFacilityNoAndSmFacilityFloor(String smList, int smFacilityNo,
+			int smFacilityFloor);
+
+	void save(SafetyManagementDTO dto);
 	
 }
