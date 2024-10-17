@@ -7,6 +7,9 @@ package himedia.project.careops.controller;
 
 import java.util.Map;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,13 +19,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import himedia.project.careops.dto.AdminDTO;
 import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.service.MyPageService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 //마이페이지 관련 요청을 처리하는 컨트롤러 클래스
 @Controller
 public class MyPageController {
 
 	private final MyPageService myPageService;
+    private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 
 	// MyPageController 생성자
 	@Autowired
@@ -87,72 +93,79 @@ public class MyPageController {
 		return "common/mypage/mypage-edit";
 	}
 
-	// 사용자 정보를 업데이트하는 메서드
-	@PostMapping("/{userType}/update-info")
-	public String updateUserInfo(@PathVariable("userType") String userType, @RequestParam("id") String id,
-			@RequestParam("name") String name, @RequestParam("phoneNumber") String phoneNumber,
-			RedirectAttributes redirectAttributes) {
-		try {
-			boolean updated = false;
-			// 사용자 유형에 따라 관리자 또는 매니저 정보 업데이트
-			if ("admin".equals(userType)) {
-				AdminDTO adminDTO = new AdminDTO();
-				adminDTO.setAdminId(id);
-				adminDTO.setAdminName(name);
-				adminDTO.setAdminPhoneNumber(phoneNumber);
-				updated = myPageService.updateAdminInfo(adminDTO);
-			} else if ("manager".equals(userType)) {
-				ManagerDTO managerDTO = new ManagerDTO();
-				managerDTO.setManagerId(id);
-				managerDTO.setManagerName(name);
-				managerDTO.setManagerPhoneNumber(phoneNumber);
-				updated = myPageService.updateManagerInfo(managerDTO);
+		// 사용자 정보를 업데이트하는 메서드
+		@PostMapping("/{userType}/update-info")
+		public String updateUserInfo(@PathVariable("userType") String userType, @RequestParam("id") String id,
+				@RequestParam("name") String name, @RequestParam("phoneNumber") String phoneNumber,
+				RedirectAttributes redirectAttributes) {
+			try {
+				boolean updated = false;
+				// 사용자 유형에 따라 관리자 또는 매니저 정보 업데이트
+				if ("admin".equals(userType)) {
+					AdminDTO adminDTO = new AdminDTO();
+					adminDTO.setAdminId(id);
+					adminDTO.setAdminName(name);
+					adminDTO.setAdminPhoneNumber(phoneNumber);
+					updated = myPageService.updateAdminInfo(adminDTO);
+				} else if ("manager".equals(userType)) {
+					ManagerDTO managerDTO = new ManagerDTO();
+					managerDTO.setManagerId(id);
+					managerDTO.setManagerName(name);
+					managerDTO.setManagerPhoneNumber(phoneNumber);
+					updated = myPageService.updateManagerInfo(managerDTO);
+				}
+				// 업데이트 결과에 따라 메시지 설정
+				if (updated) {
+					redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 수정되었습니다.");
+				} else {
+					redirectAttributes.addFlashAttribute("error", "회원 정보 수정에 실패했습니다.");
+				}
+			} catch (Exception e) {
+				redirectAttributes.addFlashAttribute("error", "회원 정보 수정 중 오류가 발생했습니다.");
 			}
-			// 업데이트 결과에 따라 메시지 설정
-			if (updated) {
-				redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 수정되었습니다.");
-			} else {
-				redirectAttributes.addFlashAttribute("error", "회원 정보 수정에 실패했습니다.");
-			}
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("error", "회원 정보 수정 중 오류가 발생했습니다.");
+	
+			return "redirect:/" + userType + "/mypage";
 		}
-
-		return "redirect:/" + userType + "/mypage";
-	}
 
 	// 비밀번호 변경 폼을 표시하는 메서드
 	@GetMapping("/{userType}/mypage-change-pw")
 	public String showChangePasswordForm(@PathVariable("userType") String userType, Model model, HttpSession session) {
-		String userId = (String) session.getAttribute("userId");
+	    String userId = (String) session.getAttribute("userId");
 
 		// 세션 정보가 없는 경우 로그인 페이지로 리다이렉트
-		if (userId == null) {
-			return "redirect:/login";
-		}
+	    if (userId == null) {
+	        return "redirect:/login";
+	    }
 
 		// 사용자의 현재 비밀번호 조회
-		String currentPassword;
-		if ("admin".equals(userType)) {
-			currentPassword = myPageService.getAdminPassword(userId);
-		} else if ("manager".equals(userType)) {
-			currentPassword = myPageService.getManagerPassword(userId);
-		} else {
-			throw new IllegalArgumentException("유효하지 않은 사용자 유형입니다: " + userType);
-		}
+	    try {
+	        String currentPassword;
+	        if ("admin".equals(userType)) {
+	            currentPassword = myPageService.getAdminPassword(userId);
+	        } else if ("manager".equals(userType)) {
+	            currentPassword = myPageService.getManagerPassword(userId);
+	        } else {
+	            throw new IllegalArgumentException("유효하지 않은 사용자 유형입니다: " + userType);
+	        }
 
-		// 비밀번호 유효성 검증
-		if (currentPassword == null || !myPageService.isValidPassword(currentPassword)) {
-			model.addAttribute("error", "현재 비밀번호가 유효하지 않습니다.");
-			return "common/mypage/mypage-change-pw";
-		}
+			// 비밀번호 유효성 검증
+	        if (currentPassword == null) {
+	            model.addAttribute("error", "현재 비밀번호가 유효하지 않습니다.");
+	            return "common/mypage/mypage-change-pw";
+	        }
 
-		// 모델에 필요한 정보 추가
-		model.addAttribute("userId", userId);
-		model.addAttribute("userType", userType);
-		model.addAttribute("currentPassword", currentPassword);
+			// 모델에 필요한 정보 추가
+	        model.addAttribute("userId", userId);
+	        model.addAttribute("userType", userType);
+	        model.addAttribute("currentPassword", currentPassword);
 
-		return "common/mypage/mypage-change-pw";
+	    } catch (EntityNotFoundException e) {
+	        model.addAttribute("error", e.getMessage());
+	    } catch (IllegalArgumentException e) {
+	        model.addAttribute("error", e.getMessage());
+	    }
+
+	    return "common/mypage/mypage-change-pw";
 	}
 
 	// 비밀번호 변경 요청을 처리하는 메서드
