@@ -10,8 +10,8 @@
 		
 		<style type="text/css">
           /* 페이지 레이아웃 */
-          .layout-table { margin-bottom: 10px; height: 800px; text-align: center; }
-          .inner-layout-table { padding-top: 20px; height: 600px; }
+          .layout-table { margin-bottom: 10px; height: 810px; text-align: center; }
+          .inner-layout-table { padding-top: 20px; height: 625px; }
           /* 목록 테이블 */
           .table { margin: 0 auto; width: 800px;  text-align: center; vertical-align: inherit; }
           .table-head { font-weight: 600; font-size: 20px; }
@@ -29,16 +29,17 @@
           /* 검색박스 라인 */
           .page { width: 800px; margin: 10px auto; }
           .down-side {display: flex; align-items: center; width: 800px; margin: 0 auto;}
-          .down-left-side {margin-right: auto;}
+          .down-left-side {margin: 0 auto;}
           .category-search-box { margin: 20px auto; }
           .manager-searchbox { margin-left: auto; }
+          #filter {width: 100px;}
           
           /* 버튼 라인 */
           .btn { background-color: #13254C; color: white; }
           .btn:hover { border: 1px solid #13254C; }
 		</style>
 	</head>
-
+  
 	<body>
 		<!-- 사이드바 -->
 		<th:block th:replace="~{/common/side-bar}"></th:block>
@@ -63,22 +64,19 @@
       				      <th scope="col"  th:if="${session.userType == 'admin' and (session.department == '안전 관리팀' or session.department == '의료기기 관리팀')}">상태</th>
       				    </tr>
       				  </thead>
-                          <tbody>
-                            
-                            <tr class="table-row data-row" th:if="${! reportAllList.isEmpty()}" th:each="drl : ${reportAllList}" >
-                              <td th:text="${drl.dmrNo}" > </td>
-                              <td th:text="${drl.adminDeptName}" ></td>
-                              <td th:text="${drl.adminName}" ></td>
-                              <td th:text="${drl.dmrDate}" ></td>
-                                <td><a th:if="${session.userType != null}" th:href="@{../daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>  
-                              <td><button th:onclick="|location.href='@{../daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit"  th:if="${session.userType} == 'admin' and ${session.department} == ${drl.adminDeptName}" >수 정</button></td>
-                            </tr>
-                            <tr class="table-row data-row empty-row" th:unless="${! reportAllList.isEmpty()}" >
-                              <td th:attr="colspan=${session.userType == 'admin' ? '6' : '5'}">
-                                  결과 없음
-                              </td>
-                            </tr>
-                          </tbody>
+                      <tbody>
+                        <tr class="table-row data-row" th:if="${! reportAllList.isEmpty()}" th:each="drl : ${reportAllList}" >
+                          <td th:text="${drl.dmrNo}" > </td>
+                          <td th:text="${drl.adminDeptName}" ></td>
+                          <td th:text="${drl.adminName}" ></td>
+                          <td th:text="${drl.dmrDate}" ></td>
+                          <td><a th:if="${session.userType != null}" th:href="@{../daily-report-detail/{dmrNo}(dmrNo = ${drl.dmrNo})}" class="detail-a" ><img class="detail-icon" alt="상세보기" th:src="@{/img/detail-icon.png}"></a></td>  
+                          <td><button th:onclick="|location.href='@{../daily-report-edit/{dmrNo}(dmrNo = ${drl.dmrNo})}'|" class="btn btn-edit"  th:if="${session.userType} == 'admin' and ${session.department} == ${drl.adminDeptName}" >수 정</button></td>
+                        </tr>
+                        <tr class="table-row data-row empty-row" th:unless="${! reportAllList.isEmpty()}" >
+                          <td th:attr="colspan=${session.userType == 'admin' ? '6' : '5'}">결과 없음</td>
+                        </tr>
+                      </tbody>
       				</table>
                     </div>
                     <!-- 페이지 네이션 -->
@@ -139,7 +137,7 @@
                     <div class="down-right-side">
                       <div class="btn-line"  >
                         <div class="btn-regist">
-                            <button class="btn btn-regist" th:if="${session.userType == 'admin'}"  th:onclick="|location.href='@{../daily-report-regist}'|"  type="submit" >보고서 등록</button>
+                          <button class="btn btn-regist" th:onclick="|location.href='@{../daily-report-list}'|"  type="reset" >목 록</button>
                         </div>
                       </div>
                     </div>

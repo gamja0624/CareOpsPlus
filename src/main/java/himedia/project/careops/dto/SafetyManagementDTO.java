@@ -2,7 +2,7 @@ package himedia.project.careops.dto;
 
 /**
  * @author 이홍준 
- * @editDate 2024-09-24
+ * @editDate 2024-09-24 ~ 2024-10-15
  */
 
 import java.sql.Date;
@@ -16,17 +16,17 @@ import lombok.ToString;
 @ToString
 public class SafetyManagementDTO {
 	
-	private Integer smNo;
-	private int smFacilityNo;
-	private String smAdminId;
-	private String smAdminDeptNo;
-	private String smAdminDeptName;
-	private String smAdminName;
-	private String smList;
-	private int smFacilityFloor;
-	private String smFacilityName;
-	private boolean smStatus;
-	private Date smDate;
+	private Integer smNo;				// 점검 번호
+	private int smFacilityNo;			// 시설 번호
+	private String smAdminId;			// 관리자 아이디
+	private String smAdminDeptNo;		// 관리자 부서번호
+	private String smAdminDeptName;		// 관리자 부서 이름
+	private String smAdminName;			// 관리자 이름
+	private String smList;				// 점검 항목
+	private int smFacilityFloor;		// 시설물 층
+	private String smFacilityName;		// 시설물 이름
+	private boolean smStatus;			// 관리 상태
+	private Date smDate;				// 수정 날짜
 	
 	public SafetyManagementDTO() {}
 	

@@ -10,8 +10,8 @@
 		
 		<style type="text/css">
           /* 페이지 레이아웃 */
-          .layout-table { margin-bottom: 10px; height: 800px; text-align: center; }
-          .inner-layout-table { padding-top: 20px; }
+          .layout-table { margin-bottom: 10px; height: 810px; text-align: center; }
+          .inner-layout-table { padding-top: 20px; height: 625px; }
           
           /* 목록 테이블 */
           .table { margin: 0 auto; width: 800px;  text-align: center; vertical-align: inherit; }
@@ -19,7 +19,6 @@
           .table-row { line-height: 35px; border-bottom: 1px solid #d9d9d9;  }
           .detail-a { cursor: pointer; }
           .detail-icon { width: 30px; line-height: 30px; vertical-align: middle; }
-          .inner-layout-table { height: 600px; }
           .empty-row { font-size: 25px; font-weight: 600; }
           
           /* 페이지네이션 */
@@ -29,16 +28,17 @@
           .pagination a:hover:not(.active) { background-color: #ddd; }
           
           /* 검색바 라인 */
+          .down-side {display: flex; align-items: center; width: 800px; margin: 0 auto;}
           .category-search-box { margin: 20px auto; }
+          #filter {width: 100px;}
           
           /* 버튼 라인 */
           .btn-line { text-align: center; }
-          .btn-regist { margin-top: 5px; }
           .btn { background-color: #13254C; color: white; }
           .btn:hover { border: 1px solid #13254C; }
 		</style>
 	</head>
-
+  
 	<body>
 		<!-- 사이드바 -->
 		<th:block th:replace="~{/common/side-bar}"></th:block>
@@ -80,44 +80,45 @@
                     </tbody>
                 </table>
               </div>
-                        <!-- 페이지 네이션 -->
+              <!-- 페이지 네이션 -->
               <div class="page" > 
-                    <nav aria-label="Page navigation">
-                      <ul class="pagination">
-                        <!-- 맨 앞으로 이동 -->
-                        <li class="page-item">
-                          <a class="page-link " th:href="@{./search(filter=${filter}, value=${value}, page=1)}" aria-label="Previous">
-                            <span aria-hidden="true">&#171;</span>
-                          </a>
-                        </li>
-                        
-                        <!-- 이전 페이지 이동 -->
-                        <li class="page-item">
-                         <a class="page-link"  th:href="@{./search(filter=${filter}, value=${value}, page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
-                        </li>
-                        
-                        <!-- 숫자 -->
-                        <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}" >
-                          <li class="page-item">
-                            <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${page})}"
-                                th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''" ></a>
-                          </li>
-                        </th:block>
-                        
-                        <!-- 다음 페이지 이동 -->
-                        <li class="page-item" >
-                           <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}" >&#62;</a> 
-                        </li>
-                        
-                        <!-- 맨 끝으로 이동 -->
-                        <li class="page-item">
-                          <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${totalPages})}" aria-label="Next">
-                            <span aria-hidden="true">&#187;</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <!-- 맨 앞으로 이동 -->
+                    <li class="page-item">
+                      <a class="page-link " th:href="@{./search(filter=${filter}, value=${value}, page=1)}" aria-label="Previous">
+                        <span aria-hidden="true">&#171;</span>
+                      </a>
+                    </li>
+                    
+                    <!-- 이전 페이지 이동 -->
+                    <li class="page-item">
+                     <a class="page-link"  th:href="@{./search(filter=${filter}, value=${value}, page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
+                    </li>
+                    
+                    <!-- 숫자 -->
+                    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}" >
+                      <li class="page-item">
+                        <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${page})}"
+                            th:text="${ page }" th:classappend="${paging.currentPage eq page} ? 'disabled' : ''" ></a>
+                      </li>
+                    </th:block>
+                    
+                    <!-- 다음 페이지 이동 -->
+                    <li class="page-item" >
+                       <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}" >&#62;</a> 
+                    </li>
+                    
+                    <!-- 맨 끝으로 이동 -->
+                    <li class="page-item">
+                      <a class="page-link" th:href="@{./search(filter=${filter}, value=${value}, page=${totalPages})}" aria-label="Next">
+                        <span aria-hidden="true">&#187;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="down-side">
                 <div class="search-box">
                   <form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/my-report/search' }" method="get">
                     <label class="report-category" for="column"></label> 
@@ -129,8 +130,14 @@
                     <input class="input" type="submit" id="search-submit" value="검색">
                   </form>
                 </div>
-              </div>
- 			</div> 
+                <div class="btn-line"  >
+                  <div class="btn-regist">
+                    <button class="btn btn-regist" th:onclick="|location.href='@{../my-report}'|"  type="reset" >목 록</button>
+                  </div>
+                </div>
+            </div>
+            </div>
+		  </div> 
 		</div>
 		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 	</body>

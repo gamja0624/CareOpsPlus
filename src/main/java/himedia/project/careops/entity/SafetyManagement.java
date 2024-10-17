@@ -2,7 +2,7 @@ package himedia.project.careops.entity;
 
 /**
  * @author 이홍준 
- * @editDate 2024-09-24
+ * @editDate 2024-09-24 ~ 2024-10-15
  */
 
 import java.sql.Date;
@@ -11,10 +11,7 @@ import java.sql.Date;
  * @editDate 2024-09-24
  */
 
-import org.hibernate.annotations.ColumnDefault;
-
 import jakarta.persistence.Column;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
