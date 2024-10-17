@@ -1,17 +1,13 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url:  jdbc:mysql://careops.ch4imym4yfn4.ap-northeast-2.rds.amazonaws.com:3306/CareOps_DataBase
+    url:  jdbc:mysql://careops.ch4imym4yfn4.ap-northeast-2.rds.amazonaws.com:3306/CareOps_DataBase?useUnicode=true&characterEncoding=UTF-8
     username: CareOpsAdmin
     password: PKgXGz1kVRM0atcQnfS8
 
   thymeleaf:
     cache: false
 
-#  autoconfigure:
-#    exclude:
-#      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-  
 
   # spring data jpa 설정
   jpa:

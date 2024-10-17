@@ -36,7 +36,7 @@
 				/* display: inline-block; */
 		 	}
  		 	.box-text { font-size: 20px; color: white; }
-		 	.box-sub { display:flex; font-size: 35px; font-weight: 900; }
+		 	.box-sub { display:flex; font-size: 30px; font-weight: 900; }
 		 	
 		 	/* 의료기기 상태 현황 */
 		 	.medical-table { padding: 20px; margin-top: 70px; width: 700px; height: 515px; border: 3px solid #13254C; border-radius: 10px; }
@@ -119,18 +119,14 @@
 					<!-- 민원 -->
 					<div class="box box-text">
 						<p>마이 페이지</p>
-						<a th:href="@{/mypage}" class="box-text box-sub">이동
-							<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-						</a>
+						<a th:href="@{ '/manager/mypage' }" class="box-text box-sub">이동 &rarr;</a>
 					</div>
 					
 					<!-- 민원 -->
 					<div class="box box-text">
 						<p>부서 민원 보러가기</p>
 						<div class="box-flex">
-							<a th:href="@{/manager/claim-list}" class="box-text box-sub" th:text="'총 ' + ${ claimCnt } + '건'">
-								<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-							</a>
+							<a th:href="@{/manager/claim-list}" class="box-text box-sub" th:text="'총 ' + ${ claimCnt } + '건 &rarr;'"></a>
 						</div>
 					</div>
 					
@@ -138,20 +134,16 @@
 					<div class="box box-text">
 						<p>부서 담당 의료기기</p>
 						<div class="box-flex">
-							<a th:href="@{ './medical-list/search?filter=lmdManagerDeptPart&value=' + ${ session.department } }"
-								 class="box-text box-sub" th:text="'총 ' + ${ medicalCnt } + '개'">
-								<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-							 </a>
+							<a th:href="@{ './medical-list/' + ${ session.department } }"
+								 class="box-text box-sub" th:text="'총 ' + ${ medicalCnt } + '개 &rarr;'"></a>
 						</div>
 					</div>
 					
 					<!-- 예약 시설물 -->
 					<div class="box box-text">
-						<p>시설물 예약 관리</p>
+						<p>시설 예약 목록</p>
 						<div class="box-flex">
-							<a th:href="@{./facility-dept-list}" class="box-text box-sub">이동
-								<img alt="이동" th:src="@{/img/icon-next-w.png}" class="icon-next">
-							</a>
+							<a th:href="@{./facility-dept-list}" class="box-text box-sub">이동 &rarr;</a>
 						</div>
 					</div>
 				</div>
@@ -189,7 +181,7 @@
 				<div class="claim">
 					<th:block th:if="${ claimList != null && !claimList.isEmpty() }">
 						<div class="claim-add">
-							<a th:href="@{'/' + ${session.userType} + '/claim-list'}" class="claim-add-next">더보기</a>
+							<a th:href="@{'/' + ${session.userType} + '/claim-list'}" class="claim-add-next">더보기 &rarr;</a>
 						</div>
 						<th:block th:if="${ claimList.size() > 3 }">
 				 			<div class="claim-content" th:each="claim : ${ claimList.subList(0, 3) }">
@@ -263,11 +255,11 @@
 	          data: ['[[${MedicalStatus.normal}]]', '[[${MedicalStatus.check}]]', 
 	        	  '[[${MedicalStatus.repair}]]', '[[${MedicalStatus.old}]]', '[[${MedicalStatus.expire}]]'],
 	          backgroundColor: [
-	            'rgba(0, 204, 0, 0.5)',    // 정상
-	            'rgba(255, 159, 64, 0.5)', // 점검
-	            'rgba(54, 162, 235, 0.5)', // 수리
-	            'rgba(255, 206, 86, 0.5)', // 노후
-	            'rgba(255, 99, 132, 0.5)'  // 만료
+	            'rgba(0, 204, 0, 0.7)',    // 정상
+	            'rgba(255, 159, 64, 0.7)', // 점검
+	            'rgba(54, 162, 235, 0.7)', // 수리
+	            'rgba(255, 206, 86, 0.7)', // 노후
+	            'rgba(255, 99, 132, 0.7)'  // 만료
 	          ],
 	          borderColor: [
 	            'rgba(0, 204, 0, 1)',    // 정상

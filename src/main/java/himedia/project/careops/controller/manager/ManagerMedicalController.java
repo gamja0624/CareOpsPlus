@@ -25,12 +25,9 @@ import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.AdminDTO;
 import himedia.project.careops.dto.ListMedicalDevicesDTO;
-import himedia.project.careops.dto.ManagerDepartmentDTO;
 import himedia.project.careops.entity.ListMedicalDevices;
 import himedia.project.careops.entity.Manager;
 import himedia.project.careops.service.AdminService;
-import himedia.project.careops.service.ManagerDepartmentService;
-import himedia.project.careops.service.ManagerService;
 import himedia.project.careops.service.MedicalService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,16 +38,10 @@ public class ManagerMedicalController {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	private final MedicalService medicalService;
-	private final ManagerService managerService;
-	private final ManagerDepartmentService managerDepartmentService;
 	private final AdminService adminService;
 	
-	public ManagerMedicalController(MedicalService medicalService, 
-			ManagerService managerService, ManagerDepartmentService managerDepartmentService,
-			AdminService adminService) {
+	public ManagerMedicalController(MedicalService medicalService, AdminService adminService) {
 		this.medicalService = medicalService;
-		this.managerService = managerService;
-		this.managerDepartmentService = managerDepartmentService;
 		this.adminService = adminService;
 	}
 
@@ -69,6 +60,21 @@ public class ManagerMedicalController {
 		model.addAttribute("totalPages", totalPages);					
 		
 		return "manager/medical/medical-list";
+	}
+	
+	// [부서 목록 조회] ======================================================================================
+	@GetMapping("/medical-list/{department}")
+	public String deptList(@PathVariable String department, Model model) {
+		
+		// filter & value
+		String filter = "lmdManagerDeptPart";
+		
+		List<ListMedicalDevices> medicalDevicesList = medicalService.findFilterMedicalDevices(filter, department);
+		model.addAttribute("medicalDevicesList", medicalDevicesList);
+		model.addAttribute("filter", filter);
+		model.addAttribute("value", department);
+		
+		return "manager/medical/medical-dept-list";
 	}
 	
 	// [검색 조회] ======================================================================================
@@ -100,6 +106,16 @@ public class ManagerMedicalController {
 	}
 	
 	// [등록] ==========================================================================================
+	@GetMapping("/medical-add/getLmdMinorCateCode")
+	@ResponseBody
+	// 장비세분류명 중복 체크
+	public List<ListMedicalDevices> getManagersByDeptName(@RequestParam String lmdMinorCateCode) {
+		
+		String filter = "lmdMinorCateCode";
+		
+	    return medicalService.findFilterMedicalDevices(filter, lmdMinorCateCode);
+	}
+	
 	@GetMapping("/medical-add")
 	public String medicalAddPage(Model model) {
 		
