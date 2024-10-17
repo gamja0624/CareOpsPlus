@@ -23,7 +23,6 @@
 			.btn-css { width: 80px; border-radius: 50px; }
 			.btn-add { margin-left: auto; background-color: #13254C; color: white; }
 			.btn-add:hover { border: 1px solid #13254C; }
-			
 		</style>
 	</head>
 
@@ -36,7 +35,7 @@
 			<!-- 서비스 미리보기 -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title">의료관리 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">
+				<h1 class="title">의료기기 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">
 					<th:block th:text="${ session.department + ' : 총 ' + medicalDevicesList.size() } + '개' "></th:block>
 				</h1>
 				

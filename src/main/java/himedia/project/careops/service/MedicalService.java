@@ -22,7 +22,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ListMedicalDevicesDTO;
+import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.entity.ListMedicalDevices;
+import himedia.project.careops.entity.Manager;
 import himedia.project.careops.repository.MedicalRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +53,15 @@ public class MedicalService {
 				.map(medical -> modelMapper.map(medical, ListMedicalDevicesDTO.class));
 	}
 	
+	// [모든 의료기기 리스트로 반환]
+	public List<ListMedicalDevicesDTO> findAllmedicalList() {
+		
+		List<ListMedicalDevices> medicalInfo = medicalRepository.findAll();
+		return medicalInfo.stream()
+				.map(medical -> modelMapper.map(medical, ListMedicalDevicesDTO.class))
+				.collect(Collectors.toList());
+	}
+	
 	// [검색 필터]
 	public List<ListMedicalDevices> findFilterMedicalDevices(String filter, String value) {
         if (value == null || value.isEmpty()) {
@@ -65,6 +76,9 @@ public class MedicalService {
 
     private boolean filterMatches(ListMedicalDevices m, String filter, String value) {
         switch (filter) {
+        	// 장비세분류코드
+        	case "lmdMinorCateCode":
+        		return m.getLmdMinorCateCode().equals(value);
         	// 장비대분류명
             case "lmdMajorCateName":
                 return m.getLmdMajorCateName().contains(value);

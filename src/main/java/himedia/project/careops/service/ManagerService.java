@@ -31,26 +31,13 @@ public class ManagerService {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	private final ManagerDepartmentRepository managerDepartmentRepository;
 	private final ManagerRepository managerRepository;
 	private final ModelMapper modelMapper;
 	
-	public ManagerService(
-			ManagerDepartmentRepository managerDepartmentRepository, ManagerRepository managerRepository, 
+	public ManagerService(ManagerRepository managerRepository, 
 			ModelMapper modelMapper) {
 		this.managerRepository = managerRepository; 
-		this.managerDepartmentRepository = managerDepartmentRepository;
 		this.modelMapper = modelMapper;
-	}
-	
-	// 작성자 : 진혜정
-	// 전체 매니저 정보 리스트로 반환
-	public List<ManagerDTO> findAllManagerList() {
-		
-		List<Manager> managerInfo = managerRepository.findAll();
-		return managerInfo.stream()
-				.map(manager -> modelMapper.map(manager, ManagerDTO.class))
-				.collect(Collectors.toList());
 	}
 	
 	// 작성자 : 진혜정
