@@ -39,7 +39,7 @@
 			<div class="section">
 				<!-- 제목 -->
 				<h1 class="title">일일 관리 보고서 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 수정</h1>
-                <form th:action="@{/admin/daily-report-detail/{dmrNo}(dmrNo = ${result.dmrNo}) }" method="post">
+                <form th:action="@{/admin/daily-report-detail/{dmrNo}(dmrNo = ${result.dmrNo}) }" name="reportform" method="post" onsubmit="return noSpaceForm(document.getElementById('textarea'))" >
     				<div class="layout-table">
                       <div class="detail-report">
                           <div class="intitle" >일일 관리 보고서</div>
@@ -62,7 +62,7 @@
                           </div>
                           <div>
                             <label class="detail report-detail" for="dmrReportDetail" >내용</label>
-                            <textarea class="report-detail-detail" name="dmrReportDetail" th:text="${result.dmrReportDetail}" ></textarea> 
+                            <textarea id="textarea" class="report-detail-detail" name="dmrReportDetail" th:text="${result.dmrReportDetail}" required="required"></textarea> 
                           </div>
                           <div>
                             <label class="detail report-issue"  for="dmrIssue" >특이사항</label>
@@ -76,13 +76,23 @@
                         <button th:onclick="|location.href='@{../daily-report-list}'|"  class="btn" type="reset">뒤로 가기</button>
                       </div>
                       <div class="btn-edit">
-                          <button class="btn btn-edit-comple" type="submit" >수정 완료</button>
+                          <button class="btn btn-edit-comple" onclick="chkValue()" type="submit" >수정 완료</button>
                       </div>
                     </div>
                 </form>
 			</div>
 		</div>
-		
+		<script>
+          function noSpaceForm(obj) {
+              if (obj.value.trim() === "") {
+            	  obj.value = ""; // 입력 내용을 비움
+                  obj.focus(); // 입력창으로 다시 포커스 이동
+                  obj.reportValidity(); // 유효성 검사 다시 실행
+                  return false; // 제출 방지
+              }
+              return true; // 정상 입력일 때만 제출
+          }
+		</script>
 		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 	</body>
 </html>
