@@ -117,7 +117,10 @@
 							<div class="data-t-2">
 								<div class="data">
 									<p class="data-title">장비세분류코드</p>
-									<input type="text" name="lmdMinorCateCode" class="data-input-b" oninput="checkFields()">
+									<div>
+										<input type="text" id="minor-cate-code" name="lmdMinorCateCode" class="data-input-b" oninput="checkMinorCateCode(); checkFields();">
+										<p id="messageContainer" style="color: red; margin-bottom: -18.75px;"></p>
+									</div>
 								</div>
 								<div class="data">
 									<p class="data-title">장비수</p>
@@ -145,28 +148,62 @@
 		<script type="text/javascript">
 			// 오늘 날짜로 기본값 설정
 			document.getElementById('current-date').value = new Date().toISOString().substring(0, 10);
-		
-			// 모든 필드 체크 함수
-      function checkFields() {
-	      const majorCateName = document.querySelector('input[name="lmdMajorCateName"]').value;
-	      const minorCateName = document.querySelector('input[name="lmdMinorCateName"]').value;
-	      const lmdDate = document.querySelector('input[name="lmdDate"]').value;
-	      
-	      const majorCateCode = document.querySelector('input[name="lmdMajorCateCode"]').value;
-	      const licenseNumber = document.querySelector('input[name="lmdLicenseNumber"]').value;
-	      
-	      const minorCateCode = document.querySelector('input[name="lmdMinorCateCode"]').value;
-	      const deviceCount = document.querySelector('input[name="lmdDeviceCnt"]').value;
-	
-	      const submitButton = document.getElementById('submit-button');
-	
-	      // 모든 필드가 채워졌는지 확인
-	      if (majorCateName && minorCateName && lmdDate && majorCateCode && licenseNumber && minorCateCode && deviceCount) {
-	          submitButton.disabled = false; // 버튼 활성화
-	      } else {
-	          submitButton.disabled = true;  // 버튼 비활성화
-	      }
-      }
+			
+			function checkMinorCateCode() {
+		    const minorCateCodeInput = document.querySelector('input[name="lmdMinorCateCode"]');
+		    const messageContainer = document.getElementById('messageContainer');
+
+		    // 입력값이 비어있으면 메시지 초기화
+		    if (! minorCateCodeInput.value) {
+		        messageContainer.textContent = '';
+		        checkFields(); // 필드 체크 함수 호출
+		        return;
+		    }
+		    
+		    // 서버에 중복 체크 요청
+		    fetch('./medical-add/getLmdMinorCateCode?lmdMinorCateCode=' + encodeURIComponent(minorCateCodeInput.value))
+	        .then(response => response.json())
+	        .then(data => {
+	            // 결과가 있으면 메시지 표시
+	            if (data.length > 0) {
+	                messageContainer.textContent = '현재 등록된 의료기기입니다.';
+	            } else {
+	                messageContainer.textContent = ''; // 중복이 없으면 메시지 초기화
+	            }
+	            checkFields(); // 필드 체크 함수 호출
+	        })
+	        .catch(error => {
+	            console.error('Error fetching data:', error);
+	            messageContainer.textContent = '오류가 발생했습니다.';
+	            checkFields(); // 필드 체크 함수 호출
+	        });
+			}
+
+			function checkFields() {
+		    const majorCateName = document.querySelector('input[name="lmdMajorCateName"]').value;
+		    const minorCateName = document.querySelector('input[name="lmdMinorCateName"]').value;
+		    const lmdDate = document.querySelector('input[name="lmdDate"]').value;
+		    
+		    const majorCateCode = document.querySelector('input[name="lmdMajorCateCode"]').value;
+		    const licenseNumber = document.querySelector('input[name="lmdLicenseNumber"]').value;
+		    
+		    const minorCateCode = document.querySelector('input[name="lmdMinorCateCode"]').value;
+		    const deviceCount = document.querySelector('input[name="lmdDeviceCnt"]').value;
+		    
+		    const submitButton = document.getElementById('submit-button');
+		    const messageContainer = document.getElementById('messageContainer').textContent;
+
+		    // 모든 필드가 채워졌는지 확인
+		    const allFieldsFilled = majorCateName && minorCateName && lmdDate && majorCateCode && licenseNumber && minorCateCode && deviceCount;
+
+		    // messageContainer에 값이 있을 경우 버튼 비활성화
+		    if (messageContainer) {
+		        submitButton.disabled = true; // 메시지가 있을 때 비활성화
+		    } else {
+		        submitButton.disabled = !allFieldsFilled; // 모든 필드가 채워졌을 때 활성화
+		    }
+			}
+
 		</script>
 	</body>
 </html>

@@ -55,7 +55,6 @@ public class AdminAccountController {
 		Page<ManagerDTO> manager = managerService.allManager(page);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(manager);
 		
-		
 		model.addAttribute("manager", manager);
 		model.addAttribute("paging", paging);
 		
@@ -101,7 +100,6 @@ public class AdminAccountController {
 		redirectAttributes.addFlashAttribute("managerDeptName", managerDeptName);
 		redirectAttributes.addFlashAttribute("managerName", managerName);
 		redirectAttributes.addFlashAttribute("managerPhoneNumber", managerPhoneNumber);
-	    log.info("부서이름 저장됨 ?: {}", managerDeptName);   
 		
 		return "redirect:/admin/account-add";
 	}

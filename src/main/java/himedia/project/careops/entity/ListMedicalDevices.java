@@ -245,7 +245,7 @@ public class ListMedicalDevices {
 		return "ListMedicalDevices : [ " +
 		// 장비세분류코드, 장비세분류명, 장비대문류코드, 장비대분류명
 		"lmdMinorCateCode= " + lmdMinorCateCode + ", " + "lmdMinorCateName= " + lmdMinorCateName + ", "
-		+ "lmdMajorCateCode= " + lmdMajorCateCode + ", " + "lmdDevicesName= " + lmdDevicesName + ", \n" +
+		+ "lmdMajorCateCode= " + lmdMajorCateCode + ", " + "lmdMajorCateName= " + lmdMajorCateName + ", \n" +
 
 		// 모델명, 장비허가번호, 장비수, 상태
 		"lmdDevicesName= " + lmdDevicesName + ", " + "lmdLicenseNumber= " + lmdLicenseNumber + ", "

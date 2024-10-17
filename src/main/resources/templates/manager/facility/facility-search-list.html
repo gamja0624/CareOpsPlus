@@ -9,6 +9,7 @@
 		
 		<style type="text/css">
 			/* 테이블 */
+			.table-css { height: 660px; margin-bottom: 20px; }
 			.table { text-align: center; vertical-align: inherit; }
 			.table-row { line-height: 40px; }
 			.table-head { font-size: 20px; font-weight: 600; }
@@ -24,6 +25,8 @@
 			.btn-add { margin-left: auto; background-color: #13254C; color: white; }
 			.btn-add:hover { border: 1px solid #13254C; }
 			
+			/* 검색바 */
+			.filter { width: 100px; }
 		</style>
 	</head>
 
@@ -40,61 +43,62 @@
 					<th:block th:text="${ '총 ' + facilityList.size() } + '개'"></th:block>
 				</h1>
 				
-				<table class="table table-hover">
-				  <thead class="table-group">
-				    <tr class="table-row table-head">
-				      <th scope="col">시설 번호</th>
-				      <th scope="col">층 F</th>
-				      <th scope="col">시설 이름</th>
-				      <th scope="col">예약 부서</th>
-				      <th scope="col">부서 담당자</th>
-				      <th scope="col">예약 날짜</th>
-				      <th scope="col">예약 상태</th>
-				    </tr>
-				  </thead>
-				  <tbody class="table-group-se">
-				  	<tr th:each="facility : ${ facilityList }" th:if="${ ! facilityList.isEmpty() }" class="table-row">
-				    	<!-- 시설 번호 -->
-				    	<td th:text="${ facility.facilityNo }"></td>
-				      
-				      <!-- 층 -->
-				      <td th:text="${ facility.facilityFloor }"></td>
-				      
-				      <!-- 시설 이름 -->
-				      <td th:text="${ facility.facilityName }"></td>
-				      
-				      <!-- 예약 부서 -->
-				      <td th:text="${ facility.facilityManagerDeptName == null ? '-' : facility.facilityManagerDeptName }"></td>
-				      
-				      <!-- 부서 담당자 -->
-				      <td th:text="${ facility.facilityManagerName == null ? '-' : facility.facilityManagerName }"></td>
-				      
-				      <!-- 예약 날짜 -->
-				      <td th:text="${ facility.facilityReservationDate == null ? '-' : facility.facilityReservationDate }"></td>
-				      
-				      <!-- 예약 상태 -->
-			      	<td th:switch="${ facility.facilityReservationStatus }">
-			      		<button th:case="true" type="button" class="btn btn-css btn-danger" disabled>사용</button>
-			      		<button th:case="false" type="button" class="btn btn-css btn-success" disabled>미사용</button>
-			      	</td>
-			      	
-			      	<tr th:unless="${ ! facilityList.isEmpty() }">
-					    	<td class="empty-row" colspan="10">결과 없음</td>
+				<div class="table-css">
+					<table class="table table-hover">
+					  <thead class="table-group">
+					    <tr class="table-row table-head">
+					      <th scope="col">시설 번호</th>
+					      <th scope="col">층 F</th>
+					      <th scope="col">시설 이름</th>
+					      <th scope="col">예약 부서</th>
+					      <th scope="col">부서 담당자</th>
+					      <th scope="col">예약 날짜</th>
+					      <th scope="col">예약 상태</th>
 					    </tr>
-				    </tr>
-				  </tbody>
-				</table>
+					  </thead>
+					  <tbody class="table-group-se">
+					  	<tr th:each="facility : ${ facilityList }" th:if="${ ! facilityList.isEmpty() }" class="table-row">
+					    	<!-- 시설 번호 -->
+					    	<td th:text="${ facility.facilityNo }"></td>
+					      
+					      <!-- 층 -->
+					      <td th:text="${ facility.facilityFloor }"></td>
+					      
+					      <!-- 시설 이름 -->
+					      <td th:text="${ facility.facilityName }"></td>
+					      
+					      <!-- 예약 부서 -->
+					      <td th:text="${ facility.facilityManagerDeptName == null ? '-' : facility.facilityManagerDeptName }"></td>
+					      
+					      <!-- 부서 담당자 -->
+					      <td th:text="${ facility.facilityManagerName == null ? '-' : facility.facilityManagerName }"></td>
+					      
+					      <!-- 예약 날짜 -->
+					      <td th:text="${ facility.facilityReservationDate == null ? '-' : facility.facilityReservationDate }"></td>
+					      
+					      <!-- 예약 상태 -->
+				      	<td th:switch="${ facility.facilityReservationStatus }">
+				      		<button th:case="true" type="button" class="btn btn-css btn-danger" disabled>사용</button>
+				      		<button th:case="false" type="button" class="btn btn-css btn-success" disabled>미사용</button>
+				      	</td>
+				      	
+				      	<tr th:unless="${ ! facilityList.isEmpty() }">
+						    	<td class="empty-row" colspan="10">결과 없음</td>
+						    </tr>
+					  </tbody>
+					</table>
+				</div>
 				
 				<th:block th:if="${ session.userType == 'manager' }">
 			    <div class="btn-status">
-		        <button th:onclick="'location.href=\'./facility-add\''" class="btn btn-add" type="button">예약 신청</button>
+		        <button th:onclick="'location.href=\'../facility-list\''" class="btn btn-add" type="button">목록</button>
 			    </div>
 				</th:block>
 				
 				<div class="search-box">
 					<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/facility-list/search' }" method="get">
 						<label class="notice-category" for="column"></label> 
-						<select id="filter" name="filter">
+						<select id="filter" name="filter" class="filter">
 							<option value="facilityFloor">층별</option>
 							<option value="facilityName">시설물 이름</option>
 							<option value="facilityManagerDeptName">예약 부서</option>

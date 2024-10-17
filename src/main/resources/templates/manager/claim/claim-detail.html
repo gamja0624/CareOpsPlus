@@ -10,102 +10,22 @@
 	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 
 	<style type="text/css">
-		.layout-table {
-			width: 1340px;
-			height: 100%;
-			border: 3px solid #13254C;
-			border-radius: 20px;
-		}
-
-		.container {
-			padding: 15px;
-			margin: 0 auto;
-			width: 1300px;
-		}
-
-		.claim-detail-table {
-			border-collapse: separate;
-			border-spacing: 0 5px;
-		}
-
-		.claim-detail-table th,
-		.claim-detail-table td {
-			border-top: 1px solid #13254C;
-			border-bottom: 1px solid #13254C;
-			text-align: center;
-			height: 30px;
-			line-height: 30px;
-		}
-
-		.claim-detail-table th {
-			background-color: #13254C;
-			color: #FFF;
-			width: 200px;
-		}
-
-		.claim-content {
-			display: flex;
-			margin-top: 10px;
-		}
-
-		/** 이미지 기능 구현 후 수정 있음 **/
-		.claim-image {
-			text-align: center;
-			border: 1px solid #13254C;
-			border-radius: 5px;
-			width: 400px;
-			min-height: 400px;
-			margin-right: 20px;
-		}
-
-		.claim-image img {
-			max-width: 100%;
-		}
-
-		.th-wide {
-			width: 420px;
-		}
-
-		.td-mid {
-			width: 220px;
-		}
-
-		.cl-title {
-			width: 1060px;
-		}
-
-		.message {
-			padding: 10px;
-			width: 840px;
-			border: 1px solid #13254C;
-			border-radius: 5px;
-			min-height: 400px;
-		}
-
-		.button-cover {
-			width: 1260px;
-			margin-top: 10px;
-			text-align: right;
-		}
-
-		.submit-button {
-			background-color: #13254C;
-			color: white;
-			cursor: pointer;
-			margin-left: 10px;
-			text-align: center;
-			font-size: 16px;
-		}
-
-		.submit-button:hover {
-			border: 1px solid #13254C;
-			background-color: white;
-			color: #13254C;
-		}
-
-		.submit-button:disabled {
-			cursor: not-allowed;
-		}
+		.layout-table { width: 1340px; height: 100%; border: 3px solid #13254C; border-radius: 20px; }
+		.container { padding: 15px; margin: 0 auto; width: 1300px; }
+		.claim-detail-table { border-collapse: separate; border-spacing: 0 5px;}
+		.claim-detail-table th, .claim-detail-table td { border-top: 1px solid #13254C; border-bottom: 1px solid #13254C; text-align: center; height: 30px; line-height: 30px; }
+		.claim-detail-table th { background-color: #13254C; color: #FFF; width: 200px; }
+		.claim-content { display: flex; margin-top: 10px; }
+		.claim-image { text-align: center; border: 1px solid #13254C; border-radius: 5px; width: 400px; height: 400px; margin-right: 20px; }
+		.claim-image img { max-width: 100%; }
+		.th-wide { width: 420px; }
+		.td-mid { width: 220px; }
+		.cl-title { width: 1060px; text-align: left !important; padding-left: 30px; }
+		.message { padding: 10px; width: 840px; border: 1px solid #13254C; border-radius: 5px; min-height: 400px; }
+		.button-cover { width: 1260px; margin-top: 10px; text-align: right; }
+		.submit-button { background-color: #13254C; color: white; cursor: pointer; margin-left: 10px; text-align: center; font-size: 16px; }
+		.submit-button:hover { border: 1px solid #13254C; background-color: white; color: #13254C; }
+		.submit-button:disabled { cursor: not-allowed; }
 	</style>
 </head>
 
@@ -154,8 +74,12 @@
 					</table>
 					<div class="claim-content">
 						<div class="claim-image">
-							<!--<img th:src="@{/manager/claim-image/${claim.claimNo}}" alt="이미지" />-->
-							<img th:src="@{/manager/claim-image/{claimNo}(claimNo=${claim.claimNo})}" alt="이미지" />
+							<th:block th:if="${claim.claimAttachment != null}">
+								<img th:src="@{/manager/claim-image/{claimNo}(claimNo=${claim.claimNo})}" alt="이미지" />
+							</th:block>
+							<th:block th:if="${claim.claimAttachment == null}">
+								<img alt="기본 이미지" th:src="@{/img/claim.png}">
+							</th:block>
 						</div>
 						<div class="message" th:text="${claim.claimContent}"></div>
 					</div>

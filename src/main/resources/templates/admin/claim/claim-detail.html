@@ -19,7 +19,7 @@
 		.claim-content { display: flex; margin-top: 10px; }
 		.th-wide { width: 420px; }
 		.td-mid { width: 220px; }
-		.cl-title { width: 1060px; text-align: left !important; padding-left: 20px; }
+		.cl-title { width: 1060px; text-align: left !important; padding-left: 30px; }
 		.message { padding: 10px; width: 840px; border: 1px solid #13254C; border-radius: 5px; min-height: 400px; }
 		.button-cover { width: 1260px; margin-top: 10px; text-align: right; }
 		.submit-button { background-color: #13254C; color: white; cursor: pointer; 
@@ -33,13 +33,10 @@
 			border: 1px solid #13254C;
 			border-radius: 5px;
 			width: 400px;
-			min-height: 400px;
+			height: 400px;
 			margin-right: 20px;
 		}
-		.claim-image img {
-			max-width: 100%;
-		}
-
+		.claim-image img { max-width: 100%; }
 		/* 모달 스타일 */
 		.modal-header { background-color: #13254C; color: white; }
 		.modal-footer { background-color: #f1f1f1; }
@@ -97,36 +94,30 @@
 					</table>
 					<div class="claim-content">
 						<div class="claim-image">
-							<img src="" alt="이미지">
+							<th:block th:if="${claim.claimAttachment != null}">
+								<img th:src="@{/admin/claim-image/{claimNo}(claimNo=${claim.claimNo})}" alt="이미지" />
+							</th:block>
+							<th:block th:if="${claim.claimAttachment == null}">
+								<img alt="기본 이미지" th:src="@{/img/claim.png}">
+							</th:block>
 						</div>
 						<div class="message" th:text="${claim.claimContent}"></div>
 					</div>
 					<!-- 버튼 -->
 					<div class="button-cover">
 						<th:block th:if="${ session.userType == 'admin' && session.department.contains('민원') }">
-						<button class="btn submit-button" onclick="openApproveModal()" id="approveButton"
-							th:disabled="${claim.claimApprove}">민원 승인</button>
-						<button class="btn submit-button" onclick="openCompleteModal()" id="approveButton"
-							th:disabled="${claim.claimComplete}">민원 처리</button>
-							<!-- th:disabled="${claim.claimComplete}" -->
-						</th:block>
-						<th:block th:unless="${ session.userType == 'admin' && session.department.contains('민원') }">
-						<button class="btn submit-button" onclick="openApproveModal()" id="approveButton"
-							disabled>민원 승인</button>
-						<button class="btn submit-button" onclick="openCompleteModal()" id="approveButton"
-							disabled>민원 처리</button>
-							<!-- th:disabled="${claim.claimComplete}" -->
+							<button class="btn submit-button" onclick="openApproveModal()" id="approveButton"
+								th:disabled="${claim.claimApprove}">민원 승인</button>
+							<button class="btn submit-button" onclick="openCompleteModal()" id="approveButton"
+								th:disabled="${claim.claimComplete}">민원 처리</button>
 						</th:block>
 					</div>
-
-
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 모달 01 민원 승인 -->
-	<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -148,8 +139,7 @@
 		</div>
 	</div>
 	<!-- 모달 02 답변 처리 -->
-	<div class="modal fade" id="completeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="completeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -160,12 +150,11 @@
 					처리 시, 답변 작성으로 이동합니다.
 				</div>
 				<div class="modal-footer">
-					<form th:action="@{/admin/claim-complete/{claimNo}(claimNo=${claim.claimNo})}" method="POST" id="claimNo">
+					<form th:action="@{/admin/claim-re/{claimNo}(claimNo=${claim.claimNo})}" method="get" id="claimNo">
 						<input type="hidden" id="claimNo" name="claimNo" th:value="${claim.claimNo}">
 						<button type="submit" class="btn confirm-button">처 리</button>
 					</form>
-					<button type="button" class="btn cancel-button" data-dismiss="modal" onclick="closeCompleteModal()">취
-						소</button>
+					<button type="button" class="btn cancel-button" data-dismiss="modal" onclick="closeCompleteModal()">취소</button>
 				</div>
 			</div>
 		</div>

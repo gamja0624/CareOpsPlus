@@ -2,7 +2,7 @@ package himedia.project.careops.service;
 
 /**
  * @author 이홍준
- * @editDate 2024-10-15 
+ * @editDate 2024-10-15 ~ 2024-10-17
  */
 
 import java.util.List;
@@ -74,19 +74,19 @@ public class SafetyService {
 	}
 	
 	@Transactional
-	public void updateStatus(SafetyManagementDTO dto) {
+	public void updateStatus(SafetyManagementDTO updateData) {
 	    // SafetyManagement 엔티티 조회
 	    SafetyManagement entity = safetyManagementRepository.findBySmListAndSmFacilityNoAndSmFacilityFloor(
-	        dto.getSmList(), dto.getSmFacilityNo(), dto.getSmFacilityFloor());
+	    		updateData.getSmList(), updateData.getSmFacilityNo(), updateData.getSmFacilityFloor());
 
 	    if (entity != null) {
 	        // 엔티티에서 DTO로 변환
-	        entity.setSmStatus(dto.isSmStatus());
-	        entity.setSmAdminId(dto.getSmAdminId());
-	        entity.setSmAdminDeptNo(dto.getSmAdminDeptNo());
-	        entity.setSmAdminDeptName(dto.getSmAdminDeptName());
-	        entity.setSmAdminName(dto.getSmAdminName());
-	        entity.setSmDate(dto.getSmDate());
+	        entity.setSmStatus(updateData.isSmStatus());
+	        entity.setSmAdminId(updateData.getSmAdminId());
+	        entity.setSmAdminDeptNo(updateData.getSmAdminDeptNo());
+	        entity.setSmAdminDeptName(updateData.getSmAdminDeptName());
+	        entity.setSmAdminName(updateData.getSmAdminName());
+	        entity.setSmDate(updateData.getSmDate());
 
 	        // 엔티티 저장
 	        safetyManagementRepository.save(entity);

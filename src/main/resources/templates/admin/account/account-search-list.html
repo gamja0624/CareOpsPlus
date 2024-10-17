@@ -8,54 +8,17 @@
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
 		<style type="text/css">
-			.layout-table {
-				height: 100%; 
-				padding-bottom: 50px;
-				margin-bottom: 50px;
-			}
-			.table-cover {
-				height: 620px;
-			}
-			.table-basic-style {
-				width: 1200px;
-				margin: 40px auto 20px auto;
-				font-size: 18px;
-			}
-
-			.tr-style th {
-				border-bottom: 2px solid #4F5259;
-				text-align: center;
-				font-weight: 600;
-			}
-			.tr-style tr, td {
-				border-bottom: 1px solid #d9d9d9;
-				text-align: center;
-			}
-			.manager-edit{
-				background-color: #13254C;
-				color: #fff;
-			}
-			.manager-edit:hover {
-				border: 1px solid #13254C ;
-				background-color: #fff;
-				color: #13254C;
-			}
-			.button-cover {
-				width: 1270px;
-				text-align: right;
-			}
-			.add-button {
-				text-align: center;
-				margin-left: 15px;
-				border: 1px solid #14254C;
-				background-color: #14254c;
-				color: #FFF;
-			}
-			.add-button:hover {
-				border: 1px solid #13254C;
-				background-color: #FFF;
-				color: #14254C;
-			}
+			.layout-table { height: 100%; padding-bottom: 50px; margin-bottom: 50px; }
+			.table-cover { height: 620px; }
+			.table-basic-style { width: 1200px; margin: 40px auto 20px auto; font-size: 18px; }
+			.tr-style th { border-bottom: 1px solid #d9d9d9; text-align: center; font-weight: 600; font-size: 20px; }
+			.tr-style tr, td { border-bottom: 1px solid #d9d9d9; text-align: center; }
+			.empty-row { font-size: 25px; font-weight: 600; border-bottom: 1px solid #d9d9d9; }
+			.manager-edit{ background-color: #13254C; color: #fff; }
+			.manager-edit:hover { border: 1px solid #13254C ; background-color: #fff; color: #13254C; }
+			.button-cover { width: 1270px; text-align: right; }
+			.add-button { text-align: center; margin-left: 15px; border: 1px solid #14254C; background-color: #14254c; color: #FFF; }
+			.add-button:hover { border: 1px solid #13254C; background-color: #FFF; color: #14254C; }
 		</style>
 	</head>
 
@@ -94,12 +57,15 @@
 									<td th:text="${managerSearch.managerPhoneNumber}"></td>
 									<td>
 										<th:block th:if="${ session.userType == 'admin' && session.department.contains('담당자') }">
-								  		<a class="btn manager-edit" th:href="@{./account-edit/{managerId}(managerId=${managerSearch.managerId})}">담당자 변경</a>
+								  		<a class="btn manager-edit" th:href="@{/admin/account-edit/{managerId}(managerId=${managerSearch.managerId})}">담당자 변경</a>
 										</th:block>
 										<th:block th:if="${ session.userType == 'admin' && (session.department.contains('민원') || session.department.contains('안전') || session.department.contains('의료') || session.department.contains('시설물'))} ">
 											<a class="btn manager-edit">담당자 변경</a>
 										</th:block>
 									</td>
+								</tr>
+								<tr th:if="${#lists.isEmpty(managerSearch)}">
+									<td class="empty-row" colspan="10">검색 결과 없음 </td>
 								</tr>
 							</tbody>
 						</table>

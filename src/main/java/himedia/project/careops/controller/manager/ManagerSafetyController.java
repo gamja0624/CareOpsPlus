@@ -33,7 +33,7 @@ public class ManagerSafetyController {
 		this.safetyService = safetyService;
 	}
 
-	// 안전관리 목록 페이지
+	// 안전관리 현황 페이지
 	@GetMapping("/safety-list")
 	public String safetyList(Model model) {
 
@@ -43,7 +43,6 @@ public class ManagerSafetyController {
 		//log.info("smList값=>> {}", smList);
 
 		model.addAttribute("smList", smList);
-		// model.addAttribute("safetyListFirstPage", safetyListFirstPage);
 		model.addAttribute("safetyListAll", safetyListAll);
 
 		return "admin/safety/safety-list";

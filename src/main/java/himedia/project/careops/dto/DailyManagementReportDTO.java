@@ -16,14 +16,14 @@ import lombok.ToString;
 @ToString
 public class DailyManagementReportDTO {
 
-	private Integer dmrNo;
-	private String adminId;
-	private String adminDeptNo;
-	private String adminName;
-	private String adminDeptName;
-	private String dmrReportDetail;
-	private String dmrIssue;
-	private Date dmrDate;
+	private Integer dmrNo;				// 보고서 번호
+	private String adminId;				// 관리자 아이디
+	private String adminDeptNo;			// 관리자 부서번호
+	private String adminName;			// 관리자 이름
+	private String adminDeptName;		// 관리자 부서 이름
+	private String dmrReportDetail;		// 보고서 내용
+	private String dmrIssue;			// 특이사항
+	private Date dmrDate;				// 등록 및 수정 날짜
 	
 	public DailyManagementReportDTO() {}
 	

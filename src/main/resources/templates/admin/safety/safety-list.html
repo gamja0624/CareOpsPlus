@@ -15,11 +15,11 @@
       	border: 3px solid #13254C; 
       	border-radius: 20px; 
       	overflow: hidden;
-      	margin-bottom: 10px;
+      	margin-bottom: 30px;
       	text-align: center;
      	}
       .table { 
-        margin: 0 auto 20px auto;
+        margin: 0 auto 40px auto;
       	display: inline-table;
       	width: 650px;
       	text-align: center;
@@ -29,6 +29,7 @@
       .btn-css { width: 80px; border-radius: 50px; }
       tr { height: 30px;  border-bottom: 1px solid #d9d9d9; }
   	  .smFacilityName { width: 200px; }
+      
   		/* 층버튼 */
       .btn-floor-line {display: flex; flex-flow: wrap; margin: 20px auto; width: 500px; }
       .btn-floor { margin: 10px 10px; width: 80px;}
@@ -69,7 +70,7 @@
 			<!-- section -->
 			<div class="section">
 				<!-- 제목 -->
-				<h1 class="title">안전관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 목록</h1>
+				<h1 class="title">안전관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 관리 현황</h1>
 				
 				<!-- 안전관리 목록 -->
 				<div class="layout-table">
@@ -102,7 +103,7 @@
 					  <thead class="table-group">
 					    <tr class="table-row table-head">
 					      <th scope="col">시설 번호</th>
-					      <th scope="col">시설 이름</th>
+					      <th scope="col">설치 구역</th>
 					      <th scope="col">관리 현황</th>
 					    </tr>
 					  </thead>
@@ -139,14 +140,14 @@
       // 층 버튼 클릭 시 value 가져오기
       document.querySelectorAll('.btn-floor').forEach(button => {
           button.onclick = function() {
-              num = this.value; 						// 클릭된 버튼의 value를 num에 저장
-              fetchChecklist(smListElement.value, num); // 클릭 시 데이터 가져오기
+              num = this.value; 							// 클릭된 버튼의 value를 num에 저장
+              fetchChecklist(smListElement.value, num); 	// 클릭 시 데이터 가져오기
           };
       });
       
       // 페이지 로드 시 기본 데이터 가져오기
       document.addEventListener('DOMContentLoaded', () => {
-          fetchChecklist(smListElement.value, num); 	// 기본적으로 smList의 선택값과 1층 데이터 가져오기
+          fetchChecklist(smListElement.value, num); 		// 기본적으로 smList의 선택값과 1층 데이터 가져오기
       });
       
       // 층 버튼 클릭 시 해당 층의 데이터만 가져오는 함수
@@ -162,7 +163,7 @@
            	url= `/manager/safety-list/${smList}/${num}`;
           }
           
-          //console.log('Fetching URL:', url); 			// URL 확인
+          //console.log('Fetching URL:', url); 				// URL 확인
       
           fetch(url)
               .then(response => {
@@ -173,7 +174,7 @@
               })
               .then(data => {
                   const statusBody = document.getElementById('statusBody');
-                  statusBody.innerHTML = ''; 			// 기존 내용 지우기
+                  statusBody.innerHTML = ''; 				// 기존 내용 지우기
       
                   // 새로운 데이터 추가
                   data.forEach(list => {

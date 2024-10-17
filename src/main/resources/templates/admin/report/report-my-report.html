@@ -10,15 +10,15 @@
 		
 		<style type="text/css">
           /* 페이지 레이아웃 */
-          .layout-table { margin-bottom: 10px; height: 800px;; text-align: center; }
-          .inner-layout-table { padding-top: 20px; }
+          .layout-table { margin-bottom: 10px; height: 810px; text-align: center; }
+          .inner-layout-table { padding-top: 20px; height: 625px; }
+          
           /* 목록 테이블 */
           .table { margin: 0 auto; width: 800px;  text-align: center; vertical-align: inherit; }
           .table-head { font-weight: 600; font-size: 20px; }
           .table-row { line-height: 35px; border-bottom: 1px solid #d9d9d9;  }
           .detail-a { cursor: pointer; }
           .detail-icon { width: 30px; line-height: 30px; vertical-align: middle; }
-          .inner-layout-table { height: 600px; }
           
           /* 페이지네이션 */
           .pagination { text-align: center; margin: 20px 0; }
@@ -28,6 +28,7 @@
           
           /* 검색바 라인 */
           .category-search-box { margin: 20px auto; }
+          #filter {width: 100px;}
           
           /* 버튼 라인 */
           .btn-line { text-align: center; }
@@ -36,7 +37,7 @@
           .btn:hover { border: 1px solid #13254C; }
 		</style>
 	</head>
-
+  
 	<body>
 		<!-- 사이드바 -->
 		<th:block th:replace="~{/common/side-bar}"></th:block>

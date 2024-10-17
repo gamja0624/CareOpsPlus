@@ -36,15 +36,17 @@
 		.claim-submit-button { width: 120px; }
 		.claim-submit-button:hover { border: 1px solid #13254C; background-color: #FFF; color: #13254C; }
 		/* 모 달 창 */
-		.btn-open-modal { width: 120px; height: 35px; }
+		.btn-modal { width: 120px; height: 35px; }
 		.modal { display: none; position: fixed; justify-content: center; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
 		.modal-body { position: absolute; margin: 2% auto; width: 800px; min-height: 800px; border: 1px solid #13254C; background-color: rgb(255, 255, 255); border-radius: 10px; padding: 0; }
 		.modal-title { border-top-left-radius: 10px; border-top-right-radius: 10px; background-color: #13254C; color: #FFF; height: 60px; font-size: 26px; display: flex; padding-left: 20px; align-items: center; }	
+		.subcate-table-cover { min-height: 600px;}
 		.category-search-box { width: 600px; line-height: 60px; border-radius: 10px; margin: 20px auto; }
 		.select-button { background-color: #13254C; color: #FFF; border: 1px solid #13254C; width: 60px; height: 30px; line-height: 1; margin: 2px; }
 		.sub-category-table { border-top: 2px solid #4F5259; border-bottom: 2px solid #4F5259; text-align: center; width: 600px; margin: 10px auto 20px auto; border-collapse: collapse }
 		.sub-category-table tr { border-bottom: 1px solid #d9d9d9; }
 		.sub-category-table th { font-weight: 600; height: 40px; line-height: 1.5; }
+		.sub-category-table .sbt-title { width: 220px; overflow: hidden;}
 		.close { text-align: center; height: 60px; background-color: #f1f1f1; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 10px 0; margin-top: 20px; }
 		.close-button { width: 120px; background-color: #13254C; color: #FFF; }
 		.close-button:hover { border: 1px solid #14254C; color: #13254C; background-color: #fff; }
@@ -66,38 +68,47 @@
 				<form class="claim-form"  th:action="@{/manager/claim-edit-complete/{claimNo}(claimNo=${claim.claimNo})}" method="post"  enctype="multipart/form-data">
 					<div class="claim-box">
 						<label for="claimTitle" class="claim-title">민&nbsp;&nbsp; 원&nbsp;&nbsp;&nbsp; 제&nbsp;&nbsp; 목</label>
-						<input type="text" class="claim-input-wide" name="claimTitle" th:value="${claim.claimTitle}" required>
+						<input type="text" class="claim-input-wide" th:value="${claim.claimTitle}" name="claimTitle" required>
 					</div>
 					<div class="claim-box">
 						
 						<label for="claimCategory" class="btn-basic category-label ">대 분 류</label>
 						<select name="claimCategoryName" id="claimCategoryName" class="category-input" required>
-							<option th:each="claimCategory : ${claimCategory}" 
-							        th:value="${claimCategory.claimCategoryName}"
-							        th:text="${claimCategory.claimCategoryName}" 
-							        th:selected="${claimCategory.claimCategoryName == claim.claimCategoryName}"></option>
+							<option value="disabled" disabled selected>선택하기</option>
+							<option th:each="claimCategory : ${claimCategory}" th:value="${claimCategory.claimCategoryName}"
+								th:text="${claimCategory.claimCategoryName}" th:selected="${claimCategory.claimCategoryName == claim.claimCategoryName}"></option>
 						</select>
 						
-						<button class="btn-open-modal btn-basic">소 분 류</button>
-						<input class="category-input" type="text" id="claimSubCategoryName" name="claimSubCategoryName"  th:value="${claim.claimSubCategoryName}" required>
+						<button class="btn-open-modal btn-modal btn-basic">소 분 류</button>
+						<input class="btn-open-modal category-input" type="text" id="claimSubCategoryName" name="claimSubCategoryName" value="일반" th:value="${claim.claimSubCategoryName}" required>
+						
+						<select id="subCategoryDropdown" class="category-input" style="display:none;">
+							<option value="disabled" disabled selected>선택하기</option>
+							<option value="소화기" >소화기</option>
+							<option value="스프링쿨러" >스프링쿨러</option>
+							<option value="소화전설비" >소화전설비</option>
+							<option value="피난설비" >피난설비</option>
+							<option value="유도등" >유도등</option>
+							<option value="대피로" >대피로</option>
+							<option value="비상방송설비" >비상방송설비</option>
+							<option value="비상구" >비상구</option>
+						</select>
 						
 						<label for="claimCategoryStatus" class="btn-basic category-label mr-st">요 청 구 분</label>
 						<select name="claimCategoryStatus" id="claimCategoryStatus" class="category-input" required>
 							<option th:value="${claim.claimCategoryStatus}" th:text="${claim.claimCategoryStatus}" selected></option>
-							<option value="일반">일반</option>
 							<option value="긴급">긴급</option>
 							<option value="정상">정상</option>
 							<option value="점검요망">점검요망</option>
 							<option value="수리필요">수리필요</option>
 							<option value="노후">노후</option>
 							<option value="만료">만료</option>
-						</select> 
-
+						</select>
 					</div>
 					<div class="filebox">
 						<label class="claim-title">첨&nbsp;&nbsp; 부&nbsp;&nbsp;&nbsp; 파&nbsp;&nbsp; 일</label>
-						<input class="upload-name" type="text"  th:value="${claim.claimAttachment}"  readonly>
-						<input type="file" id="file_01" class="file" name="file"  title="파일 업로드">
+						<input class="upload-name" th:value="${claim.claimAttachment}"  type="text" readonly>
+						<input type="file" accept="image/*" id="file_01" class="file" name="file"  title="파일 업로드">
 						<label for="file_01" class="btn-basic upload-button">파 일 선 택</label>
 					</div>
 					<div class="claim-content">
@@ -114,81 +125,79 @@
 	<div class="modal">
 		<div class="modal-body">
 			<div class="modal-title">
-				<h2>민원 소분류 검색</h2>
+				<h2>민원 소분류 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 의료 기기 검색</h2>
 			</div>
 			<div class="search-box">
-				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/claim-sub-list/search' }"
-					method="get">
-					<label class="" for="column"></label>
-					<select id="filter" name="filter">
-						<option value="lmdMinorCateName">의료기기</option>
-						<option value="smlList">안전관리</option>
-					</select>
-					<label for="value"></label>
-					<input class="input" type="search" name="value" id="search" minlength="2">
-					<input class="input" type="submit" id="search-submit" value="검색">
-				</form>
+			    <form class="category-search-box" id="searchForm">
+			        <label for="filter"></label>
+			        <select id="filter" name="filter">
+			            <option value="lmdMinorCateName">장비명</option>
+			        </select>
+			        <label for="value"></label>
+			        <input class="input" type="search" name="value" id="search" minlength="2" required>
+			        <input class="input" type="submit" id="search-submit" value="검색">
+			    </form>
 			</div>
-
-			<table class="table table-hover sub-category-table">
-				<thead>
-					<tr class="tr-style">
-						<th>소분류 번호</th>
-						<th>소분류명</th>
-						<th>선 택</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="claimSubCategory : ${claimSubCategory}">
-						<td th:text="${claimSubCategory.claimSubCategoryNo}"></td>
-						<td name="claimSubCategory"
-							th:text="${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.subCategoryName}">
-						</td>
-						<td>
-							<button class="btn select-button" 
-							th:attr="onclick='selectSubCategory(\'' + ${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.subCategoryName}+ '\')'">선 택</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="subcate-table-cover">
+				<table class="table table-hover sub-category-table">
+					<thead>
+						<tr class="tr-style">
+							<th>소분류 번호</th>
+							<th class="sbt-title">소분류명</th>
+							<th>선 택</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="claimSubCategory : ${claimSubCategory}">
+							<td th:text="${claimSubCategory.claimSubCategoryNo}"></td>
+							<td name="claimSubCategory" th:text="${claimSubCategory.lmdMinorCateName}">
+							</td>
+							<td>
+								<button class="btn select-button" 
+								th:attr="onclick='selectSubCategory(\'' + ${claimSubCategory.lmdMinorCateName != null ? claimSubCategory.lmdMinorCateName : claimSubCategory.subCategoryName}+ '\')'">선 택</button>
+							</td>
+						</tr>
+					</tbody> 
+				</table>
+			</div>
 			<div id="paging">
 				<nav aria-label="Page navigation">
 					<ul class="pagination">
-						<!-- 맨 앞으로 이동 -->
-						<li class="page-item">
-							<a class="page-link" th:href="@{./claim-add?page=1}" aria-label="Previous">
-								<span aria-hidden="true">&#171;</span>
-							</a>
-						</li>
-
-						<!-- 이전 페이지 이동 -->
-						<li class="page-item">
-							<a class="page-link"
-								th:href="@{./claim-add(page=${paging.currentPage - 1 == 0 ? 1 : paging.currentPage - 1})}">&#60;</a>
-						</li>
-
-						<!-- 숫자 -->
-						<th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
-							<li class="page-item">
-								<a class="page-link" th:href="@{./claim-add?page=} + @{${page}}" th:text="${ page }"
-									th:classappend="${paging.currentPage eq page} ? 'disabled' : ''"></a>
-							</li>
-						</th:block>
-
-						<!-- 다음 페이지 이동 -->
-						<li class="page-item">
-							<a class="page-link"
-								th:href="@{./claim-add(page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}">&#62;</a>
-						</li>
-
-						<!-- 맨 끝으로 이동 -->
-						<li class="page-item">
-							<a class="page-link" th:href="@{./claim-add?page={totalPages}(totalPages = ${totalPages})}"
-								aria-label="Next">
-								<span aria-hidden="true">&#187;</span>
-							</a>
-						</li>
+				    <!-- 맨 앞으로 이동 -->
+				    <li class="page-item">
+			        <a class="page-link" th:href="@{/manager/claim-edit/{claimNo}(claimNo=${claim.claimNo}, page=1)}" aria-label="Previous">
+	            	<span aria-hidden="true">&#171;</span>
+			        </a>
+				    </li>
+				    <!-- 이전 페이지 이동 -->
+				    <li class="page-item">
+			        <a class="page-link"
+			           th:href="@{/manager/claim-edit/{claimNo}(claimNo=${claim.claimNo}, page=${paging.currentPage - 1 <= 1 ? 1 : paging.currentPage - 1})}">&#60;</a>
+				    </li>
+				    <!-- 숫자 페이지 -->
+				    <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+			        <li class="page-item">
+		            <a class="page-link" 
+		               th:href="@{/manager/claim-edit/{claimNo}(claimNo=${claim.claimNo}, page=${page})}"
+		               th:text="${page}" 
+		               th:classappend="${paging.currentPage eq page} ? 'disabled' : ''"></a>
+			        </li>
+				    </th:block>
+				    <!-- 다음 페이지 이동 -->
+				    <li class="page-item">
+			        <a class="page-link"
+			           th:href="@{/manager/claim-edit/{claimNo}(claimNo=${claim.claimNo}, page=${paging.currentPage + 1 >= totalPages ? totalPages : paging.currentPage + 1})}">&#62;</a>
+				    </li>
+				    <!-- 맨 끝으로 이동 -->
+				    <li class="page-item">
+			        <a class="page-link" 
+			           th:href="@{/manager/claim-edit/{claimNo}(claimNo=${claim.claimNo}, page=${totalPages})}" 
+			           aria-label="Next">
+		            <span aria-hidden="true">&#187;</span>
+			        </a>
+				    </li>
 					</ul>
+
 				</nav>
 			</div>
 			<div class="close">
@@ -197,17 +206,46 @@
 		</div>
 	</div>
 
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script>
 		// 모달 ================================================================ 
 		const modal = document.querySelector('.modal');
 		const btnOpenModal = document.querySelector('.btn-open-modal');
 		const closeModalButton =document.querySelector('.close-button');
+		const claimCategorySelect = document.getElementById('claimCategoryName');
+		const subCategoryInput = document.getElementById('claimSubCategoryName');
+		const subCategoryDropdown = document.getElementById('subCategoryDropdown');
 		
 		btnOpenModal.addEventListener("click", (event) => {
-			event.preventDefault(); 																		
-			modal.style.display = "flex";
-		 	localStorage.setItem('modalOpen', 'true'); 																
+		    openModal(event);
 		});
+
+		subCategoryInput.addEventListener("click", (event) => {
+		    openModal(event);
+		});
+		
+		subCategoryDropdown.addEventListener("click", (event) => {
+		    openModal(event);
+		});
+
+		function openModal(event) {
+		    event.preventDefault();
+		    const selectedCategory = claimCategorySelect.value;
+		    console.log("이벤트 호출");
+
+		    if (selectedCategory === "의료기기") {
+		        modal.style.display = "flex";
+						subCategoryInput.style.display = "block"; // 텍스트 입력 필드 표시
+						subCategoryDropdown.style.display = "none"; // 드롭다운 숨기기
+		        localStorage.setItem('modalOpen', 'true');
+		    } else if (selectedCategory === "안전관리") {
+		        subCategoryInput.style.display = "none"; // 텍스트 입력 필드 숨기기
+		        subCategoryDropdown.style.display = "block"; // 드롭다운 표시
+		    } else if (selectedCategory === "시설물" ) {
+						subCategoryInput.value = "시설물"; // 입력 필드에 "시설물" 자동 입력
+						subCategoryInput.style.display = "block"; // 텍스트 입력 필드 표시
+				}
+		}
 
 		closeModalButton.addEventListener("click", () => {
 			modal.style.display = "none";
@@ -223,7 +261,6 @@
 		// 소분류 선택
 		function selectSubCategory(subCategoryName ) {
 			document.getElementById("claimSubCategoryName").value = subCategoryName; // 선택한 소분류 이름을 입력 필드에 설정
-			
 			modal.style.display = "none"; // 모달 닫기
 		}
 		// 파일박스 ================================================================ 
@@ -240,9 +277,51 @@
 			nameInput.value = fileName;
 
 		});
+		
+		// 소분류 검색 ================================================================ 
+		document.getElementById('searchForm').addEventListener('submit', function(event) {
+		    event.preventDefault(); // 기본 폼 제출 방지
+
+		    const filter = document.getElementById('filter').value;
+		    const value = document.getElementById('search').value;
+
+		    // Fetch 요청
+		    fetch(`/manager/claim-sub-list/search?filter=${filter}&value=${value}`)
+		        .then(response => {
+		            if (!response.ok) {
+		                throw new Error('Network response was not ok');
+		            }
+		            return response.json();
+		        })
+		        .then(data => {
+		            updateSubCategoryTable(data); 
+		        })
+		        .catch(error => console.error('Error:', error));
+		});
+		
+		function updateSubCategoryTable(data) {
+		    const tbody = document.querySelector('.sub-category-table tbody');
+		    const ul = document.querySelector('.pagination');
+		    tbody.innerHTML = '';
+				ul.innerHTML = '';
+		    data.forEach(item => {
+		        const row = document.createElement('tr');
+		        row.innerHTML = `
+		            <td>${item.claimSubCategoryNo}</td>
+		            <td>${item.lmdMinorCateName}</td>
+		            <td>
+		                <button class="btn select-button" 
+		                onclick="selectSubCategory('${item.lmdMinorCateName || item.subCategoryName}')">선 택</button>
+		            </td>
+		        `;
+		        tbody.appendChild(row);
+		    });
+		}
+
+		
+	
 	</script>
 
-	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 
 </html>
