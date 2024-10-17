@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
 import himedia.project.careops.dto.AdminDTO;
 import himedia.project.careops.dto.ListMedicalDevicesDTO;
 import himedia.project.careops.entity.ListMedicalDevices;
+import himedia.project.careops.entity.Manager;
 import himedia.project.careops.service.AdminService;
 import himedia.project.careops.service.MedicalService;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +68,6 @@ public class ManagerMedicalController {
 		
 		// filter & value
 		String filter = "lmdManagerDeptPart";
-		log.info("department : {}", department);
 		
 		List<ListMedicalDevices> medicalDevicesList = medicalService.findFilterMedicalDevices(filter, department);
 		model.addAttribute("medicalDevicesList", medicalDevicesList);
@@ -105,6 +106,16 @@ public class ManagerMedicalController {
 	}
 	
 	// [등록] ==========================================================================================
+	@GetMapping("/medical-add/getLmdMinorCateCode")
+	@ResponseBody
+	// 장비세분류명 중복 체크
+	public List<ListMedicalDevices> getManagersByDeptName(@RequestParam String lmdMinorCateCode) {
+		
+		String filter = "lmdMinorCateCode";
+		
+	    return medicalService.findFilterMedicalDevices(filter, lmdMinorCateCode);
+	}
+	
 	@GetMapping("/medical-add")
 	public String medicalAddPage(Model model) {
 		

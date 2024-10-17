@@ -13,9 +13,12 @@
 		/** 민원 목록 **/
 		.table-cover { min-height: 600px; margin: 0 auto; }
 		.claim-list { width: 1340px; margin: 40px auto 0 auto; text-align: center; font-size: 18px; }
-		.claim-list .th-style { border-bottom: 2px solid #4F5259; font-weight: 600; }
+		.claim-list .th-style { border-bottom: 1px solid #d9d9d9; font-weight: 600; font-size: 20px; }
+		.claim-list .th-no { width: 150px; }
+		.claim-list .th-title { width: 600px; }
+		.claim-list .th-name { width: 100px; }
 		.claim-list .td-style { border-bottom: 1px solid #d9d9d9; }
-		.claim-list .td-title { text-align: left; padding-left: 20px; }
+		.claim-list .td-title { text-align: left; padding-left: 40px; }
 		.claim-list img { width: 30px; line-height: 30px; vertical-align: middle; }
 		.claim-reply td { border-bottom: 1px solid #d9d9d9; background-color: #E9ECF1; }
 		/** 상태 버튼 **/
@@ -109,7 +112,6 @@
 			<div class="button-cover">
 			    <button type="button" class="btn" onclick="location.href='/admin/claim-list'">목록으로</button>
 			</div>
-
 
 			<div class="search-box" >
 				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/claim-list/search' }" method="get">

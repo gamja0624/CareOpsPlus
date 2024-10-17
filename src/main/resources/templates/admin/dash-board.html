@@ -252,13 +252,13 @@
 			
 			var backgroundColors = claimData.map(function(value) {
 			  if (value <= thresholds.green) {
-			    return 'rgba(0, 204, 0, 0.5)';    // 초록
+			    return 'rgba(0, 204, 0, 0.7)';    // 초록
 			  } else if (value <= thresholds.yellow) {
-			    return 'rgba(255, 206, 86, 0.5)'; // 노랑
+			    return 'rgba(255, 206, 86, 0.7)'; // 노랑
 			  } else if (value <= thresholds.orange) {
-			    return 'rgba(255, 159, 64, 0.5)'; // 주황
+			    return 'rgba(255, 159, 64, 0.7)'; // 주황
 			  } else {
-			    return 'rgba(255, 99, 132, 0.5)'; // 빨강
+			    return 'rgba(255, 99, 132, 0.7)'; // 빨강
 			  }
 			});
 

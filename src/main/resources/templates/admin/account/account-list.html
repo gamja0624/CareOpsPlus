@@ -8,54 +8,18 @@
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
 		<style type="text/css">
-			.layout-table {
-				min-height: 850px; 
-				padding-bottom: 50px;
-				margin-bottom: 50px;
-			}
-			.table-cover {
-				height: 610px;
-			}
-			.table-basic-style {
-				width: 1200px;
-				margin: 40px auto 20px auto;
-				font-size: 18px;
-			}
-
-			.tr-style th {
-				border-bottom: 2px solid #4F5259;
-				text-align: center;
-				font-weight: 600;
-			}
-			.tr-style tr, td {
-				border-bottom: 1px solid #d9d9d9;
-				text-align: center;
-			}
-			.manager-edit{
-				background-color: #13254C;
-				color: #fff;
-			}
-			.manager-edit:hover {
-				border: 1px solid #13254C ;
-				background-color: #fff;
-				color: #13254C;
-			}
-			.button-cover {
-				width: 1270px;
-				text-align: right;
-			}
-			.add-button {
-				text-align: center;
-				margin-left: 15px;
-				border: 1px solid #14254C;
-				background-color: #14254c;
-				color: #FFF;
-			}
-			.add-button:hover {
-				border: 1px solid #13254C;
-				background-color: #FFF;
-				color: #14254C;
-			}
+			.layout-table { height: 100%; padding-bottom: 10px; margin-bottom: 50px; }
+			.table-cover { height: 610px; }
+			.table-basic-style { width: 1200px; margin: 40px auto 20px auto; font-size: 18px; }
+			.tr-style th { border-bottom: 1px solid #d9d9d9; text-align: center; font-weight: 600; font-size: 20px; }
+			.tr-style tr, td { border-bottom: 1px solid #d9d9d9; height: 50px; line-height: 30px; text-align: center; }
+			.th-part{ width: 250px; }
+			.th-name{ width: 205px; }
+			.manager-edit{ background-color: #13254C; color: #fff; }
+			.manager-edit:hover { border: 1px solid #13254C ; background-color: #fff; color: #13254C; }
+			.button-cover { margin-top: 10px; width: 1270px; text-align: right; }
+			.add-button { text-align: center; margin-left: 15px; border: 1px solid #14254C; background-color: #14254c; color: #FFF; }
+			.add-button:hover { border: 1px solid #13254C; background-color: #FFF; color: #14254C; }
 		</style>
 	</head>
 
@@ -76,12 +40,14 @@
 							<thead>
 								<tr class="tr-style">
 									<th>부서 번호</th>
-									<th>부서 파트</th>
-									<th>부서 이름</th>
+									<th class="th-part">부서 파트</th>
+									<th class="th-name" >부서 이름</th>
 									<th>아이디</th>
 									<th>이름</th>
 									<th>연락처</th>
-									<th>담당자 변경</th>
+									<th:block th:if="${ session.userType == 'admin' && session.department.contains('담당자') }">
+										<th>담당자 변경</th>
+									</th:block>
 								</tr>
 							</thead>
 							<tbody>
@@ -96,9 +62,6 @@
 										<th:block th:if="${ session.userType == 'admin' && session.department.contains('담당자') }">
 											<a class="btn manager-edit" th:href="@{./account-edit/{managerId}(managerId=${manager.managerId})}">담당자 변경</a>
 										</th:block>
-										<th:block th:unless="${ session.userType == 'admin' && session.department.contains('담당자') }">
-											<a class="btn manager-edit" style="background-color: #fff; border: 1px solid #13254C; color: #13254C;">담당자 변경</a>
-										</th:block>
 									</td>
 								</tr>
 							</tbody>
@@ -107,9 +70,6 @@
 					<div class="button-cover">
 						<th:block th:if="${ session.userType == 'admin' && session.department.contains('담당자') }">
 							<button class="btn add-button" type="button" onclick="location.href='account-add'">담당자 등록</button>
-						</th:block>
-						<th:block th:unless="${ session.userType == 'admin' && session.department.contains('담당자') }">
-							<button class="btn add-button" type="button" onclick="location.href='account-add'" disabled>담당자 등록</button>
 						</th:block>
 					</div>
 					<!-- 페이지네이션 -->

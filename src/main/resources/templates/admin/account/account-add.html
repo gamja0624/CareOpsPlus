@@ -22,90 +22,18 @@
 		.complete-button { width: 120px; }
 		#checkIdButton:disabled { padding: 10px; color: #FFF; background-color: #13254C; }
 		/* 부서 검색 모달 스타일 */
-		.modal {
-			display: none;
-			position: fixed;
-			z-index: 1;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.4);
-		}
-		.modal-body {
-			background-color: #fefefe;
-			margin: 5% auto;
-			border: 1px solid #13254C;
-			border-radius: 10px;
-			width: 1000px;
-			height: 700px;
-			padding: 0;
-		}
-		.modal-title {
-			border-top-left-radius: 10px;
-			border-top-right-radius: 10px;
-			background-color: #13254C;
-			color: #FFF;
-			height: 60px;
-			font-size: 26px;
-			display: flex;
-			padding-left: 20px;
-			align-items: center;
-		}	
-		.div-line {
-			width: 955px;
-			padding: 15px 0;
-			border-top: 1px solid rgba(19, 37, 76, 0.5); 
-		 	border-bottom: 1px solid rgba(19, 37, 76, 0.5); 
-		}
-		.grid-cover {
-			padding: 20px 0;
-			width: 800px;
-			margin-left:20px;
-			text-align: center;
-		}
-		.grid-container {
-			display: grid;
-			grid-template-columns: repeat(4, 1fr);
-			gap: 5px;
-			margin: 15px auto;
-		}
-		.dept-card {
-			display: flex;
-		}
-		.card-header {
-			background-color: #13254C;
-			color: white;
-			width: 125px;
-			display: flex;
-	    align-items: center;
-			justify-content: center;
-		}
-		.card-body-name {
-			border: 1px solid #13254C;
-			padding: 10px;
-			width: 110px;
-			text-align: center;
-			cursor: pointer;
-		}
-		.card-body-name:hover {
-			border: 1px solid #13254C;
-			background-color:rgba(19, 37, 76, 0.1);
-			cursor: pointer;
-		}
-		.close {
-			text-align: center;
-			height: 60px;
-			background-color: #f1f1f1;
-			border-bottom-left-radius: 10px;
-			border-bottom-right-radius: 10px;
-			padding: 10px 0;
-		}
-		.close-button { 
-			width: 120px;
-			background-color: #13254C;
-			color: #FFF;
-		}
+		.modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
+		.modal-body { background-color: #fefefe; margin: 5% auto; border: 1px solid #13254C; border-radius: 10px; width: 1000px; height: 700px; padding: 0; }
+		.modal-title { border-top-left-radius: 10px; border-top-right-radius: 10px; background-color: #13254C; color: #FFF; height: 60px; font-size: 26px; display: flex; padding-left: 20px; align-items: center; }	
+		.div-line { width: 955px; padding: 15px 0; border-top: 1px solid rgba(19, 37, 76, 0.5); border-bottom: 1px solid rgba(19, 37, 76, 0.5); }
+		.grid-cover { padding: 20px 0; width: 800px; margin-left:20px; text-align: center; }
+		.grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 15px auto; }
+		.dept-card { display: flex; }
+		.card-header { background-color: #13254C; color: white; width: 125px; display: flex; align-items: center; justify-content: center; }
+		.card-body-name { border: 1px solid #13254C; padding: 10px; width: 110px; text-align: center; cursor: pointer; }
+		.card-body-name:hover { border: 1px solid #13254C; background-color:rgba(19, 37, 76, 0.1); cursor: pointer; }
+		.close { text-align: center; height: 60px; background-color: #f1f1f1; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 10px 0; }
+		.close-button { width: 120px; background-color: #13254C; color: #FFF; }
 		.close-button:hover { border: 1px solid #13254C; }
 	</style>
 </head>
@@ -137,7 +65,7 @@
 						</div>
 						<div class="form-group">
 							<label class="label-style" for="managerPhoneNumber">연 &nbsp;락&nbsp; 처</label>
-							<input class="input-style" type="text" id="managerPhoneNumber" name="managerPhoneNumber" th:value="${managerPhoneNumber}" oninput="formatPhoneNumber(this)" required>
+							<input class="input-style" type="text" id="managerPhoneNumber" name="managerPhoneNumber" maxlength="15"  th:value="${managerPhoneNumber}" oninput="formatPhoneNumber(this)" required>
 							<div class="warning" id="phoneWarning" style="display:none;">전화번호는 15자리를 초과할 수 없습니다.</div>
 						</div>
 						<div class="form-group">
@@ -149,12 +77,12 @@
 						</div>
 						<div class="form-group">
 							<label class="label-style" for="password">비 밀 번 호</label>
-							<input class="input-style" type="password" id="managerPassword" name="managerPassword" oninput="checkManagerPassword()" th:value="${managerPassword}" required>
-							<div class="warning" id="passwordWarning" style="display:none;">비밀번호는 영소문자와 숫자를 포함 10에서 16자 사이로 입력해주세요.</div>
+							<input class="input-style" type="password" id="managerPassword" name="managerPassword" minlength="8" maxlength="16" oninput="checkManagerPassword()" th:value="${managerPassword}" required>
+							<div class="warning" id="passwordWarning" style="display:none;">비밀번호는 영소문자와 숫자를 포함 8에서 16자 사이로 입력해주세요.</div>
 						</div>
 						<div class="form-group">
 							<label class="label-style" for="confirmPassword">비밀번호 확인</label>
-							<input class="input-style" type="password" id="confirmPassword" required>
+							<input class="input-style" type="password" id="confirmPassword" minlength="8" maxlength="16" required>
 							<div class="warning" id="confirmPasswordWarning" style="display:none;">비밀번호가 일치하지 않습니다.</div>
 						</div>
 						<div class="button-cover">
@@ -208,7 +136,7 @@
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<script>
 		
-		// [ 부서 검색 ] --------------------------------------------------------
+		// [ 부서 검색 ]
 		function openModal() {
 			document.getElementById("departmentModal").style.display = "block";
 		}
@@ -223,10 +151,10 @@
 			closeModal();
 		}
 		
-		// [ 아이디 길이 검사 ]----------------------------------------------------
+		// [ 아이디 길이 검사 ]
 		const userIdInput = document.getElementById('managerid');
 		const usernameWarning = document.getElementById('usernameWarning');
-		const checkIdButton = document.getElementById('checkIdButton'); // 중복 확인 버튼
+		const checkIdButton = document.getElementById('checkIdButton'); 
 		
 		userIdInput.addEventListener('input', function (event) {
 			const username = userIdInput.value;
@@ -238,7 +166,7 @@
 			} else if (username.length > 7) {
 				usernameWarning.style.display = 'block';
 				usernameWarning.textContent = "아이디는 7자 이어야 합니다.";
-				checkIdButton.disabled = true; // 버튼 비활성화
+				checkIdButton.disabled = true; 
 			} else {
 				usernameWarning.style.display = 'none'; 
 				checkIdButton.disabled = false; 
@@ -247,9 +175,9 @@
 		});
 		
 
-		// [ 아이디 중복 검사 ]----------------------------------------------------
-		const userIdInputCheck = document.getElementById('userIdInput'); // 아이디 입력 필드의 ID
-		const idRequired = document.getElementById('idRequriedWarning'); // 경고 메시지 요소
+		// [ 아이디 중복 검사 ]
+		const userIdInputCheck = document.getElementById('userIdInput'); 
+		const idRequired = document.getElementById('idRequriedWarning'); 
 
 		function checkManagerId(event) {
 			
@@ -269,7 +197,7 @@
 			form.submit(); 
 		} 
 
-		// [ 연락처 형식 포맷 ]----------------------------------------------------
+		// [ 연락처 형식 포맷 ]
 		function formatPhoneNumber(input) {
 	   
 			let value = input.value.replace(/\D/g, '');
@@ -279,14 +207,14 @@
 	    } else if (value.length >= 7 && value.length <11 ) {
 	        input.value = value.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
 					phoneWarning.style.display = 'none';
-	    } else if (value.length > 15) {
+	    } else if (value.length === 15) {
 					phoneWarning.style.display = 'block';
 	    } else {
 	        input.value = value;
 			}
 		}
 
-		// [ 비밀번호 조건 확인 ]----------------------------------------------------
+		// [ 비밀번호 조건 확인 ]
 		function checkManagerPassword() {
 		    const passwordInput = document.getElementById('managerPassword');
 		    const passwordWarning = document.getElementById('passwordWarning');
@@ -295,8 +223,7 @@
 		    const hasLowerCase = /[a-z]/.test(password); 
 		    const hasNumber = /\d/.test(password); 
 
-		    // 영소문자와 숫자가 모두 포함되어 있는지 검사
-		    if (hasLowerCase && hasNumber && password.length >= 10 && password.length <= 16 ) {
+		    if (hasLowerCase && hasNumber && password.length >= 8 && password.length <= 16 ) {
 		        passwordWarning.style.display = 'none'; 
 		    } else {
 		        passwordWarning.style.display = 'block'; 
@@ -304,7 +231,7 @@
 				validateForm();
 		}
 		
-		// [ 비밀번호 일치 확인 ] =========================================================
+		// [ 비밀번호 일치 확인 ] 
 		document.getElementById('confirmPassword').addEventListener('input', function () {
 		    const password = document.getElementById('managerPassword').value;
 		    const confirmPassword = this.value;
@@ -315,9 +242,9 @@
 		    } else {
 		        confirmPasswordWarning.style.display = 'none'; 
 		    }
-		    validateForm(); // 비밀번호 확인 후 유효성 검사
+		    validateForm(); 
 		});
-		// [ 폼 제출 방지 ] =========================================================
+		// [ 폼 제출 방지 ] 
 		function validateForm() {
 		    const passwordInput = document.getElementById('managerPassword');
 		    const confirmPasswordInput = document.getElementById('confirmPassword');
@@ -327,14 +254,13 @@
 		                            /[a-z]/.test(passwordInput.value) && /\d/.test(passwordInput.value);
 		    const isConfirmPasswordValid = passwordInput.value === confirmPasswordInput.value;
 
-		    // 모든 조건이 충족될 때만 true 반환
 		    return isIdValid && isPasswordValid && isConfirmPasswordValid;
 		}
 
-		// 폼 제출 시 validateForm 호출
+		// validateForm 호출
 		document.getElementById('registration-form').addEventListener('submit', function(event) {
 		    if (!validateForm()) {
-		        event.preventDefault(); // 제출 방지
+		        event.preventDefault();
 		    }
 		});
 	</script>

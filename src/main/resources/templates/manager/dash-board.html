@@ -126,7 +126,7 @@
 					<div class="box box-text">
 						<p>부서 민원 보러가기</p>
 						<div class="box-flex">
-							<a th:href="@{/manager/claim-list}" class="box-text box-sub" th:text="'총 100건 &rarr;'"></a>
+							<a th:href="@{/manager/claim-list}" class="box-text box-sub" th:text="'총 ' + ${ claimCnt } + '건 &rarr;'"></a>
 						</div>
 					</div>
 					
@@ -255,11 +255,11 @@
 	          data: ['[[${MedicalStatus.normal}]]', '[[${MedicalStatus.check}]]', 
 	        	  '[[${MedicalStatus.repair}]]', '[[${MedicalStatus.old}]]', '[[${MedicalStatus.expire}]]'],
 	          backgroundColor: [
-	            'rgba(0, 204, 0, 0.5)',    // 정상
-	            'rgba(255, 159, 64, 0.5)', // 점검
-	            'rgba(54, 162, 235, 0.5)', // 수리
-	            'rgba(255, 206, 86, 0.5)', // 노후
-	            'rgba(255, 99, 132, 0.5)'  // 만료
+	            'rgba(0, 204, 0, 0.7)',    // 정상
+	            'rgba(255, 159, 64, 0.7)', // 점검
+	            'rgba(54, 162, 235, 0.7)', // 수리
+	            'rgba(255, 206, 86, 0.7)', // 노후
+	            'rgba(255, 99, 132, 0.7)'  // 만료
 	          ],
 	          borderColor: [
 	            'rgba(0, 204, 0, 1)',    // 정상

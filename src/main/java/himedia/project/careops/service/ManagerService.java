@@ -31,26 +31,13 @@ public class ManagerService {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	private final ManagerDepartmentRepository managerDepartmentRepository;
 	private final ManagerRepository managerRepository;
 	private final ModelMapper modelMapper;
 	
-	public ManagerService(
-			ManagerDepartmentRepository managerDepartmentRepository, ManagerRepository managerRepository, 
+	public ManagerService(ManagerRepository managerRepository, 
 			ModelMapper modelMapper) {
 		this.managerRepository = managerRepository; 
-		this.managerDepartmentRepository = managerDepartmentRepository;
 		this.modelMapper = modelMapper;
-	}
-	
-	// 작성자 : 진혜정
-	// 전체 매니저 정보 리스트로 반환
-	public List<ManagerDTO> findAllManagerList() {
-		
-		List<Manager> managerInfo = managerRepository.findAll();
-		return managerInfo.stream()
-				.map(manager -> modelMapper.map(manager, ManagerDTO.class))
-				.collect(Collectors.toList());
 	}
 	
 	// 작성자 : 진혜정
@@ -87,6 +74,11 @@ public class ManagerService {
     
     // 담당자 검색
 	public List<Manager> searchManagerByFilter(String filter, String value) {
+		
+		if (value == null || value.trim().isEmpty()) {
+	        return List.of(); 
+	    }
+		
 		List<Manager> ManagerSearchList = managerRepository.findAll();
 		return ManagerSearchList.stream()
 							.filter(srh -> {
@@ -105,7 +97,6 @@ public class ManagerService {
     public void updateManager(ManagerDTO managerDTO) {
         Manager manager = managerRepository.findByManagerId(managerDTO.getManagerId())
                 .orElseThrow(() -> new RuntimeException("담당자를 변경할 수 없습니다."));
-        		// orElse는 삭제할까 고민중
         manager.setManagerName(managerDTO.getManagerName());
         manager.setManagerPhoneNumber(managerDTO.getManagerPhoneNumber());
 

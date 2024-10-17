@@ -9,6 +9,7 @@
 			.side-bar { width: 280px; background-color: #13254C; display: flex; }  
 			.nav-color { color: white; }
 			.nav-item { margin: 10px 0; }
+			
 			/* 내 정보 */
 			.mypage-icon { 
 				width: 45px; 
@@ -76,21 +77,30 @@
 		</div>
 		
 		<script type="text/javascript">
-	    document.addEventListener("DOMContentLoaded", function() { // DOM 로드된 이후 이벤트 실행
-        const currentPath = window.location.pathname; // 현재 URL
-        const navLinks = document.querySelectorAll('.nav-link');
+	    document.addEventListener("DOMContentLoaded", function() {
+      const currentPath = window.location.pathname; // 현재 URL
+      const navLinks = document.querySelectorAll('.nav-link');
 
-        navLinks.forEach(link => {
-	        const linkPath = new URL(link.href).pathname;
-	
-	        // 현재 경로와 링크 경로를 비교
-	        if (currentPath === linkPath) {
-	            link.classList.add('active');
-	        } else {
-	            link.classList.remove('active');
-	        }
-        });
+      navLinks.forEach(link => {
+      	const linkPath = new URL(link.href).pathname;
+
+      	// URL 패턴 확인
+	      if (
+	        currentPath === linkPath || // exact match
+	        (linkPath.includes('medical-list') && currentPath.includes('medical')) || // medical 관련 링크
+	        (linkPath.includes('account-list') && currentPath.includes('account')) || // account 관련 링크
+	        (linkPath.includes('safety-list') && currentPath.includes('safety')) || // safety 관련 링크
+	        (linkPath.includes('facility-list') && currentPath.includes('facility')) || // facility 관련 링크
+	        (linkPath.includes('daily-report-list') && currentPath.includes('daily-report')) || // daily-report 관련 링크
+	        (linkPath.includes('claim-list') && currentPath.includes('claim')) // claim 관련 링크
+	      ) {
+	          link.classList.add('active'); // 활성화
+	      } else {
+	          link.classList.remove('active'); // 비활성화
+	      }
+     	});
 	    });
-		</script>
+	</script>
+
 	</body>
 </html>
