@@ -153,8 +153,8 @@
 		    const minorCateCodeInput = document.querySelector('input[name="lmdMinorCateCode"]');
 		    const messageContainer = document.getElementById('messageContainer');
 
-		    // 입력값이 비어있으면 메시지를 초기화하고 종료
-		    if (!minorCateCodeInput.value) {
+		    // 입력값이 비어있으면 메시지 초기화
+		    if (! minorCateCodeInput.value) {
 		        messageContainer.textContent = '';
 		        checkFields(); // 필드 체크 함수 호출
 		        return;
