@@ -47,7 +47,6 @@ public class LoginController {
 		return "common/login"; // 로그인 페이지 반환
 	}
 
-	// 작성자 : 노태윤
 	// 로그인 처리
 	// @return 로그인 결과 및 리다이렉트 url을 포함한 ResponseEntity
 	@PostMapping("")
@@ -63,7 +62,7 @@ public class LoginController {
 	        String userType = (String) loginResult.get("userType");
 	        String userName = (String) loginResult.get("userName");
 	        String departmentName = (String) loginResult.get("departmentName");
-
+	        
 	        //로그인 성공
 	        session.setAttribute("userType", userType);
 	        session.setAttribute("deptNo", deptNo);
