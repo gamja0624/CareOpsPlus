@@ -1,7 +1,7 @@
 package himedia.project.careops.repository;
 
 /**
- * @author 진혜정, 노태윤
+ * @author 노태윤
  * @editDate 2024-09-25
  */
 

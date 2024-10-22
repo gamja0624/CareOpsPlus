@@ -1,7 +1,7 @@
 package himedia.project.careops.repository;
 
 /**
- * @author 진혜정, 노태윤
+ * @author 노태윤
  * @editDate 2024-09-25
  */
 
@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import himedia.project.careops.entity.Manager;
-import himedia.project.careops.entity.ManagerDepartment;
 
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, String> {
