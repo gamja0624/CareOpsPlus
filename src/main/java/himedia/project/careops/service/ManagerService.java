@@ -20,10 +20,7 @@ import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.dto.ManagerDepartmentDTO;
-import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.Manager;
-import himedia.project.careops.entity.ManagerDepartment;
-import himedia.project.careops.repository.ManagerDepartmentRepository;
 import himedia.project.careops.repository.ManagerRepository;
 
 @Service
