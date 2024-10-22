@@ -13,6 +13,7 @@
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
 		<style type="text/css">
+			#side-bar { width: 280px; background-color: #13254C; display: flex; }  
 			/* 콘텐츠 영역 레이아웃 잡기 */
 			.content { display: grid; grid-template-columns: 1fr 1fr; width: 1340px; } /* 두 개의 동일한 열 생성 */ 
 			.s-m { margin-right: 20px; }
@@ -104,7 +105,7 @@
 
 	<body>
 		<!-- 사이드바 -->
-	  <th:block th:insert="~{/common/side-bar :: sidebar}"></th:block>		
+	  <div id="side-bar" th:fragment="~{/common/side-bar :: sidebar}"></div>		
 	  <!--<th:block th:replace="~{/common/side-bar :: side-bar}"></th:block>-->	
 		
 		<!-- 컨텐츠 영역 -->
