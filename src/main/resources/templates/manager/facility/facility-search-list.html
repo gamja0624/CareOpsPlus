@@ -9,7 +9,7 @@
 		
 		<style type="text/css">
 			/* 테이블 */
-			.table-css { height: 660px; margin-bottom: 20px; }
+			.table-css { height: 660px; margin-bottom: 20px; min-height: min-content; }
 			.table { text-align: center; vertical-align: inherit; }
 			.table-row { line-height: 40px; }
 			.table-head { font-size: 20px; font-weight: 600; }
@@ -20,9 +20,9 @@
 			.empty-row { font-size: 25px; font-weight: 600; }
 			
 			/* 버튼 */
-			.btn-status { display: flex; }
+			.btn-status { margin-top: 20px; text-align: right; }
 			.btn-css { width: 80px; border-radius: 50px; }
-			.btn-add { margin-left: auto; background-color: #13254C; color: white; }
+			.btn-add { background-color: #13254C; color: white; }
 			.btn-add:hover { border: 1px solid #13254C; }
 			
 			/* 검색바 */
@@ -90,7 +90,7 @@
 				</div>
 				
 				<th:block th:if="${ session.userType == 'manager' }">
-			    <div class="btn-status">
+			    <div class="btn-table btn-status">
 		        <button th:onclick="'location.href=\'../facility-list\''" class="btn btn-add" type="button">목록</button>
 			    </div>
 				</th:block>
