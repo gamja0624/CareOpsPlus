@@ -1,106 +1,77 @@
+<body>
 <div th:fragment="sidebar" >
-	<head>
-		<style type="text/css">
-			/* 로고 */
-			.logo { margin: 10px 0; }
-			
-			/* 메뉴 */	
-			.hr { margin: 16px 0; background-color: white; height: 1px; }
-			.side-bar { width: 280px; background-color: #13254C; display: flex; }  
-			.nav-color { color: white; }
-			.nav-item { margin: 10px 0; }
-			
-			/* 내 정보 */
-			.mypage-icon { 
-				width: 45px; 
-				height: 45px; 
-				line-height: 45px;
-				margin-right: 10px; 
-				border-radius: 50px; 
-				background-color: white; 
-				text-align: center; 
-				font-size: 20px;
-				font-weight: 600;
-				color: #13254C;
-			}
-			.mypage { margin: 0 auto; cursor: pointer;}
-			.dropup .dropdown-toggle::after { color: white; }
-		</style>
-	</head>
+	<div class="side-bar">
+		<div class="d-flex flex-column flex-shrink-0 p-3">
+	    <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+	    	<img th:src="@{/img/logo.png}" class="logo" alt="사이트 로고" width="248">
+	    </a>
+	    <div class="hr"></div>
+	    <ul class="nav nav-pills flex-column mb-auto">
+	      <li class="nav-item">
+	        <a th:href="@{'/' + ${session.userType} + '/account-list'}" class="nav-link nav-color" aria-current="page">담당자 관리</a>
+	      </li>
+	      <li class="nav-item">
+	        <a th:href="@{'/' + ${session.userType} + '/medical-list'}" class="nav-link nav-color">의료기기 관리</a>
+	      </li>
+	      <li class="nav-item">
+	        <a th:href="@{'/' + ${session.userType} + '/safety-list'}" class="nav-link nav-color">안전 관리</a>
+	      </li>
+	      <li class="nav-item">
+	        <a th:href="@{'/' + ${session.userType} + '/facility-list'}" class="nav-link nav-color">시설 예약 시스템</a>
+	      </li>
+	      <li class="nav-item">
+	        <a th:href="@{'/' + ${session.userType} + '/daily-report-list'}" class="nav-link nav-color">일일 관리 보고서</a>
+	      </li>
+	      <li class="nav-item">
+	        <a th:href="@{'/' + ${session.userType} + '/claim-list'}" class="nav-link nav-color">민원 관리</a>
+	      </li>
+	    </ul>
+	    <div class="hr"></div>
+	    <div class="mypage dropup">
+	      <div class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      		<div th:if="${session.userType == 'manager'}" th:text="M" class="mypage-icon"></div>
+      		<div th:unless="${session.userType == 'manager'}" th:text="A" class="mypage-icon"></div>
+	        <span class="nav-color" th:text="${ session.userName != null ? session.userName + '님' : '사용자님' }"></span>
+	      </div>
+	      <ul class="dropdown-menu text-small shadow">
+	        <li th:if="${session.userType} == 'admin'"  ><a class="dropdown-item" th:href="@{/admin/my-report}" >내 보고서</a></li> 
+	        <li th:if="${session.userType} == 'manager'" ><a class="dropdown-item" th:href="@{ '/' + ${ session.userType } + '/claim-my-list'}">내 민원 목록</a></li>
+	        <li th:if="${session.userType} == 'manager'" ><a class="dropdown-item" th:href="@{ '/' + ${ session.userType } + '/facility-dept-list'}">예약 목록</a></li>
+	        <li><hr class="dropdown-divider"></li>
+					<li><a class="dropdown-item" th:href="@{'/' + ${session.userType} + '/mypage'}">내 정보</a></li>
+	        <li><a class="dropdown-item" th:href="@{'/' + ${session.userType} + '/mypage-change-pw'}">비밀번호 변경</a></li>
+	        <li><hr class="dropdown-divider"></li>
+	        <li><a class="dropdown-item" th:href="@{/logout}">로그아웃</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</div>
+	</div>
+	
+	<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+    const currentPath = window.location.pathname; // 현재 URL
+    const navLinks = document.querySelectorAll('.nav-link');
 
-	<body>
-		<div class="side-bar">
-			<div class="d-flex flex-column flex-shrink-0 p-3">
-		    <a th:href="@{'/' + ${session.userType} + '/dash-board'}" class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-		    	<img th:src="@{/img/logo.png}" class="logo" alt="사이트 로고" width="248">
-		    </a>
-		    <div class="hr"></div>
-		    <ul class="nav nav-pills flex-column mb-auto">
-		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/account-list'}" class="nav-link nav-color" aria-current="page">담당자 관리</a>
-		      </li>
-		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/medical-list'}" class="nav-link nav-color">의료기기 관리</a>
-		      </li>
-		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/safety-list'}" class="nav-link nav-color">안전 관리</a>
-		      </li>
-		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/facility-list'}" class="nav-link nav-color">시설 예약 시스템</a>
-		      </li>
-		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/daily-report-list'}" class="nav-link nav-color">일일 관리 보고서</a>
-		      </li>
-		      <li class="nav-item">
-		        <a th:href="@{'/' + ${session.userType} + '/claim-list'}" class="nav-link nav-color">민원 관리</a>
-		      </li>
-		    </ul>
-		    <div class="hr"></div>
-		    <div class="mypage dropup">
-		      <div class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-	      		<div th:if="${session.userType == 'manager'}" th:text="M" class="mypage-icon"></div>
-	      		<div th:unless="${session.userType == 'manager'}" th:text="A" class="mypage-icon"></div>
-		        <span class="nav-color" th:text="${ session.userName != null ? session.userName + '님' : '사용자님' }"></span>
-		      </div>
-		      <ul class="dropdown-menu text-small shadow">
-		        <li th:if="${session.userType} == 'admin'"  ><a class="dropdown-item" th:href="@{/admin/my-report}" >내 보고서</a></li> 
-		        <li th:if="${session.userType} == 'manager'" ><a class="dropdown-item" th:href="@{ '/' + ${ session.userType } + '/claim-my-list'}">내 민원 목록</a></li>
-		        <li th:if="${session.userType} == 'manager'" ><a class="dropdown-item" th:href="@{ '/' + ${ session.userType } + '/facility-dept-list'}">예약 목록</a></li>
-		        <li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item" th:href="@{'/' + ${session.userType} + '/mypage'}">내 정보</a></li>
-		        <li><a class="dropdown-item" th:href="@{'/' + ${session.userType} + '/mypage-change-pw'}">비밀번호 변경</a></li>
-		        <li><hr class="dropdown-divider"></li>
-		        <li><a class="dropdown-item" th:href="@{/logout}">로그아웃</a></li>
-		      </ul>
-		    </div>
-		  </div>
-		</div>
-		
-		<script type="text/javascript">
-	    document.addEventListener("DOMContentLoaded", function() {
-      const currentPath = window.location.pathname; // 현재 URL
-      const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+    	const linkPath = new URL(link.href).pathname;
 
-      navLinks.forEach(link => {
-      	const linkPath = new URL(link.href).pathname;
+    	// URL 패턴 확인
+      if (
+        currentPath === linkPath || // exact match
+        (linkPath.includes('medical-list') && currentPath.includes('medical')) || // medical 관련 링크
+        (linkPath.includes('account-list') && currentPath.includes('account')) || // account 관련 링크
+        (linkPath.includes('safety-list') && currentPath.includes('safety')) || // safety 관련 링크
+        (linkPath.includes('facility-list') && currentPath.includes('facility')) || // facility 관련 링크
+        (linkPath.includes('daily-report-list') && currentPath.includes('daily-report')) || // daily-report 관련 링크
+        (linkPath.includes('claim-list') && currentPath.includes('claim')) // claim 관련 링크
+      ) {
+          link.classList.add('active'); // 활성화
+      } else {
+          link.classList.remove('active'); // 비활성화
+      }
+   	});
+    });
+</script>
 
-      	// URL 패턴 확인
-	      if (
-	        currentPath === linkPath || // exact match
-	        (linkPath.includes('medical-list') && currentPath.includes('medical')) || // medical 관련 링크
-	        (linkPath.includes('account-list') && currentPath.includes('account')) || // account 관련 링크
-	        (linkPath.includes('safety-list') && currentPath.includes('safety')) || // safety 관련 링크
-	        (linkPath.includes('facility-list') && currentPath.includes('facility')) || // facility 관련 링크
-	        (linkPath.includes('daily-report-list') && currentPath.includes('daily-report')) || // daily-report 관련 링크
-	        (linkPath.includes('claim-list') && currentPath.includes('claim')) // claim 관련 링크
-	      ) {
-	          link.classList.add('active'); // 활성화
-	      } else {
-	          link.classList.remove('active'); // 비활성화
-	      }
-     	});
-	    });
-	</script>
-
-	</body>
-</div>
+</body>
