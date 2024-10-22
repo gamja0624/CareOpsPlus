@@ -41,7 +41,9 @@
 		<!-- section -->
 		<div class="section">
 			<!-- 제목 -->
-			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 정렬 결과 </h1>
+			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 정렬 결과수 :  
+				<th:block th:text="${ '총 ' + claimSort.size() } + '개' "></th:block>
+			</h1>
 			<div class="table-cover">
 				<table class="table table-hover claim-list">
 					<thead>
@@ -110,7 +112,7 @@
 			</div>
 			<!--버튼-->
 			<div class="button-cover">
-			    <button type="button" class="btn" onclick="location.href='/admin/claim-list'">목록으로</button>
+			    <button type="button" class="btn" onclick="location.href='/admin/claim-list'">목록</button>
 			</div>
 
 			<div class="search-box" >

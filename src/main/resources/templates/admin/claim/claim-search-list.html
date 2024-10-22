@@ -116,6 +116,9 @@
 				</table>
 			</div>
 			<!--버튼-->
+			<div class="button-cover">
+		    <button type="button" class="btn" onclick="location.href='/admin/claim-list'">목록</button>
+			</div>
 			<div class="search-box" >
 				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/claim-list/search' }" method="get">
 					<label class="" for="column"></label>

@@ -88,9 +88,11 @@ public class ClaimService {
 	// 작성자 최은지 
 	// 이미지 조회 
 	public byte[] claimImageData(Integer claimNo) {
-	    Claim claim = claimRepository.findById(claimNo)
-	            .orElseThrow(() -> new IllegalArgumentException("클레임 번호가 유효하지 않습니다."));
+	   
+		Claim claim = claimRepository.findById(claimNo)
+	            .orElseThrow(() -> new IllegalArgumentException("민원 번호가 유효하지 않습니다."));
 	    byte[] imageData = claim.getClaimImageData();
+	    
 	    return imageData; 
 	}
 
@@ -101,13 +103,13 @@ public class ClaimService {
 		Claim claim = claimRepository.findById(claimNo).orElseThrow(IllegalArgumentException::new);
 		
 		ClaimDTO claimDTO = modelMapper.map(claim, ClaimDTO.class);
-		claimDTO.setClaimImageData(claim.getClaimImageData()); // 이미지 데이터 설정
+		claimDTO.setClaimImageData(claim.getClaimImageData()); 
+		
 		return modelMapper.map(claim, ClaimDTO.class);	
-		// return claimDTO; 
 	}
 	
 	// 작성자 : 최은지 
-	// 민원 검색 ( 혜정님 버전 ) 
+	// 민원 검색 
 	public List<Claim> searchClaimByFilter(String filter, String value) {
 	    
 		if (value == null || value.trim().isEmpty()) {
@@ -143,26 +145,26 @@ public class ClaimService {
         return claimSortList.stream()
                             .filter(srt -> {
                                 if (sort.equals("claimNotApprove")) {
-                                    return !srt.getClaimApprove(); // 미승인 필터링
+                                    return !srt.getClaimApprove(); 
                                 } else if (sort.equals("claimApprove")) {
-                                    return srt.getClaimApprove() && !srt.getClaimComplete(); // 승인 필터링
+                                    return srt.getClaimApprove() && !srt.getClaimComplete(); 
                                 } else if (sort.equals("claimComplete")) {
-                                    return srt.getClaimComplete(); // 완료 필터링
+                                    return srt.getClaimComplete(); 
                                 }
-                                return false; // 기본값
+                                return false;
                             }).collect(Collectors.toList());
     }
 	// 작성자 : 최은지
 	// 민원 승인
 	public void approveClaim(ClaimDTO claimDTO) {
-		log.info("민원승인 서비스 실행");
+		
 		Claim claim =  claimRepository.findById(claimDTO.getClaimNo()).orElseThrow(IllegalArgumentException::new);
 		claim.setClaimApprove(true);		
 		claimRepository.save(claim);
 		
 		Optional<ClaimSubCategory> subCategory = claimSubCategoryRepository.findById(claim.getClaimSubCategoryNo());
-		
 		String catogoryCode = subCategory.get().getLmdMinorCateCode();
+		
 		if(catogoryCode != null) {
 			ListMedicalDevices medicalStatus = medicalRepository.findById(catogoryCode).get();		
 			medicalStatus.setLmdStatus(claim.getClaimCategoryStatus());	
@@ -175,11 +177,13 @@ public class ClaimService {
 	// 작성자 : 최은지 
 	// 민원 처리
 	public void completeClaim(ClaimDTO claimDTO) {
+		
 		Claim claim =  claimRepository.findById(claimDTO.getClaimNo()).orElseThrow(IllegalArgumentException::new);
-		Date currentDate = new Date(System.currentTimeMillis()); // 현재 날짜 가져오기 ( 임시.. )
+		Date currentDate = new Date(System.currentTimeMillis()); 
 		
 		Optional<ClaimSubCategory> subCategory = claimSubCategoryRepository.findById(claim.getClaimSubCategoryNo());
 		String catogoryCode = subCategory.get().getLmdMinorCateCode();
+		
 		if(catogoryCode != null) {
 			ListMedicalDevices medicalStatus = medicalRepository.findById(catogoryCode).get();		
 		
@@ -188,6 +192,7 @@ public class ClaimService {
 			medicalRepository.save(medicalStatus);
 		}
 		claim.setClaimComplete(true);
+		
 		claimRepository.save(claim);
 	}
 	
@@ -294,7 +299,8 @@ public class ClaimService {
 	// 작성자 : 최은지
 	// 민원 소분류 정보 찾기
 	public ClaimSubCategory findBySubcategoryName(String subCategoryName) {
-	    return claimSubCategoryRepository.findAll()
+	    
+		return claimSubCategoryRepository.findAll()
 	            .stream()
 	            .filter(category -> 
 	                category.getLmdMinorCateName() != null && category.getLmdMinorCateName().equals(subCategoryName) || 
@@ -318,13 +324,15 @@ public class ClaimService {
 	            .filter(subCategory -> subCategory.getLmdMinorCateName() != null)
 	            .map(subCategory -> modelMapper.map(subCategory, ClaimSubCategoryDTO.class))
 	            .collect(Collectors.toList());
-        return new PageImpl<>(filteredList, page, claimSubCategoryPage.getTotalElements());
+        
+	    return new PageImpl<>(filteredList, page, claimSubCategoryPage.getTotalElements());
 	}
 	
 	// 작성자 : 최은지
 	// 민원 소분류 검색
 	public List<ClaimSubCategoryDTO> searchSubCategories(String filter, String value) {
-        List<ClaimSubCategory> claimSubCategories;
+        
+		List<ClaimSubCategory> claimSubCategories;
         
         if ("lmdMinorCateName".equals(filter)) {
             claimSubCategories = claimSubCategoryRepository.findByLmdMinorCateNameContaining(value);
@@ -354,10 +362,12 @@ public class ClaimService {
 	// 작성자 : 최은지 
 	// 내가 쓴 민원 페이지로 반환
 	public Page<ClaimDTO> managerClaim (String managerId , Pageable pageable) {
-	    pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+	    
+		pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
                 Sort.by("claimNo").descending());
-	    Page<Claim> myClaimList = claimRepository.findByManagerId(managerId, pageable); 
+	    
+		Page<Claim> myClaimList = claimRepository.findByManagerId(managerId, pageable); 
 	    
 	    return myClaimList.map(cl -> modelMapper.map(cl, ClaimDTO.class));
 	}
@@ -398,6 +408,7 @@ public class ClaimService {
 		claim.setClaimDate(currentDate);
 		claim.setClaimApprove(false);
 		claim.setClaimComplete(false);
+		
 		claimRepository.save(claim);	
 	}
 	
@@ -406,6 +417,7 @@ public class ClaimService {
 	public void updateClaim(Integer claimNo, ClaimDTO claimDTO,  MultipartFile file) throws IOException {
 		
 		Claim claim = claimRepository.findById(claimNo).get();
+		
 		if (file != null && !file.isEmpty()) {
 			claim.setClaimImageData(file.getBytes());
 	        claim.setClaimAttachment(file.getOriginalFilename());	
@@ -428,6 +440,7 @@ public class ClaimService {
 	// 작성자 : 최은지
 	// 부서별 민원 조회
 	public List<Claim> findByManagerDeptClaim(Integer managerDeptNo) {
+		
 		return claimRepository.findAll()
 				.stream()
 				.filter(deptNo -> deptNo.getManagerDeptNo() == managerDeptNo)
