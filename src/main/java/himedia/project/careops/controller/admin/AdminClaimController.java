@@ -75,33 +75,39 @@ public class AdminClaimController {
 	// 민원 검색 결과 조회 페이지 
 	@GetMapping("/claim-list/search")
 	public String claimSearchFitler(@RequestParam String filter, @RequestParam String value, Model model) {
+		
 		List<Claim> claimSearch = claimService.searchClaimByFilter(filter, value);
 		List<ClaimReplyDTO> claimReply =  claimReplyService.claimReplyList();
+		
 		model.addAttribute("claimSearch", claimSearch);
 		model.addAttribute("claimReply", claimReply);
+		
 		return "/admin/claim/claim-search-list";
 	}
 	
 	// 민원 정렬 페이지 
 	@GetMapping("/claim-list/sort")
 	public String claimSroting(@RequestParam String sort, @RequestParam String value, Model model) {
+		
 		List<Claim> claimSort = claimService.sortClaim(sort, value);
 		List<ClaimReplyDTO> claimReply =  claimReplyService.claimReplyList();
+		
 		model.addAttribute("claimSort", claimSort);
 		model.addAttribute("claimReply", claimReply);
+		
 		return "/admin/claim/claim-sort-list"; 
 	}
 	
 	@GetMapping("/claim-image/{claimNo}")
 	public ResponseEntity<byte[]> getClaimImage(@PathVariable ("claimNo") Integer claimNo) {
-	    byte[] imageData = claimService.claimImageData(claimNo);
+	   
+		byte[] imageData = claimService.claimImageData(claimNo);
 	    
 	    if (imageData != null) {
 	        return ResponseEntity.ok()
-	                .contentType(MediaType.IMAGE_JPEG) // 필요에 따라 MIME 타입 변경
+	                .contentType(MediaType.IMAGE_JPEG) // 필요에 따라 MediaType 타입 변경
 	                .body(imageData);
 	    } else {
-	    	log.warn("해당 민원에는 이미지가 존재하지 않습니다: {}", claimNo);
 	    	return ResponseEntity.noContent().build(); // 204 No Content 반환 (아무것도 없음)
 	    }
 	}
@@ -112,6 +118,7 @@ public class AdminClaimController {
 		
 		ClaimDTO claim = claimService.findByClaimNo(claimNo);		
 		ManagerDTO manager = managerService.findByManagerId(claim.getManagerId());
+		
 		model.addAttribute("claim", claim);
 		model.addAttribute("manager", manager);
 		
@@ -122,7 +129,9 @@ public class AdminClaimController {
 	// 민원 승인
 	@PostMapping("/claim-approve")
 	public String claimApprove(@ModelAttribute ClaimDTO claimDTO) {
+		
 		claimService.approveClaim(claimDTO);
+		
 		return "redirect:./claim-list";
 	}
 	
@@ -130,8 +139,10 @@ public class AdminClaimController {
 	// 답변 작성
 	@GetMapping("/claim-re/{claimNo}")
 	public String claimReplyForm(@PathVariable Integer claimNo, Model model) {
+		
 		ClaimDTO claim = claimService.findByClaimNo(claimNo);		
 		ManagerDTO manager = managerService.findByManagerId(claim.getManagerId());
+		
 		model.addAttribute("claim", claim);	
 		model.addAttribute("manager", manager);
 		
@@ -141,8 +152,10 @@ public class AdminClaimController {
 	// 답변 저장 및 민원 처리 
 	@PostMapping("/claim-reply-save/{claimNo}")
 	public String claimReplySave(@PathVariable("claimNo") Integer claimNo, @ModelAttribute ClaimDTO claimDTO, @ModelAttribute ClaimReplyDTO claimReplyDTO, HttpSession session) {
+		
 		claimService.completeClaim(claimDTO);
 		claimReplyService.saveClaimReply(claimReplyDTO, claimNo, session);
+		
 		return "redirect:/admin/claim-list";
 	}
 	
@@ -157,6 +170,7 @@ public class AdminClaimController {
     	model.addAttribute("claim", claim);
     	model.addAttribute("manager", manager);
     	model.addAttribute("claimReply", claimReply);
+    	
     	return "/admin/claim/claim-re-detail";
     }
 

@@ -180,7 +180,6 @@ public class MyPageService {
                (password.matches(".*[A-Z].*") || password.matches(".*\\d.*")); // 대문자 또는 숫자 포함
     }
     
-    
     // 현재 비밀번호가 정확한지 확인하는 메서드
     // userType에 따라 Admin 또는 Manager의 비밀번호를 검증
     public boolean isCurrentPasswordCorrect(String userId, String currentPassword, String userType) {

@@ -62,6 +62,7 @@ public class ClaimReplyService {
 	public List<ClaimReplyDTO> claimReplyList() {
 		
 		List<ClaimReply> claimReplyList = claimReplyRepository.findAll();
+		
 		return claimReplyList.stream()
 					.map(claimReply -> modelMapper.map(claimReply, ClaimReplyDTO.class))
 					.collect(Collectors.toList());		

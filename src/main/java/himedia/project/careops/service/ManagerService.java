@@ -95,7 +95,8 @@ public class ManagerService {
     // 작성자 : 최은지
     // 담당자 변경 ( 이름 , 전화번호 변경 )
     public void updateManager(ManagerDTO managerDTO) {
-        Manager manager = managerRepository.findByManagerId(managerDTO.getManagerId())
+        
+    	Manager manager = managerRepository.findByManagerId(managerDTO.getManagerId())
                 .orElseThrow(() -> new RuntimeException("담당자를 변경할 수 없습니다."));
         manager.setManagerName(managerDTO.getManagerName());
         manager.setManagerPhoneNumber(managerDTO.getManagerPhoneNumber());
@@ -107,10 +108,9 @@ public class ManagerService {
     // 작성자 : 최은지
     // 담당자 중복 확인
     public boolean checkMangerId(String managerId) {
+    	
     	Optional<Manager> checkId = managerRepository.findByManagerId(managerId);
     
-    	checkId.isEmpty();
-    	
     	if(checkId.isPresent()) {
     		return true;
     	}

@@ -54,17 +54,22 @@ public class AdminAccountController {
 		
 		Page<ManagerDTO> manager = managerService.allManager(page);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(manager);
+		int totalPages = manager.getTotalPages();
 		
 		model.addAttribute("manager", manager);
 		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages", totalPages);	
 		
 		return "admin/account/account-list";
 	}
 	// 담당자 검색
 	@GetMapping("/account-list/search")
 	public String accountSearchFitler(@RequestParam String filter, @RequestParam String value, Model model) {
+
 		List<Manager> managerSearch = managerService.searchManagerByFilter(filter, value);
+		
 		model.addAttribute("managerSearch", managerSearch);
+		
 		return "admin/account/account-search-list";
 	}
 	
@@ -72,8 +77,11 @@ public class AdminAccountController {
 	// 담당자 등록 페이지
 	@GetMapping("/account-add")
 	public String accountAdd(Model model) {
+		
 		List<ManagerDepartmentDTO> managerDepartment= managerDepartmentService.findAllDepartmentsList();
+		
 		model.addAttribute("managerDepartment", managerDepartment);
+		
 		return "admin/account/account-add";
 	}
 	
@@ -94,7 +102,6 @@ public class AdminAccountController {
 	        redirectAttributes.addFlashAttribute("message", "사용 가능한 아이디입니다.");
 	    }
 		
-		
 		// 입력값 저장 (폼 데이터 초기화 방지)
 		redirectAttributes.addFlashAttribute("managerId", managerId);
 		redirectAttributes.addFlashAttribute("managerDeptName", managerDeptName);
@@ -107,6 +114,7 @@ public class AdminAccountController {
 	// 담당자 등록 - 저장  
 	@PostMapping("/account-add-complete")
 	public String accountSave(@ModelAttribute ManagerDTO managerDTO) {
+		
 		ManagerDepartmentDTO department = managerDepartmentService.findByDeptName(managerDTO.getManagerDeptName());
 		managerService.saveManager(managerDTO, department);
 		
@@ -116,14 +124,19 @@ public class AdminAccountController {
 	// 담당자 수정 페이지
 	@GetMapping("/account-edit/{managerId}")
 	public String accountEdit(@PathVariable("managerId") String managerId, Model model) {
+		
 		ManagerDTO manager = managerService.findByManagerId(managerId);
+		
 		model.addAttribute("manager", manager);
+		
 		return "admin/account/account-edit";
 	}
 	
 	@PostMapping("/account-edit-complete")
     public String accuntEditComplete(@ModelAttribute ManagerDTO managerDTO) {
+		
 		managerService.updateManager(managerDTO);
-        return "redirect:./account-list"; 
+       
+		return "redirect:./account-list"; 
     }
 }

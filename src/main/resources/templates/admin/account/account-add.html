@@ -10,11 +10,11 @@
 	<style type="text/css">
 		/* 등록 폼 스타일 */
 		.layout-table { width: 1340px; height: 650px; border: 3px solid #13254C; border-radius: 20px; }
-		.form-whole-cover { width: 650px; margin: 100px auto; display: flex; font-weight: 600; font-size: 18px; }
-		.form-group { margin-bottom: 16px; }
+		.form-whole-cover { width: 650px; margin: 80px auto; display: flex; font-weight: 600; font-size: 18px; }
+		.form-group { margin-bottom: 26px; }
 		.form-group .label-style { margin-right: 8px; width: 90px; }
 		.form-group .input-style { width: 400px; padding: 10px; border-radius: 5px; background-color: #13254C; margin-left: auto; color: #FFF; }
-		.warning { width: 400px; margin: 2px auto 0 auto; color: red; font-size: 16px; }
+		.warning { width: 400px; margin: 1px auto -20px auto; color: red; font-size: 16px; }
 		.srh-button { padding: 10px; margin-left: 15px; }
 		.button-cover { width: 600px; margin-top: 30px; text-align: center; }
 		.account-button {  color: #FFF; background-color: #13254C; cursor: pointer; }
@@ -250,7 +250,7 @@
 		    const confirmPasswordInput = document.getElementById('confirmPassword');
 
 		    const isIdValid = userIdInput.value.length >= 7;
-		    const isPasswordValid = passwordInput.value.length >= 5 && passwordInput.value.length <= 16 &&
+		    const isPasswordValid = passwordInput.value.length >= 8 && passwordInput.value.length <= 16 &&
 		                            /[a-z]/.test(passwordInput.value) && /\d/.test(passwordInput.value);
 		    const isConfirmPasswordValid = passwordInput.value === confirmPasswordInput.value;
 

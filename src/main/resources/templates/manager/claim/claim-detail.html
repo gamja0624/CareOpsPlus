@@ -11,12 +11,12 @@
 
 	<style type="text/css">
 		.layout-table { width: 1340px; height: 100%; border: 3px solid #13254C; border-radius: 20px; }
-		.container { padding: 15px; margin: 0 auto; width: 1300px; }
+		.container { padding: 15px; margin: 0 auto; width: 1300px; font-size: 20px; }
 		.claim-detail-table { border-collapse: separate; border-spacing: 0 5px;}
 		.claim-detail-table th, .claim-detail-table td { border-top: 1px solid #13254C; border-bottom: 1px solid #13254C; text-align: center; height: 30px; line-height: 30px; }
 		.claim-detail-table th { background-color: #13254C; color: #FFF; width: 200px; }
 		.claim-content { display: flex; margin-top: 10px; }
-		.claim-image { text-align: center; border: 1px solid #13254C; border-radius: 5px; width: 400px; height: 400px; margin-right: 20px; }
+		.claim-image { text-align: center; border: 1px solid #13254C; border-radius: 5px; width: 400px; height: 400px; margin-right: 20px; padding: 5px; }
 		.claim-image img { max-width: 100%; }
 		.th-wide { width: 420px; }
 		.td-mid { width: 220px; }
@@ -64,7 +64,7 @@
 							<td th:text="${claim.claimCategoryName}" class="td-mid"></td>
 							<th>소분류</th>
 							<td th:text="${claim.claimSubCategoryName}" class="td-mid"></td>
-							<th>요청구분</th>
+							<th>요청 구분</th>
 							<td th:text="${claim.claimCategoryStatus}" class="td-mid"></td>
 						</tr>
 					</table>
