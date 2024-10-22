@@ -30,16 +30,7 @@ public class SafetyService {
 		this.modelMapper = modelMapper;
 	}
 
-	// SafetyManagement 테이블 전체조회
-	public List<SafetyManagementDTO> safetyResultList() {
-		//log.info("safetyResultList 실행");
-		List<SafetyManagement> safetyResultList = safetyManagementRepository.findAll();
-		return safetyResultList.stream()
-				.map(safetyManagement -> modelMapper.map(safetyManagement, SafetyManagementDTO.class))
-				.collect(Collectors.toList());
-	}
-
-	// SafetyManagementChecklist테이블 전체조회 메소드
+	// SafetyManagement테이블 전체조회 메소드
 	public List<SafetyManagementDTO> safetyListAll() {
 
 		List<SafetyManagement> safetyListAll = safetyManagementRepository.findAll();
@@ -49,32 +40,30 @@ public class SafetyService {
 				.collect(Collectors.toList());
 	}
 
-	// 전체 조회중 1층의 소화기인 리스트
-	public List<SafetyManagementDTO> safetyListFirstPage() {
-
-		List<SafetyManagementDTO> safetyListAll = safetyListAll();
-
-		return safetyListAll.stream().filter(f -> f.getSmFacilityFloor() == 1 && f.getSmList().equals("소화기"))
-				.map(list -> modelMapper.map(list, SafetyManagementDTO.class)).collect(Collectors.toList());
-	}
-
-	// smList만 보내는 메소드
+	// 점검항목(smList)만 보내는 메소드
 	public List<String> findSmList() {
-		List<String> smList = safetyListAll().stream().map(SafetyManagementDTO::getSmList) // smList 추출
-				.distinct() // 중복 제거
-				.collect(Collectors.toList()); // 결과를 리스트로 수집
+		
+		List<String> smList = safetyListAll().stream().map(SafetyManagementDTO::getSmList) 	// smList 추출
+				.distinct() 																// 중복 제거
+				.collect(Collectors.toList()); 												// 결과를 리스트로 수집
+		
 		return smList;
 	}
 
+	// 해당 층수에 대한 점검항목(smList)의 데이터를 불러오는 메소드
 	public List<SafetyManagementDTO> findStatusList(String smList, int smFacilityFloor) {
+		
 		List<SafetyManagement> findbySmListandSmFacilityFloor = safetyManagementRepository
 				.findBySmListAndSmFacilityFloor(smList, smFacilityFloor);
+		
 		return findbySmListandSmFacilityFloor.stream().map(list -> modelMapper.map(list, SafetyManagementDTO.class))
 				.collect(Collectors.toList());
 	}
 	
+	// [수정된 안전관리 현황 실시간 Update]
 	@Transactional
 	public void updateStatus(SafetyManagementDTO updateData) {
+		
 	    // SafetyManagement 엔티티 조회
 	    SafetyManagement entity = safetyManagementRepository.findBySmListAndSmFacilityNoAndSmFacilityFloor(
 	    		updateData.getSmList(), updateData.getSmFacilityNo(), updateData.getSmFacilityFloor());
