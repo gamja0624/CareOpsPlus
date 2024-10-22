@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import himedia.project.careops.dto.ManagerDepartmentDTO;
-import himedia.project.careops.entity.Manager;
 import himedia.project.careops.entity.ManagerDepartment;
 import himedia.project.careops.repository.ManagerDepartmentRepository;
 import lombok.extern.slf4j.Slf4j;

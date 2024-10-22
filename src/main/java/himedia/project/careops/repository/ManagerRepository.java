@@ -6,11 +6,11 @@ package himedia.project.careops.repository;
  */
 
 import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import himedia.project.careops.entity.Manager;
-import himedia.project.careops.entity.ManagerDepartment;
 
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, String> {
