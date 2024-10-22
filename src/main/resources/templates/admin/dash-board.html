@@ -105,8 +105,9 @@
 
 	<body>
 		<!-- 사이드바 -->
-	  <div id="side-bar" th:fragment="~{/common/side-bar :: sidebar}"></div>		
-	  <!--<th:block th:replace="~{/common/side-bar :: side-bar}"></th:block>-->	
+	  <div id="side-bar" >
+		  <th:block th:fragment="~{/common/side-bar :: sidebar}"></th:block>
+		</div>		
 		
 		<!-- 컨텐츠 영역 -->
 		<div class="content">
