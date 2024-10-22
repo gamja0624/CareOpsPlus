@@ -7,7 +7,6 @@
 	<title>CareOps+ | 민원 신청 </title>
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
-
 	<style type="text/css">
 		/*  공 통  */
 		.layout-table { width: 1340px; height: 100%; border: 3px solid #13254C; border-radius: 20px; }
@@ -67,7 +66,7 @@
 				<form class="claim-form" action="/manager/claim-submit" method="post"  enctype="multipart/form-data">
 					<div class="claim-box">
 						<label for="claimTitle" class="claim-title">민&nbsp;&nbsp; 원&nbsp;&nbsp;&nbsp; 제&nbsp;&nbsp; 목</label>
-						<input type="text" class="claim-input-wide" name="claimTitle" required>
+						<input type="text" class="claim-input-wide" name="claimTitle" maxlength='40' required>
 					</div>
 
 					<div class="claim-box">

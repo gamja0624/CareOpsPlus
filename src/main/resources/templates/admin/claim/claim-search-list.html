@@ -83,7 +83,7 @@
 										<th:block th:if="${claimSearch.claimApprove} == true and ${claimSearch.claimComplete} == false">
 							        <a href="#" 
 							           th:onclick="'handleClick(event, ' + ${claimSearch.claimApprove} + ', ' + ${claimSearch.claimComplete} + ', \'' + ${claimSearch.claimNo} + '\')'">
-							            <img alt="답변작성" th:src="@{/img/test.png}"> 
+							            <img alt="답변작성" th:src="@{/img/write.png}"> 
 							        </a>
 									    </th:block>
 									    <th:block th:if="${claimSearch.claimApprove} == true and ${claimSearch.claimComplete} == true">

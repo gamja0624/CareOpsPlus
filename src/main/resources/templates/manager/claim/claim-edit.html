@@ -68,7 +68,7 @@
 				<form class="claim-form"  th:action="@{/manager/claim-edit-complete/{claimNo}(claimNo=${claim.claimNo})}" method="post"  enctype="multipart/form-data">
 					<div class="claim-box">
 						<label for="claimTitle" class="claim-title">민&nbsp;&nbsp; 원&nbsp;&nbsp;&nbsp; 제&nbsp;&nbsp; 목</label>
-						<input type="text" class="claim-input-wide" th:value="${claim.claimTitle}" name="claimTitle" required>
+						<input type="text" class="claim-input-wide" maxlength='40' th:value="${claim.claimTitle}" name="claimTitle" required>
 					</div>
 					<div class="claim-box">
 						

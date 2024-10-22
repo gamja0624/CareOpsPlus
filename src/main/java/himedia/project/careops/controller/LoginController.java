@@ -33,13 +33,6 @@ public class LoginController {
 		this.loginService = loginService;
 	}
 
-	// 작성자 : 진혜정
-	// 파라미터 값으로 favicon.ico 들어오는 거 방지
-	@GetMapping("favicon.ico")
-	@ResponseBody
-	public void returnNoFavicon() {
-	}
-
 	// 작성자 : 노태윤
 	// 로그인 페이지를 표시해줌
 	@GetMapping("")
