@@ -6,7 +6,6 @@ package himedia.project.careops.controller.admin;
  */
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +29,6 @@ import himedia.project.careops.dto.ClaimDTO;
 import himedia.project.careops.dto.ClaimReplyDTO;
 import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.entity.Claim;
-import himedia.project.careops.entity.ClaimSubCategory;
-import himedia.project.careops.repository.ClaimSubCategoryRepository;
 import himedia.project.careops.service.ClaimReplyService;
 import himedia.project.careops.service.ClaimService;
 import himedia.project.careops.service.ManagerService;

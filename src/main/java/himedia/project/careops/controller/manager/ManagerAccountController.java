@@ -2,7 +2,7 @@ package himedia.project.careops.controller.manager;
 
 /**
  * @author 최은지 
- * @editDate 2024-09-30 ~
+ * @editDate 2024-09-30
  */
 
 import java.util.List;

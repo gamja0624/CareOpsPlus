@@ -15,12 +15,12 @@ public class ClaimReplyId implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Integer claimNo;			 	// 민원 번호
-    private String claimCategoryNo; 		// 민원 대분류 번호
-    private int claimSubCategoryNo; 	// 민원 소분류 번호
-    private String managerId; 			// 민원 담당자 아이디
-    private int managerDeptNo; 		// 민원 담당자 부서번호
-
+	private Integer claimNo;            
+    private String claimCategoryNo; 		
+    private int claimSubCategoryNo; 	
+    private String managerId; 			
+    private int managerDeptNo; 		
+    
     public ClaimReplyId() {}
 
 	public ClaimReplyId(Integer claimNo, String claimCategoryNo, int claimSubCategoryNo, String managerId,
