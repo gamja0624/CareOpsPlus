@@ -6,10 +6,6 @@ package himedia.project.careops.entity;
  */
 
 import java.sql.Date;
-/**
- * @author 이홍준 
- * @editDate 2024-09-24
- */
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
