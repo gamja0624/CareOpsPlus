@@ -17,22 +17,22 @@ import lombok.ToString;
 @ToString
 public class ClaimDTO {
 
-	private Integer claimNo;						// 민원 번호 ( 고유키 )
-	private String managerId;					// 담당자 아이디 ( 외래키 )         				
-	private int managerDeptNo;					// 담당자 부서번호 ( 외래키 ) 
-	private String claimCategoryNo;				// 민원 대분류 번호 ( 외래키 )
-	private int claimSubCategoryNo;				// 민원 소뷴류 번호 ( 외래키 )	
-	private String claimCategoryName;			// 민원 대분류 이름 
-	private String claimSubCategoryName;		// 민원 소분류 이름
-	private String claimCategoryStatus;			// 민원 요청 구분 ( * 의료 기기 관리 ) 
-	private String claimManagerName;			// 담당자 이름
-	private Date claimDate;						// 민원 신청일
-	private String claimTitle;					// 민원 제목
-	private String claimContent;				// 민원 내용
-	private Boolean claimApprove;				// 민원 승인 여부
-	private Boolean claimComplete;				// 민원 처리 여부
-	private String claimAttachment;				// 민원 첨부파일
-	private byte[] claimImageData;                  // 민원 이진 데이터 (LONGBLOB 추가)
+	private Integer claimNo;             // 민원 번호 ( 고유키 )
+	private String managerId;            // 담당자 아이디 ( 외래키 )         				
+	private int managerDeptNo;           // 담당자 부서번호 ( 외래키 ) 
+	private String claimCategoryNo;      // 민원 대분류 번호 ( 외래키 )
+	private int claimSubCategoryNo;      // 민원 소뷴류 번호 ( 외래키 )	
+	private String claimCategoryName;    // 민원 대분류 이름 
+	private String claimSubCategoryName; // 민원 소분류 이름
+	private String claimCategoryStatus;	 // 민원 요청 구분  
+	private String claimManagerName;     // 담당자 이름
+	private Date claimDate;              // 민원 신청일
+	private String claimTitle;           // 민원 제목
+	private String claimContent;         // 민원 내용
+	private Boolean claimApprove;        // 민원 승인 여부
+	private Boolean claimComplete;       // 민원 처리 여부
+	private String claimAttachment;      // 민원 첨부파일 경로
+	private byte[] claimImageData;       // 민원 이미지 데이터 
 	
 	public ClaimDTO() {}
 

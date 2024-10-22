@@ -3,7 +3,6 @@ package himedia.project.careops.dto;
 /**
  * @author 최은지 
  * @editDate 2024-09-25
- * @edit smlNo int -> Integer
  */
 
 import lombok.Getter;
@@ -18,8 +17,8 @@ public class ClaimSubCategoryDTO {
 	private int claimSubCategoryNo;                 // 민원 소분류 번호 ( 기본키 auto_increment)
 	private String lmdMinorCateCode;                // 장비 세분류 코드 ( 의료기기 관리 )
 	private String lmdMinorCateName;                // 장비 세분류명 ( 의료기기 관리 )
-	private Integer subCategorySort;                              // 세부항목 번호 ( 안전관리 )
-	private String subCategoryName;
+	private Integer subCategorySort;                // 세부항목 번호 
+	private String subCategoryName;					// 세부항목 번호 	
 	
 	public ClaimSubCategoryDTO() {}
 

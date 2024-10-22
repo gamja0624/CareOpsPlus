@@ -25,53 +25,53 @@ public class Claim {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="claim_no", nullable = false)
-	private Integer claimNo;					// 민원 번호 ( 고유키 )
+	private Integer claimNo;					
 	
 	@Column(name="manager_id", nullable = false)
-	private String managerId;					// 담당자 아이디 ( 외래키 )         				
+	private String managerId;					        				
 	
 	@Column(name="manager_dept_no", nullable = false)
-	private int managerDeptNo;				    // 담당자 부서번호 ( 외래키 ) 
+	private int managerDeptNo;				    
 	
 	@Column(name="claim_category_no", nullable = false)
-	private String claimCategoryNo;				// 민원 대분류 번호 ( 외래키 )
+	private String claimCategoryNo;				
 	
 	@Column(name="claim_sub_category_no", nullable = false)
-	private int claimSubCategoryNo;     		// 민원 소뷴류 번호 ( 외래키 )	
+	private int claimSubCategoryNo;     			
 	
 	@Column(name="claim_category_name", nullable = false)
-	private String claimCategoryName;			// 민원 대분류 이름 
+	private String claimCategoryName;			
 	
 	@Column(name="claim_sub_category_name")
-	private String claimSubCategoryName;		// 민원 소분류 이름
+	private String claimSubCategoryName;		
 	
 	@Column(name="claim_cateogory_status")
-	private String claimCategoryStatus;			// 민원 요청 구분 ( * 의료 기기 관리 ) 
+	private String claimCategoryStatus;			 
 	
 	@Column(name="claim_manager_name", nullable = false)
-	private String claimManagerName;			// 담당자 이름
+	private String claimManagerName;			
 	
 	@Column(name="claim_date", nullable = false)
-	private Date claimDate;						// 민원 신청일
+	private Date claimDate;						
 	
 	@Column(name="claim_title", nullable = false)
-	private String claimTitle;					// 민원 제목
+	private String claimTitle;					
 	
 	@Column(name="claim_content", nullable = false)
-	private String claimContent;				// 민원 내용
+	private String claimContent;				
 	
 	@Column(name="claim_approve", nullable = false)
-	private Boolean claimApprove;				// 민원 승인 여부
+	private Boolean claimApprove;				
 	
 	@Column(name="claim_complete", nullable = false)
-	private Boolean claimComplete;				// 민원 처리 여부
+	private Boolean claimComplete;				
 	
 	@Column(name="claim_attachment")
-	private String claimAttachment;				// 민원 첨부파일
+	private String claimAttachment;				
    
-	@Lob                                        // LONGBLOB을 나타내는 어노테이션
-    @Column(name = "claim_image_data")          // 이진 데이터 컬럼 이름
-    private byte[] claimImageData;              // 민원 이진 데이터 (LONGBLOB 추가)
+	@Lob                                       
+    @Column(name = "claim_image_data")          
+    private byte[] claimImageData;              
 
 	public Claim() {}
 

@@ -1,16 +1,13 @@
 package himedia.project.careops.controller.manager;
 
-
-import java.io.IOException;
-
 /**
  * @author 최은지
  * @editDate 2024-09-24 ~
  */
 
+import java.io.IOException;
 import java.util.List;
 
-import org.hibernate.annotations.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -36,13 +33,11 @@ import himedia.project.careops.dto.ClaimReplyDTO;
 import himedia.project.careops.dto.ClaimSubCategoryDTO;
 import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.entity.Claim;
-import himedia.project.careops.entity.ClaimCategory;
 import himedia.project.careops.service.ClaimReplyService;
 import himedia.project.careops.service.ClaimService;
 import himedia.project.careops.service.ManagerService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @Controller
