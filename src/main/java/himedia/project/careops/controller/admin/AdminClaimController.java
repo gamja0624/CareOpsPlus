@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,6 +92,20 @@ public class AdminClaimController {
 		return "/admin/claim/claim-sort-list"; 
 	}
 	
+	@GetMapping("/claim-image/{claimNo}")
+	public ResponseEntity<byte[]> getClaimImage(@PathVariable ("claimNo") Integer claimNo) {
+	    byte[] imageData = claimService.claimImageData(claimNo);
+	    
+	    if (imageData != null) {
+	        return ResponseEntity.ok()
+	                .contentType(MediaType.IMAGE_JPEG) // 필요에 따라 MIME 타입 변경
+	                .body(imageData);
+	    } else {
+	    	log.warn("해당 민원에는 이미지가 존재하지 않습니다: {}", claimNo);
+	    	return ResponseEntity.noContent().build(); // 204 No Content 반환 (아무것도 없음)
+	    }
+	}
+	
 	// 민원 상세
 	@GetMapping("/claim-detail/{claimNo}") 
 	public String claimDetail(@PathVariable("claimNo") Integer claimNo, Model model) {
@@ -106,16 +122,8 @@ public class AdminClaimController {
 	// 민원 승인
 	@PostMapping("/claim-approve")
 	public String claimApprove(@ModelAttribute ClaimDTO claimDTO) {
-		
 		claimService.approveClaim(claimDTO);
 		return "redirect:./claim-list";
-	}
-	
-	// 민원 처리
-	@PostMapping("/claim-complete/{claimNo}")
-	public String claimComplete(@PathVariable Integer claimNo, @ModelAttribute ClaimDTO claimDTO) {
-		claimService.completeClaim(claimDTO);
-		return "redirect:/admin/claim-re/"+claimNo;
 	}
 	
 	// [ 답변 저장 및 조회 ] ==========================================================================
@@ -130,9 +138,10 @@ public class AdminClaimController {
 		return "/admin/claim/claim-re-form";
 	}
 	
-	// 답변 저장
+	// 답변 저장 및 민원 처리 
 	@PostMapping("/claim-reply-save/{claimNo}")
-	public String claimReplySave(@PathVariable("claimNo") Integer claimNo, @ModelAttribute ClaimReplyDTO claimReplyDTO, HttpSession session) {
+	public String claimReplySave(@PathVariable("claimNo") Integer claimNo, @ModelAttribute ClaimDTO claimDTO, @ModelAttribute ClaimReplyDTO claimReplyDTO, HttpSession session) {
+		claimService.completeClaim(claimDTO);
 		claimReplyService.saveClaimReply(claimReplyDTO, claimNo, session);
 		return "redirect:/admin/claim-list";
 	}

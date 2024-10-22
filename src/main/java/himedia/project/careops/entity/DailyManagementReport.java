@@ -2,7 +2,7 @@ package himedia.project.careops.entity;
 
 /**
  * @author 이홍준 
- * @editDate 2024-09-25
+ * @editDate 2024-09-25 ~ 2024-10-04
  */
 
 import java.sql.Date;

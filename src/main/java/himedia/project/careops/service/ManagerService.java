@@ -74,6 +74,11 @@ public class ManagerService {
     
     // 담당자 검색
 	public List<Manager> searchManagerByFilter(String filter, String value) {
+		
+		if (value == null || value.trim().isEmpty()) {
+	        return List.of(); 
+	    }
+		
 		List<Manager> ManagerSearchList = managerRepository.findAll();
 		return ManagerSearchList.stream()
 							.filter(srh -> {
@@ -92,7 +97,6 @@ public class ManagerService {
     public void updateManager(ManagerDTO managerDTO) {
         Manager manager = managerRepository.findByManagerId(managerDTO.getManagerId())
                 .orElseThrow(() -> new RuntimeException("담당자를 변경할 수 없습니다."));
-        		// orElse는 삭제할까 고민중
         manager.setManagerName(managerDTO.getManagerName());
         manager.setManagerPhoneNumber(managerDTO.getManagerPhoneNumber());
 

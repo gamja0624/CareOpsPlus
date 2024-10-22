@@ -114,7 +114,7 @@ public class ManagerClaimController {
 	
 	// 민원 이미지 조회
 	@GetMapping("/claim-image/{claimNo}")
-	public ResponseEntity<byte[]> getClaimImage(@PathVariable ("claimNo") Integer claimNo) {
+	public ResponseEntity<byte[]> MangerGetClaimImage(@PathVariable ("claimNo") Integer claimNo) {
 	    byte[] imageData = claimService.claimImageData(claimNo);
 	    
 	    if (imageData != null) {
@@ -154,6 +154,7 @@ public class ManagerClaimController {
 		// 민원 소분류
 		Page<ClaimSubCategoryDTO> claimSubCategory = claimService.findAllSubCategory(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(claimSubCategory);
+		int totalPages = claimSubCategory.getTotalPages();			    // 총 페이지 수 계산
 		
 		// 민원 정보
 		model.addAttribute("claim", claim);
@@ -165,13 +166,13 @@ public class ManagerClaimController {
 		// 민원 소분류
 		model.addAttribute("claimSubCategory", claimSubCategory);
 		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages", totalPages);	
 		
 		return "/manager/claim/claim-edit";
 	}
 	
 	@PostMapping("/claim-edit-complete/{claimNo}")
 	public String managerClaimEditSave(@PathVariable("claimNo") Integer claimNo,  @ModelAttribute ClaimDTO claimDTO,  @RequestParam("file") MultipartFile file) {
-		log.info("민원 수정 컨트롤러 실행");
 		try {
 			claimService.updateClaim(claimNo, claimDTO, file);
 			return "redirect:/manager/claim-list";
@@ -204,7 +205,6 @@ public class ManagerClaimController {
 	// 민원 저장 
 	@PostMapping("/claim-submit")
 	public String managerClaimSubmit(@ModelAttribute ClaimDTO claimDTO, @RequestParam("file") MultipartFile file, HttpSession session) {
-		log.info("민원 신청");
 		
 		try {
 			claimService.saveClaim(claimDTO, file, session);
@@ -219,7 +219,6 @@ public class ManagerClaimController {
     public ResponseEntity<List<ClaimSubCategoryDTO>> searchClaimSubCategories(
             @RequestParam String filter,
             @RequestParam String value) {
-        log.info("검색시자악~ 컨트롤러");
         List<ClaimSubCategoryDTO> results = claimService.searchSubCategories(filter, value);
         return ResponseEntity.ok(results);
     }

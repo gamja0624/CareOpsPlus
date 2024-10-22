@@ -81,7 +81,18 @@
 		border: 0;
 	}
 	
-	.btn:hover { border-color: #13254C; background-color: white; color: #13254C } 
+	.btn:hover { 
+	    border: 2px solid #13254C; 
+	    background-color: white; 
+	    color: #13254C 
+	}
+
+	/* 모달 닫기 버튼 hover 시 스타일 추가 */
+	.modal-header .btn-close:hover {
+	    color: #ffffff; /* 텍스트 색상을 파란색으로 */
+	    background-color: white; /* 배경을 흰색으로 */
+	    border: 2px solid #13254C; /* 파란색 테두리 추가 */
+	}
 	
 	.btn-container {
 		width: 60%;
@@ -141,10 +152,9 @@
 	.modal-backdrop { z-index: 1040; }
 	
 	/* 모달 내 버튼 스타일 */
-	.modal-footer .btn { 
+	.modal-footer .btn {
 		padding: 15px 20px; 
 		font-size: 16px; 
-		background-color: #13254C; 
 		border-color: #fff; 
 	}
 	
@@ -177,7 +187,7 @@
 						    <label for="new_password" class="info-label">새로운 비밀번호</label>
 						    <div class="password-container">
 						        <input type="password" id="new_password" name="newPassword"
-						               class="info-field" required>
+						               class="info-field" required placeholder="8자 이상 16자 이하" minlength="8" maxlength="16">
 						        <button type="button" class="toggle-password"
 						                onclick="togglePassword('new_password')">🔐</button>
 						    </div>
@@ -186,7 +196,8 @@
 						    <label for="confirm_password" class="info-label">비밀번호 재입력</label>
 						    <div class="password-container">
 						        <input type="password" id="confirm_password"
-						               name="confirmPassword" class="info-field" required>
+						               name="confirmPassword" class="info-field" required 
+									   placeholder="8자 이상 16자 이하" minlength="8" maxlength="16">
 						        <button type="button" class="toggle-password"
 						                onclick="togglePassword('confirm_password')">🔐</button>
 						    </div>
@@ -256,7 +267,7 @@
 		
 		// 비밀번호 유효성 검사 함수
 		function isValidPassword(password) {
-		    const regex = /^(?=.*[a-z])(?=.*[A-Z0-9]).{10,16}$/;
+		    const regex = /^(?=.*[a-z])(?=.*[A-Z0-9]).{8,16}$/;
 		    return regex.test(password);
 		}
 

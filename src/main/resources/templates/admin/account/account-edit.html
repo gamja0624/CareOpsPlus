@@ -9,62 +9,16 @@
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
 		<style type="text/css">
-			.form-whole-cover {
-				width: 600px;
-				margin: 100px  auto;
-			 	display: flex;
-			 	font-weight: 600;
-			 	font: 25px;
-			}
-	   	.form-group {
-				margin-bottom: 15px;
-	   	}
+			.form-whole-cover { width: 600px; margin: 100px  auto; display: flex; font-weight: 600; font: 25px; }
+	   	.form-group { margin-bottom: 15px; }
 			.warning { width: 400px; margin: 2px auto 0 auto; color: red; font-size: 16px; }
-	   	.label-style {
-	      margin-bottom: 5px;
-	      margin-right: 8px;
-		    width: 80px;
-	   	}
-	   	.input-style {
-        width: 400px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-		    background-color: #13254C;
-		    margin-left: auto;
-		    color: #FFF;
-	   	}
-			.edit-style {
-				width: 400px;
-        padding: 10px;
-        border: 1px solid #13254C;
-        border-radius: 5px;
-		    background-color: #FFF;
-		    margin-left: auto;
-		    color: #13254C;
-			}
-	   	.button-cover {
-				width: 600px;
-				margin-top: 50px;
-				text-align: center;
-	   	}
-	   	.account-button {
-	      color: white;
-		    background-color: #13254C;
-	      cursor: pointer;
-				width: 120px;
-				height: 40px;
-				margin-right: 10px;
-	   	}
-	  	.account-button:hover {
-	      border: 1px solid #13254C;	
-		    color: #13254C;
-	      background-color: white;
-	   	}
-			.srh-button {
-				margin-left: 15px;
-			}
-
+	   	.label-style { margin-bottom: 5px; margin-right: 8px; width: 80px; }
+	   	.input-style { width: 400px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #13254C; margin-left: auto; color: #FFF; }
+			.edit-style { width: 400px; padding: 10px; border: 1px solid #13254C; border-radius: 5px; background-color: #FFF; margin-left: auto; color: #13254C; }
+	   	.button-cover { width: 600px; margin-top: 50px; text-align: center; }
+	   	.account-button { color: white; background-color: #13254C; cursor: pointer; width: 120px; height: 40px; margin-right: 10px; }
+	  	.account-button:hover { border: 1px solid #13254C; color: #13254C; background-color: white; }
+			.srh-button { margin-left: 15px; }
 		</style>
 	</head>
 
@@ -92,12 +46,12 @@
 					        </div>
 					        <div class="form-group">
 				            <label class="label-style" for="managerPhoneNumber">연 &nbsp;락&nbsp; 처</label>
-				            <input class="edit-style" type="text" id="managerPhoneNumber" name="managerPhoneNumber" th:value="${manager.managerPhoneNumber}" oninput="formatPhoneNumber(this)" required>
+				            <input class="edit-style" type="text" id="managerPhoneNumber" name="managerPhoneNumber" maxlength="15" th:value="${manager.managerPhoneNumber}" oninput="formatPhoneNumber(this)" required>
 										<div class="warning" id="phoneWarning" style="display:none;">전화번호는 15자리를 초과할 수 없습니다.</div>
 									</div>
 					        <div class="form-group">
 				            <label class="label-style" for="userId">아 &nbsp;이&nbsp; 디</label>
-				            <input class="input-style" type="text" id="managerId" name="managerId"  th:value="${manager.managerId}" readonly>
+				            <input class="input-style" type="text" id="managerId" name="managerId" th:value="${manager.managerId}" readonly>
 					        </div>
 					        <div class="form-group">
 				            <label class="label-style" for="password">비 밀 번 호</label>
@@ -119,7 +73,7 @@
 		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 		<script>
 			
-			// [ 연락처 형식 포맷 ]----------------------------------------------------
+			// [ 연락처 형식 포맷 ]
 			function formatPhoneNumber(input) {
 			 
 				let value = input.value.replace(/\D/g, '');
@@ -129,7 +83,7 @@
 			  } else if (value.length >= 7 && value.length <11 ) {
 			      input.value = value.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
 						phoneWarning.style.display = 'none';
-			  } else if (value.length > 15) {
+			  } else if (value.length === 15) {
 						phoneWarning.style.display = 'block';
 			  } else {
 			      input.value = value;

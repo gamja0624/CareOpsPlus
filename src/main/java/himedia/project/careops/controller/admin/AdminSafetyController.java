@@ -2,7 +2,7 @@ package himedia.project.careops.controller.admin;
 
 /**
  * @author 이홍준
- * @editDate 2024-10-16
+ * @editDate 2024-09-24 ~ 2024-10-17
  */
 
 import java.util.HashMap;
@@ -45,46 +45,43 @@ public class AdminSafetyController {
 		this.safetyService = safetyService;
 	}
 
-	// 안전관리 목록 페이지
+	// [안전관리 현황 페이지]
 	@GetMapping("/safety-list")
 	public String safetyList(Model model) {
-
+		
+		// SafetyManagement 테이블 모든 컬럼의 데이터 반환
 		List<SafetyManagementDTO> safetyListAll = safetyService.safetyListAll();
+		// 중복제거된 점검 항목 컬럼의 데이터 반환
 		List<String> smList = safetyService.findSmList();
 
-		//log.info("smList값=>> {}", smList);
 
 		model.addAttribute("smList", smList);
-		// model.addAttribute("safetyListFirstPage", safetyListFirstPage);
 		model.addAttribute("safetyListAll", safetyListAll);
 
 		return "admin/safety/safety-list";
 	}
 
-	// 버튼클릭시 요청 메소드
+	// [층 버튼클릭 시 요청 메소드]
 	@GetMapping("/safety-list/{smList}/{smFacilityFloor}")
 	public ResponseEntity<List<SafetyManagementDTO>> loadDataForFloor(@PathVariable String smList,
-			@PathVariable int smFacilityFloor, Model model) {
-		//log.info("뷰에서 넘어온 값 항목: {}, 층 수: {}", smList, smFacilityFloor );
+																		@PathVariable int smFacilityFloor, Model model) {
+		// 점검 항목, 층 수에 대한 데이터 반환
 		List<SafetyManagementDTO> statusList = safetyService.findStatusList(smList, smFacilityFloor);
-		//log.info("검색 된 값 : {}", statusList);
 		
 		model.addAttribute("smlList", smList);
 		model.addAttribute("safetyListAll", statusList);
 
-		// log.info("층별 데이터>>>{}{}", smlList,allChecklist);
-
 		return ResponseEntity.ok(statusList);
 	}
 	
-	// 안전관리 현황 수정 페이지
+	// [안전관리 현황 수정 페이지]
 	@GetMapping("/safety-list-status")
 	public String modifySafetyStatus(Model model) {
 		
+		// SafetyManagement 테이블 모든 컬럼의 데이터 반환
 		List<SafetyManagementDTO> safetyListAll = safetyService.safetyListAll();
+		// 중복제거된 점검 항목 컬럼의 데이터 반환
 		List<String> smList = safetyService.findSmList();
-
-		//log.info("smList값=>> {}", smList);
 
 		model.addAttribute("smList", smList);
 		model.addAttribute("safetyListAll", safetyListAll);
@@ -92,28 +89,28 @@ public class AdminSafetyController {
 		return "admin/safety/safety-list-status";
 	}
 	
-	// 현황 수정 시 실시간 데이터 저장 처리
+	// [현황 수정 시 실시간 데이터 저장 처리]
 	@PostMapping("/updateSmStatus")
 	@ResponseBody
-	public Map<String, Object> updateSmStatus(@RequestBody SafetyManagementDTO dto, HttpSession session) {
+	public Map<String, Object> updateSmStatus(@RequestBody SafetyManagementDTO updateData, HttpSession session) {
 	    
 		Map<String, Object> response = new HashMap<>();
 	    
 	    try {
-	        // 세션에서 사용자 정보 가져오기
+	        // 세션에서 사용자 정보 저장
 	        String smAdminId = (String) session.getAttribute("userId");
 	        String smAdminDeptNo = (String) session.getAttribute("deptNo");
 	        String smAdminDeptName = (String) session.getAttribute("department");
 	        String smAdminName = (String) session.getAttribute("userName");
 
-	        // DTO에 세션 정보를 추가
-	        dto.setSmAdminId(smAdminId);
-	        dto.setSmAdminDeptNo(smAdminDeptNo);
-	        dto.setSmAdminDeptName(smAdminDeptName);
-	        dto.setSmAdminName(smAdminName);
+	        // updateData에 세션 정보를 추가
+	        updateData.setSmAdminId(smAdminId);
+	        updateData.setSmAdminDeptNo(smAdminDeptNo);
+	        updateData.setSmAdminDeptName(smAdminDeptName);
+	        updateData.setSmAdminName(smAdminName);
 
 	        // 서비스에서 상태 업데이트 호출
-	        safetyService.updateStatus(dto);
+	        safetyService.updateStatus(updateData);
 	        
 	        response.put("success", true);
 	    } catch (IllegalArgumentException e) {

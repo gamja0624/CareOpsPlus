@@ -64,270 +64,270 @@
   	</style>
   </head>
 
-	<body>
-		<!-- 사이드바 -->
-		<th:block th:replace="~{/common/side-bar}"></th:block>
-		
-		<!-- 컨텐츠 영역 -->
-		<div class="content">
-			<!-- section -->
-			<div class="section">
-				<!-- 제목 -->
-				<h1 class="title">안전관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">현황 수정</h1>
-				
-				<!-- 안전관리 목록 -->
-				<div class="layout-table">
-					<!-- 층수 선택 (1 ~ 10층) -->
-					<div class="btn-floor-line">
-                      <th:block th:each="num : ${#numbers.sequence(1, 10)}">
-                        <div th:classappend="${num} > 5 ? 'floor-row-2' : 'floor-row-1'">
-                          <button 
-                            id="btn-floor"
-                            class="btn btn-floor" 
-                            th:value="${num}"
-                            th:text="${num} + 'F'" 
-                           >
-                          </button>
-                        </div>
-                      </th:block>
-                    </div>
-					
-					<!-- 세부항목 선택 -->
-					<div class="data">
-				    <select id="smList" name="smList" class="data-select" aria-label="Default select" >
-                      <th:block th:each="smList, stat : ${smList}" >
-			    	    <option th:name="${smList}" th:text=${smList} th:selected="${smList} == '소화기' ? true : false" ></option>
-                      </th:block>
-				    </select>
-					</div>
-					
-					<!-- 점검 항목 게시판 -->
-					<table class="table table-hover">
-					  <thead class="table-group">
-					    <tr class="table-row table-head">
-					      <th scope="col">시설 번호</th>
-					      <th scope="col">설치 구역</th>
-					      <th scope="col">관리 현황</th>
-					    </tr>
-					  </thead>
-					  <tbody id="statusBody" class="table-group-se">
-					  	<tr class="table-row" th:each="list : ${safetyListAll}" >
-					    	<!-- 시설번호 -->
-					    	<td class="checkbox-td-1" th:text="${list.smFacilityNo}" ></td>
-					      <!-- 시설 이름 -->
-					    	<td class="smFacilityName checkbox-td-2" th:text="${list.smFacilityName}" ></td>
-					      <!-- 상태 -->
-    				      	<td class="checkbox-td-3" >
-                              <div class="checkbox-d" >
-                                <div class="checkbox-d-1" >
-                                  <input class="${'status_' + list.smFacilityFloor + '_' + list.smFacilityNo}" 
-                                        name="statusTrue" 
-                                        type="checkbox" 
-                                        th:checked="${list.smStatus}"
-                                        onclick="toggleCheckbox(this)"
-                                        data-smfacilityno="${list.smFacilityNo}"
-                                        data-smfacilityfloor="${list.smFacilityFloor}"
-                                        data-smlist="${list.smList}"
-                                      >
-                                      <label id="statusTrue" >양 호</label>
-                                </div>
-                                <div class="checkbox-d-2" >
-                                  <input class="${'status_' + list.smFacilityFloor + '_' + list.smFacilityNo}" 
-                                        name="statusFalse" 
-                                        type="checkbox" 
-                                        th:checked="${!list.smStatus}"
-                                        onclick="toggleCheckbox(this)"
-                                        data-smfacilityno="${list.smFacilityNo}"
-                                        data-smfacilityfloor="${list.smFacilityFloor}"
-                                        data-smlist="${list.smList}"
-                                  >
-                                  <label id="statusFalse" >점검 요망</label>
-                                </div>
-                              </div>
-                            </td>
-					    </tr>
-					  </tbody>
-					</table>
-					
-					<!-- 버튼 -->
-					<th:block th:if="${ session.userType == 'admin' && session.department.contains('안전') }">
-				    <div class="btn-status">
-			           <button th:onclick="'location.href=\'./safety-list\''" class="btn btn-add" type="button">안전 관리 현황</button>
-				    </div>
-					</th:block>
-				</div>
-			</div>
-		</div>
-  	<script type="text/javascript">
-      // 층 버튼 클릭 시 해당 층의 데이터만 가져오는 함수
-      // 페이지가 로드될 때 기본적으로 1층의 데이터 가져오기
-      const smListElement = document.getElementById("smList");
-      let num = 1; // 기본값으로 1층을 설정
-      
-      // 층 버튼 클릭 시 value 가져오기
-      document.querySelectorAll('.btn-floor').forEach(button => {
-          button.onclick = function() {
-              num = this.value; 						// 클릭된 버튼의 value를 num에 저장
-              fetchChecklist(smListElement.value, num); // 클릭 시 데이터 가져오기
-          };
-      });
-      
-      // 페이지 로드 시 기본 데이터 가져오기
-      document.addEventListener('DOMContentLoaded', () => {
-          fetchChecklist(smListElement.value, num); 	// 기본적으로 smList의 선택값과 1층 데이터 가져오기
-      });
-      
-      // 층 버튼 클릭 시 해당 층의 데이터만 가져오는 함수
-      function fetchChecklist(smList, num) {
-          //console.log('smList:', smList, 'num:', num);	// 확인용 로그
-      
-          // URL 형식: admin/safety-list/{smList}/{num}
-          const url = `/admin/safety-list/${smList}/${num}`;
-          //console.log('Fetching URL:', url); 			// URL 확인
-      
-          fetch(url)
-              .then(response => {
-                  if (!response.ok) {
-                      throw new Error('네트워크의 연결상태를 확인해주세요.');
-                  }
-                  return response.json();
-              })	
-              .then(data => {
-                  const statusBody = document.getElementById('statusBody');
-                  statusBody.innerHTML = ''; 			// 기존 내용 지우기
-      
-                  // 새로운 데이터 추가
-                  data.forEach(list => {
-                      const row = document.createElement('tr');
-                      row.className = 'table-row data-row';
-      
-                      // 새로운 행을 만들어 데이터 추가
-                      row.innerHTML = `
-                          <td class="checkbox-td-1" >${list.smFacilityNo}</td>
-                          <td class="smFacilityName checkbox-td-2" >${list.smFacilityName}</td>
-                          <td class="checkbox-td-3" >
-                          	<div class="checkbox-d" >
-                              <div class="checkbox-d-1" >
-                                <input 
-                                class="${'status_' + list.smFacilityFloor + '_' + list.smFacilityNo}" 
-                                name="statusTrue" 
-                                type="checkbox" 
-                                ${list.smStatus ? 'checked' : '' } 
-                                onclick="toggleCheckbox(this)"
-                                data-smfacilityno="${list.smFacilityNo}"
-                                data-smfacilityfloor="${list.smFacilityFloor}"
-                                data-smlist="${list.smList}"
-                                >
-                                <label id="statusTrue" >양 호</label>
-                              </div>
-                              <div class="checkbox-d-2" >
-                                <input 
-                                class="${'status_' + list.smFacilityFloor + '_' + list.smFacilityNo}" 
-                                name="statusFalse" 
-                                type="checkbox" 
-                                ${!list.smStatus ? 'checked' : '' } 
-                                onclick="toggleCheckbox(this)"
-                                data-smfacilityno="${list.smFacilityNo}"
-                                data-smfacilityfloor="${list.smFacilityFloor}"
-                                data-smlist="${list.smList}"
-                                >
-                                <label id="statusFalse" >점검 요망</label>
-                              </div>
+  <body>
+  	<!-- 사이드바 -->
+    <th:block th:replace="~{/common/side-bar}"></th:block>
+  
+    <!-- 컨텐츠 영역 -->
+    <div class="content">
+  	<!-- section -->
+    <div class="section">
+  	<!-- 제목 -->
+    <h1 class="title">안전관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next">현황 수정</h1>
+  
+    <!-- 안전관리 목록 -->
+    <div class="layout-table">
+    	<!-- 층수 선택 (1 ~ 10층) -->
+    <div class="btn-floor-line">
+                <th:block th:each="num : ${#numbers.sequence(1, 10)}">
+                  <div th:classappend="${num} > 5 ? 'floor-row-2' : 'floor-row-1'">
+                    <button 
+                      id="btn-floor"
+                      class="btn btn-floor" 
+                      th:value="${num}"
+                      th:text="${num} + 'F'" 
+                     >
+                    </button>
+                  </div>
+                </th:block>
+              </div>
+    
+    <!-- 세부항목 선택 -->
+    <div class="data">
+      <select id="smList" name="smList" class="data-select" aria-label="Default select" >
+                <th:block th:each="smList, stat : ${smList}" >
+    	    <option th:name="${smList}" th:text=${smList} th:selected="${smList} == '소화기' ? true : false" ></option>
+                </th:block>
+      </select>
+    </div>
+    
+    <!-- 점검 항목 게시판 -->
+    <table class="table table-hover">
+      <thead class="table-group">
+        <tr class="table-row table-head">
+          <th scope="col">시설 번호</th>
+          <th scope="col">설치 구역</th>
+          <th scope="col">관리 현황</th>
+        </tr>
+      </thead>
+      <tbody id="statusBody" class="table-group-se">
+      	<tr class="table-row" th:each="list : ${safetyListAll}" >
+          <!-- 시설번호 --> 
+          <td class="checkbox-td-1" th:text="${list.smFacilityNo}" ></td>
+          <!-- 시설 이름 -->
+          <td class="smFacilityName checkbox-td-2" th:text="${list.smFacilityName}" ></td>
+          <!-- 상태 -->
+          <td class="checkbox-td-3" >
+            <div class="checkbox-d" >
+              <div class="checkbox-d-1" >
+                <input class="${'status_' + list.smFacilityFloor + '_' + list.smFacilityNo}" 
+                      name="statusTrue" 
+                      type="checkbox" 
+                      th:checked="${list.smStatus}"
+                      onclick="toggleCheckbox(this)"
+	                 data-smfacilityno="${list.smFacilityNo}"
+                    data-smfacilityfloor="${list.smFacilityFloor}"
+                    data-smlist="${list.smList}"
+                  >
+                  <label id="statusTrue" >양 호</label>
+            </div>
+            <div class="checkbox-d-2" >
+              <input class="${'status_' + list.smFacilityFloor + '_' + list.smFacilityNo}" 
+                    name="statusFalse" 
+                    type="checkbox" 
+                    th:checked="${!list.smStatus}"
+                    onclick="toggleCheckbox(this)"
+            data-smfacilityno="${list.smFacilityNo}"
+                      data-smfacilityfloor="${list.smFacilityFloor}"
+                      data-smlist="${list.smList}"
+                >
+                <label id="statusFalse" >점검 요망</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- 버튼 -->
+    			<th:block th:if="${ session.userType == 'admin' && session.department.contains('안전') }">
+    		    <div class="btn-status">
+    	           <button th:onclick="'location.href=\'./safety-list\''" class="btn btn-add" type="button">안전 관리 현황</button>
+    		    </div>
+    			</th:block>
+    		</div>
+    	</div>
+    </div>
+    <script type="text/javascript">
+    // 층 버튼 클릭 시 해당 층의 데이터만 가져오는 함수
+    // 페이지가 로드될 때 기본적으로 1층의 데이터 가져오기
+    const smListElement = document.getElementById("smList");
+    let num = 1; // 기본값으로 1층을 설정
+    
+    // 층 버튼 클릭 시 value 가져오기
+    document.querySelectorAll('.btn-floor').forEach(button => {
+        button.onclick = function() {
+            num = this.value; 						// 클릭된 버튼의 value를 num에 저장
+            fetchChecklist(smListElement.value, num); // 클릭 시 데이터 가져오기
+        };
+    });
+    
+    // 페이지 로드 시 기본 데이터 가져오기
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchChecklist(smListElement.value, num); 	// 기본적으로 smList의 선택값과 1층 데이터 가져오기
+    });
+    
+    // 층 버튼 클릭 시 해당 층의 데이터만 가져오는 함수
+    function fetchChecklist(smList, num) {
+        //console.log('smList:', smList, 'num:', num);	// 확인용 로그
+    
+        // URL 형식: admin/safety-list/{smList}/{num}
+        const url = `/admin/safety-list/${smList}/${num}`;
+        //console.log('Fetching URL:', url); 			// URL 확인
+    
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('네트워크의 연결상태를 확인해주세요.');
+                }
+                return response.json();
+            })	
+            .then(data => {
+                const statusBody = document.getElementById('statusBody');
+                statusBody.innerHTML = ''; 			// 기존 내용 지우기
+    
+                // 새로운 데이터 추가
+                data.forEach(list => {
+                    const row = document.createElement('tr');
+                    row.className = 'table-row data-row';
+    
+                    // 새로운 행을 만들어 데이터 추가
+                    row.innerHTML = `
+                        <td class="checkbox-td-1" >${list.smFacilityNo}</td>
+                        <td class="smFacilityName checkbox-td-2" >${list.smFacilityName}</td>
+                        <td class="checkbox-td-3" >
+                        	<div class="checkbox-d" >
+                            <div class="checkbox-d-1" >
+                              <input 
+                              class="${'status_' + list.smFacilityFloor + '_' + list.smFacilityNo}" 
+                              name="statusTrue" 
+                              type="checkbox" 
+                              ${list.smStatus ? 'checked' : '' } 
+                              onclick="toggleCheckbox(this)"
+                              data-smfacilityno="${list.smFacilityNo}"
+                              data-smfacilityfloor="${list.smFacilityFloor}"
+                              data-smlist="${list.smList}"
+                              >
+                              <label id="statusTrue" >양 호</label>
                             </div>
-                          </td>
-                      `;
-                      statusBody.appendChild(row);
-                  });
-              })
-              .catch(error => console.error('Error fetching checklist:', error));
-      
-          // 다른 버튼들의 active 클래스 제거
-          document.querySelectorAll('.btn-floor').forEach(btn => {
-              btn.classList.remove('active');  
-          });
-      
-          // 클릭된 버튼에 active 클래스 추가
-          const clickedButton = document.querySelector(`.btn-floor[value="${num}"]`); // 클릭된 버튼의 value 사용
-          if (clickedButton) {
-              clickedButton.classList.add('active');  
-          }
-      }
-      
-      // 선택값 변경 시 기본 층 데이터 가져오기
-      smListElement.addEventListener('change', (event) => {
-          const selectedSmList = event.target.value; 		// 현재 선택된 smList 값
-          fetchChecklist(selectedSmList, num); 				// 기본적으로 선택된 smList와 num으로 데이터 가져오기
-      });
-      
-      // 체크박스 선택시 실행되는 메소드(체크박스 정보 처리)
-      function toggleCheckbox(checkbox) {
-    	    const className = checkbox.className; // 클릭된 체크박스의 클래스를 가져옴
-    	    const checkboxes = document.querySelectorAll(`.${className}`); // 해당 클래스를 가진 모든 체크박스를 선택
-
-    	    if (checkbox.checked) {
-    	        // 체크된 경우, 다른 모든 체크박스를 해제
-    	        checkboxes.forEach((cb) => {
-    	            if (cb !== checkbox) {
-    	                cb.checked = false;
-    	            }
-    	        });
-    	    } else {
-    	        // 체크 해제된 경우
-    	        const unchecked = Array.from(checkboxes).filter(cb => cb !== checkbox && !cb.checked);
-    	        
-    	        // 만약 체크된 것이 없으면 나머지 하나를 체크
-    	        if (unchecked.length === checkboxes.length - 1) {
-    	            unchecked[0].checked = true;
-    	        }
-    	    }
-    	 // 체크된 값에 따라 smStatus 결정
-    	    const smStatus = checkbox.name === 'statusTrue' ? 1 : 0; // statusTrue는 1, statusFalse는 0
-    	    
-    	    // 데이터 속성으로 값 가져오기
-    	    const smFacilityNo = checkbox.getAttribute('data-smfacilityno');
-    	    const smFacilityFloor = checkbox.getAttribute('data-smfacilityfloor');
-    	    const smList = checkbox.getAttribute('data-smlist');
-
-    	    // 세션에서 필요한 관리자 정보 가져오기 (여기서는 세션에서 직접 가져오는 대신, 서버에서 처리할 수 있도록 넘김)
-    	    const smAdminId = sessionStorage.getItem('userId');  // 세션에서 userId 가져오기 (혹은 서버에서 처리)
-    	    const smAdminDeptNo = sessionStorage.getItem('deptNo');
-    	    const smAdminDeptName = sessionStorage.getItem('department');
-    	    const smAdminName = sessionStorage.getItem('userName');
-    	    
-    	    // 현재 체크된 날짜 (yyyy-MM-dd 형식으로)
-    	    const smDate = new Date().toISOString().split('T')[0];
-
-    	    // AJAX 요청으로 서버에 데이터 전송
-    	    fetch('/admin/updateSmStatus', {
-    	        method: 'POST',
-    	        headers: {
-    	            'Content-Type': 'application/json',
-    	        },
-    	        body: JSON.stringify({
-    	            smStatus: smStatus,             // 체크된 상태 값
-    	            smFacilityNo: smFacilityNo,     // 시설 번호
-    	            smFacilityFloor: smFacilityFloor, // 시설 층수
-    	            smList: smList,                 // 점검 항목
-    	            smAdminId: smAdminId,           // 관리자 ID
-    	            smAdminDeptNo: smAdminDeptNo,   // 관리자 부서 번호
-    	            smAdminDeptName: smAdminDeptName, // 관리자 부서명
-    	            smAdminName: smAdminName,       // 관리자 이름
-    	            smDate: smDate                  // 체크된 날짜
-    	        })
-    	    })
-    	    .then(response => response.json())
-    	    .then(data => {
-    	        if (data.success) {
-    	            console.log('Update successful');
-    	        } else {
-    	            console.log('Update failed');
-    	        }
-    	    })
-    	    .catch(error => {
-    	        console.error('Error:', error);
-    	    });
-    	}
+                            <div class="checkbox-d-2" >
+                              <input 
+                              class="${'status_' + list.smFacilityFloor + '_' + list.smFacilityNo}" 
+                              name="statusFalse" 
+                              type="checkbox" 
+                              ${!list.smStatus ? 'checked' : '' } 
+                              onclick="toggleCheckbox(this)"
+                              data-smfacilityno="${list.smFacilityNo}"
+                              data-smfacilityfloor="${list.smFacilityFloor}"
+                              data-smlist="${list.smList}"
+                              >
+                              <label id="statusFalse" >점검 요망</label>
+                            </div>
+                          </div>
+                        </td>
+                    `;
+                    statusBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching checklist:', error));
+    
+        // 다른 버튼들의 active 클래스 제거
+        document.querySelectorAll('.btn-floor').forEach(btn => {
+            btn.classList.remove('active');  
+        });
+    
+        // 클릭된 버튼에 active 클래스 추가
+        const clickedButton = document.querySelector(`.btn-floor[value="${num}"]`); // 클릭된 버튼의 value 사용
+        if (clickedButton) {
+            clickedButton.classList.add('active');  
+        }
+    }
+    
+    // 선택값 변경 시 기본 층 데이터 가져오기
+    smListElement.addEventListener('change', (event) => {
+        const selectedSmList = event.target.value; 		// 현재 선택된 smList 값
+        fetchChecklist(selectedSmList, num); 				// 기본적으로 선택된 smList와 num으로 데이터 가져오기
+    });
+    
+    // 체크박스 선택시 실행되는 메소드(체크박스 정보 처리)
+    function toggleCheckbox(checkbox) {
+        const className = checkbox.className; // 클릭된 체크박스의 클래스를 가져옴
+        const checkboxes = document.querySelectorAll(`.${className}`); // 해당 클래스를 가진 모든 체크박스를 선택
+    
+        if (checkbox.checked) {
+            // 체크된 경우, 다른 모든 체크박스를 해제
+            checkboxes.forEach((cb) => {
+                if (cb !== checkbox) {
+                    cb.checked = false;
+                }
+            });
+        } else {
+            // 체크 해제된 경우
+            const unchecked = Array.from(checkboxes).filter(cb => cb !== checkbox && !cb.checked);
+            
+            // 만약 체크된 것이 없으면 나머지 하나를 체크
+            if (unchecked.length === checkboxes.length - 1) {
+                unchecked[0].checked = true;
+            }
+        }
+     // 체크된 값에 따라 smStatus 결정
+        const smStatus = checkbox.name === 'statusTrue' ? 1 : 0; // statusTrue는 1, statusFalse는 0
+        
+        // 데이터 속성으로 값 가져오기
+        const smFacilityNo = checkbox.getAttribute('data-smfacilityno');
+        const smFacilityFloor = checkbox.getAttribute('data-smfacilityfloor');
+        const smList = checkbox.getAttribute('data-smlist');
+    
+        // 세션에서 필요한 관리자 정보 가져오기 (여기서는 세션에서 직접 가져오는 대신, 서버에서 처리할 수 있도록 넘김)
+        const smAdminId = sessionStorage.getItem('userId');  // 세션에서 userId 가져오기 (혹은 서버에서 처리)
+        const smAdminDeptNo = sessionStorage.getItem('deptNo');
+        const smAdminDeptName = sessionStorage.getItem('department');
+        const smAdminName = sessionStorage.getItem('userName');
+        
+        // 현재 체크된 날짜 (yyyy-MM-dd 형식으로)
+        const smDate = new Date().toISOString().split('T')[0];
+    
+        // AJAX 요청으로 서버에 데이터 전송
+        fetch('/admin/updateSmStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                smStatus: smStatus,             // 체크된 상태 값
+                smFacilityNo: smFacilityNo,     // 시설 번호
+                smFacilityFloor: smFacilityFloor, // 시설 층수
+                smList: smList,                 // 점검 항목
+                smAdminId: smAdminId,           // 관리자 ID
+                smAdminDeptNo: smAdminDeptNo,   // 관리자 부서 번호
+                smAdminDeptName: smAdminDeptName, // 관리자 부서명
+                smAdminName: smAdminName,       // 관리자 이름
+                smDate: smDate                  // 체크된 날짜
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Update successful');
+            } else {
+                console.log('Update failed');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
     </script>
   	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
-	</body>
+  </body>
 </html>
