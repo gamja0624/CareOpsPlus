@@ -61,38 +61,12 @@
       }
       .btn-add { margin-left: auto; background-color: #13254C; color: white; }
 			
-      /* 사이드바  임시 */
-			/* 로고 */
-			.logo { margin: 10px 0; }
-
-			/* 메뉴 */	
-			.hr { margin: 16px 0; background-color: white; height: 1px; }
-			.side-bar { width: 280px; background-color: #13254C; display: flex; }  
-			.nav-color { color: white; }
-			.nav-item { margin: 10px 0; }
-
-			/* 내 정보 */
-			.mypage-icon { 
-				width: 45px; 
-				height: 45px; 
-				line-height: 45px;
-				margin-right: 10px; 
-				border-radius: 50px; 
-				background-color: white; 
-				text-align: center; 
-				font-size: 20px;
-				font-weight: 600;
-				color: #13254C;
-			}
-			.mypage { margin: 0 auto; cursor: pointer;}
-			.dropup .dropdown-toggle::after { color: white; }
-			
   	</style>
   </head>
 
   <body>
   	<!-- 사이드바 -->
-		<th:block th:fragment="sidebar"></th:block>
+    <!--<th:block th:replace="~{/common/side-bar}"></th:block>-->
   
     <!-- 컨텐츠 영역 -->
     <div class="content">
