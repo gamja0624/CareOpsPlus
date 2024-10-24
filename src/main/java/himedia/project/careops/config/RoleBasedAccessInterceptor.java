@@ -6,7 +6,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// 작성자: 노태윤
 // 세션의 사용자 타입에 따라 접근을 제한하는 인터셉터 
 public class RoleBasedAccessInterceptor implements HandlerInterceptor {
 

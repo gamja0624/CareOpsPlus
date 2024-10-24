@@ -177,39 +177,32 @@ public class MyPageController {
 		String newPassword = passwordData.get("newPassword");
 		String confirmPassword = passwordData.get("confirmPassword");
 		String userId = (String) session.getAttribute("userId");
-
 		// 사용자 유형 검증
 		if (!("admin".equals(userType) || "manager".equals(userType))) {
 			return ResponseEntity.badRequest().body(Map.of("success", false, "message", "잘못된 사용자 유형입니다."));
 		}
-
 		// 세션 정보 검증
 		if (userId == null) {
 			return ResponseEntity.badRequest().body(Map.of("success", false, "message", "유효하지 않은 세션 정보입니다."));
 		}
-
 		// 현재 비밀번호 일치 여부 확인
 		if (!myPageService.isCurrentPasswordCorrect(userId, currentPassword, userType)) {
 			return ResponseEntity.badRequest().body(Map.of("success", false, "message", "현재 비밀번호가 올바르지 않습니다."));
 		}
-
 		// 새 비밀번호와 확인 비밀번호 일치 여부 확인
 		if (!newPassword.equals(confirmPassword)) {
 			return ResponseEntity.badRequest().body(Map.of("success", false, "message", "새 비밀번호와 확인 비밀번호가 일치하지 않습니다."));
 		}
-
 		// 현재 비밀번호와 새 비밀번호가 같은지 확인
 		if (currentPassword.equals(newPassword)) {
 			return ResponseEntity.badRequest()
 					.body(Map.of("success", false, "message", "새 비밀번호는 현재 비밀번호와 달라야 합니다. 다시 입력해주세요."));
 		}
-
 		// 새 비밀번호 유효성 검사
 		if (!myPageService.isValidPassword(newPassword)) {
 			return ResponseEntity.badRequest()
-					.body(Map.of("success", false, "message", "비밀번호는 10-16자 사이여야 하며, 대문자, 소문자 또는 숫자를 포함해야 합니다."));
+					.body(Map.of("success", false, "message", "비밀번호는 8-16자 사이여야 하며, 대문자, 소문자 또는 숫자를 포함해야 합니다."));
 		}
-
 		// 비밀번호 변경 시도
 		try {
 			boolean success = myPageService.changePassword(userId, currentPassword, newPassword, userType);
