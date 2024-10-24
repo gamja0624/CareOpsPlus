@@ -9,8 +9,8 @@
 		
 		<style type="text/css">
 			/* 테이블 */
-			.table { text-align: center; vertical-align: inherit; }
-			.table-row { line-height: 40px; }
+			.table { text-align: center; vertical-align: inherit; width: 1200px; }
+			.table-row { line-height: 40px; width: 1000px; }
 			.table-head { font-size: 20px; font-weight: 600; }
 			tr { height: 50px;  border-bottom: 1px solid #d9d9d9; }
 			
@@ -20,6 +20,7 @@
 			
 			/* 버튼 */
 			.btn-status { display: flex; }
+			.btn-table { width: 1200px; }
 			.btn-css { width: 80px; border-radius: 50px; }
 			.btn-add { margin-left: auto; background-color: #13254C; color: white; }
 			.btn-add:hover { border: 1px solid #13254C; }
@@ -104,7 +105,7 @@
 				</table>
 				
 				<th:block th:if="${ session.user_type == 'manager' }">
-			    <div class="btn-status">
+			    <div class="btn-table btn-status">
 		        <button th:onclick="'location.href=\'./medical-list/add\''" class="btn btn-add" type="button">신규 등록</button>
 			    </div>
 				</th:block>

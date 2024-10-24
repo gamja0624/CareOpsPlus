@@ -3,7 +3,7 @@
   <head>
   	<meta charset="UTF-8">
   	<!-- title 지정 -->
-  	<title>CareOps+ | 안전관리</title>
+  	<title>CareOps+ | 안전관리 현황 수정</title>
   	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
   	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
   	  
@@ -66,7 +66,7 @@
 
   <body>
   	<!-- 사이드바 -->
-    <th:block th:replace="~{/common/side-bar}"></th:block>
+  	<th:block th:replace="~{/common/side-bar}"></th:block>
   
     <!-- 컨텐츠 영역 -->
     <div class="content">
@@ -255,14 +255,14 @@
     
     // 선택값 변경 시 기본 층 데이터 가져오기
     smListElement.addEventListener('change', (event) => {
-        const selectedSmList = event.target.value; 		// 현재 선택된 smList 값
-        fetchChecklist(selectedSmList, num); 				// 기본적으로 선택된 smList와 num으로 데이터 가져오기
+        const selectedSmList = event.target.value;          // 현재 선택된 smList 값
+        fetchChecklist(selectedSmList, num);                // 기본적으로 선택된 smList와 num으로 데이터 가져오기
     });
     
     // 체크박스 선택시 실행되는 메소드(체크박스 정보 처리)
     function toggleCheckbox(checkbox) {
-        const className = checkbox.className; // 클릭된 체크박스의 클래스를 가져옴
-        const checkboxes = document.querySelectorAll(`.${className}`); // 해당 클래스를 가진 모든 체크박스를 선택
+        const className = checkbox.className;                           // 클릭된 체크박스의 클래스를 가져옴
+        const checkboxes = document.querySelectorAll(`.${className}`);  // 해당 클래스를 가진 모든 체크박스를 선택
     
         if (checkbox.checked) {
             // 체크된 경우, 다른 모든 체크박스를 해제
@@ -280,16 +280,17 @@
                 unchecked[0].checked = true;
             }
         }
-     // 체크된 값에 따라 smStatus 결정
-        const smStatus = checkbox.name === 'statusTrue' ? 1 : 0; // statusTrue는 1, statusFalse는 0
+     	// 체크된 값에 따라 smStatus 결정
+        const smStatus = checkbox.name === 'statusTrue' ? 1 : 0; 
         
         // 데이터 속성으로 값 가져오기
         const smFacilityNo = checkbox.getAttribute('data-smfacilityno');
         const smFacilityFloor = checkbox.getAttribute('data-smfacilityfloor');
         const smList = checkbox.getAttribute('data-smlist');
     
-        // 세션에서 필요한 관리자 정보 가져오기 (여기서는 세션에서 직접 가져오는 대신, 서버에서 처리할 수 있도록 넘김)
-        const smAdminId = sessionStorage.getItem('userId');  // 세션에서 userId 가져오기 (혹은 서버에서 처리)
+        // 세션에서 필요한 관리자 정보 가져오기 
+        // (여기서는 세션에서 직접 가져오고, 서버에서 검증할 수 있도록 함)
+        const smAdminId = sessionStorage.getItem('userId');  
         const smAdminDeptNo = sessionStorage.getItem('deptNo');
         const smAdminDeptName = sessionStorage.getItem('department');
         const smAdminName = sessionStorage.getItem('userName');
@@ -304,15 +305,15 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                smStatus: smStatus,             // 체크된 상태 값
-                smFacilityNo: smFacilityNo,     // 시설 번호
-                smFacilityFloor: smFacilityFloor, // 시설 층수
-                smList: smList,                 // 점검 항목
-                smAdminId: smAdminId,           // 관리자 ID
-                smAdminDeptNo: smAdminDeptNo,   // 관리자 부서 번호
-                smAdminDeptName: smAdminDeptName, // 관리자 부서명
-                smAdminName: smAdminName,       // 관리자 이름
-                smDate: smDate                  // 체크된 날짜
+                smStatus: smStatus,                 // 체크된 상태 값
+                smFacilityNo: smFacilityNo,         // 시설 번호
+                smFacilityFloor: smFacilityFloor,   // 시설 층수
+                smList: smList,                     // 점검 항목
+                smAdminId: smAdminId,               // 관리자 ID
+                smAdminDeptNo: smAdminDeptNo,       // 관리자 부서 번호
+                smAdminDeptName: smAdminDeptName,   // 관리자 부서명
+                smAdminName: smAdminName,           // 관리자 이름
+                smDate: smDate                      // 체크된 날짜
             })
         })
         .then(response => response.json())

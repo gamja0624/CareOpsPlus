@@ -6,12 +6,6 @@ package himedia.project.careops.controller.admin;
  */
 
 import java.util.HashMap;
-
-/**
- * @author 이홍준
- * @editDate 2024-10-15 
- */
-
 import java.util.List;
 import java.util.Map;
 
@@ -94,22 +88,16 @@ public class AdminSafetyController {
 	@ResponseBody
 	public Map<String, Object> updateSmStatus(@RequestBody SafetyManagementDTO updateData, HttpSession session) {
 	    
-		Map<String, Object> response = new HashMap<>();
+	    Map<String, Object> response = new HashMap<>();
 	    
 	    try {
-	        // 세션에서 사용자 정보 저장
-	        String smAdminId = (String) session.getAttribute("userId");
-	        String smAdminDeptNo = (String) session.getAttribute("deptNo");
-	        String smAdminDeptName = (String) session.getAttribute("department");
-	        String smAdminName = (String) session.getAttribute("userName");
+	        // 클라이언트에서 넘어온 관리자 정보가 올바른지 검증 (optional)
+	        String sessionAdminId = (String) session.getAttribute("userId");
+	        if (!sessionAdminId.equals(updateData.getSmAdminId())) {
+	            throw new IllegalArgumentException("관리자 정보가 일치하지 않습니다.");
+	        }
 
-	        // updateData에 세션 정보를 추가
-	        updateData.setSmAdminId(smAdminId);
-	        updateData.setSmAdminDeptNo(smAdminDeptNo);
-	        updateData.setSmAdminDeptName(smAdminDeptName);
-	        updateData.setSmAdminName(smAdminName);
-
-	        // 서비스에서 상태 업데이트 호출
+	        // 세션에서 이미 불필요한 정보는 가져오지 않고, updateData에 포함된 정보를 그대로 사용
 	        safetyService.updateStatus(updateData);
 	        
 	        response.put("success", true);

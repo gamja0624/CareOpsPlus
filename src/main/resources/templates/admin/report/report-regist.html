@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
-		<title>CareOps+ | 일일관리보고서</title>
+		<title>CareOps+ | 일일관리보고서 등록</title>
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
@@ -102,7 +102,7 @@
                   obj.reportValidity(); 		// 유효성 검사 다시 실행
                   return false; 				// 제출 방지
               }
-              return true; // 정상 입력일 때만 제출
+              return true; 						// 정상 입력일 때만 제출
           }
 		</script>
 		<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>

@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<!-- title 지정 -->
-		<title>CareOps+ | 일일관리보고서</title>
+		<title>CareOps+ | 내 보고서 검색결과</title>
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 		<link th:href="@{/css/web-settings.css}" rel="stylesheet">
 		
@@ -42,14 +42,13 @@
 	<body>
 		<!-- 사이드바 -->
 		<th:block th:replace="~{/common/side-bar}"></th:block>
-		
 		<!-- 컨텐츠 영역 -->
 		<div class="content">
 			
 			<!-- section -->
           <div class="section">
 				<!-- 제목 -->
-            <h1 class="title">내 보고서</h1>
+            <h1 class="title">내 보고서 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 검색 결과</h1>
             <div class="layout-table">
               <div class="inner-layout-table">
                 <table class="table table-hover">

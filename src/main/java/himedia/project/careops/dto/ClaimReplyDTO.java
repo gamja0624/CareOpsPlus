@@ -7,32 +7,28 @@ package himedia.project.careops.dto;
 
 import java.sql.Date;
 
-import himedia.project.careops.entity.Claim;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/*@Getter
+@Getter
 @Setter
-@ToString*/
+@ToString
 public class ClaimReplyDTO {
 	
-	private Integer claimNo;				// 민원 번호 ( 외래키 )
-	private String claimCategoryNo;		// 민원 대분류 번호 ( 외래키 )
-	private int claimSubCategoryNo;	// 민원 소분류 번호 ( 외래키 )
-	private String managerId;			// 민원 담당자 아이디 ( 외래키 ) 
-	private int managerDeptNo;		// 민원 담당자 부서번호 ( 외래키 )
-	private String adminId;				// 관리자 아이디 ( 외래키 )
-	private String adminDeptNo;			// 관리자 부서번호 ( 외래키 )
-	private String adminName;			// 관리자 이름
-	private String claimReTitle;		// 민원 답변 제목
-	private String claimReContent;		// 민원 답변 내용
-	private Date claimReDate;			// 민원 답변 일자
+	private Integer claimNo;            // 민원 번호 ( 외래키 )
+	private String claimCategoryNo;     // 민원 대분류 번호 ( 외래키 )
+	private int claimSubCategoryNo;     // 민원 소분류 번호 ( 외래키 )
+	private String managerId;           // 민원 담당자 아이디 ( 외래키 ) 
+	private int managerDeptNo;          // 민원 담당자 부서번호 ( 외래키 )
+	private String adminId;             // 관리자 아이디 ( 외래키 )
+	private String adminDeptNo;         // 관리자 부서번호 ( 외래키 )
+	private String adminName;           // 관리자 이름
+	private String claimReTitle;        // 민원 답변 제목
+	private String claimReContent;      // 민원 답변 내용
+	private Date claimReDate;           // 민원 답변 일자
 	
-	
-
 	public ClaimReplyDTO() {}
-	
 
 	public ClaimReplyDTO(Integer claimNo, String claimCategoryNo, int claimSubCategoryNo, String managerId,
 			int managerDeptNo, String adminId, String adminDeptNo, String adminName, String claimReTitle,
@@ -49,7 +45,6 @@ public class ClaimReplyDTO {
 		this.claimReContent = claimReContent;
 		this.claimReDate = claimReDate;
 	}
-
 
 	public Integer getClaimNo() {
 		return claimNo;

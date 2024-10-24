@@ -34,14 +34,15 @@
 <body>
 	<!-- 사이드바 -->
 	<th:block th:replace="~{/common/side-bar}"></th:block>
-
 	<!-- 컨텐츠 영역 -->
 	<div class="content">
 
 		<!-- section -->
 		<div class="section">
 			<!-- 제목 -->
-			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 정렬 결과 </h1>
+			<h1 class="title">민원 관리 <img alt="이동" th:src="@{/img/icon-next-b.png}" class="title-next"> 정렬 결과수 :  
+				<th:block th:text="${ '총 ' + claimSort.size() } + '개' "></th:block>
+			</h1>
 			<div class="table-cover">
 				<table class="table table-hover claim-list">
 					<thead>
@@ -80,7 +81,7 @@
 										<th:block th:if="${claimSort.claimApprove} == true and ${claimSort.claimComplete} == false">
 							        <a href="#" 
 							           th:onclick="'handleClick(event, ' + ${claimSort.claimApprove} + ', ' + ${claimSort.claimComplete} + ', \'' + ${claimSort.claimNo} + '\')'">
-							            <img alt="답변작성" th:src="@{/img/test.png}"> 
+							            <img alt="답변작성" th:src="@{/img/write.png}"> 
 							        </a>
 								    </th:block>
 								    <th:block th:if="${claimSort.claimComplete} == true">
@@ -110,7 +111,7 @@
 			</div>
 			<!--버튼-->
 			<div class="button-cover">
-			    <button type="button" class="btn" onclick="location.href='/admin/claim-list'">목록으로</button>
+			    <button type="button" class="btn" onclick="location.href='/admin/claim-list'">목록</button>
 			</div>
 
 			<div class="search-box" >

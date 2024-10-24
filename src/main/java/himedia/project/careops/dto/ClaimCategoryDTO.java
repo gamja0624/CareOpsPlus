@@ -13,8 +13,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ClaimCategoryDTO {
-	private String claimCategoryNo;
-	private String claimCategoryName;
+	
+	private String claimCategoryNo;         // 민원 대분류 번호 
+	private String claimCategoryName;       // 민원 대분류 이름 
 	
 	public ClaimCategoryDTO() {}
 

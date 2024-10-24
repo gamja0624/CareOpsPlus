@@ -7,7 +7,6 @@
 	<title>CareOps+ | 민원 신청 </title>
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 	<link th:href="@{/css/web-settings.css}" rel="stylesheet">
-
 	<style type="text/css">
 		/*  공 통  */
 		.layout-table { width: 1340px; height: 100%; border: 3px solid #13254C; border-radius: 20px; }
@@ -67,10 +66,10 @@
 				<form class="claim-form" action="/manager/claim-submit" method="post"  enctype="multipart/form-data">
 					<div class="claim-box">
 						<label for="claimTitle" class="claim-title">민&nbsp;&nbsp; 원&nbsp;&nbsp;&nbsp; 제&nbsp;&nbsp; 목</label>
-						<input type="text" class="claim-input-wide" name="claimTitle" required>
+						<input type="text" class="claim-input-wide" name="claimTitle" maxlength='40' required>
 					</div>
+
 					<div class="claim-box">
-						
 						<label for="claimCategory" class="btn-basic category-label ">대 분 류</label>
 						<select name="claimCategoryName" id="claimCategoryName" class="category-input" required>
 							<option value="disabled" disabled selected>선택하기</option>
@@ -104,6 +103,7 @@
 							<option value="만료">만료</option>
 						</select>
 					</div>
+	
 					<div class="filebox">
 						<label class="claim-title">첨&nbsp;&nbsp; 부&nbsp;&nbsp;&nbsp; 파&nbsp;&nbsp; 일</label>
 						<input class="upload-name" type="text" readonly>
@@ -230,14 +230,19 @@
 
 		    if (selectedCategory === "의료기기") {
 		        modal.style.display = "flex";
+						subCategoryInput.style.display = "block"; // 텍스트 입력 필드 표시
 						subCategoryDropdown.style.display = "none"; // 드롭다운 숨기기
 		        localStorage.setItem('modalOpen', 'true');
 		    } else if (selectedCategory === "안전관리") {
 		        subCategoryInput.style.display = "none"; // 텍스트 입력 필드 숨기기
 		        subCategoryDropdown.style.display = "block"; // 드롭다운 표시
-		    } else if (selectedCategory === "시설물" ) {
-						subCategoryInput.value = "시설물"; // 입력 필드에 "시설물" 자동 입력
+		    } else if (selectedCategory === "시설물") {
 						subCategoryDropdown.style.display = "none"; // 드롭다운 숨기기
+						subCategoryInput.value = "시설물"; // 입력 필드에 "시설물" 자동 입력
+						subCategoryInput.style.display = "block"; // 텍스트 입력 필드 표시
+				} else if (selectedCategory === "일반") {
+						subCategoryDropdown.style.display = "none"; // 드롭다운 숨기기
+						subCategoryInput.value = "일반"; // 입력 필드에 "일반" 자동 입력
 						subCategoryInput.style.display = "block"; // 텍스트 입력 필드 표시
 				}
 		}
@@ -259,18 +264,7 @@
 		    document.getElementById("claimSubCategoryName").value = subCategoryName; 
 		    modal.style.display = "none"; // 모달 닫기
 		}
-
-		window.addEventListener('load', () => {
-		    if (localStorage.getItem('modalOpen') === 'true') {
-		        modal.style.display = 'flex'; 
-		    }
-		    
-		    // 입력값 복원
-		    document.querySelector('[name="claimTitle"]').value = localStorage.getItem('claimTitle') || '';
-		    document.getElementById('claimCategoryName').value = localStorage.getItem('claimCategoryName') || '일반';
-		    document.getElementById('claimContent').value = localStorage.getItem('claimContent') || '';
-		});
-
+		// 폼 임시 저장 ==================================================================
 		// 입력값 저장
 		document.querySelector('[name="claimTitle"]').addEventListener('input', function() {
 		    localStorage.setItem('claimTitle', this.value);
@@ -283,6 +277,23 @@
 		document.getElementById('claimContent').addEventListener('input', function() {
 		    localStorage.setItem('claimContent', this.value);
 		});
+		// 입력값 복원
+		window.addEventListener('load', () => {
+		    if (localStorage.getItem('modalOpen') === 'true') {
+		        modal.style.display = 'flex'; 
+		    }
+		    
+		    document.querySelector('[name="claimTitle"]').value = localStorage.getItem('claimTitle') || '';
+		    document.getElementById('claimCategoryName').value = localStorage.getItem('claimCategoryName') || '일반';
+		    document.getElementById('claimContent').value = localStorage.getItem('claimContent') || '';
+		});
+		// 입력값 삭제  
+		document.querySelector('.claim-form').addEventListener('submit', function() {
+		    localStorage.removeItem('claimTitle');
+		    localStorage.removeItem('claimCategoryName');
+		    localStorage.removeItem('claimContent');
+		});
+
 		
 		// 파일박스 ================================================================ 
 		const fileInput = document.querySelector('.filebox .file');

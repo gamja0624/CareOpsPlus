@@ -22,22 +22,22 @@ public class ClaimReply {
     private ClaimReplyId claimReplyId;   // 민원 외래키 인덱스 설정 -> 기본키로 Embedded
    
 	@Column(name="admin_id", nullable = false)
-	private String adminId;				// 관리자 아이디 ( 외래키 )
+	private String adminId;				
 	
 	@Column(name="admin_dept_no", nullable = false)
-	private String adminDeptNo;			// 관리자 부서번호 ( 외래키 )
+	private String adminDeptNo;			
 	
 	@Column(name="admin_name", nullable = false)
-	private String adminName;			// 관리자 이름
+	private String adminName;			
 	
 	@Column(name="claim_re_title", nullable = false)
-	private String claimReTitle;		// 민원 답변 제목
+	private String claimReTitle;		
 	
 	@Column(name="claim_re_content", nullable = false)
-	private String claimReContent;		// 민원 답변 내용
+	private String claimReContent;		
 	
 	@Column(name="claim_re_date", nullable = false)
-	private Date claimReDate;			// 민원 답변 일자
+	private Date claimReDate;			
 
 	public ClaimReply() {}
 	

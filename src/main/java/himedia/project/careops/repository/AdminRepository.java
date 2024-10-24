@@ -1,5 +1,10 @@
 package himedia.project.careops.repository;
 
+/**
+ * @auther 진혜정
+ * @eidtDate 2024-09-25
+ */
+
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

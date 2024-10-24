@@ -10,7 +10,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -25,10 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import himedia.project.careops.common.Pagenation;
 import himedia.project.careops.common.PagingButtonInfo;
-import himedia.project.careops.dto.ClaimReplyDTO;
 import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.dto.ManagerDepartmentDTO;
-import himedia.project.careops.entity.Claim;
 import himedia.project.careops.entity.Manager;
 import himedia.project.careops.service.ManagerDepartmentService;
 import himedia.project.careops.service.ManagerService;
@@ -54,17 +51,22 @@ public class AdminAccountController {
 		
 		Page<ManagerDTO> manager = managerService.allManager(page);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(manager);
+		int totalPages = manager.getTotalPages();
 		
 		model.addAttribute("manager", manager);
 		model.addAttribute("paging", paging);
+		model.addAttribute("totalPages", totalPages);	
 		
 		return "admin/account/account-list";
 	}
 	// 담당자 검색
 	@GetMapping("/account-list/search")
 	public String accountSearchFitler(@RequestParam String filter, @RequestParam String value, Model model) {
+
 		List<Manager> managerSearch = managerService.searchManagerByFilter(filter, value);
+		
 		model.addAttribute("managerSearch", managerSearch);
+		
 		return "admin/account/account-search-list";
 	}
 	
@@ -72,8 +74,11 @@ public class AdminAccountController {
 	// 담당자 등록 페이지
 	@GetMapping("/account-add")
 	public String accountAdd(Model model) {
+		
 		List<ManagerDepartmentDTO> managerDepartment= managerDepartmentService.findAllDepartmentsList();
+		
 		model.addAttribute("managerDepartment", managerDepartment);
+		
 		return "admin/account/account-add";
 	}
 	
@@ -94,7 +99,6 @@ public class AdminAccountController {
 	        redirectAttributes.addFlashAttribute("message", "사용 가능한 아이디입니다.");
 	    }
 		
-		
 		// 입력값 저장 (폼 데이터 초기화 방지)
 		redirectAttributes.addFlashAttribute("managerId", managerId);
 		redirectAttributes.addFlashAttribute("managerDeptName", managerDeptName);
@@ -107,6 +111,7 @@ public class AdminAccountController {
 	// 담당자 등록 - 저장  
 	@PostMapping("/account-add-complete")
 	public String accountSave(@ModelAttribute ManagerDTO managerDTO) {
+		
 		ManagerDepartmentDTO department = managerDepartmentService.findByDeptName(managerDTO.getManagerDeptName());
 		managerService.saveManager(managerDTO, department);
 		
@@ -116,14 +121,19 @@ public class AdminAccountController {
 	// 담당자 수정 페이지
 	@GetMapping("/account-edit/{managerId}")
 	public String accountEdit(@PathVariable("managerId") String managerId, Model model) {
+		
 		ManagerDTO manager = managerService.findByManagerId(managerId);
+		
 		model.addAttribute("manager", manager);
+		
 		return "admin/account/account-edit";
 	}
 	
 	@PostMapping("/account-edit-complete")
     public String accuntEditComplete(@ModelAttribute ManagerDTO managerDTO) {
+		
 		managerService.updateManager(managerDTO);
-        return "redirect:./account-list"; 
+       
+		return "redirect:./account-list"; 
     }
 }

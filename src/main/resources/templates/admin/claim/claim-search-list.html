@@ -83,7 +83,7 @@
 										<th:block th:if="${claimSearch.claimApprove} == true and ${claimSearch.claimComplete} == false">
 							        <a href="#" 
 							           th:onclick="'handleClick(event, ' + ${claimSearch.claimApprove} + ', ' + ${claimSearch.claimComplete} + ', \'' + ${claimSearch.claimNo} + '\')'">
-							            <img alt="답변작성" th:src="@{/img/test.png}"> 
+							            <img alt="답변작성" th:src="@{/img/write.png}"> 
 							        </a>
 									    </th:block>
 									    <th:block th:if="${claimSearch.claimApprove} == true and ${claimSearch.claimComplete} == true">
@@ -116,6 +116,9 @@
 				</table>
 			</div>
 			<!--버튼-->
+			<div class="button-cover">
+		    <button type="button" class="btn" onclick="location.href='/admin/claim-list'">목록</button>
+			</div>
 			<div class="search-box" >
 				<form class="category-search-box" th:attr="action=@{ '/' + ${session.userType} + '/claim-list/search' }" method="get">
 					<label class="" for="column"></label>

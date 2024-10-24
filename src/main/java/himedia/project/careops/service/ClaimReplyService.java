@@ -1,13 +1,13 @@
 package himedia.project.careops.service;
+
 /**
  * @author 최은지
- * @editDate 2024-10-07 ~ 
+ * @editDate 2024-10-07  
  */
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -62,6 +62,7 @@ public class ClaimReplyService {
 	public List<ClaimReplyDTO> claimReplyList() {
 		
 		List<ClaimReply> claimReplyList = claimReplyRepository.findAll();
+		
 		return claimReplyList.stream()
 					.map(claimReply -> modelMapper.map(claimReply, ClaimReplyDTO.class))
 					.collect(Collectors.toList());		

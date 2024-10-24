@@ -1,16 +1,13 @@
 package himedia.project.careops.controller.manager;
 
-
-import java.io.IOException;
-
 /**
  * @author 최은지
  * @editDate 2024-09-24 ~
  */
 
+import java.io.IOException;
 import java.util.List;
 
-import org.hibernate.annotations.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -36,13 +33,11 @@ import himedia.project.careops.dto.ClaimReplyDTO;
 import himedia.project.careops.dto.ClaimSubCategoryDTO;
 import himedia.project.careops.dto.ManagerDTO;
 import himedia.project.careops.entity.Claim;
-import himedia.project.careops.entity.ClaimCategory;
 import himedia.project.careops.service.ClaimReplyService;
 import himedia.project.careops.service.ClaimService;
 import himedia.project.careops.service.ManagerService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @Controller
@@ -72,6 +67,7 @@ public class ManagerClaimController {
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(claim);
 		List<ClaimReplyDTO> claimReply =  claimReplyService.claimReplyList(); 
 		int totalPages = claim.getTotalPages();			    // 총 페이지 수 계산
+		
 		model.addAttribute("claim", claim);
 		model.addAttribute("paging", paging);
 		model.addAttribute("claimReply", claimReply);
@@ -82,7 +78,9 @@ public class ManagerClaimController {
 	// (내 민원) 민원 목록
 	@GetMapping("/claim-my-list")
 	public String myClaimList(@PageableDefault Pageable pageable, Model model, HttpSession session) {
+		
 		String managerId = (String) session.getAttribute("userId");
+		
 		Page<ClaimDTO> myClaim = claimService.managerClaim(managerId, pageable);
 		List<ClaimReplyDTO> claimReply =  claimReplyService.claimReplyList(); 
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(myClaim);
@@ -92,6 +90,7 @@ public class ManagerClaimController {
 		model.addAttribute("claimReply", claimReply);
 		model.addAttribute("paging", paging);
 		model.addAttribute("totalPages", totalPages);	
+		
 		return "/manager/claim/claim-my-list";
 	}
 	
@@ -115,14 +114,14 @@ public class ManagerClaimController {
 	// 민원 이미지 조회
 	@GetMapping("/claim-image/{claimNo}")
 	public ResponseEntity<byte[]> MangerGetClaimImage(@PathVariable ("claimNo") Integer claimNo) {
-	    byte[] imageData = claimService.claimImageData(claimNo);
+	   
+		byte[] imageData = claimService.claimImageData(claimNo);
 	    
 	    if (imageData != null) {
 	        return ResponseEntity.ok()
-	                .contentType(MediaType.IMAGE_JPEG) // 필요에 따라 MIME 타입 변경
+	                .contentType(MediaType.IMAGE_JPEG) // 필요에 따라 MediaType 타입 변경
 	                .body(imageData);
 	    } else {
-	    	log.warn("해당 민원에는 이미지가 존재하지 않습니다: {}", claimNo);
 	    	return ResponseEntity.noContent().build(); // 204 No Content 반환 (아무것도 없음)
 	    }
 	}
@@ -133,6 +132,7 @@ public class ManagerClaimController {
 		
 		ClaimDTO claim = claimService.findByClaimNo(claimNo);		
 		ManagerDTO manager = managerService.findByManagerId(claim.getManagerId());
+		
 		model.addAttribute("claim", claim);
 		model.addAttribute("manager", manager);
 		
@@ -144,26 +144,17 @@ public class ManagerClaimController {
 	@GetMapping("/claim-edit/{claimNo}")
 	public String managerClaimEdit(@PathVariable("claimNo") Integer claimNo, Model model, @PageableDefault Pageable pageable) {
 		
-		// 민원 정보 
 		ClaimDTO claim = claimService.findByClaimNo(claimNo);
 		ManagerDTO manager = managerService.findByManagerId(claim.getManagerId());
 		
-		// 민원 대분류
 		List<ClaimCategoryDTO> claimCategory = claimService.findAllCategory();
-		
-		// 민원 소분류
 		Page<ClaimSubCategoryDTO> claimSubCategory = claimService.findAllSubCategory(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(claimSubCategory);
 		int totalPages = claimSubCategory.getTotalPages();			    // 총 페이지 수 계산
 		
-		// 민원 정보
 		model.addAttribute("claim", claim);
 		model.addAttribute("manager", manager);
-		
-		// 민원 대분류
 		model.addAttribute("claimCategory", claimCategory);
-		
-		// 민원 소분류
 		model.addAttribute("claimSubCategory", claimSubCategory);
 		model.addAttribute("paging", paging);
 		model.addAttribute("totalPages", totalPages);	
@@ -173,6 +164,7 @@ public class ManagerClaimController {
 	
 	@PostMapping("/claim-edit-complete/{claimNo}")
 	public String managerClaimEditSave(@PathVariable("claimNo") Integer claimNo,  @ModelAttribute ClaimDTO claimDTO,  @RequestParam("file") MultipartFile file) {
+		
 		try {
 			claimService.updateClaim(claimNo, claimDTO, file);
 			return "redirect:/manager/claim-list";
@@ -186,10 +178,7 @@ public class ManagerClaimController {
 	@GetMapping("/claim-add")
 	public String managerClaimForm(@PageableDefault Pageable pageable, Model model) {
 		
-		// 민원 대분류
 		List<ClaimCategoryDTO> claimCategory = claimService.findAllCategory();
-		
-		// 민원 소분류
 		Page<ClaimSubCategoryDTO> claimSubCategory = claimService.findAllSubCategory(pageable);
 		PagingButtonInfo paging = Pagenation.getPagingButtonInfo(claimSubCategory);
 		int totalPages = claimSubCategory.getTotalPages();			    // 총 페이지 수 계산
@@ -219,8 +208,10 @@ public class ManagerClaimController {
     public ResponseEntity<List<ClaimSubCategoryDTO>> searchClaimSubCategories(
             @RequestParam String filter,
             @RequestParam String value) {
-        List<ClaimSubCategoryDTO> results = claimService.searchSubCategories(filter, value);
-        return ResponseEntity.ok(results);
+       
+		List<ClaimSubCategoryDTO> results = claimService.searchSubCategories(filter, value);
+       
+		return ResponseEntity.ok(results);
     }
 
 	// [ 답변 조회 ] ===========================================================================
@@ -234,6 +225,7 @@ public class ManagerClaimController {
     	model.addAttribute("claim", claim);
     	model.addAttribute("manager", manager);
     	model.addAttribute("claimReply", claimReply);
+    	
     	return "/manager/claim/claim-re-detail";
     }
 	
